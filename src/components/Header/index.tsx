@@ -291,12 +291,12 @@ export default function Header() {
   return (
     <HeaderFrame>
       <HeaderRow>
-        <Title to="/swap">
+        {/* <Title to="/swap">
           <UniIcon>
             <IconImage src={isDark ? '/logo-dark.svg' : '/logo.svg'} alt="logo" />
           </UniIcon>
-        </Title>
-        <HeaderLinks>
+        </Title> */}
+        {/* <HeaderLinks>
           <StyledNavLink
             id={`swapv2-nav-link`}
             to={'/swap'}
@@ -364,7 +364,13 @@ export default function Header() {
               <Trans>About</Trans>
             </StyledNavLink>
           </AboutWrapper>
-        </HeaderLinks>
+        </HeaderLinks> */}
+        <Title to="/discoverPro">
+          <UniIcon>
+            <IconImage src={isDark ? '/logo-dark.svg' : '/logo.svg'} alt="logo" />
+          </UniIcon>
+        </Title>
+        <HeaderLinks></HeaderLinks>
       </HeaderRow>
       <HeaderControls>
         <HeaderElement>
