@@ -105,6 +105,9 @@ export function useFarmHistoryModalToggle(): () => void {
 export function useTrendingSoonSortingModalToggle(): () => void {
   return useToggleModal(ApplicationModal.TRENDING_SOON_SORTING)
 }
+export function useDiscoverProSortingModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.DISCOVER_PRO_SORTING)
+}
 
 export function useTrueSightNetworkModalToggle(): () => void {
   return useToggleModal(ApplicationModal.TRUESIGHT_NETWORK)
