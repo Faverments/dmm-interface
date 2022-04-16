@@ -69,7 +69,7 @@ import TopBanner from 'components/Header/TopBanner'
 
 // const CreateReferral = lazy(() => import(/* webpackChunkName: 'create-referral-page' */ './CreateReferral'))
 
-// const TrueSight = lazy(() => import(/* webpackChunkName: 'true-sight-page' */ './TrueSight'))
+const TrueSight = lazy(() => import(/* webpackChunkName: 'true-sight-page' */ './TrueSight'))
 
 const DiscoverPro = lazy(() => import(/* webpackChunkName: 'discover-pro-page' */ './DiscoverPro'))
 
@@ -237,9 +237,9 @@ export default function App() {
                     />
                     <Route exact strict path="/migrate/:currencyIdA/:currencyIdB" component={MigrateLiquidityUNI} />
                     <Route exact path="/about" component={About} />
-                    <Route exact path="/referral" component={CreateReferral} />
+                    <Route exact path="/referral" component={CreateReferral} />*/}
                     <Route exact path="/discover" component={TrueSight} />
-                    <Route component={RedirectPathToSwapOnly} /> */}
+                    {/* <Route component={RedirectPathToSwapOnly} />  */}
                     <Route exact path="/discoverPro" component={DiscoverPro} />
                   </Switch>
                 </Web3ReactManager>

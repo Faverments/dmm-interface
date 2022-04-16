@@ -613,9 +613,15 @@ msgstr "Disable Metamask in C98"
 msgid "Disclaimer: The information here should not be treated as any form of financial advice"
 msgstr "Disclaimer: The information here should not be treated as any form of financial advice"
 
+#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Discover"
 msgstr "Discover"
+
+#: src/components/Header/index.tsx
+#: src/components/Settings/index.tsx
+msgid "Discover Pro"
+msgstr "Discover Pro"
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx

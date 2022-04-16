@@ -36,3 +36,4 @@ export const toggleRebrandingAnnouncement = createAction<void>('user/toggleRebra
 export const toggleLiveChart = createAction<{ chainId: number }>('user/toggleLiveChart')
 export const toggleTradeRoutes = createAction<void>('user/toggleTradeRoutes')
 export const toggleTopTrendingTokens = createAction<void>('user/toggleTopTrendingTokens')
+export const toggleDiscoverPro = createAction<void>('user/toggleDiscoverPro')

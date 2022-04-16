@@ -19,6 +19,7 @@ import {
   toggleLiveChart,
   toggleTradeRoutes,
   toggleTopTrendingTokens,
+  toggleDiscoverPro,
 } from './actions'
 import { SupportedLocale } from 'constants/locales'
 import { isMobile } from 'react-device-detect'
@@ -63,6 +64,7 @@ export interface UserState {
   }
   showTradeRoutes: boolean
   showTopTrendingSoonTokens: boolean
+  discoverProMode: boolean
 }
 
 function pairKey(token0Address: string, token1Address: string) {
@@ -108,6 +110,7 @@ export const initialState: UserState = {
   showLiveCharts: defaultShowLiveCharts,
   showTradeRoutes: !isMobile,
   showTopTrendingSoonTokens: true,
+  discoverProMode: true,
 }
 
 export default createReducer(initialState, builder =>
@@ -197,5 +200,8 @@ export default createReducer(initialState, builder =>
     })
     .addCase(toggleTopTrendingTokens, state => {
       state.showTopTrendingSoonTokens = !state.showTopTrendingSoonTokens
+    })
+    .addCase(toggleDiscoverPro, state => {
+      state.discoverProMode = !state.discoverProMode
     }),
 )

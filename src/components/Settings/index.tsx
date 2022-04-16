@@ -4,11 +4,12 @@ import styled, { css } from 'styled-components'
 import { Trans, t } from '@lingui/macro'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useToggleSettingsMenu } from '../../state/application/hooks'
-import { useDarkModeManager, useUserLocale } from 'state/user/hooks'
+import { useDarkModeManager, useUserLocale, useDiscoverProMode, useToggleDiscoverPro } from 'state/user/hooks'
 import { ButtonEmpty } from '../Button'
 import { AutoColumn } from '../Column'
 import { RowBetween, RowFixed } from '../Row'
 import ThemeToggle from 'components/Toggle/ThemeToggle'
+import DiscoverProToggle from 'components/Toggle/DiscoverProToggle'
 import useTheme from 'hooks/useTheme'
 import ArrowRight from 'components/Icons/ArrowRight'
 import { LOCALE_LABEL, SupportedLocale } from 'constants/locales'
@@ -87,6 +88,8 @@ export default function SettingsTab() {
   const open = useModalOpen(ApplicationModal.SETTINGS)
   const toggle = useToggleSettingsMenu()
   const userLocale = useUserLocale()
+  const isDiscoverProMode = useDiscoverProMode()
+  const toggleDiscoverPro = useToggleDiscoverPro()
   useLingui() // To re-render t`Preferences` when language change
 
   const [isSelectingLanguage, setIsSelectingLanguage] = useState(false)
@@ -138,6 +141,15 @@ export default function SettingsTab() {
                 </span>
                 <ArrowRight fill={theme.text} />
               </ButtonEmpty>
+            </RowBetween>
+
+            <RowBetween style={{ marginTop: '15px' }}>
+              <RowFixed>
+                <StyledLabel>
+                  <Trans>Discover Pro</Trans>
+                </StyledLabel>
+              </RowFixed>
+              <DiscoverProToggle isActive={isDiscoverProMode} toggle={toggleDiscoverPro} />
             </RowBetween>
           </>
         ) : (

@@ -28,6 +28,7 @@ import {
   toggleLiveChart,
   toggleTradeRoutes,
   toggleTopTrendingTokens,
+  toggleDiscoverPro,
 } from './actions'
 import { convertChainIdFromDmmToSushi } from 'utils/dmm'
 import { useUserLiquidityPositions } from 'state/pools/hooks'
@@ -486,4 +487,14 @@ export function useToggleTradeRoutes(): () => void {
 export function useToggleTopTrendingTokens(): () => void {
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(() => dispatch(toggleTopTrendingTokens()), [dispatch])
+}
+
+export function useDiscoverProMode(): boolean {
+  const discoverProMode = useSelector((state: AppState) => state.user.discoverProMode)
+  return discoverProMode ?? true
+}
+
+export function useToggleDiscoverPro(): () => void {
+  const dispatch = useDispatch<AppDispatch>()
+  return useCallback(() => dispatch(toggleDiscoverPro()), [dispatch])
 }
