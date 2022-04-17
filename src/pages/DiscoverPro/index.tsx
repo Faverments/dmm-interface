@@ -28,7 +28,7 @@ export enum PercentChangeMode {
   LAST_7D = 'last_7d',
 }
 
-export enum TrueSightStatus {
+export enum TokenStatus {
   NEW_DISCOVERED = 'NEW_DISCOVERED',
   PREVIOUS_PREDICTED = 'PREVIOUS_PREDICTED',
   NEXT_PREDICTED = 'NEXT_PREDICTED',
@@ -37,7 +37,7 @@ export enum TrueSightStatus {
 
 export interface DiscoverProFilter extends TrueSightFilter {
   selectedPercentChangeMode: PercentChangeMode
-  selectedStatus: TrueSightStatus | undefined
+  selectedTokenStatus: TokenStatus | undefined
   // IN_DEV : add token data detail ( add to selectedTokenData )
 }
 
@@ -57,7 +57,7 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
     selectedTokenData: undefined,
     selectedNetwork: undefined,
     selectedPercentChangeMode: PercentChangeMode.PREDICTED_TO_CURRENT,
-    selectedStatus: undefined,
+    selectedTokenStatus: undefined,
   })
 
   const [sortSettings, setSortSettings] = useState<DiscoverProSortSettings>({ sortBy: 'rank', sortDirection: 'asc' })
@@ -78,7 +78,7 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
         selectedTokenData: undefined,
         selectedNetwork: undefined,
         selectedPercentChangeMode: PercentChangeMode.PREDICTED_TO_CURRENT,
-        selectedStatus: undefined,
+        selectedTokenStatus: undefined,
       })
       setSortSettings({ sortBy: 'rank', sortDirection: 'asc' })
     }
@@ -90,6 +90,15 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
       {activeTab === TrueSightTabs.TRENDING_SOON && (
         <>
           <TrendingSoonHero />
+          <Flex flexDirection="column" style={{ gap: '16px' }}>
+            <FilterBar
+              activeTab={TrueSightTabs.TRENDING_SOON}
+              filter={filter}
+              setFilter={setFilter}
+              sortSettings={sortSettings}
+              setSortSettings={setSortSettings}
+            />
+          </Flex>
         </>
       )}
       {activeTab === TrueSightTabs.TRENDING && (

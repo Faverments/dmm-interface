@@ -177,8 +177,11 @@ msgstr "고급 모드 사용중"
 msgid "After harvesting, your rewards will unlock linearly over the indicated time period"
 msgstr ""
 
+#: src/components/DiscoverProNetworkModal/index.tsx
+#: src/components/DiscoverProNetworkModal/index.tsx
 #: src/components/TrueSightNetworkModal/index.tsx
 #: src/components/TrueSightNetworkModal/index.tsx
+#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
 #: src/pages/TrueSight/components/FilterBar/NetworkSelect.tsx
 msgid "All Chains"
 msgstr ""
@@ -628,6 +631,7 @@ msgstr ""
 msgid "Discover more"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
 msgid "Discovered On"
@@ -822,6 +826,7 @@ msgstr ""
 msgid "Fees are adjusted dynamically according to market conditions to maximise returns for liquidity providers."
 msgstr "수수료는 유동성 공급자의 수익을 극대화하기 위해 시장 상황에 따라 동적으로 조정됩니다."
 
+#: src/components/DiscoverProNetworkModal/index.tsx
 #: src/components/TrueSightNetworkModal/index.tsx
 msgid "Filter tokens by chain"
 msgstr ""
@@ -1320,6 +1325,7 @@ msgstr "내 베스팅"
 msgid "My liquidity"
 msgstr "나의 유동성"
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
@@ -1648,6 +1654,7 @@ msgstr ""
 msgid "Rainmaker Yield Farming"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 msgid "Ranking"
 msgstr ""
@@ -1753,6 +1760,7 @@ msgstr "풀 주소로 검색"
 msgid "Search by token name or pool address"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "Search by token name or tag"
 msgstr ""
@@ -1844,6 +1852,7 @@ msgstr ""
 msgid "Something went wrong"
 msgstr "문제가 발생했습니다"
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 msgid "Sort by"
 msgstr ""
@@ -2020,6 +2029,8 @@ msgstr "이 토큰은 활성 토큰 목록에 표시되지 않습니다. 거래�
 msgid "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "Timeframe"
@@ -2054,6 +2065,7 @@ msgstr "토큰 이름"
 msgid "Token Pair"
 msgstr "토큰 쌍"
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "Token name or tag"
 msgstr ""
@@ -2369,10 +2381,12 @@ msgstr "단일 토큰(토큰 쌍의 토큰)을 제공하여 풀에 유동성을 
 msgid "You can also include tokens to swap in your referral link so that referees are automatically re-directed to selected chain and selected tokens are also populated for the swap. You will still earn commission on other token swaps if they use your referral link."
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "You can choose to see currently trending tokens over the last 24 hours or 7 days"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days"
 msgstr ""
@@ -2556,6 +2570,7 @@ msgstr "{0}을(를) 통해"
 msgid "via {0} token list"
 msgstr "{0} 토큰 목록을 통해"
 
+#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
 #: src/pages/TrueSight/components/FilterBar/NetworkSelect.tsx
 msgid "{0}"
 msgstr ""

@@ -177,8 +177,11 @@ msgstr "Gelişmiş mod açık!"
 msgid "After harvesting, your rewards will unlock linearly over the indicated time period"
 msgstr ""
 
+#: src/components/DiscoverProNetworkModal/index.tsx
+#: src/components/DiscoverProNetworkModal/index.tsx
 #: src/components/TrueSightNetworkModal/index.tsx
 #: src/components/TrueSightNetworkModal/index.tsx
+#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
 #: src/pages/TrueSight/components/FilterBar/NetworkSelect.tsx
 msgid "All Chains"
 msgstr ""
@@ -628,6 +631,7 @@ msgstr ""
 msgid "Discover more"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
 msgid "Discovered On"
@@ -822,6 +826,7 @@ msgstr ""
 msgid "Fees are adjusted dynamically according to market conditions to maximise returns for liquidity providers."
 msgstr "Likidite sağlayıcıları için getirileri en üst düzeye çıkarmak adına, ücretler piyasa koşullarına göre dinamik olarak ayarlanır."
 
+#: src/components/DiscoverProNetworkModal/index.tsx
 #: src/components/TrueSightNetworkModal/index.tsx
 msgid "Filter tokens by chain"
 msgstr ""
@@ -1320,6 +1325,7 @@ msgstr "Vesting Süreçlerim"
 msgid "My liquidity"
 msgstr "Likiditem"
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
@@ -1648,6 +1654,7 @@ msgstr ""
 msgid "Rainmaker Yield Farming"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 msgid "Ranking"
 msgstr ""
@@ -1753,6 +1760,7 @@ msgstr "Havuz adresine göre ara"
 msgid "Search by token name or pool address"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "Search by token name or tag"
 msgstr ""
@@ -1844,6 +1852,7 @@ msgstr ""
 msgid "Something went wrong"
 msgstr "Bir şeyler yanlış gitti"
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 msgid "Sort by"
 msgstr ""
@@ -2020,6 +2029,8 @@ msgstr "Bu token, aktif token listelerinde görünmüyor. Bunun takas etmek iste
 msgid "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "Timeframe"
@@ -2054,6 +2065,7 @@ msgstr "Token Adı"
 msgid "Token Pair"
 msgstr "Token Çifti"
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "Token name or tag"
 msgstr ""
@@ -2369,10 +2381,12 @@ msgstr "Tek bir token (token çiftinden istediğiniz token) sağlayarak havuza l
 msgid "You can also include tokens to swap in your referral link so that referees are automatically re-directed to selected chain and selected tokens are also populated for the swap. You will still earn commission on other token swaps if they use your referral link."
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "You can choose to see currently trending tokens over the last 24 hours or 7 days"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days"
 msgstr ""
@@ -2556,6 +2570,7 @@ msgstr "{0} aracılığıyla"
 msgid "via {0} token list"
 msgstr "{0} token listesi aracılığıyla"
 
+#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
 #: src/pages/TrueSight/components/FilterBar/NetworkSelect.tsx
 msgid "{0}"
 msgstr ""

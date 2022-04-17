@@ -177,8 +177,11 @@ msgstr "Advanced mode is on!"
 msgid "After harvesting, your rewards will unlock linearly over the indicated time period"
 msgstr "After harvesting, your rewards will unlock linearly over the indicated time period"
 
+#: src/components/DiscoverProNetworkModal/index.tsx
+#: src/components/DiscoverProNetworkModal/index.tsx
 #: src/components/TrueSightNetworkModal/index.tsx
 #: src/components/TrueSightNetworkModal/index.tsx
+#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
 #: src/pages/TrueSight/components/FilterBar/NetworkSelect.tsx
 msgid "All Chains"
 msgstr "All Chains"
@@ -628,6 +631,7 @@ msgstr "Discover Pro"
 msgid "Discover more"
 msgstr "Discover more"
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
 msgid "Discovered On"
@@ -822,6 +826,7 @@ msgstr "Fees (24H)"
 msgid "Fees are adjusted dynamically according to market conditions to maximise returns for liquidity providers."
 msgstr "Fees are adjusted dynamically according to market conditions to maximise returns for liquidity providers."
 
+#: src/components/DiscoverProNetworkModal/index.tsx
 #: src/components/TrueSightNetworkModal/index.tsx
 msgid "Filter tokens by chain"
 msgstr "Filter tokens by chain"
@@ -1320,6 +1325,7 @@ msgstr "My Vesting"
 msgid "My liquidity"
 msgstr "My liquidity"
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
@@ -1648,6 +1654,7 @@ msgstr "REWARD:"
 msgid "Rainmaker Yield Farming"
 msgstr "Rainmaker Yield Farming"
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 msgid "Ranking"
 msgstr "Ranking"
@@ -1753,6 +1760,7 @@ msgstr "Search by pool address"
 msgid "Search by token name or pool address"
 msgstr "Search by token name or pool address"
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "Search by token name or tag"
 msgstr "Search by token name or tag"
@@ -1844,6 +1852,7 @@ msgstr "Something is wrong. Please try again later!"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 msgid "Sort by"
 msgstr "Sort by"
@@ -2020,6 +2029,8 @@ msgstr "This token doesn't appear on the active token list(s). Make sure this is
 msgid "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
 msgstr "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "Timeframe"
@@ -2054,6 +2065,7 @@ msgstr "Token Name"
 msgid "Token Pair"
 msgstr "Token Pair"
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "Token name or tag"
 msgstr "Token name or tag"
@@ -2369,10 +2381,12 @@ msgstr "You can add liquidity to the pool by supplying a single token (either to
 msgid "You can also include tokens to swap in your referral link so that referees are automatically re-directed to selected chain and selected tokens are also populated for the swap. You will still earn commission on other token swaps if they use your referral link."
 msgstr "You can also include tokens to swap in your referral link so that referees are automatically re-directed to selected chain and selected tokens are also populated for the swap. You will still earn commission on other token swaps if they use your referral link."
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "You can choose to see currently trending tokens over the last 24 hours or 7 days"
 msgstr "You can choose to see currently trending tokens over the last 24 hours or 7 days"
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days"
 msgstr "You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days"
@@ -2556,6 +2570,7 @@ msgstr "via {0}"
 msgid "via {0} token list"
 msgstr "via {0} token list"
 
+#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
 #: src/pages/TrueSight/components/FilterBar/NetworkSelect.tsx
 msgid "{0}"
 msgstr "{0}"
