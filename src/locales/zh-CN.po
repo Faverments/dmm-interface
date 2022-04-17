@@ -187,6 +187,7 @@ msgid "All Chains"
 msgstr ""
 
 #: src/components/PoolsCurrencyInputPanel/index.tsx
+#: src/pages/DiscoverPro/components/FilterBar/TokenStatusSelect.tsx
 msgid "All Tokens"
 msgstr ""
 
@@ -2571,6 +2572,7 @@ msgid "via {0} token list"
 msgstr "通过 {0} 代币列表"
 
 #: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
+#: src/pages/DiscoverPro/components/FilterBar/TokenStatusSelect.tsx
 #: src/pages/TrueSight/components/FilterBar/NetworkSelect.tsx
 msgid "{0}"
 msgstr ""

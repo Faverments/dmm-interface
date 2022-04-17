@@ -29,11 +29,12 @@ export enum PercentChangeMode {
 }
 
 export enum TokenStatus {
-  NEW_DISCOVERED = 'NEW_DISCOVERED',
-  PREVIOUS_PREDICTED = 'PREVIOUS_PREDICTED',
-  NEXT_PREDICTED = 'NEXT_PREDICTED',
-  DISCOVERED_DATE_CHANGE = 'DISCOVERED_DATE_CHANGE',
+  NEW_DISCOVER = 'NEW_DISCOVER',
+  CHANGE_DISCOVER = 'CHANGE_DISCOVER',
+  PREVIOUS_PREDICT = 'PREVIOUS_PREDICT',
+  NEXT_PREDICT = 'NEXT_PREDICT',
 }
+console.log('DiscoverPro/index.tsx')
 
 export interface DiscoverProFilter extends TrueSightFilter {
   selectedPercentChangeMode: PercentChangeMode
@@ -83,7 +84,6 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
       setSortSettings({ sortBy: 'rank', sortDirection: 'asc' })
     }
   }, [history, tab, isDiscoverProMode])
-
   return (
     <TrueSightPageWrapper>
       <TrueSightTab activeTab={activeTab} />
