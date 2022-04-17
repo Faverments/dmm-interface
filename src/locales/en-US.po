@@ -13,6 +13,10 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
+msgid "% Change Mode"
+msgstr "% Change Mode"
+
 #: src/pages/CreateReferral/index.tsx
 msgid "*Required"
 msgstr "*Required"
@@ -186,8 +190,11 @@ msgstr "After harvesting, your rewards will unlock linearly over the indicated t
 msgid "All Chains"
 msgstr "All Chains"
 
-#: src/components/PoolsCurrencyInputPanel/index.tsx
 #: src/pages/DiscoverPro/components/FilterBar/TokenStatusSelect.tsx
+msgid "All Status"
+msgstr "All Status"
+
+#: src/components/PoolsCurrencyInputPanel/index.tsx
 msgid "All Tokens"
 msgstr "All Tokens"
 
@@ -1718,6 +1725,10 @@ msgstr "Removing pool tokens converts your position back into underlying tokens 
 #: src/pages/RemoveLiquidity/migrate_sushi.tsx
 msgid "Removing {0} {1} and {2} {3}"
 msgstr "Removing {0} {1} and {2} {3}"
+
+#: src/pages/DiscoverPro/components/FilterBar/ResetFilter.tsx
+msgid "Reset Filter"
+msgstr "Reset Filter"
 
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx

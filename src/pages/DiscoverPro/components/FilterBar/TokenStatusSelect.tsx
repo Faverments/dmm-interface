@@ -9,7 +9,7 @@ import { Flex, Text } from 'rebass'
 import { Trans } from '@lingui/macro'
 
 import { TokenStatus } from 'pages/DiscoverPro/index'
-import { ChevronDown, X } from 'react-feather'
+import { ChevronDown, X, Activity } from 'react-feather'
 import { OptionsContainer } from 'pages/TrueSight/styled'
 
 // UNKNOWN_ERROR if put TOKEN_STATUS_LABE here ( interface is working )
@@ -61,11 +61,12 @@ const TokenStatusSelect = ({
       ref={containerRef}
       style={style}
     >
-      <div>
+      <Flex alignItems="center" style={{ gap: '4px' }}>
+        <Activity size={16} color={selectedTokenStatus ? undefined : theme.disableText} />
         <Text color={selectedTokenStatus ? theme.subText : theme.disableText} fontSize="12px">
-          {selectedTokenStatus ? TOKEN_STATUS_LABEL[selectedTokenStatus] : <Trans>All Tokens</Trans>}
+          {selectedTokenStatus ? TOKEN_STATUS_LABEL[selectedTokenStatus] : <Trans>All Status</Trans>}
         </Text>
-      </div>
+      </Flex>
       <Flex alignItems="center">
         {selectedTokenStatus && (
           <X

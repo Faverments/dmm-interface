@@ -13,6 +13,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "Plural-Forms: \n"
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
+msgid "% Change Mode"
+msgstr ""
+
 #: src/pages/CreateReferral/index.tsx
 msgid "*Required"
 msgstr ""
@@ -186,8 +190,11 @@ msgstr ""
 msgid "All Chains"
 msgstr ""
 
-#: src/components/PoolsCurrencyInputPanel/index.tsx
 #: src/pages/DiscoverPro/components/FilterBar/TokenStatusSelect.tsx
+msgid "All Status"
+msgstr ""
+
+#: src/components/PoolsCurrencyInputPanel/index.tsx
 msgid "All Tokens"
 msgstr ""
 
@@ -1718,6 +1725,10 @@ msgstr "删除池代币会将您的头寸以当前比率转换回基础代币，
 #: src/pages/RemoveLiquidity/migrate_sushi.tsx
 msgid "Removing {0} {1} and {2} {3}"
 msgstr "删除 {0} {1} 和 {2} {3}"
+
+#: src/pages/DiscoverPro/components/FilterBar/ResetFilter.tsx
+msgid "Reset Filter"
+msgstr ""
 
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx

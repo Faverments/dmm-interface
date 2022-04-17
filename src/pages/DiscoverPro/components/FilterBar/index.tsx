@@ -27,6 +27,9 @@ import TrueSightSearchBox from 'pages/TrueSight/components/FilterBar/TrueSightSe
 import NetworkSelect from 'pages/DiscoverPro/components/FilterBar/NetworkSelect'
 import ModalSorting from 'pages/DiscoverPro/components/FilterBar/ModalSorting'
 import TokenStatusSelect from 'pages/DiscoverPro/components/FilterBar/TokenStatusSelect'
+import PercentChangeModePicker from 'pages/DiscoverPro/components/FilterBar/PercentChangeModePicker'
+import ResetFilter from 'pages/DiscoverPro/components/FilterBar/ResetFilter'
+import { PercentChangeMode } from 'pages/DiscoverPro/index'
 
 import { Flex } from 'rebass'
 import { ButtonEmpty } from 'components/Button'
@@ -41,6 +44,7 @@ interface FilterBarProps {
 }
 
 export default function FilterBar({ activeTab, filter, setFilter, sortSettings, setSortSettings }: FilterBarProps) {
+  // console.log(filter)
   const isActiveTabTrending = activeTab === TrueSightTabs.TRENDING
   const isActiveTabTrendingSoon = activeTab === TrueSightTabs.TRENDING_SOON
   const above1000 = useMedia('(min-width: 1000px)')
@@ -50,8 +54,23 @@ export default function FilterBar({ activeTab, filter, setFilter, sortSettings, 
   const setActiveTimeframe = (timeframe: TrueSightTimeframe) => {
     setFilter(prev => ({ ...prev, timeframe }))
   }
-
+  const setActivePercentChangeMode = (percentChangeMode: PercentChangeMode) => {
+    setFilter(prev => ({ ...prev, selectedPercentChangeMode: percentChangeMode }))
+  }
   const [searchText, setSearchText] = useState('')
+  const resetFilter = () => {
+    setFilter(prev => ({
+      ...prev,
+      isShowTrueSightOnly: false,
+      selectedTag: undefined,
+      selectedTokenData: undefined,
+      selectedNetwork: undefined,
+      selectedPercentChangeMode: PercentChangeMode.PREDICTED_TO_CURRENT,
+      selectedTokenStatus: undefined,
+    }))
+    setSearchText('')
+  }
+
   const debouncedSearchText = useDebounce(searchText.toLowerCase().trim(), 200)
 
   const { data: foundTokens } = useGetTokensForSearchBox(
@@ -66,20 +85,31 @@ export default function FilterBar({ activeTab, filter, setFilter, sortSettings, 
   const toggleSortingModal = useDiscoverProSortingModalToggle()
 
   const { tab } = useParsedQueryString()
-  const tooltipText =
+  const tooltipTimeframeText =
     tab === TrueSightTabs.TRENDING_SOON
       ? t`You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days`
       : t`You can choose to see currently trending tokens over the last 24 hours or 7 days`
+  const tooltipPercentChangeModeText = 'test'
 
   return above1000 ? (
     <TrueSightFilterBarLayout>
       <TrueSightFilterBarSection style={{ gap: '8px' }}>
-        <MouseoverTooltip text={tooltipText}>
+        <MouseoverTooltip text={tooltipTimeframeText}>
           <TextTooltip color={theme.subText} fontSize="14px" fontWeight={500}>
             <Trans>Timeframe</Trans>
           </TextTooltip>
         </MouseoverTooltip>
         <TimeframePicker activeTimeframe={filter.timeframe} setActiveTimeframe={setActiveTimeframe} />
+        <MouseoverTooltip text={tooltipPercentChangeModeText}>
+          <TextTooltip color={theme.subText} fontSize="14px" fontWeight={500}>
+            <Trans>% Change Mode</Trans>
+          </TextTooltip>
+        </MouseoverTooltip>
+        <PercentChangeModePicker
+          activeMode={filter.selectedPercentChangeMode}
+          setActiveMode={setActivePercentChangeMode}
+        />
+        <ResetFilter filter={filter} resetFilter={resetFilter} />
       </TrueSightFilterBarSection>
       <TrueSightFilterBarSection style={{ gap: '16px' }}>
         {isActiveTabTrending && (
@@ -134,7 +164,7 @@ export default function FilterBar({ activeTab, filter, setFilter, sortSettings, 
           </>
         )}
         <Flex style={{ gap: '12px', alignItems: 'center' }}>
-          <MouseoverTooltip text={tooltipText}>
+          <MouseoverTooltip text={tooltipTimeframeText}>
             <TextTooltip color={theme.subText} fontSize="14px" fontWeight={500}>
               <Trans>Timeframe</Trans>
             </TextTooltip>
