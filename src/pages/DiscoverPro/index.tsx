@@ -13,6 +13,11 @@ import TrueSightTab from 'pages/TrueSight/TrueSightTab'
 
 import FilterBar from 'pages/DiscoverPro/components/FilterBar'
 
+// TEST
+import Calendar from 'components/Calendar'
+import useGetListPredictedDate from './hooks/useGetListPredictedDate'
+import Loader from 'components/Loader'
+
 import {
   TrueSightTabs,
   TrueSightChartCategory,
@@ -20,6 +25,7 @@ import {
   TrueSightFilter,
   TrueSightSortSettings,
 } from 'pages/TrueSight'
+import { number } from '@lingui/core/cjs/formats'
 
 export enum PercentChangeMode {
   PREDICTED_TO_CURRENT = 'predicted_to_current',
@@ -34,11 +40,23 @@ export enum TokenStatus {
   PREVIOUS_PREDICT = 'PREVIOUS_PREDICT',
   NEXT_PREDICT = 'NEXT_PREDICT',
 }
-console.log('DiscoverPro/index.tsx')
+
+export enum LayoutMode {
+  TABLE_LARGE,
+  TABLE_WITH_DETAILS,
+}
+
+export interface PredictedDate {
+  mediumDate: number
+  firstDate: number
+  index: number
+}
 
 export interface DiscoverProFilter extends TrueSightFilter {
   selectedPercentChangeMode: PercentChangeMode
   selectedTokenStatus: TokenStatus | undefined
+  layoutMode: LayoutMode
+  selectedPredictedDate: PredictedDate | undefined
   // IN_DEV : add token data detail ( add to selectedTokenData )
 }
 
@@ -59,6 +77,8 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
     selectedNetwork: undefined,
     selectedPercentChangeMode: PercentChangeMode.PREDICTED_TO_CURRENT,
     selectedTokenStatus: undefined,
+    layoutMode: LayoutMode.TABLE_WITH_DETAILS,
+    selectedPredictedDate: undefined,
   })
 
   const [sortSettings, setSortSettings] = useState<DiscoverProSortSettings>({ sortBy: 'rank', sortDirection: 'asc' })
@@ -80,10 +100,14 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
         selectedNetwork: undefined,
         selectedPercentChangeMode: PercentChangeMode.PREDICTED_TO_CURRENT,
         selectedTokenStatus: undefined,
+        layoutMode: LayoutMode.TABLE_WITH_DETAILS,
+        selectedPredictedDate: undefined,
       })
       setSortSettings({ sortBy: 'rank', sortDirection: 'asc' })
     }
   }, [history, tab, isDiscoverProMode])
+
+  console.log(useGetListPredictedDate(filter.timeframe))
   return (
     <TrueSightPageWrapper>
       <TrueSightTab activeTab={activeTab} />
@@ -98,6 +122,8 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
               sortSettings={sortSettings}
               setSortSettings={setSortSettings}
             />
+            <Calendar />
+            <Loader />
           </Flex>
         </>
       )}

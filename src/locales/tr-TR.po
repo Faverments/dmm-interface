@@ -1122,6 +1122,10 @@ msgstr "LP Token’ları Kaldırıldı"
 msgid "Language"
 msgstr "Dil"
 
+#: src/pages/DiscoverPro/components/FilterBar/LayoutPicker.tsx
+msgid "Layout"
+msgstr ""
+
 #: src/pages/About/index.tsx
 #: src/pages/About/index.tsx
 #: src/pages/About/index.tsx

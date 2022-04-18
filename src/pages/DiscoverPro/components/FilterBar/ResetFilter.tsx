@@ -35,7 +35,7 @@ function compareFilterState(filter: DiscoverProFilter): boolean {
   return deepEqual(DefaultFilter, newFilter)
 }
 
-const ResetButtonWapper = styled.div`
+const ResetButtonWarper = styled.div`
   width: 35px;
   height: 35px;
   background: ${({ theme }) => theme.background};
@@ -66,9 +66,9 @@ const PercentChangeModePicker = ({ filter, resetFilter }: { filter: DiscoverProF
         <Trans>Reset Filter</Trans>
       </Text>
 
-      <ResetButtonWapper onClick={resetFilter}>
+      <ResetButtonWarper onClick={resetFilter}>
         <RefreshCcw size={18} color={isFilterChanged ? undefined : theme.disableText} />
-      </ResetButtonWapper>
+      </ResetButtonWarper>
     </>
   )
 }

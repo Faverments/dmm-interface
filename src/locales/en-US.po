@@ -1122,6 +1122,10 @@ msgstr "LP Tokens Removed"
 msgid "Language"
 msgstr "Language"
 
+#: src/pages/DiscoverPro/components/FilterBar/LayoutPicker.tsx
+msgid "Layout"
+msgstr "Layout"
+
 #: src/pages/About/index.tsx
 #: src/pages/About/index.tsx
 #: src/pages/About/index.tsx

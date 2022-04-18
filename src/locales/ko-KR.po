@@ -1122,6 +1122,10 @@ msgstr "LP 토큰이 제거되었습니다. "
 msgid "Language"
 msgstr "언어"
 
+#: src/pages/DiscoverPro/components/FilterBar/LayoutPicker.tsx
+msgid "Layout"
+msgstr ""
+
 #: src/pages/About/index.tsx
 #: src/pages/About/index.tsx
 #: src/pages/About/index.tsx

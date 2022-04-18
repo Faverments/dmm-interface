@@ -29,7 +29,8 @@ import ModalSorting from 'pages/DiscoverPro/components/FilterBar/ModalSorting'
 import TokenStatusSelect from 'pages/DiscoverPro/components/FilterBar/TokenStatusSelect'
 import PercentChangeModePicker from 'pages/DiscoverPro/components/FilterBar/PercentChangeModePicker'
 import ResetFilter from 'pages/DiscoverPro/components/FilterBar/ResetFilter'
-import { PercentChangeMode } from 'pages/DiscoverPro/index'
+import LayoutPicker from 'pages/DiscoverPro/components/FilterBar/LayoutPicker'
+import { PercentChangeMode, LayoutMode } from 'pages/DiscoverPro/index'
 
 import { Flex } from 'rebass'
 import { ButtonEmpty } from 'components/Button'
@@ -71,6 +72,10 @@ export default function FilterBar({ activeTab, filter, setFilter, sortSettings, 
     setSearchText('')
   }
 
+  const setLayoutMode = (layoutMode: LayoutMode) => {
+    setFilter(prev => ({ ...prev, layoutMode }))
+  }
+
   const debouncedSearchText = useDebounce(searchText.toLowerCase().trim(), 200)
 
   const { data: foundTokens } = useGetTokensForSearchBox(
@@ -100,6 +105,7 @@ export default function FilterBar({ activeTab, filter, setFilter, sortSettings, 
           </TextTooltip>
         </MouseoverTooltip>
         <TimeframePicker activeTimeframe={filter.timeframe} setActiveTimeframe={setActiveTimeframe} />
+        <LayoutPicker activeMode={filter.layoutMode} setActiveMode={setLayoutMode} />
         <MouseoverTooltip text={tooltipPercentChangeModeText}>
           <TextTooltip color={theme.subText} fontSize="14px" fontWeight={500}>
             <Trans>% Change Mode</Trans>
