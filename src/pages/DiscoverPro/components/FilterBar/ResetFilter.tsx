@@ -62,9 +62,9 @@ const PercentChangeModePicker = ({ filter, resetFilter }: { filter: DiscoverProF
 
   return (
     <>
-      <Text fontSize="14px" fontWeight={500} color={theme.subText}>
+      {/* <Text fontSize="14px" fontWeight={500} color={theme.subText}>
         <Trans>Reset Filter</Trans>
-      </Text>
+      </Text> */}
 
       <ResetButtonWarper onClick={resetFilter}>
         <RefreshCcw size={18} color={isFilterChanged ? undefined : theme.disableText} />

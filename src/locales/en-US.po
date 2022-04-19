@@ -2045,6 +2045,7 @@ msgstr "This token doesn't appear on the active token list(s). Make sure this is
 msgid "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
 msgstr "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
 
+#: src/pages/DiscoverPro/components/FilterBar/DateSelect.tsx
 #: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx

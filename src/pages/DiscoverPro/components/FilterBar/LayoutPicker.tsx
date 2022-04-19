@@ -47,9 +47,9 @@ const LayoutPicker = ({
 
   return (
     <>
-      <Text fontSize="14px" fontWeight={500} color={theme.subText}>
+      {/* <Text fontSize="14px" fontWeight={500} color={theme.subText}>
         <Trans>Layout</Trans>
-      </Text>
+      </Text> */}
       <Flex style={{ borderRadius: '4px', padding: '4px', background: theme.background }}>
         <LayoutPickerItem
           active={activeMode === LayoutMode.TABLE_WITH_DETAILS}

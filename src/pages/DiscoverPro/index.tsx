@@ -13,11 +13,6 @@ import TrueSightTab from 'pages/TrueSight/TrueSightTab'
 
 import FilterBar from 'pages/DiscoverPro/components/FilterBar'
 
-// TEST
-import Calendar from 'components/Calendar'
-import useGetListPredictedDate from './hooks/useGetListPredictedDate'
-import Loader from 'components/Loader'
-
 import {
   TrueSightTabs,
   TrueSightChartCategory,
@@ -107,7 +102,6 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
     }
   }, [history, tab, isDiscoverProMode])
 
-  console.log(useGetListPredictedDate(filter.timeframe))
   return (
     <TrueSightPageWrapper>
       <TrueSightTab activeTab={activeTab} />
@@ -122,8 +116,6 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
               sortSettings={sortSettings}
               setSortSettings={setSortSettings}
             />
-            <Calendar />
-            <Loader />
           </Flex>
         </>
       )}

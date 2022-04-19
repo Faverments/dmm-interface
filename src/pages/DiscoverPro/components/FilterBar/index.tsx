@@ -12,12 +12,9 @@ import { useDiscoverProSortingModalToggle } from 'state/application/hooks'
 
 import { t, Trans } from '@lingui/macro'
 
-import {
-  TextTooltip,
-  TrueSightFilterBarLayout,
-  TrueSightFilterBarLayoutMobile,
-  TrueSightFilterBarSection,
-} from 'pages/TrueSight/styled'
+import { TextTooltip, TrueSightFilterBarLayoutMobile, TrueSightFilterBarSection } from 'pages/TrueSight/styled'
+
+import { DiscoverProFilterBarRow } from 'pages/DiscoverPro/styled'
 
 import { MouseoverTooltip } from 'components/Tooltip'
 import TimeframePicker from 'pages/TrueSight/components/FilterBar/TimeframePicker'
@@ -30,9 +27,10 @@ import TokenStatusSelect from 'pages/DiscoverPro/components/FilterBar/TokenStatu
 import PercentChangeModePicker from 'pages/DiscoverPro/components/FilterBar/PercentChangeModePicker'
 import ResetFilter from 'pages/DiscoverPro/components/FilterBar/ResetFilter'
 import LayoutPicker from 'pages/DiscoverPro/components/FilterBar/LayoutPicker'
+import DateSelect from 'pages/DiscoverPro/components/FilterBar/DateSelect'
 import { PercentChangeMode, LayoutMode } from 'pages/DiscoverPro/index'
 
-import { Flex } from 'rebass'
+import { Flex, Text } from 'rebass'
 import { ButtonEmpty } from 'components/Button'
 import { BarChart } from 'react-feather'
 
@@ -97,52 +95,75 @@ export default function FilterBar({ activeTab, filter, setFilter, sortSettings, 
   const tooltipPercentChangeModeText = 'test'
 
   return above1000 ? (
-    <TrueSightFilterBarLayout>
-      <TrueSightFilterBarSection style={{ gap: '8px' }}>
-        <MouseoverTooltip text={tooltipTimeframeText}>
-          <TextTooltip color={theme.subText} fontSize="14px" fontWeight={500}>
-            <Trans>Timeframe</Trans>
-          </TextTooltip>
-        </MouseoverTooltip>
-        <TimeframePicker activeTimeframe={filter.timeframe} setActiveTimeframe={setActiveTimeframe} />
-        <LayoutPicker activeMode={filter.layoutMode} setActiveMode={setLayoutMode} />
-        <MouseoverTooltip text={tooltipPercentChangeModeText}>
-          <TextTooltip color={theme.subText} fontSize="14px" fontWeight={500}>
-            <Trans>% Change Mode</Trans>
-          </TextTooltip>
-        </MouseoverTooltip>
-        <PercentChangeModePicker
-          activeMode={filter.selectedPercentChangeMode}
-          setActiveMode={setActivePercentChangeMode}
-        />
-        <ResetFilter filter={filter} resetFilter={resetFilter} />
-      </TrueSightFilterBarSection>
-      <TrueSightFilterBarSection style={{ gap: '16px' }}>
-        {isActiveTabTrending && (
-          <TrueSightToggle
-            isActive={filter.isShowTrueSightOnly}
-            toggle={() => setFilter(prev => ({ ...prev, isShowTrueSightOnly: !prev.isShowTrueSightOnly }))}
+    <Flex flexDirection="column" style={{ gap: '8px' }}>
+      <DiscoverProFilterBarRow>
+        <TrueSightFilterBarSection style={{ gap: '8px' }}>
+          <DateSelect activeTimeFrame={filter.timeframe} />
+        </TrueSightFilterBarSection>
+        <TrueSightFilterBarSection style={{ gap: '16px' }}>
+          <TokenStatusSelect filter={filter} setFilter={setFilter} />
+          <NetworkSelect filter={filter} setFilter={setFilter} />
+          <TrueSightSearchBox
+            placeholder={t`Search by token name or tag`}
+            minWidth="260px"
+            style={{ minWidth: '260px' }}
+            foundTags={foundTags}
+            foundTokens={foundTokens}
+            searchText={searchText}
+            setSearchText={setSearchText}
+            selectedTag={filter.selectedTag}
+            setSelectedTag={tag => setFilter(prev => ({ ...prev, selectedTag: tag, selectedTokenData: undefined }))}
+            selectedTokenData={filter.selectedTokenData}
+            setSelectedTokenData={tokenData =>
+              setFilter(prev => ({ ...prev, selectedTag: undefined, selectedTokenData: tokenData }))
+            }
           />
-        )}
-        <TokenStatusSelect filter={filter} setFilter={setFilter} />
-        <NetworkSelect filter={filter} setFilter={setFilter} />
-        <TrueSightSearchBox
-          placeholder={t`Search by token name or tag`}
-          minWidth="260px"
-          style={{ minWidth: '260px' }}
-          foundTags={foundTags}
-          foundTokens={foundTokens}
-          searchText={searchText}
-          setSearchText={setSearchText}
-          selectedTag={filter.selectedTag}
-          setSelectedTag={tag => setFilter(prev => ({ ...prev, selectedTag: tag, selectedTokenData: undefined }))}
-          selectedTokenData={filter.selectedTokenData}
-          setSelectedTokenData={tokenData =>
-            setFilter(prev => ({ ...prev, selectedTag: undefined, selectedTokenData: tokenData }))
-          }
-        />
-      </TrueSightFilterBarSection>
-    </TrueSightFilterBarLayout>
+        </TrueSightFilterBarSection>
+      </DiscoverProFilterBarRow>
+      <DiscoverProFilterBarRow>
+        <TrueSightFilterBarSection style={{ gap: '8px' }}>
+          {/* <MouseoverTooltip text={tooltipTimeframeText}>
+            <TextTooltip
+              color={theme.subText}
+              fontSize="14px"
+              fontWeight={500}
+            >
+              <Trans>Timeframe</Trans>
+            </TextTooltip>
+          </MouseoverTooltip> */}
+          <Text
+            fontSize="14px"
+            fontWeight={500}
+            color={theme.subText}
+            style={{
+              width: '102.11px',
+            }}
+          >
+            <Trans>Timeframe</Trans>
+          </Text>
+          <TimeframePicker activeTimeframe={filter.timeframe} setActiveTimeframe={setActiveTimeframe} />
+          <LayoutPicker activeMode={filter.layoutMode} setActiveMode={setLayoutMode} />
+        </TrueSightFilterBarSection>
+        <TrueSightFilterBarSection style={{ gap: '16px' }}>
+          {isActiveTabTrending && (
+            <TrueSightToggle
+              isActive={filter.isShowTrueSightOnly}
+              toggle={() => setFilter(prev => ({ ...prev, isShowTrueSightOnly: !prev.isShowTrueSightOnly }))}
+            />
+          )}
+          <MouseoverTooltip text={tooltipPercentChangeModeText}>
+            <TextTooltip color={theme.subText} fontSize="14px" fontWeight={500}>
+              <Trans>% Change Mode</Trans>
+            </TextTooltip>
+          </MouseoverTooltip>
+          <PercentChangeModePicker
+            activeMode={filter.selectedPercentChangeMode}
+            setActiveMode={setActivePercentChangeMode}
+          />
+          <ResetFilter filter={filter} resetFilter={resetFilter} />
+        </TrueSightFilterBarSection>
+      </DiscoverProFilterBarRow>
+    </Flex>
   ) : (
     <TrueSightFilterBarLayoutMobile>
       <Flex justifyContent="space-between" style={{ gap: '16px' }}>
