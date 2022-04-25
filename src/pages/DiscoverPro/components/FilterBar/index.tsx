@@ -28,7 +28,7 @@ import PercentChangeModePicker from 'pages/DiscoverPro/components/FilterBar/Perc
 import ResetFilter from 'pages/DiscoverPro/components/FilterBar/ResetFilter'
 import LayoutPicker from 'pages/DiscoverPro/components/FilterBar/LayoutPicker'
 import DateSelect from 'pages/DiscoverPro/components/FilterBar/DateSelect'
-import { PercentChangeMode, LayoutMode } from 'pages/DiscoverPro/index'
+import { PercentChangeMode, LayoutMode, PredictedDate } from 'pages/DiscoverPro/index'
 
 import { Flex, Text } from 'rebass'
 import { ButtonEmpty } from 'components/Button'
@@ -56,6 +56,10 @@ export default function FilterBar({ activeTab, filter, setFilter, sortSettings, 
   const setActivePercentChangeMode = (percentChangeMode: PercentChangeMode) => {
     setFilter(prev => ({ ...prev, selectedPercentChangeMode: percentChangeMode }))
   }
+  const setActivePredictedDate = (predictedDate: PredictedDate) => {
+    setFilter(prev => ({ ...prev, selectedPredictedDate: predictedDate }))
+  }
+
   const [searchText, setSearchText] = useState('')
   const resetFilter = () => {
     setFilter(prev => ({
@@ -98,7 +102,7 @@ export default function FilterBar({ activeTab, filter, setFilter, sortSettings, 
     <Flex flexDirection="column" style={{ gap: '8px' }}>
       <DiscoverProFilterBarRow>
         <TrueSightFilterBarSection style={{ gap: '8px' }}>
-          <DateSelect activeTimeFrame={filter.timeframe} />
+          <DateSelect activeTimeFrame={filter.timeframe} setActivePredictedDate={setActivePredictedDate} />
         </TrueSightFilterBarSection>
         <TrueSightFilterBarSection style={{ gap: '16px' }}>
           <TokenStatusSelect filter={filter} setFilter={setFilter} />

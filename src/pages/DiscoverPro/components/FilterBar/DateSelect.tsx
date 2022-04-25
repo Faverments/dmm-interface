@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Flex, Text } from 'rebass'
 import { ArrowLeft, ArrowRight, Calendar } from 'react-feather'
 import { MouseoverTooltip } from 'components/Tooltip'
@@ -9,6 +9,7 @@ import useTheme from 'hooks/useTheme'
 import dayjs from 'dayjs'
 import useGetListPredictedDate from 'pages/DiscoverPro/hooks/useGetListPredictedDate'
 import { TrueSightTimeframe } from 'pages/TrueSight/index'
+import { PredictedDate } from 'pages/DiscoverPro/index'
 import Loader from 'components/Loader'
 const DateSelectWrapper = styled.div`
   display: flex;
@@ -51,16 +52,36 @@ const NavigateButton = styled.div`
   }
 `
 
-export default function DateSelect({ activeTimeFrame }: { activeTimeFrame: TrueSightTimeframe }) {
+export default function DateSelect({
+  activeTimeFrame,
+  setActivePredictedDate,
+}: {
+  activeTimeFrame: TrueSightTimeframe
+  setActivePredictedDate: (predictedDate: PredictedDate) => void
+}) {
   const theme = useTheme()
   const tooltipText = 'test'
-  const { isLoading, data, error } = useGetListPredictedDate(activeTimeFrame)
-  const currentDate = (() => {
-    if (data.length > 0) {
-      return dayjs.unix(data[0].mediumDate).format('h:m A - MMM D, YYYY')
+  const listPredictedDate24h = useGetListPredictedDate(TrueSightTimeframe.ONE_DAY)
+  const listPredictedDate7d = useGetListPredictedDate(TrueSightTimeframe.ONE_WEEK)
+
+  const currentDate24h = (() => {
+    if (listPredictedDate24h.data.length > 0) {
+      return dayjs.unix(listPredictedDate24h.data[0].mediumDate).format('h:m A - MMM D, YYYY')
     }
     return ''
   })()
+  const currentDate7d = (() => {
+    if (listPredictedDate7d.data.length > 0) {
+      return dayjs.unix(listPredictedDate7d.data[0].mediumDate).format('h:m A - MMM D, YYYY')
+    }
+    return ''
+  })()
+
+  // useEffect(() => {
+  //   if (listPredictedDate24h.data.length > 0) {
+  //     setActivePredictedDate(listPredictedDate24h.data[0])
+  //   }
+  // }, [listPredictedDate24h.data])
 
   return (
     <DateSelectWrapper>
@@ -77,7 +98,23 @@ export default function DateSelect({ activeTimeFrame }: { activeTimeFrame: TrueS
           <ArrowRight size={18} />
         </NavigateButton>
         <DatePicker>
-          {isLoading ? <Loader /> : <div>{currentDate}</div>}
+          {activeTimeFrame === TrueSightTimeframe.ONE_DAY ? (
+            listPredictedDate24h.isLoading ? (
+              <Loader />
+            ) : (
+              (() => {
+                // setActivePredictedDate(listPredictedDate24h.data[0])
+                return <div>{currentDate24h}</div>
+              })()
+            )
+          ) : listPredictedDate7d.isLoading ? (
+            <Loader />
+          ) : (
+            (() => {
+              // setActivePredictedDate(listPredictedDate7d.data[0])
+              return <div>{currentDate7d}</div>
+            })()
+          )}
           <Calendar size={20}></Calendar>
         </DatePicker>
       </DateNavigateWarper>

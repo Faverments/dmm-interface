@@ -12,6 +12,7 @@ import TrendingHero from 'pages/TrueSight/TrendingHero'
 import TrueSightTab from 'pages/TrueSight/TrueSightTab'
 
 import FilterBar from 'pages/DiscoverPro/components/FilterBar'
+import TrendingSoonLayout from 'pages/DiscoverPro/components/TrendingSoonLayout'
 
 import {
   TrueSightTabs,
@@ -117,6 +118,12 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
               setSortSettings={setSortSettings}
             />
           </Flex>
+          <TrendingSoonLayout
+            filter={filter}
+            setFilter={setFilter}
+            sortSettings={sortSettings}
+            setSortSettings={setSortSettings}
+          />
         </>
       )}
       {activeTab === TrueSightTabs.TRENDING && (

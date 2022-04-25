@@ -443,6 +443,7 @@ msgid "Common bases"
 msgstr "通用基础"
 
 #: src/components/ModalCommunity/index.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/CommunityButton.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Community"
@@ -521,6 +522,7 @@ msgstr "联系我们"
 
 #: src/components/ModalContractAddress/index.tsx
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Contract Address"
 msgstr ""
@@ -640,11 +642,13 @@ msgid "Discover more"
 msgstr ""
 
 #: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
 msgid "Discovered On"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItem.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItem.tsx
 msgid "Discovered on"
 msgstr ""
@@ -929,6 +933,8 @@ msgstr ""
 msgid "History"
 msgstr "历史"
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -1122,10 +1128,6 @@ msgstr "移除的LP代币"
 msgid "Language"
 msgstr "语言"
 
-#: src/pages/DiscoverPro/components/FilterBar/LayoutPicker.tsx
-msgid "Layout"
-msgstr ""
-
 #: src/pages/About/index.tsx
 #: src/pages/About/index.tsx
 #: src/pages/About/index.tsx
@@ -1221,6 +1223,8 @@ msgid "Manage your pools."
 msgstr "管理您的池。"
 
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -1338,6 +1342,7 @@ msgid "My liquidity"
 msgstr "我的流动性"
 
 #: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
@@ -1387,6 +1392,7 @@ msgstr "未找到结果。"
 msgid "No staked liquidity found. Check out our <0>Farms.</0>"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
 msgid "No token found"
@@ -1587,11 +1593,17 @@ msgstr ""
 msgid "Powered by TrueSight, our AI prediction model"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/DateSelect.tsx
+msgid "Predicted Date"
+msgstr ""
+
 #: src/components/Settings/index.tsx
 msgid "Preferences"
 msgstr "偏好"
 
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/Chart.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
@@ -1729,10 +1741,6 @@ msgstr "删除池代币会将您的头寸以当前比率转换回基础代币，
 #: src/pages/RemoveLiquidity/migrate_sushi.tsx
 msgid "Removing {0} {1} and {2} {3}"
 msgstr "删除 {0} {1} 和 {2} {3}"
-
-#: src/pages/DiscoverPro/components/FilterBar/ResetFilter.tsx
-msgid "Reset Filter"
-msgstr ""
 
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
@@ -1977,6 +1985,7 @@ msgstr ""
 msgid "TVL equivalent compared to AMMs"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Tag"
@@ -2045,7 +2054,6 @@ msgstr "此代币未出现在活动代币列表中。 确保这是您要交易�
 msgid "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
 msgstr ""
 
-#: src/pages/DiscoverPro/components/FilterBar/DateSelect.tsx
 #: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
@@ -2163,6 +2171,8 @@ msgid "Trading Volume"
 msgstr ""
 
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -2313,6 +2323,7 @@ msgstr "释放开始: {0}"
 msgid "View Farms"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "View chart"
@@ -2363,6 +2374,7 @@ msgstr ""
 msgid "We will automatically remove your liquidity and convert it into your desired token (either token from the token pair), all in a single transaction."
 msgstr "我们将自动移除您的流动性，并将其转换为您想要的代币（代币对中的任何一个代币），所有这些都是一次性的交易。"
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Website"

@@ -443,6 +443,7 @@ msgid "Common bases"
 msgstr "공통 기지"
 
 #: src/components/ModalCommunity/index.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/CommunityButton.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Community"
@@ -521,6 +522,7 @@ msgstr "연락처"
 
 #: src/components/ModalContractAddress/index.tsx
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Contract Address"
 msgstr ""
@@ -640,11 +642,13 @@ msgid "Discover more"
 msgstr ""
 
 #: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
 msgid "Discovered On"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItem.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItem.tsx
 msgid "Discovered on"
 msgstr ""
@@ -929,6 +933,8 @@ msgstr ""
 msgid "History"
 msgstr "기록"
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -1122,10 +1128,6 @@ msgstr "LP 토큰이 제거되었습니다. "
 msgid "Language"
 msgstr "언어"
 
-#: src/pages/DiscoverPro/components/FilterBar/LayoutPicker.tsx
-msgid "Layout"
-msgstr ""
-
 #: src/pages/About/index.tsx
 #: src/pages/About/index.tsx
 #: src/pages/About/index.tsx
@@ -1221,6 +1223,8 @@ msgid "Manage your pools."
 msgstr "자신의 풀 관리하기."
 
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -1338,6 +1342,7 @@ msgid "My liquidity"
 msgstr "나의 유동성"
 
 #: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
@@ -1387,6 +1392,7 @@ msgstr "결과를 발견하지 못했습니다."
 msgid "No staked liquidity found. Check out our <0>Farms.</0>"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
 msgid "No token found"
@@ -1587,11 +1593,17 @@ msgstr ""
 msgid "Powered by TrueSight, our AI prediction model"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/DateSelect.tsx
+msgid "Predicted Date"
+msgstr ""
+
 #: src/components/Settings/index.tsx
 msgid "Preferences"
 msgstr "기본 설정"
 
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/Chart.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
@@ -1729,10 +1741,6 @@ msgstr "풀 토큰을 제거하면 풀 지분에 비례하는 현재 비율로 �
 #: src/pages/RemoveLiquidity/migrate_sushi.tsx
 msgid "Removing {0} {1} and {2} {3}"
 msgstr "{0} {1} 및 {2} {3} 제거"
-
-#: src/pages/DiscoverPro/components/FilterBar/ResetFilter.tsx
-msgid "Reset Filter"
-msgstr ""
 
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
@@ -1977,6 +1985,7 @@ msgstr ""
 msgid "TVL equivalent compared to AMMs"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Tag"
@@ -2045,7 +2054,6 @@ msgstr "이 토큰은 활성 토큰 목록에 표시되지 않습니다. 거래�
 msgid "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
 msgstr ""
 
-#: src/pages/DiscoverPro/components/FilterBar/DateSelect.tsx
 #: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
@@ -2163,6 +2171,8 @@ msgid "Trading Volume"
 msgstr ""
 
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -2313,6 +2323,7 @@ msgstr "베스팅 시작됨: {0}"
 msgid "View Farms"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "View chart"
@@ -2363,6 +2374,7 @@ msgstr ""
 msgid "We will automatically remove your liquidity and convert it into your desired token (either token from the token pair), all in a single transaction."
 msgstr "한번의 트랙잭션으로 유동성 풀을 제거하고 원하는 단일 토큰으로 유동성을  출금할 수 있습니다. "
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Website"

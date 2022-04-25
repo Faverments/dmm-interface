@@ -1,15 +1,17 @@
 import { useState, useEffect, useMemo } from 'react'
 import { TrueSightTimeframe } from 'pages/TrueSight/index'
+import { PredictedDate } from 'pages/DiscoverPro/index'
 
 // ERROR interface is Error with eslint (empty interface rule)
-export type FormatListPredictedDateResponse = Array<{ mediumDate: number; firstDate: number }>
+export type FormatListPredictedDateResponse = Array<PredictedDate>
 
 function formatListPredictedDateResponse(data: number[][]): FormatListPredictedDateResponse {
-  return data.map(item => {
+  return data.map((item, index) => {
     const mediumDate = Math.floor(item.reduce((acc, curr) => acc + curr) / item.length)
     return {
       mediumDate,
       firstDate: item[0],
+      index,
     }
   })
 }
@@ -38,7 +40,8 @@ export default function useGetListPredictedDate(timeframe: TrueSightTimeframe) {
       }
     }
     fetchData()
-  }, [timeframe])
+    // }, [timeframe])
+  }, [])
 
   return useMemo(() => {
     const formattedData = formatListPredictedDateResponse(data)
