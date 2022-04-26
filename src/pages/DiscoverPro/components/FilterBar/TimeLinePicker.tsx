@@ -4,37 +4,9 @@ import { Flex } from 'rebass'
 import useTheme from 'hooks/useTheme'
 import { PercentChangeMode } from 'pages/DiscoverPro/index'
 
-const PercentChangeModePickerItem = ({
-  text,
-  active,
-  onClick,
-}: {
-  text: string
-  active: boolean
-  onClick: () => void
-}) => {
-  const theme = useTheme()
+import { PickerItem } from './Shared'
 
-  return (
-    <div
-      style={{
-        borderRadius: '4px',
-        padding: '7px',
-        color: active ? theme.text14 : theme.subText,
-        background: active ? theme.primary : 'transparent',
-        fontSize: '12px',
-        fontWeight: 500,
-        lineHeight: '14px',
-        cursor: 'pointer',
-      }}
-      onClick={onClick}
-    >
-      {text}
-    </div>
-  )
-}
-
-const PercentChangeModePicker = ({
+const TimeLinePicker = ({
   activeMode,
   setActiveMode,
 }: {
@@ -45,14 +17,14 @@ const PercentChangeModePicker = ({
 
   return (
     <Flex style={{ borderRadius: '4px', padding: '4px', background: theme.background }}>
-      <PercentChangeModePickerItem
+      <PickerItem
         text="Predicted"
         active={activeMode === PercentChangeMode.PREDICTED_TO_CURRENT}
         onClick={() => {
           setActiveMode(PercentChangeMode.PREDICTED_TO_CURRENT)
         }}
       />
-      <PercentChangeModePickerItem
+      <PickerItem
         text="Discover"
         active={activeMode === PercentChangeMode.DISCOVER_TO_CURRENT}
         onClick={() => {
@@ -63,4 +35,4 @@ const PercentChangeModePicker = ({
   )
 }
 
-export default PercentChangeModePicker
+export default TimeLinePicker

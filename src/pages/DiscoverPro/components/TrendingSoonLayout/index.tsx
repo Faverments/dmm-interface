@@ -22,7 +22,7 @@ import { TRENDING_SOON_ITEM_PER_PAGE, TRENDING_SOON_MAX_ITEMS } from 'constants/
 import useParsedQueryString from 'hooks/useParsedQueryString'
 import { useHistory } from 'react-router'
 import { useLocation } from 'react-router-dom'
-import useGetPredictedsData from 'pages/DiscoverPro/hooks/useGetPredictedsData'
+import useGetPredictedData from 'pages/DiscoverPro/hooks/useGetPredictedData'
 
 const TrendingSoonLayout = ({
   filter,
@@ -47,6 +47,13 @@ const TrendingSoonLayout = ({
     isLoading: isLoadingTrendingSoonTokens,
     error: errorWhenLoadingTrendingSoonData,
   } = useGetTrendingSoonData(filter, TRENDING_SOON_MAX_ITEMS)
+
+  const {
+    data: predictedData,
+    isLoading: isLoadingPredictedData,
+    error: errorWhenLoadingPredictedData,
+  } = useGetPredictedData(filter.timeframe, filter.selectedPredictedDate?.firstDate)
+
   const maxPage = Math.min(
     Math.ceil((trendingSoonData?.total_number_tokens ?? 1) / TRENDING_SOON_ITEM_PER_PAGE),
     TRENDING_SOON_MAX_ITEMS / TRENDING_SOON_ITEM_PER_PAGE,
@@ -109,12 +116,10 @@ const TrendingSoonLayout = ({
     if (above1200 && sortedPaginatedTrendingSoonTokens.length) setSelectedToken(sortedPaginatedTrendingSoonTokens[0])
   }, [currentPage, above1200, sortedPaginatedTrendingSoonTokens])
 
-  // console.log(useGetPredictedsData(filter.timeframe, [filter.selectedPredictedDate?.firstDate]))
-
   return (
     <>
       <TrueSightContainer>
-        {isLoadingTrendingSoonTokens ? (
+        {isLoadingTrendingSoonTokens && isLoadingPredictedData ? (
           <LocalLoader />
         ) : errorWhenLoadingTrendingSoonData || sortedPaginatedTrendingSoonTokens.length === 0 ? (
           <Flex

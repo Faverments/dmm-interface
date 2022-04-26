@@ -52,7 +52,7 @@ const ResetButtonWarper = styled.div`
   }
 `
 
-const PercentChangeModePicker = ({ filter, resetFilter }: { filter: DiscoverProFilter; resetFilter: () => void }) => {
+const ResetButton = ({ filter, resetFilter }: { filter: DiscoverProFilter; resetFilter: () => void }) => {
   const theme = useTheme()
   const [isFilterChanged, setIsFilterChanged] = useState<boolean>(!compareFilterState(filter))
 
@@ -73,4 +73,4 @@ const PercentChangeModePicker = ({ filter, resetFilter }: { filter: DiscoverProF
   )
 }
 
-export default PercentChangeModePicker
+export default ResetButton

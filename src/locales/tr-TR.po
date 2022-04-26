@@ -13,10 +13,6 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "Plural-Forms: \n"
 
-#: src/pages/DiscoverPro/components/FilterBar/index.tsx
-msgid "% Change Mode"
-msgstr ""
-
 #: src/pages/CreateReferral/index.tsx
 msgid "*Required"
 msgstr ""
@@ -2052,6 +2048,10 @@ msgstr "Bu token, aktif token listelerinde görünmüyor. Bunun takas etmek iste
 
 #: src/pages/About/index.tsx
 msgid "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
+msgstr ""
+
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
+msgid "TimeLine"
 msgstr ""
 
 #: src/pages/DiscoverPro/components/FilterBar/index.tsx

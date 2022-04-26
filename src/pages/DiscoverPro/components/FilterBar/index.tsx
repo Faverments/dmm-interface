@@ -24,11 +24,12 @@ import TrueSightSearchBox from 'pages/TrueSight/components/FilterBar/TrueSightSe
 import NetworkSelect from 'pages/DiscoverPro/components/FilterBar/NetworkSelect'
 import ModalSorting from 'pages/DiscoverPro/components/FilterBar/ModalSorting'
 import TokenStatusSelect from 'pages/DiscoverPro/components/FilterBar/TokenStatusSelect'
-import PercentChangeModePicker from 'pages/DiscoverPro/components/FilterBar/PercentChangeModePicker'
+import TimeLinePicker from 'pages/DiscoverPro/components/FilterBar/TimeLinePicker'
+import PreferencePicker from 'pages/DiscoverPro/components/FilterBar/PreferencePicker'
 import ResetFilter from 'pages/DiscoverPro/components/FilterBar/ResetFilter'
 import LayoutPicker from 'pages/DiscoverPro/components/FilterBar/LayoutPicker'
 import DateSelect from 'pages/DiscoverPro/components/FilterBar/DateSelect'
-import { PercentChangeMode, LayoutMode, PredictedDate } from 'pages/DiscoverPro/index'
+import { PercentChangeMode, LayoutMode, PredictedDate, PreferenceMode } from 'pages/DiscoverPro/index'
 
 import { Flex, Text } from 'rebass'
 import { ButtonEmpty } from 'components/Button'
@@ -58,6 +59,9 @@ export default function FilterBar({ activeTab, filter, setFilter, sortSettings, 
   }
   const setActivePredictedDate = (predictedDate: PredictedDate) => {
     setFilter(prev => ({ ...prev, selectedPredictedDate: predictedDate }))
+  }
+  const setActivePreferenceMode = (preferenceMode: PreferenceMode) => {
+    setFilter(prev => ({ ...prev, selectedPreferenceMode: preferenceMode }))
   }
 
   const [searchText, setSearchText] = useState('')
@@ -157,13 +161,11 @@ export default function FilterBar({ activeTab, filter, setFilter, sortSettings, 
           )}
           <MouseoverTooltip text={tooltipPercentChangeModeText}>
             <TextTooltip color={theme.subText} fontSize="14px" fontWeight={500}>
-              <Trans>% Change Mode</Trans>
+              <Trans>TimeLine</Trans>
             </TextTooltip>
           </MouseoverTooltip>
-          <PercentChangeModePicker
-            activeMode={filter.selectedPercentChangeMode}
-            setActiveMode={setActivePercentChangeMode}
-          />
+          <TimeLinePicker activeMode={filter.selectedPercentChangeMode} setActiveMode={setActivePercentChangeMode} />
+          <PreferencePicker activeMode={filter.selectedPreferenceMode} setActiveMode={setActivePreferenceMode} />
           <ResetFilter filter={filter} resetFilter={resetFilter} />
         </TrueSightFilterBarSection>
       </DiscoverProFilterBarRow>

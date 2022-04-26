@@ -13,10 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/pages/DiscoverPro/components/FilterBar/index.tsx
-msgid "% Change Mode"
-msgstr "% Change Mode"
-
 #: src/pages/CreateReferral/index.tsx
 msgid "*Required"
 msgstr "*Required"
@@ -2053,6 +2049,10 @@ msgstr "This token doesn't appear on the active token list(s). Make sure this is
 #: src/pages/About/index.tsx
 msgid "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
 msgstr "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
+
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
+msgid "TimeLine"
+msgstr "TimeLine"
 
 #: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/DiscoverPro/components/FilterBar/index.tsx

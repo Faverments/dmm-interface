@@ -2,17 +2,8 @@ import { useState, useEffect, useMemo } from 'react'
 import { TrueSightTimeframe } from 'pages/TrueSight/index'
 import { TrueSightTokenResponse } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
 
-export interface PredictedData {
-  data: TrueSightTokenResponse
-  status: number
-  message: string
-}
-
-export type PredictedsDataResponse = Array<PredictedData>
-
-export default function useGetPredictedsData(timeframe: TrueSightTimeframe, predictedDates: [number | undefined]) {
-  console.log(predictedDates)
-  const [data, setData] = useState<PredictedsDataResponse>()
+export default function useGetPredictedsData(timeframe: TrueSightTimeframe, predictedDates: number | undefined) {
+  const [data, setData] = useState<TrueSightTokenResponse>()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error>()
 
@@ -22,13 +13,13 @@ export default function useGetPredictedsData(timeframe: TrueSightTimeframe, pred
         const timeFrame = timeframe === TrueSightTimeframe.ONE_DAY ? '24h' : '7d'
         const url = `${
           process.env.REACT_APP_DISCOVER_PRO_API
-        }/predicted_dates/${timeFrame}?predicted_dates=${predictedDates.join(',')}`
+        }/predicted_date/${timeFrame}?predicted_date=${predictedDates || ''}`
         setError(undefined)
         setIsLoading(true)
         const response = await fetch(url)
         if (response.ok) {
           const json = await response.json()
-          const result: PredictedsDataResponse = json.data
+          const result: TrueSightTokenResponse = json.data
           setData(result)
         }
         setIsLoading(false)
@@ -37,9 +28,7 @@ export default function useGetPredictedsData(timeframe: TrueSightTimeframe, pred
         setIsLoading(false)
       }
     }
-    if (predictedDates) {
-      // fetchData()
-    }
+    fetchData()
   }, [timeframe, predictedDates])
 
   return useMemo(() => {

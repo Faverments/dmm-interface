@@ -30,6 +30,11 @@ export enum PercentChangeMode {
   LAST_7D = 'last_7d',
 }
 
+export enum PreferenceMode {
+  PERCENT = 'percent',
+  VALUE = 'value',
+}
+
 export enum TokenStatus {
   NEW_DISCOVER = 'NEW_DISCOVER',
   CHANGE_DISCOVER = 'CHANGE_DISCOVER',
@@ -50,6 +55,7 @@ export interface PredictedDate {
 
 export interface DiscoverProFilter extends TrueSightFilter {
   selectedPercentChangeMode: PercentChangeMode
+  selectedPreferenceMode: PreferenceMode
   selectedTokenStatus: TokenStatus | undefined
   layoutMode: LayoutMode
   selectedPredictedDate: PredictedDate | undefined
@@ -72,6 +78,7 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
     selectedTokenData: undefined,
     selectedNetwork: undefined,
     selectedPercentChangeMode: PercentChangeMode.PREDICTED_TO_CURRENT,
+    selectedPreferenceMode: PreferenceMode.PERCENT,
     selectedTokenStatus: undefined,
     layoutMode: LayoutMode.TABLE_WITH_DETAILS,
     selectedPredictedDate: undefined,
@@ -95,6 +102,7 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
         selectedTokenData: undefined,
         selectedNetwork: undefined,
         selectedPercentChangeMode: PercentChangeMode.PREDICTED_TO_CURRENT,
+        selectedPreferenceMode: PreferenceMode.PERCENT,
         selectedTokenStatus: undefined,
         layoutMode: LayoutMode.TABLE_WITH_DETAILS,
         selectedPredictedDate: undefined,
