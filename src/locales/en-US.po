@@ -41,6 +41,7 @@ msgstr "- Remove Recipient"
 msgid "- Remove send"
 msgstr "- Remove send"
 
+#: src/pages/DiscoverPro/components/Chart.tsx
 #: src/pages/TrueSight/components/Chart.tsx
 msgid "1D"
 msgstr "1D"
@@ -49,6 +50,7 @@ msgstr "1D"
 msgid "24H Trading Volume"
 msgstr "24H Trading Volume"
 
+#: src/pages/DiscoverPro/components/Chart.tsx
 #: src/pages/TrueSight/components/Chart.tsx
 msgid "7D"
 msgstr "7D"
@@ -1598,6 +1600,7 @@ msgid "Preferences"
 msgstr "Preferences"
 
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/Chart.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/Chart.tsx
@@ -2166,6 +2169,7 @@ msgstr "Tradable token pair price range for this pool based on AMP. If the price
 msgid "Trade Route"
 msgstr "Trade Route"
 
+#: src/pages/DiscoverPro/components/Chart.tsx
 #: src/pages/TrueSight/components/Chart.tsx
 msgid "Trading Volume"
 msgstr "Trading Volume"

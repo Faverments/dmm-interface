@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { TrueSightTimeframe } from 'pages/TrueSight/index'
 import { TrueSightTokenResponse } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
 
-export default function useGetPredictedsData(timeframe: TrueSightTimeframe, predictedDates: number | undefined) {
+export default function useGetPredictedData(timeframe: TrueSightTimeframe, predictedDates: number | undefined) {
   const [data, setData] = useState<TrueSightTokenResponse>()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error>()

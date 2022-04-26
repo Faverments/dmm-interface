@@ -22,7 +22,10 @@ import { TRENDING_SOON_ITEM_PER_PAGE, TRENDING_SOON_MAX_ITEMS } from 'constants/
 import useParsedQueryString from 'hooks/useParsedQueryString'
 import { useHistory } from 'react-router'
 import { useLocation } from 'react-router-dom'
+
 import useGetPredictedData from 'pages/DiscoverPro/hooks/useGetPredictedData'
+import useMakeDiscoverProTokensList from 'pages/DiscoverPro/hooks/useMakeDiscoverProTokensList'
+import useGetTokenPredictedDetails from 'pages/DiscoverPro/hooks/useGetTokenPredictedDetails'
 
 const TrendingSoonLayout = ({
   filter,
@@ -59,17 +62,19 @@ const TrendingSoonLayout = ({
     TRENDING_SOON_MAX_ITEMS / TRENDING_SOON_ITEM_PER_PAGE,
   )
   const trendingSoonTokens = useMemo(() => trendingSoonData?.tokens ?? [], [trendingSoonData])
+  const predictedTokens = useMemo(() => predictedData?.tokens ?? [], [predictedData])
+  const discoverProTokensList = useMakeDiscoverProTokensList(trendingSoonTokens, predictedTokens)
 
   // token_id in query param
   useEffect(() => {
-    if (selectedTokenIdFromQs && trendingSoonTokens.length) {
-      const newSelectedTokenData = trendingSoonTokens.find(
+    if (selectedTokenIdFromQs && discoverProTokensList.length) {
+      const newSelectedTokenData = discoverProTokensList.find(
         tokenData => tokenData.token_id.toString() === selectedTokenIdFromQs,
       )
       history.replace({ ...location, search: `?tab=${tab}` })
       setFilter(prev => ({ ...prev, selectedTag: undefined, selectedTokenData: newSelectedTokenData }))
     }
-  }, [history, location, selectedTokenIdFromQs, setFilter, tab, trendingSoonTokens])
+  }, [history, location, selectedTokenIdFromQs, setFilter, tab, discoverProTokensList])
 
   useEffect(() => {
     setCurrentPage(1)
@@ -91,6 +96,14 @@ const TrendingSoonLayout = ({
     chartTimeframe,
   )
 
+  const selectedTokenId = useMemo(() => (selectedToken ? selectedToken.token_id : undefined), [selectedToken])
+
+  const {
+    data: tokenPredictedDetails,
+    isLoading: isTokenPredictedDetailsLoading,
+    error: errorWhenLoadingTokenPredictedDetails,
+  } = useGetTokenPredictedDetails(selectedTokenId, filter.timeframe)
+
   const theme = useTheme()
 
   const sortedPaginatedTrendingSoonTokens = useMemo(() => {
@@ -99,7 +112,7 @@ const TrendingSoonLayout = ({
     const nameComparer = (a: TrueSightTokenData, b: TrueSightTokenData) =>
       a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
     const discoveredOnComparer = (a: TrueSightTokenData, b: TrueSightTokenData) => a.discovered_on - b.discovered_on
-    let res = trendingSoonTokens.sort(
+    let res = discoverProTokensList.sort(
       sortBy === 'rank' ? rankComparer : sortBy === 'name' ? nameComparer : discoveredOnComparer,
     )
     res = sortDirection === 'asc' ? res : res.reverse()
@@ -108,7 +121,7 @@ const TrendingSoonLayout = ({
     res = res.slice((currentPage - 1) * TRENDING_SOON_ITEM_PER_PAGE, currentPage * TRENDING_SOON_ITEM_PER_PAGE)
 
     return res
-  }, [currentPage, sortSettings, trendingSoonTokens])
+  }, [currentPage, sortSettings, discoverProTokensList])
 
   const above1200 = useMedia('(min-width: 1200px)')
 
@@ -119,7 +132,7 @@ const TrendingSoonLayout = ({
   return (
     <>
       <TrueSightContainer>
-        {isLoadingTrendingSoonTokens && isLoadingPredictedData ? (
+        {isLoadingTrendingSoonTokens || isLoadingPredictedData ? (
           <LocalLoader />
         ) : errorWhenLoadingTrendingSoonData || sortedPaginatedTrendingSoonTokens.length === 0 ? (
           <Flex
@@ -225,6 +238,7 @@ const TrendingSoonLayout = ({
                     setIsOpenChartModal={setIsOpenChartModal}
                     setFilter={setFilter}
                     isShowMedal={sortSettings.sortBy === 'rank' && sortSettings.sortDirection === 'asc'}
+                    preferenceMode={filter.selectedPreferenceMode}
                   />
                 ))}
               </TrendingSoonTokenListBody>
@@ -239,6 +253,8 @@ const TrendingSoonLayout = ({
                     chartTimeframe={chartTimeframe}
                     setChartTimeframe={setChartTimeframe}
                     setFilter={setFilter}
+                    predictedDetails={tokenPredictedDetails}
+                    isPredictedDetailsLoading={isTokenPredictedDetailsLoading}
                   />
                 )}
               </TrendingSoonTokenDetailContainer>

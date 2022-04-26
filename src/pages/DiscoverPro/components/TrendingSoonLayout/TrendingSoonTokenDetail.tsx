@@ -8,13 +8,14 @@ import AddressButton from 'pages/TrueSight/components/AddressButton'
 import CommunityButton, { StyledCommunityButton } from 'pages/TrueSight/components/CommunityButton'
 import { ExternalLink } from 'theme'
 import Tags from 'pages/DiscoverPro/components/Tags'
-import Chart from 'pages/TrueSight/components/Chart'
+import Chart from 'pages/DiscoverPro/components/Chart'
 import { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
 import { formattedNumLong } from 'utils'
 import { FormattedCoinGeckoChartData } from 'pages/TrueSight/hooks/useGetCoinGeckoChartData'
 import { TrueSightChartCategory, TrueSightTimeframe } from 'pages/TrueSight/index'
 
 import { DiscoverProFilter } from 'pages/DiscoverPro/index'
+import { PredictedDetails } from 'pages/DiscoverPro/hooks/useGetTokenPredictedDetails'
 
 const TrendingSoonTokenDetail = ({
   tokenData,
@@ -26,6 +27,8 @@ const TrendingSoonTokenDetail = ({
   setChartTimeframe,
   setFilter,
   style,
+  predictedDetails,
+  isPredictedDetailsLoading,
 }: {
   tokenData: TrueSightTokenData
   isChartDataLoading: boolean
@@ -36,6 +39,8 @@ const TrendingSoonTokenDetail = ({
   setChartTimeframe: React.Dispatch<React.SetStateAction<TrueSightTimeframe>>
   setFilter?: React.Dispatch<React.SetStateAction<DiscoverProFilter>>
   style?: CSSProperties
+  predictedDetails: PredictedDetails[]
+  isPredictedDetailsLoading: boolean
 }) => {
   return (
     <Flex height="100%" flexDirection="column" style={{ ...style, gap: '24px' }}>
@@ -101,6 +106,8 @@ const TrendingSoonTokenDetail = ({
         setChartCategory={setChartCategory}
         chartTimeframe={chartTimeframe}
         setChartTimeframe={setChartTimeframe}
+        predictedDetails={predictedDetails}
+        isPredictedDetailsLoading={isPredictedDetailsLoading}
       />
     </Flex>
   )

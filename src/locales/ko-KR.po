@@ -41,6 +41,7 @@ msgstr "- 받는 사람 제거"
 msgid "- Remove send"
 msgstr "- 보내기 제거"
 
+#: src/pages/DiscoverPro/components/Chart.tsx
 #: src/pages/TrueSight/components/Chart.tsx
 msgid "1D"
 msgstr ""
@@ -49,6 +50,7 @@ msgstr ""
 msgid "24H Trading Volume"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/Chart.tsx
 #: src/pages/TrueSight/components/Chart.tsx
 msgid "7D"
 msgstr ""
@@ -1598,6 +1600,7 @@ msgid "Preferences"
 msgstr "기본 설정"
 
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/Chart.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/Chart.tsx
@@ -2166,6 +2169,7 @@ msgstr "AMP에 따른 거래 가능 한 토큰 가격 범위입니다. 이 범�
 msgid "Trade Route"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/Chart.tsx
 #: src/pages/TrueSight/components/Chart.tsx
 msgid "Trading Volume"
 msgstr ""

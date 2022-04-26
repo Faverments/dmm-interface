@@ -11,11 +11,14 @@ import Silver from 'assets/svg/silver_icon.svg'
 import Bronze from 'assets/svg/bronze_icon.svg'
 import { useMedia } from 'react-use'
 import { ChevronDown, X } from 'react-feather'
-import { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
+import { DiscoverProToken } from 'pages/DiscoverPro/hooks/useMakeDiscoverProTokensList'
+import { PreferenceMode } from 'pages/DiscoverPro/index'
 import { DiscoverProFilter } from 'pages/DiscoverPro/index'
 import TrendingSoonTokenItemDetailsOnMobile from 'pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile'
 import { useToggleModal } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
+
+import { formattedNum } from 'utils'
 
 const StyledTrendingSoonTokenItem = styled(Flex)<{
   isSelected: boolean
@@ -86,11 +89,12 @@ export const FieldValue = styled(TruncatedText)`
 interface TrendingSoonTokenItemProps {
   isSelected: boolean
   tokenIndex?: number
-  tokenData: TrueSightTokenData
+  tokenData: DiscoverProToken
   onSelect?: () => void
   setIsOpenChartModal: React.Dispatch<React.SetStateAction<boolean>>
   setFilter?: React.Dispatch<React.SetStateAction<DiscoverProFilter>>
   isShowMedal: boolean
+  preferenceMode: PreferenceMode
 }
 
 const TrendingSoonTokenItem = ({
@@ -101,6 +105,7 @@ const TrendingSoonTokenItem = ({
   setIsOpenChartModal,
   setFilter,
   isShowMedal,
+  preferenceMode,
 }: TrendingSoonTokenItemProps) => {
   const theme = useTheme()
   // const date = dayjs(tokenData.discovered_on * 1000).format('YYYY/MM/DD, HH:mm')
@@ -153,8 +158,46 @@ const TrendingSoonTokenItem = ({
           >
             {tokenData.name}
           </TruncatedText>
-          <Text fontSize="14px" fontWeight={500} color={theme.disableText} marginLeft="8px">
+          <Text
+            fontSize="14px"
+            fontWeight={500}
+            color={theme.disableText}
+            marginLeft="8px"
+            style={{
+              width: '80px',
+            }}
+          >
             {tokenData.symbol}
+          </Text>
+          <Text
+            fontSize="12px"
+            fontWeight={500}
+            color={tokenData.predicted_price_change >= 0 ? theme.apr : theme.red}
+            marginLeft="8px"
+            style={{
+              width: '100px',
+              textAlign: 'right',
+              paddingRight: preferenceMode === PreferenceMode.PERCENT ? undefined : '16px',
+            }}
+          >
+            {preferenceMode === PreferenceMode.PERCENT
+              ? `${formattedNum(tokenData.predicted_price_change.toString(), false)}%`
+              : `${formattedNum(tokenData.predicted_price.toString(), true)}`}
+          </Text>
+          <Text
+            fontSize="12px"
+            fontWeight={500}
+            color={tokenData.predicted_volume_change >= 0 ? theme.apr : theme.red}
+            marginLeft="8px"
+            style={{
+              width: '120px',
+              textAlign: 'right',
+              paddingRight: '20px',
+            }}
+          >
+            {preferenceMode === PreferenceMode.PERCENT
+              ? `${formattedNum(tokenData.predicted_volume_change.toString(), false)}%`
+              : `${formattedNum(tokenData.predicted_volume.toString(), true)}`}
           </Text>
         </Flex>
         <Text fontSize="12px" color={isSelected ? theme.primary : theme.subText}>

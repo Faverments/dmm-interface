@@ -41,7 +41,7 @@ export default function useGetListPredictedDate(timeframe: TrueSightTimeframe) {
     }
     fetchData()
     // }, [timeframe])
-  }, [])
+  }, []) // fetch only one time
 
   return useMemo(() => {
     const formattedData = formatListPredictedDateResponse(data)
