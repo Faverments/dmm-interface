@@ -13,6 +13,8 @@ import { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData
 import TrendingLayout from 'pages/TrueSight/components/TrendingLayout'
 import { ChainId } from '@dynamic-amm/sdk'
 
+import { useDiscoverProMode } from 'state/user/hooks'
+
 export enum TrueSightTabs {
   TRENDING_SOON = 'trending_soon',
   TRENDING = 'trending',
@@ -52,8 +54,12 @@ export default function TrueSight({ history }: RouteComponentProps) {
     selectedNetwork: undefined,
   })
   const [sortSettings, setSortSettings] = useState<TrueSightSortSettings>({ sortBy: 'rank', sortDirection: 'asc' })
-
+  const isDiscoverProMode = useDiscoverProMode()
   useEffect(() => {
+    if (isDiscoverProMode) {
+      history.push('/discoverPro')
+    }
+
     if (tab === undefined) {
       history.push({ search: '?tab=' + TrueSightTabs.TRENDING_SOON })
     } else {
@@ -67,7 +73,7 @@ export default function TrueSight({ history }: RouteComponentProps) {
       })
       setSortSettings({ sortBy: 'rank', sortDirection: 'asc' })
     }
-  }, [history, tab])
+  }, [history, tab, isDiscoverProMode])
 
   return (
     <TrueSightPageWrapper>

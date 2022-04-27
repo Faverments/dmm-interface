@@ -17,6 +17,7 @@ import { ExternalLink } from 'theme/components'
 import Web3Network from 'components/Web3Network'
 import { useIsDarkMode } from 'state/user/hooks'
 import DiscoverIcon from 'components/Icons/DiscoverIcon'
+import { useDiscoverProMode } from 'state/user/hooks'
 // import { MouseoverTooltip } from 'components/Tooltip'
 
 const HeaderFrame = styled.div`
@@ -265,13 +266,25 @@ const shine = keyframes`
   }
 `
 
-export const SlideToUnlock = styled.div<{ active?: boolean }>`
+const DropdownIcon = styled.div<{ open: boolean; active: boolean }>`
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid ${({ theme, active }) => (active ? theme.primary : theme.subText)};
+
+  transform: rotate(${({ open }) => (open ? '180deg' : '0')});
+  transition: transform 300ms;
+`
+
+export const SlideToUnlock = styled.div<{ active?: boolean; isDiscoverProMode?: boolean }>`
   background: linear-gradient(
     to right,
     ${props => (props.active ? props.theme.primary : props.theme.subText)} 0,
     white 10%,
     ${props => (props.active ? props.theme.primary : props.theme.subText)} 20%
   );
+  margin-right: ${props => (props.isDiscoverProMode ? '8px' : '0px')};
   animation: ${shine} 1.3s infinite linear;
   animation-fill-mode: forwards;
   background-position: 0;
@@ -285,18 +298,23 @@ export default function Header() {
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
   const isDark = useIsDarkMode()
+  const isDiscoverProMode = useDiscoverProMode()
+  const discoverLink = isDiscoverProMode ? '/discoverPro' : '/discover?tab=trending_soon'
   const { pathname } = useLocation()
   const [isHoverSlide, setIsHoverSlide] = useState(false)
-
+  const [isDicoverProHover, setIsDicoverProHover] = useState(false)
+  const activeHoverSlide = isDiscoverProMode
+    ? pathname.includes('discoverPro')
+    : pathname.includes('discover') || isHoverSlide
   return (
     <HeaderFrame>
       <HeaderRow>
-        <Title to="/swap">
+        {/* <Title to="/swap">
           <UniIcon>
             <IconImage src={isDark ? '/logo-dark.svg' : '/logo.svg'} alt="logo" />
           </UniIcon>
-        </Title>
-        <HeaderLinks>
+        </Title> */}
+        {/* <HeaderLinks>
           <StyledNavLink
             id={`swapv2-nav-link`}
             to={'/swap'}
@@ -364,6 +382,35 @@ export default function Header() {
               <Trans>About</Trans>
             </StyledNavLink>
           </AboutWrapper>
+        </HeaderLinks> */}
+        <Title to={discoverLink}>
+          <UniIcon>
+            <IconImage src={isDark ? '/logo-dark.svg' : '/logo.svg'} alt="logo" />
+          </UniIcon>
+        </Title>
+        <HeaderLinks>
+          <DiscoverWrapper
+            onMouseEnter={() => {
+              setIsDicoverProHover(true)
+              setIsHoverSlide(true)
+            }}
+            onMouseLeave={() => {
+              setIsDicoverProHover(false)
+              setIsHoverSlide(false)
+            }}
+          >
+            <StyledNavLink to={discoverLink} isActive={match => Boolean(match)} style={{ alignItems: 'center' }}>
+              <SlideToUnlock active={activeHoverSlide} isDiscoverProMode={isDiscoverProMode}>
+                {isDiscoverProMode ? <Trans>Discover Pro</Trans> : <Trans>Discover</Trans>}
+              </SlideToUnlock>
+
+              {isDiscoverProMode ? (
+                <DropdownIcon open={isDicoverProHover} active={activeHoverSlide} />
+              ) : (
+                <DiscoverIcon size={14} style={{ marginTop: '-20px', marginLeft: '4px' }} />
+              )}
+            </StyledNavLink>
+          </DiscoverWrapper>
         </HeaderLinks>
       </HeaderRow>
       <HeaderControls>

@@ -10,13 +10,13 @@ import Header from '../components/Header'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
 import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
-import Swap from './Swap'
-import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
-import SwapV2 from './SwapV2'
+// import Swap from './Swap'
+// import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+// import SwapV2 from './SwapV2'
 import { BLACKLIST_WALLETS } from 'constants/index'
 import { useActiveWeb3React } from 'hooks'
 import { useExchangeClient } from 'state/application/hooks'
-import OnlyEthereumRoute from 'components/OnlyEthereumRoute'
+// import OnlyEthereumRoute from 'components/OnlyEthereumRoute'
 import { ChainId } from '@dynamic-amm/sdk'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'state'
@@ -32,44 +32,46 @@ import { ethers } from 'ethers'
 import TopBanner from 'components/Header/TopBanner'
 
 // Route-based code splitting
-const Pools = lazy(() => import(/* webpackChunkName: 'pools-page' */ './Pools'))
-const Pool = lazy(() => import(/* webpackChunkName: 'pool-page' */ './Pool'))
-const Yield = lazy(() => import(/* webpackChunkName: 'yield-page' */ './Yield'))
-const PoolFinder = lazy(() => import(/* webpackChunkName: 'pool-finder-page' */ './PoolFinder'))
-const PoolFinderExternal = lazy(() =>
-  import(/* webpackChunkName: 'pool-finder-external-page' */ './PoolFinder/PoolFinderExternal'),
-)
-const Migration = lazy(() => import(/* webpackChunkName: 'migration-page' */ './Pool/lp'))
+// const Pools = lazy(() => import(/* webpackChunkName: 'pools-page' */ './Pools'))
+// const Pool = lazy(() => import(/* webpackChunkName: 'pool-page' */ './Pool'))
+// const Yield = lazy(() => import(/* webpackChunkName: 'yield-page' */ './Yield'))
+// const PoolFinder = lazy(() => import(/* webpackChunkName: 'pool-finder-page' */ './PoolFinder'))
+// const PoolFinderExternal = lazy(() =>
+//   import(/* webpackChunkName: 'pool-finder-external-page' */ './PoolFinder/PoolFinderExternal'),
+// )
+// const Migration = lazy(() => import(/* webpackChunkName: 'migration-page' */ './Pool/lp'))
 
-const CreatePool = lazy(() => import(/* webpackChunkName: 'create-pool-page' */ './CreatePool'))
-const RedirectCreatePoolDuplicateTokenIds = lazy(() =>
-  import(
-    /* webpackChunkName: 'redirect-create-pool-duplicate-token-ids-page' */ './CreatePool/RedirectDuplicateTokenIds'
-  ),
-)
-const RedirectOldCreatePoolPathStructure = lazy(() =>
-  import(
-    /* webpackChunkName: 'redirect-old-create-pool-path-structure-page' */ './CreatePool/RedirectOldCreatePoolPathStructure'
-  ),
-)
+// const CreatePool = lazy(() => import(/* webpackChunkName: 'create-pool-page' */ './CreatePool'))
+// const RedirectCreatePoolDuplicateTokenIds = lazy(() =>
+//   import(
+//     /* webpackChunkName: 'redirect-create-pool-duplicate-token-ids-page' */ './CreatePool/RedirectDuplicateTokenIds'
+//   ),
+// )
+// const RedirectOldCreatePoolPathStructure = lazy(() =>
+//   import(
+//     /* webpackChunkName: 'redirect-old-create-pool-path-structure-page' */ './CreatePool/RedirectOldCreatePoolPathStructure'
+//   ),
+// )
 
-const AddLiquidity = lazy(() => import(/* webpackChunkName: 'add-liquidity-page' */ './AddLiquidity'))
+// const AddLiquidity = lazy(() => import(/* webpackChunkName: 'add-liquidity-page' */ './AddLiquidity'))
 
-const RemoveLiquidity = lazy(() => import(/* webpackChunkName: 'remove-liquidity-page' */ './RemoveLiquidity'))
+// const RemoveLiquidity = lazy(() => import(/* webpackChunkName: 'remove-liquidity-page' */ './RemoveLiquidity'))
 
-const MigrateLiquidityUNI = lazy(() =>
-  import(/* webpackChunkName: 'migrate-uni-page' */ './RemoveLiquidity/migrate_uni'),
-)
+// const MigrateLiquidityUNI = lazy(() =>
+//   import(/* webpackChunkName: 'migrate-uni-page' */ './RemoveLiquidity/migrate_uni'),
+// )
 
-const MigrateLiquiditySUSHI = lazy(() =>
-  import(/* webpackChunkName: 'migrate-sushi-page' */ './RemoveLiquidity/migrate_sushi'),
-)
+// const MigrateLiquiditySUSHI = lazy(() =>
+//   import(/* webpackChunkName: 'migrate-sushi-page' */ './RemoveLiquidity/migrate_sushi'),
+// )
 
-const About = lazy(() => import(/* webpackChunkName: 'about-page' */ './About'))
+// const About = lazy(() => import(/* webpackChunkName: 'about-page' */ './About'))
 
-const CreateReferral = lazy(() => import(/* webpackChunkName: 'create-referral-page' */ './CreateReferral'))
+// const CreateReferral = lazy(() => import(/* webpackChunkName: 'create-referral-page' */ './CreateReferral'))
 
 const TrueSight = lazy(() => import(/* webpackChunkName: 'true-sight-page' */ './TrueSight'))
+
+const DiscoverPro = lazy(() => import(/* webpackChunkName: 'discover-pro-page' */ './DiscoverPro'))
 
 const AppWrapper = styled.div`
   display: flex;
@@ -196,7 +198,7 @@ export default function App() {
                 <Popups />
                 <Web3ReactManager>
                   <Switch>
-                    <Route exact strict path="/swap-legacy" component={Swap} />
+                    {/* <Route exact strict path="/swap-legacy" component={Swap} />
                     <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
                     <Route exact strict path="/swap" component={SwapV2} />
                     <Route exact strict path="/find" component={PoolFinder} />
@@ -206,19 +208,19 @@ export default function App() {
                     <Route exact strict path="/pools/:currencyIdA/:currencyIdB" component={Pools} />
                     <Route exact strict path="/farms" component={Yield} />
                     <Route exact strict path="/myPools" component={Pool} />
-                    <OnlyEthereumRoute exact path="/migration" component={Migration} />
+                    <OnlyEthereumRoute exact path="/migration" component={Migration} /> */}
 
                     {/* Create new pool */}
-                    <Route exact path="/create" component={CreatePool} />
+                    {/* <Route exact path="/create" component={CreatePool} />
                     <Route exact path="/create/:currencyIdA" component={RedirectOldCreatePoolPathStructure} />
                     <Route
                       exact
                       path="/create/:currencyIdA/:currencyIdB"
                       component={RedirectCreatePoolDuplicateTokenIds}
-                    />
+                    /> */}
 
                     {/* Add liquidity */}
-                    <Route exact path="/add/:currencyIdA/:currencyIdB/:pairAddress" component={AddLiquidity} />
+                    {/* <Route exact path="/add/:currencyIdA/:currencyIdB/:pairAddress" component={AddLiquidity} />
 
                     <Route
                       exact
@@ -235,9 +237,10 @@ export default function App() {
                     />
                     <Route exact strict path="/migrate/:currencyIdA/:currencyIdB" component={MigrateLiquidityUNI} />
                     <Route exact path="/about" component={About} />
-                    <Route exact path="/referral" component={CreateReferral} />
+                    <Route exact path="/referral" component={CreateReferral} />*/}
                     <Route exact path="/discover" component={TrueSight} />
-                    <Route component={RedirectPathToSwapOnly} />
+                    {/* <Route component={RedirectPathToSwapOnly} />  */}
+                    <Route exact path="/discoverPro" component={DiscoverPro} />
                   </Switch>
                 </Web3ReactManager>
               </BodyWrapper>
