@@ -1340,11 +1340,14 @@ msgid "My liquidity"
 msgstr "Thanh khoản của tôi"
 
 #: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
-#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
 msgid "Name"
+msgstr ""
+
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
+msgid "Name - Symbol"
 msgstr ""
 
 #: src/components/UpcomingFarms/index.tsx
@@ -1601,6 +1604,7 @@ msgstr "Các tùy chọn"
 
 #: src/components/swapv2/TokenInfo.tsx
 #: src/pages/DiscoverPro/components/Chart.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/Chart.tsx
@@ -2340,6 +2344,10 @@ msgstr "Xem danh sách"
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
 msgstr "Xem giao dịch trên Etherscan"
+
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
+msgid "Volume"
+msgstr ""
 
 #: src/components/PoolList/ItemCard/TabInfoItems.tsx
 msgid "Volume (24H)"

@@ -13,7 +13,7 @@ import MobileChartModal from 'pages/TrueSight/components/TrendingSoonLayout/Mobi
 import useGetTrendingSoonData, { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
 import { TrueSightChartCategory, TrueSightTimeframe } from 'pages/TrueSight/index'
 
-import { DiscoverProFilter, DiscoverProSortSettings } from 'pages/DiscoverPro/index'
+import { DiscoverProFilter, DiscoverProSortSettings, PreferenceMode } from 'pages/DiscoverPro/index'
 
 import useGetCoinGeckoChartData from 'pages/TrueSight/hooks/useGetCoinGeckoChartData'
 import WarningIcon from 'components/LiveChart/WarningIcon'
@@ -24,7 +24,7 @@ import { useHistory } from 'react-router'
 import { useLocation } from 'react-router-dom'
 
 import useGetPredictedData from 'pages/DiscoverPro/hooks/useGetPredictedData'
-import useMakeDiscoverProTokensList from 'pages/DiscoverPro/hooks/useMakeDiscoverProTokensList'
+import useMakeDiscoverProTokensList, { DiscoverProToken } from 'pages/DiscoverPro/hooks/useMakeDiscoverProTokensList'
 import useGetTokenPredictedDetails from 'pages/DiscoverPro/hooks/useGetTokenPredictedDetails'
 
 const TrendingSoonLayout = ({
@@ -112,8 +112,25 @@ const TrendingSoonLayout = ({
     const nameComparer = (a: TrueSightTokenData, b: TrueSightTokenData) =>
       a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
     const discoveredOnComparer = (a: TrueSightTokenData, b: TrueSightTokenData) => a.discovered_on - b.discovered_on
+    const priceComparer = (a: DiscoverProToken, b: DiscoverProToken) =>
+      filter.selectedPreferenceMode == PreferenceMode.PERCENT
+        ? a.predicted_price_change - b.predicted_price_change
+        : a.predicted_price - b.predicted_price
+    const volumeComparer = (a: DiscoverProToken, b: DiscoverProToken) =>
+      filter.selectedPreferenceMode == PreferenceMode.PERCENT
+        ? a.predicted_volume_change - b.predicted_volume_change
+        : a.predicted_volume - b.predicted_volume
+
     let res = discoverProTokensList.sort(
-      sortBy === 'rank' ? rankComparer : sortBy === 'name' ? nameComparer : discoveredOnComparer,
+      sortBy === 'rank'
+        ? rankComparer
+        : sortBy === 'name'
+        ? nameComparer
+        : sortBy === 'price'
+        ? priceComparer
+        : sortBy === 'volume'
+        ? volumeComparer
+        : discoveredOnComparer,
     )
     res = sortDirection === 'asc' ? res : res.reverse()
 
@@ -186,10 +203,72 @@ const TrendingSoonLayout = ({
                       setCurrentPage(1)
                     }}
                   >
-                    <div>
-                      <Trans>Name</Trans>
+                    <div
+                      style={{
+                        width: '220px',
+                      }}
+                    >
+                      <Trans>Name - Symbol </Trans>
                     </div>
                     {sortSettings.sortBy === 'name' && (
+                      <ArrowDown
+                        color={theme.subText}
+                        size={12}
+                        style={{ transform: sortSettings.sortDirection === 'desc' ? 'rotate(180deg)' : 'unset' }}
+                      />
+                    )}
+                  </div>
+                </TrendingSoonTokenListHeaderItem>
+                <TrendingSoonTokenListHeaderItem style={{ flex: 1 }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      width: 'fit-content',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {
+                      setSortSettings(prev => ({
+                        sortBy: 'price',
+                        sortDirection:
+                          prev.sortBy === 'price' ? (prev.sortDirection === 'asc' ? 'desc' : 'asc') : 'asc',
+                      }))
+                      setCurrentPage(1)
+                    }}
+                  >
+                    <div>
+                      <Trans>Price</Trans>
+                    </div>
+                    {sortSettings.sortBy === 'price' && (
+                      <ArrowDown
+                        color={theme.subText}
+                        size={12}
+                        style={{ transform: sortSettings.sortDirection === 'desc' ? 'rotate(180deg)' : 'unset' }}
+                      />
+                    )}
+                  </div>
+                </TrendingSoonTokenListHeaderItem>
+                <TrendingSoonTokenListHeaderItem style={{ flex: 1 }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      width: 'fit-content',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {
+                      setSortSettings(prev => ({
+                        sortBy: 'volume',
+                        sortDirection:
+                          prev.sortBy === 'volume' ? (prev.sortDirection === 'asc' ? 'desc' : 'asc') : 'asc',
+                      }))
+                      setCurrentPage(1)
+                    }}
+                  >
+                    <div>
+                      <Trans>Volume</Trans>
+                    </div>
+                    {sortSettings.sortBy === 'volume' && (
                       <ArrowDown
                         color={theme.subText}
                         size={12}
