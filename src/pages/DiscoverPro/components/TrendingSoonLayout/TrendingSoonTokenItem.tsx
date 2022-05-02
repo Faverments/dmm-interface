@@ -172,7 +172,15 @@ const TrendingSoonTokenItem = ({
           <Text
             fontSize="12px"
             fontWeight={500}
-            color={tokenData.predicted_price_change >= 0 ? theme.apr : theme.red}
+            color={
+              preferenceMode === PreferenceMode.PERCENT
+                ? tokenData.predicted_price_change >= 0
+                  ? theme.apr
+                  : theme.red
+                : isSelected
+                ? theme.primary
+                : theme.subText
+            }
             marginLeft="8px"
             style={{
               width: '100px',
@@ -187,7 +195,15 @@ const TrendingSoonTokenItem = ({
           <Text
             fontSize="12px"
             fontWeight={500}
-            color={tokenData.predicted_volume_change >= 0 ? theme.apr : theme.red}
+            color={
+              preferenceMode === PreferenceMode.PERCENT
+                ? tokenData.predicted_volume_change >= 0
+                  ? theme.apr
+                  : theme.red
+                : isSelected
+                ? theme.primary
+                : theme.subText
+            }
             marginLeft="8px"
             style={{
               width: '120px',

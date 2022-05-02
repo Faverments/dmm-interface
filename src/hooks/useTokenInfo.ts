@@ -31,13 +31,13 @@ export interface TokenInfoResponse {
   additional_notices: any[]
   localization: KeyString
   description: KeyString
-  links: 
-  image: Image
+  // links:
+  // image: Image
   country_origin: string
   genesis_date: string
   sentiment_votes_up_percentage: number
   sentiment_votes_down_percentage: number
-  ico_data: IcoData
+  // ico_data: IcoData
   market_cap_rank: number
   coingecko_rank: number
   coingecko_score: number
@@ -45,13 +45,14 @@ export interface TokenInfoResponse {
   community_score: number
   liquidity_score: number
   public_interest_score: number
-  market_data: MarketData
-  community_data: CommunityData
-  developer_data: DeveloperData
-  public_interest_stats: PublicInterestStats
+  // market_data: MarketData
+  // community_data: CommunityData
+  // developer_data: DeveloperData
+  // public_interest_stats: PublicInterestStats
   status_updates: any[]
   last_updated: Date
-  tickers: Ticker[]
+  // tickers: Ticker[]
+  [key: string]: any
 }
 
 export default function useTokenInfo(

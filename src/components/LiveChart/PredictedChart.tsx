@@ -1,5 +1,7 @@
-import React, { useContext, useEffect, useMemo } from 'react'
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
+import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Brush } from 'recharts'
+import { AxisDomain } from 'recharts/types/util/types'
+import { Props as BrushProps } from 'recharts/types/cartesian/Brush'
 import { format } from 'date-fns'
 import styled, { ThemeContext } from 'styled-components'
 import { LiveDataTimeframeEnum } from 'hooks/useLiveChartData'
@@ -44,6 +46,25 @@ const getAxisDateFormat = (timeFrame: LiveDataTimeframeEnum | undefined) => {
       return 'p'
     case LiveDataTimeframeEnum.WEEK:
       return 'MMM d'
+    case LiveDataTimeframeEnum.MONTH:
+      return 'MMM d'
+    case LiveDataTimeframeEnum.SIX_MONTHS:
+      return 'MMM d'
+    default:
+      return 'p MMM d'
+  }
+}
+
+const getBrushDateFormat = (timeFrame: LiveDataTimeframeEnum | undefined) => {
+  switch (timeFrame) {
+    case LiveDataTimeframeEnum.HOUR:
+      return 'p'
+    case LiveDataTimeframeEnum.FOUR_HOURS:
+      return 'p'
+    case LiveDataTimeframeEnum.DAY:
+      return 'p'
+    case LiveDataTimeframeEnum.WEEK:
+      return 'p MMM d'
     case LiveDataTimeframeEnum.MONTH:
       return 'MMM d'
     case LiveDataTimeframeEnum.SIX_MONTHS:
@@ -134,6 +155,8 @@ interface LineChartProps {
   predictedDetails: PredictedDetails[]
 }
 
+const CustomizedBrush = (props: any) => {}
+
 const LineChart = ({
   data,
   setHoverValue,
@@ -144,6 +167,10 @@ const LineChart = ({
   unitYAsis = '',
   predictedDetails,
 }: LineChartProps) => {
+  const [index, setIndex] = useState<{ startIndex: number | undefined; endIndex: number | undefined }>({
+    startIndex: undefined,
+    endIndex: undefined,
+  })
   const theme = useContext(ThemeContext)
   const formattedData = useMemo(() => {
     return addZeroData(
@@ -151,12 +178,20 @@ const LineChart = ({
       timeFrame,
     )
   }, [data, timeFrame])
-  const dataMax = useMemo(() => Math.max(...formattedData.map(item => parseFloat(item.value))), [formattedData])
-  const dataMin = useMemo(() => Math.min(...formattedData.map(item => parseFloat(item.value))), [formattedData])
+  const dataMax = useMemo(() => {
+    if (index)
+      return Math.max(...formattedData.slice(index.startIndex, index.endIndex).map(item => parseFloat(item.value)))
+    return Math.max(...formattedData.map(item => parseFloat(item.value)))
+  }, [formattedData, index])
+  const dataMin = useMemo(() => {
+    if (index)
+      return Math.min(...formattedData.slice(index.startIndex, index.endIndex).map(item => parseFloat(item.value)))
+    return Math.min(...formattedData.map(item => parseFloat(item.value)))
+  }, [formattedData, index])
   const ticks = useMemo(() => {
     if (formattedData && formattedData.length > 0) {
-      const firstTime = formattedData[0].time
-      const lastTime = formattedData[formattedData.length - 1].time
+      const firstTime = formattedData[index.startIndex || 0].time
+      const lastTime = formattedData[index.endIndex || formattedData.length - 1].time
       const length = lastTime - firstTime
       let padding = 0.06
       let counts = 6
@@ -171,14 +206,18 @@ const LineChart = ({
       return positions.map(v => firstTime + length * v)
     }
     return []
-  }, [formattedData])
+  }, [formattedData, index])
 
   const { predictedChartData, discoverDateIndex, predictedDateIndexList } = useMakePredictedChartData(
     formattedData,
     predictedDetails,
   )
 
-  console.log({ predictedChartData, discoverDateIndex, predictedDateIndexList })
+  const xDomain = [
+    formattedData[index.startIndex || 0]?.time || 'auto',
+    formattedData[index.endIndex || formattedData.length - 1]?.time || 'auto',
+  ] as AxisDomain
+  const yDomain = [dataMin, (5 * (dataMax - dataMin)) / 4] as AxisDomain
 
   return (
     <ResponsiveContainer minHeight={isMobile ? 240 : minHeight}>
@@ -205,7 +244,7 @@ const LineChart = ({
             fontSize="12px"
             axisLine={false}
             tickLine={false}
-            domain={[formattedData[0]?.time || 'auto', formattedData[formattedData.length - 1]?.time || 'auto']}
+            domain={xDomain}
             ticks={ticks}
             tick={{ fill: theme.subText, fontWeight: 400 }}
             type="number"
@@ -233,10 +272,10 @@ const LineChart = ({
               dataMin + (5 * (dataMax - dataMin)) / 4,
             ]}
             orientation="right"
-            domain={[dataMin, (5 * (dataMax - dataMin)) / 4]}
+            domain={yDomain}
             hide={!showYAsis}
           />
-          <YAxis yAxisId="rank_left" orientation="left" dataKey="rank" reversed></YAxis>
+          <YAxis fontSize="12px" yAxisId="rank_left" orientation="left" dataKey="rank" reversed></YAxis>
           <Tooltip
             contentStyle={{ display: 'none' }}
             formatter={(tooltipValue: any, name: string, props: any) => (
@@ -253,6 +292,18 @@ const LineChart = ({
             stroke={color}
             fill="url(#colorUv)"
             strokeWidth={2}
+          />
+          <Brush
+            dataKey="time"
+            onChange={(e: any) => setIndex(e)}
+            tickFormatter={(time: any, index: number) => {
+              return typeof time === 'number' ? format(new Date(time), getBrushDateFormat(timeFrame)) : '0'
+            }}
+            stroke={color}
+            fill="#00000000"
+            // traveller={
+            //   <CustomizedBrush />>
+            // }
           />
           {predictedDateIndexList.map((pD: number, index: number) => {
             if (pD !== -1) {
