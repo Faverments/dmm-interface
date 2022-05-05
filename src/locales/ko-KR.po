@@ -1340,11 +1340,14 @@ msgid "My liquidity"
 msgstr "나의 유동성"
 
 #: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
-#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
 msgid "Name"
+msgstr ""
+
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
+msgid "Name - Symbol"
 msgstr ""
 
 #: src/components/UpcomingFarms/index.tsx
@@ -1601,6 +1604,7 @@ msgstr "기본 설정"
 
 #: src/components/swapv2/TokenInfo.tsx
 #: src/pages/DiscoverPro/components/Chart.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/Chart.tsx
@@ -2340,6 +2344,10 @@ msgstr "목록 보기"
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
 msgstr "Etherscan에서 거래 보기"
+
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
+msgid "Volume"
+msgstr ""
 
 #: src/components/PoolList/ItemCard/TabInfoItems.tsx
 msgid "Volume (24H)"

@@ -105,7 +105,17 @@ const TokenInfo = ({ currencies }: { currencies: { [field in Field]?: Currency }
   const outputToken = wrappedCurrency(outputNativeCurrency, chainId)
   const [activeTab, setActiveTab] = useState<string>(inputNativeCurrency?.symbol || '')
   const selectedToken = activeTab === outputNativeCurrency?.symbol ? outputToken : inputToken
-  const { data: tokenInfo, loading } = useTokenInfo(selectedToken)
+  const { data: tokenInfoResponse, loading } = useTokenInfo(selectedToken)
+  const tokenInfo = {
+    price: tokenInfoResponse?.market_data?.current_price?.usd || 0,
+    marketCap: tokenInfoResponse?.market_data?.market_cap?.usd || 0,
+    marketCapRank: tokenInfoResponse?.market_data?.market_cap_rank || 0,
+    circulatingSupply: tokenInfoResponse?.market_data?.circulating_supply || 0,
+    totalSupply: tokenInfoResponse?.market_data?.total_supply || 0,
+    allTimeHigh: tokenInfoResponse?.market_data?.ath?.usd || 0,
+    allTimeLow: tokenInfoResponse?.market_data?.atl?.usd || 0,
+    tradingVolume: tokenInfoResponse?.market_data?.total_volume?.usd || 0,
+  }
   const darkMode = useIsDarkMode()
 
   // Handle switch network case

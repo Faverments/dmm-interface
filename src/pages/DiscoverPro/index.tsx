@@ -63,7 +63,15 @@ export interface DiscoverProFilter extends TrueSightFilter {
 }
 
 export interface DiscoverProSortSettings extends Omit<TrueSightSortSettings, 'sortBy'> {
-  sortBy: 'rank' | 'name' | 'discovered_on' | 'last_rank' | 'trading_volume_percent' | 'price_change_percent'
+  sortBy:
+    | 'rank'
+    | 'name'
+    | 'discovered_on'
+    | 'last_rank'
+    | 'trading_volume_percent'
+    | 'price_change_percent'
+    | 'price'
+    | 'volume'
   //     | 'trading_volume'
   //     | 'price'
 }
