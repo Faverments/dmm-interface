@@ -28,3 +28,5 @@ yarn start
 
 **Please open all pull requests against the `main` branch.**
 CI checks will run against all PRs.
+
+deploy push
