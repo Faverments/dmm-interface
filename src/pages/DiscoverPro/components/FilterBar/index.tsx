@@ -41,9 +41,17 @@ interface FilterBarProps {
   setFilter: React.Dispatch<React.SetStateAction<DiscoverProFilter>>
   sortSettings: DiscoverProSortSettings
   setSortSettings: React.Dispatch<React.SetStateAction<DiscoverProSortSettings>>
+  isChangerPage: Boolean
 }
 
-export default function FilterBar({ activeTab, filter, setFilter, sortSettings, setSortSettings }: FilterBarProps) {
+export default function FilterBar({
+  activeTab,
+  filter,
+  setFilter,
+  sortSettings,
+  setSortSettings,
+  isChangerPage,
+}: FilterBarProps) {
   // console.log(filter)
   const isActiveTabTrending = activeTab === TrueSightTabs.TRENDING
   const isActiveTabTrendingSoon = activeTab === TrueSightTabs.TRENDING_SOON
@@ -150,7 +158,7 @@ export default function FilterBar({ activeTab, filter, setFilter, sortSettings, 
             <Trans>Timeframe</Trans>
           </Text>
           <TimeframePicker activeTimeframe={filter.timeframe} setActiveTimeframe={setActiveTimeframe} />
-          <LayoutPicker activeMode={filter.layoutMode} setActiveMode={setLayoutMode} />
+          {!isChangerPage && <LayoutPicker activeMode={filter.layoutMode} setActiveMode={setLayoutMode} />}
         </TrueSightFilterBarSection>
         <TrueSightFilterBarSection style={{ gap: '16px' }}>
           {isActiveTabTrending && (

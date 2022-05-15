@@ -318,6 +318,7 @@ msgid "Bug Bounty"
 msgstr ""
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/TopTrendingSoonTokenItem.tsx
+#: src/pages/DiscoverPro/SubPages/Changer/components/Table/TopTrendingSoonTokenItem.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx
 msgid "Buy now"
 msgstr ""
@@ -624,18 +625,19 @@ msgstr ""
 msgid "Disclaimer: The information here should not be treated as any form of financial advice"
 msgstr ""
 
-#: src/components/Header/index.tsx
+#: src/components/Header/DiscoverProNavigator.tsx
 #: src/components/Menu/index.tsx
 msgid "Discover"
 msgstr ""
 
-#: src/components/Header/index.tsx
+#: src/components/Header/DiscoverProNavigator.tsx
 #: src/components/Settings/index.tsx
 msgid "Discover Pro"
 msgstr ""
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
+#: src/pages/DiscoverPro/SubPages/Changer/components/Table/index.tsx
 msgid "Discover more"
 msgstr ""
 
@@ -1305,6 +1307,7 @@ msgid "Minimum received"
 msgstr "Minimum alındı"
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/TopTrendingSoonTokenItem.tsx
+#: src/pages/DiscoverPro/SubPages/Changer/components/Table/TopTrendingSoonTokenItem.tsx
 msgid "More info"
 msgstr ""
 
@@ -1418,6 +1421,10 @@ msgstr "Not: Bu token çifti için mevcut havuzlar var. Lütfen kontrol edin"
 #: src/components/PositionCard/index.tsx
 msgid "Note: {warningToken} is now <10% of the pool. Pool might become inactive if {warningToken} reaches 0%"
 msgstr "Not: {warningToken} artık havuzda <%10 oranındadır. {warningToken} %0'a ulaşırsa havuz devre dışı kalabilir"
+
+#: src/components/Header/DiscoverProNavigator.tsx
+msgid "Nothing"
+msgstr ""
 
 #: src/components/Toggle/ListToggle.tsx
 msgid "OFF"
@@ -1591,6 +1598,7 @@ msgid "Powered by <0>TrueSight</0>, our AI prediction model"
 msgstr ""
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
+#: src/pages/DiscoverPro/SubPages/Changer/components/Table/index.tsx
 msgid "Powered by TrueSight, our AI prediction model"
 msgstr ""
 
@@ -2210,6 +2218,7 @@ msgstr ""
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
+#: src/pages/DiscoverPro/SubPages/Changer/components/Table/index.tsx
 #: src/pages/TrueSight/TrueSightTab.tsx
 msgid "Trending Soon"
 msgstr ""

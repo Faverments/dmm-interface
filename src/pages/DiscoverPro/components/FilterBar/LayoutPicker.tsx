@@ -40,7 +40,7 @@ const LayoutPicker = ({
   activeMode,
   setActiveMode,
 }: {
-  activeMode: LayoutMode
+  activeMode: LayoutMode | undefined
   setActiveMode: (timeframe: LayoutMode) => void
 }) => {
   const theme = useTheme()

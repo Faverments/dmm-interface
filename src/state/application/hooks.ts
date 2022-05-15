@@ -70,6 +70,10 @@ export function useToggleSettingsMenu(): () => void {
   return useToggleModal(ApplicationModal.SETTINGS)
 }
 
+export function useToggleDiscoverProNavigator(): () => void {
+  return useToggleModal(ApplicationModal.DISCOVER_PRO_NAVIGATOR)
+}
+
 export function useToggleTransactionSettingsMenu(): () => void {
   return useToggleModal(ApplicationModal.TRANSACTION_SETTINGS)
 }

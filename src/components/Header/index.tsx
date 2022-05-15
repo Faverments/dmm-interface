@@ -18,6 +18,7 @@ import Web3Network from 'components/Web3Network'
 import { useIsDarkMode } from 'state/user/hooks'
 import DiscoverIcon from 'components/Icons/DiscoverIcon'
 import { useDiscoverProMode } from 'state/user/hooks'
+import DiscoverProNavigator from './DiscoverProNavigator'
 // import { MouseoverTooltip } from 'components/Tooltip'
 
 const HeaderFrame = styled.div`
@@ -135,12 +136,6 @@ const HideSmall = styled.span`
 `
 
 const AnalyticsWrapper = styled.span`
-  @media (max-width: 576px) {
-    display: none;
-  }
-`
-
-const DiscoverWrapper = styled.span`
   @media (max-width: 576px) {
     display: none;
   }
@@ -266,17 +261,6 @@ const shine = keyframes`
   }
 `
 
-const DropdownIcon = styled.div<{ open: boolean; active: boolean }>`
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 5px solid ${({ theme, active }) => (active ? theme.primary : theme.subText)};
-
-  transform: rotate(${({ open }) => (open ? '180deg' : '0')});
-  transition: transform 300ms;
-`
-
 export const SlideToUnlock = styled.div<{ active?: boolean; isDiscoverProMode?: boolean }>`
   background: linear-gradient(
     to right,
@@ -301,11 +285,7 @@ export default function Header() {
   const isDiscoverProMode = useDiscoverProMode()
   const discoverLink = isDiscoverProMode ? '/discoverPro' : '/discover?tab=trending_soon'
   const { pathname } = useLocation()
-  const [isHoverSlide, setIsHoverSlide] = useState(false)
-  const [isDicoverProHover, setIsDicoverProHover] = useState(false)
-  const activeHoverSlide = isDiscoverProMode
-    ? pathname.includes('discoverPro')
-    : pathname.includes('discover') || isHoverSlide
+
   return (
     <HeaderFrame>
       <HeaderRow>
@@ -389,28 +369,7 @@ export default function Header() {
           </UniIcon>
         </Title>
         <HeaderLinks>
-          <DiscoverWrapper
-            onMouseEnter={() => {
-              setIsDicoverProHover(true)
-              setIsHoverSlide(true)
-            }}
-            onMouseLeave={() => {
-              setIsDicoverProHover(false)
-              setIsHoverSlide(false)
-            }}
-          >
-            <StyledNavLink to={discoverLink} isActive={match => Boolean(match)} style={{ alignItems: 'center' }}>
-              <SlideToUnlock active={activeHoverSlide} isDiscoverProMode={isDiscoverProMode}>
-                {isDiscoverProMode ? <Trans>Discover Pro</Trans> : <Trans>Discover</Trans>}
-              </SlideToUnlock>
-
-              {isDiscoverProMode ? (
-                <DropdownIcon open={isDicoverProHover} active={activeHoverSlide} />
-              ) : (
-                <DiscoverIcon size={14} style={{ marginTop: '-20px', marginLeft: '4px' }} />
-              )}
-            </StyledNavLink>
-          </DiscoverWrapper>
+          <DiscoverProNavigator />
         </HeaderLinks>
       </HeaderRow>
       <HeaderControls>

@@ -57,7 +57,7 @@ export interface DiscoverProFilter extends TrueSightFilter {
   selectedPercentChangeMode: PercentChangeMode
   selectedPreferenceMode: PreferenceMode
   selectedTokenStatus: TokenStatus | undefined
-  layoutMode: LayoutMode
+  layoutMode: LayoutMode | undefined
   selectedPredictedDate: PredictedDate | undefined
   // IN_DEV : add token data detail ( add to selectedTokenData )
 }
@@ -127,6 +127,7 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
           <TrendingSoonHero />
           <Flex flexDirection="column" style={{ gap: '16px' }}>
             <FilterBar
+              isChangerPage={false}
               activeTab={TrueSightTabs.TRENDING_SOON}
               filter={filter}
               setFilter={setFilter}
@@ -147,6 +148,7 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
           <TrendingHero />
           <Flex flexDirection="column" style={{ gap: '16px' }}>
             <FilterBar
+              isChangerPage={false}
               activeTab={TrueSightTabs.TRENDING_SOON}
               filter={filter}
               setFilter={setFilter}

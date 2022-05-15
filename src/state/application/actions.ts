@@ -45,6 +45,7 @@ export enum ApplicationModal {
   COMMUNITY,
   CONTRACT_ADDRESS,
   DISCOVER_PRO_SORTING,
+  DISCOVER_PRO_NAVIGATOR,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')

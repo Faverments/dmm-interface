@@ -73,6 +73,8 @@ const TrueSight = lazy(() => import(/* webpackChunkName: 'true-sight-page' */ '.
 
 const DiscoverPro = lazy(() => import(/* webpackChunkName: 'discover-pro-page' */ './DiscoverPro'))
 
+const Changer = lazy(() => import(/* webpackChunkName: 'changer-page' */ './DiscoverPro/SubPages/Changer'))
+
 const AppWrapper = styled.div`
   display: flex;
   flex-flow: column;
@@ -241,6 +243,7 @@ export default function App() {
                     <Route exact path="/discover" component={TrueSight} />
                     {/* <Route component={RedirectPathToSwapOnly} />  */}
                     <Route exact path="/discoverPro" component={DiscoverPro} />
+                    <Route exact path="/changer" component={Changer} />
                   </Switch>
                 </Web3ReactManager>
               </BodyWrapper>
