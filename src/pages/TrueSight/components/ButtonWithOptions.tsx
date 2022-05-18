@@ -16,6 +16,7 @@ import { useLocation } from 'react-router-dom'
 import { useHistory } from 'react-router'
 import { useToggleModal } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
+import Cart from 'components/Icons/Cart'
 
 const ButtonWithOptions = ({
   platforms,
@@ -55,14 +56,17 @@ const ButtonWithOptions = ({
       height="36px"
       padding="0 36px"
       fontSize="14px"
-      style={{ position: 'relative', zIndex: 2, ...style }}
+      style={{ position: 'relative', zIndex: 1, ...style }}
       onClick={e => {
         e.stopPropagation()
         setIsShowNetworks(prev => !prev)
       }}
       ref={containerRef}
     >
-      <Trans>Buy now</Trans>
+      <Flex alignItems="center">
+        <Cart color={theme.text14} style={{ marginRight: '8px' }} />
+        <Trans>{tokenData.symbol}</Trans>
+      </Flex>
       <ChevronDown
         size="16px"
         style={{ position: 'absolute', top: '50%', right: '12px', transform: 'translateY(-50%)' }}
@@ -78,13 +82,15 @@ const ButtonWithOptions = ({
                     key={platform}
                     alignItems="center"
                     onClick={() => {
-                      triggerDiscoverSwapInitiated(platform)
                       toggleTrendingSoonTokenDetailModal()
                       history.push(
                         `/swap?inputCurrency=ETH&outputCurrency=${getAddress(
                           platforms.get(platform) ?? '',
-                        )}&networkId=${mappedChainId}`,
+                        )}&networkId=${mappedChainId}&keepCurrencyIds=1`,
                       )
+                      mixpanelHandler(MIXPANEL_TYPE.DISCOVER_SWAP_BUY_NOW_POPUP_CLICKED, {
+                        trending_token: tokenData.symbol,
+                      })
                     }}
                   >
                     <img src={NETWORK_ICON[mappedChainId]} alt="Network" style={{ minWidth: '16px', width: '16px' }} />
@@ -95,7 +101,7 @@ const ButtonWithOptions = ({
                       fontWeight={500}
                       minWidth="fit-content"
                     >
-                      <Trans>Buy on {NETWORK_LABEL[mappedChainId]}</Trans>
+                      <Trans>{NETWORK_LABEL[mappedChainId]}</Trans>
                     </Text>
                   </Flex>
                 )
@@ -113,7 +119,7 @@ const ButtonWithOptions = ({
                 >
                   <img src={NETWORK_ICON[mappedChainId]} alt="Network" style={{ minWidth: '16px', width: '16px' }} />
                   <Text marginLeft="4px" color={theme.subText} fontSize="12px" fontWeight={500} minWidth="fit-content">
-                    <Trans>Buy on {NETWORK_LABEL[mappedChainId]}</Trans>
+                    <Trans>{NETWORK_LABEL[mappedChainId]}</Trans>
                   </Text>
                 </Flex>
               )
