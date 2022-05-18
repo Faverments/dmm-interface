@@ -179,11 +179,11 @@ export const CLAIM_REWARD_SC_ADDRESS: { [chainId in ChainId]: string } = {
   [ChainId.BSCTESTNET]: '',
   [ChainId.BSCMAINNET]: '',
   [ChainId.AVAXTESTNET]: '',
-  [ChainId.AVAXMAINNET]: '0x610A05127d51dd42031A39c25aF951a8e77cDDf7',
+  [ChainId.AVAXMAINNET]: '',
   [ChainId.FANTOM]: '',
   [ChainId.CRONOSTESTNET]: '',
   [ChainId.CRONOS]: '',
-  [ChainId.BTTC]: '0x1a91f5ADc7cB5763d35A26e98A18520CB9b67e70',
+  [ChainId.BTTC]: '',
   [ChainId.ARBITRUM]: '',
   [ChainId.ARBITRUM_TESTNET]: '',
   [ChainId.AURORA]: '',
@@ -625,16 +625,10 @@ export const KNC: { [chainId in ChainId]: Token } = {
     'KNC',
     'Kyber Network Crystal',
   ),
-  [ChainId.BTTC]: new Token(
-    ChainId.BTTC,
-    '0x18fA72e0EE4C580a129b0CE5bD0694d716C7443E',
-    18,
-    'KNC_b',
-    'Kyber Network Crystal v2 - BSC',
-  ),
 
   // UPDATE WHEN HAS BRIDGE KNC
   [ChainId.ARBITRUM]: new Token(ChainId.ARBITRUM, KNC_ADDRESS, 18, 'KNC', 'Kyber Network Crystal'),
+  [ChainId.BTTC]: new Token(ChainId.BTTC, KNC_ADDRESS, 18, 'KNC', 'Kyber Network Crystal'),
   [ChainId.VELAS]: new Token(ChainId.VELAS, KNC_ADDRESS, 18, 'KNC', 'Kyber Network Crystal'),
   [ChainId.OASIS]: new Token(ChainId.OASIS, KNC_ADDRESS, 18, 'KNC', 'Kyber Network Crystal'),
 }
@@ -1143,11 +1137,7 @@ export const FAIRLAUNCH_V2_ADDRESSES: { [chainId in ChainId]: string[] } = {
   [ChainId.CRONOS]: [],
   [ChainId.ARBITRUM]: [],
   [ChainId.ARBITRUM_TESTNET]: [],
-  [ChainId.BTTC]: [
-    '0x8e9Bd30D15420bAe4B7EC0aC014B7ECeE864373C',
-    '0xa107e6466Be74361840059a11e390200371a7538',
-    '0x89929Bc485cE72D2Af7b7283B40b921e9F4f80b3',
-  ],
+  [ChainId.BTTC]: [],
   [ChainId.AURORA]: [],
   [ChainId.VELAS]: [],
   [ChainId.OASIS]: [],
@@ -1375,15 +1365,8 @@ export const CREATE_POOL_AMP_HINT = t`Stands for amplification factor. Pools wit
 export const AGGREGATOR_ROUTER_SWAPPED_EVENT_TOPIC =
   '0xd6d4f5681c246c9f42c203e287975af1601f8df8035a9251f79aab5c8f09e2f8'
 
-export const CLAIM_REWARDS_DATA_URL: { [chainId: number]: string } = {
-  [ChainId.ROPSTEN]: 'claim-reward-data.json',
-  [ChainId.AVAXMAINNET]:
-    'https://raw.githubusercontent.com/KyberNetwork/avax-trading-contest-reward-distribution/develop/results/reward_proof.json',
-  [ChainId.BSCMAINNET]:
-    'https://raw.githubusercontent.com/KyberNetwork/zkyber-reward-distribution/main/results/phase_0/merkle_data.json',
-  [ChainId.BTTC]:
-    'https://raw.githubusercontent.com/KyberNetwork/trading-contest-reward-distribution/main/bttc/results/reward_proof.json',
-}
+export const CLAIM_REWARDS_DATA_URL =
+  'https://raw.githubusercontent.com/KyberNetwork/zkyber-reward-distribution/main/results/phase_0/merkle_data.json'
 
 export const sentryRequestId = uuid()
 
@@ -1408,12 +1391,4 @@ export const TRENDING_SOON_SUPPORTED_NETWORKS: { [p: string]: ChainId } = {
   polygon: ChainId.MATIC,
   avax: ChainId.AVAXMAINNET,
   fantom: ChainId.FANTOM,
-}
-
-export const TOBE_EXTENDED_FARMING_POOLS: { [key: string]: number } = {
-  '0xD185094b8F3DF34d28d3f8740bAf5664Eb5b8636': 1651928400,
-  '0xa6bb71128B8F27a8a54a2087ef6E95249723C038': 1651928400,
-
-  '0xC6BC80490A3D022ac888b26A5Ae4f1fad89506Bd': 1651222800,
-  '0x9dD156dF57ad44c23f6e1FCB731C640B127fE2Be': 1651222800,
 }

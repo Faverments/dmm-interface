@@ -38,8 +38,8 @@ export default function ConfirmSwapModal({
   isOpen,
   attemptingTxn,
   txHash,
-  tokenAddToMetaMask,
-  showTxBanner,
+  tokenAddtoMetaMask,
+  showFarmBanner,
 }: {
   isOpen: boolean
   trade: Aggregator | undefined
@@ -48,12 +48,12 @@ export default function ConfirmSwapModal({
   txHash: string | undefined
   recipient: string | null
   allowedSlippage: number
-  tokenAddToMetaMask: Currency | undefined
+  tokenAddtoMetaMask: Currency | undefined
   onAcceptChanges: () => void
   onConfirm: () => void
   swapErrorMessage: string | undefined
   onDismiss: () => void
-  showTxBanner?: boolean
+  showFarmBanner?: boolean
 }) {
   const { feeConfig, typedValue } = useSwapState()
 
@@ -117,8 +117,8 @@ export default function ConfirmSwapModal({
       hash={txHash}
       content={confirmationContent}
       pendingText={pendingText}
-      tokenAddToMetaMask={tokenAddToMetaMask}
-      showTxBanner={showTxBanner}
+      tokenAddtoMetaMask={tokenAddtoMetaMask}
+      showFarmBanner={showFarmBanner}
     />
   )
 }

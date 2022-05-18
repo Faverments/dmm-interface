@@ -7,7 +7,7 @@ import { Flex, Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 import { t, Trans } from '@lingui/macro'
 
-import { Currency, CurrencyAmount, currencyEquals, ETHER, JSBI, Percent, Token, WETH, Fraction } from '@dynamic-amm/sdk'
+import { Currency, CurrencyAmount, currencyEquals, ETHER, Percent, Token, WETH } from '@dynamic-amm/sdk'
 import { ROUTER_ADDRESSES, FEE_OPTIONS } from 'constants/index'
 import { ButtonPrimary, ButtonLight, ButtonError, ButtonConfirmed } from 'components/Button'
 import { BlackCard } from 'components/Card'
@@ -93,7 +93,6 @@ export default function TokenPair({
     currencyB ?? undefined,
     pairAddress,
   )
-  const amp = pair?.amp || JSBI.BigInt(0)
   const { onUserInput: _onUserInput } = useBurnActionHandlers()
   const isValid = !error
 
@@ -359,11 +358,9 @@ export default function TokenPair({
                 ' ' +
                 convertToNativeTokenFromETH(currencyB, chainId).symbol,
               arbitrary: {
-                poolAddress: pairAddress,
                 token_1: convertToNativeTokenFromETH(currencyA, chainId).symbol,
                 token_2: convertToNativeTokenFromETH(currencyB, chainId).symbol,
                 remove_liquidity_method: 'token pair',
-                amp: new Fraction(amp).divide(JSBI.BigInt(10000)).toSignificant(5),
               },
             })
 

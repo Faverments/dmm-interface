@@ -23,7 +23,6 @@ import {
   DEFAULT_GAS_LIMIT_MARGIN,
   CLAIM_REWARD_SC_ADDRESS,
   FEE_OPTIONS,
-  ZERO_ADDRESS,
 } from 'constants/index'
 import ROUTER_ABI from '../constants/abis/dmm-router.json'
 import ROUTER_ABI_WITHOUT_DYNAMIC_FEE from '../constants/abis/dmm-router-without-dynamic-fee.json'
@@ -50,13 +49,6 @@ import { VELAS_TOKEN_LIST } from 'constants/tokenLists/velas.tokenlist'
 import { OASIS_TOKEN_LIST } from 'constants/tokenLists/oasis.tokenlist'
 import { ARBITRUM_TOKEN_LIST } from 'constants/tokenLists/arbitrum.tokenlist'
 import { FANTOM_MAINNET_TOKEN_LIST } from 'constants/tokenLists/fantom.mainnet.tokenlist'
-import { MATIC_TOKEN_LIST } from '../constants/tokenLists/matic.tokenlist'
-import { MAINNET_TOKEN_LIST } from '../constants/tokenLists/mainnet.tokenlist'
-import { MUMBAI_TOKEN_LIST } from '../constants/tokenLists/mumbai.tokenlist'
-import { BSC_MAINNET_TOKEN_LIST } from '../constants/tokenLists/bsc.mainnet.tokenlist'
-import { AVAX_MAINNET_TOKEN_LIST } from '../constants/tokenLists/avax.mainnet.tokenlist'
-import { CRONOS_TOKEN_LIST } from '../constants/tokenLists/cronos.tokenlist'
-import { AURORA_TOKEN_LIST } from '../constants/tokenLists/aurora.tokenlist'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
@@ -272,7 +264,7 @@ export function getClaimRewardContract(
   library: Web3Provider,
   account?: string,
 ): Contract | undefined {
-  if (CLAIM_REWARD_SC_ADDRESS[chainId] === '') return
+  if (![ChainId.ROPSTEN, ChainId.MATIC].includes(chainId)) return
   return getContract(CLAIM_REWARD_SC_ADDRESS[chainId], CLAIM_REWARD_ABI, library, account)
 }
 
@@ -332,15 +324,7 @@ export const formatDollarSignificantAmount = (num: number, minDigits: number, ma
   return formatter.format(num)
 }
 
-export function formatNumberWithPrecisionRange(number: number, minPrecision = 2, maxPrecision = 2) {
-  const options = {
-    minimumFractionDigits: minPrecision,
-    maximumFractionDigits: maxPrecision,
-  }
-  return number.toLocaleString(undefined, options)
-}
-
-export function formattedNum(number: string, usd = false, fractionDigits = 5) {
+export function formattedNum(number: string, usd = false) {
   if (number === '' || number === undefined) {
     return usd ? '$0' : 0
   }
@@ -374,7 +358,7 @@ export function formattedNum(number: string, usd = false, fractionDigits = 5) {
     }
   }
 
-  return Number(num.toFixed(fractionDigits)).toLocaleString()
+  return Number(num.toFixed(5)).toLocaleString()
 }
 
 export function formattedNumLong(num: number, usd = false) {
@@ -528,12 +512,7 @@ export const getRopstenTokenLogoURL = (address: string) => {
   )}/logo.png`
 }
 
-export const getTokenLogoURL = (inputAddress: string, chainId?: ChainId): string => {
-  let address = inputAddress
-  if (address === ZERO_ADDRESS && chainId) {
-    address = WETH[chainId].address
-  }
-
+export const getTokenLogoURL = (address: string, chainId?: ChainId): string => {
   if (address.toLowerCase() === KNC[chainId as ChainId].address.toLowerCase()) {
     return 'https://raw.githubusercontent.com/dynamic-amm/dmm-interface/develop/src/assets/images/KNC.svg'
   }
@@ -551,53 +530,40 @@ export const getTokenLogoURL = (inputAddress: string, chainId?: ChainId): string
 
   switch (chainId) {
     case ChainId.MAINNET:
-      imageURL =
-        MAINNET_TOKEN_LIST.tokens.find(item => item.address.toLowerCase() === address.toLowerCase())?.logoURI ||
-        getEthereumMainnetTokenLogoURL(address)
+      imageURL = getEthereumMainnetTokenLogoURL(address)
       break
     case ChainId.ROPSTEN:
       imageURL = getRopstenTokenLogoURL(address)
       break
     case ChainId.MATIC:
-      imageURL =
-        MATIC_TOKEN_LIST.tokens.find(item => item.address.toLowerCase() === address.toLowerCase())?.logoURI ||
-        getMaticTokenLogoURL(address)
+      imageURL = getMaticTokenLogoURL(address)
       break
     case ChainId.MUMBAI:
-      imageURL =
-        MUMBAI_TOKEN_LIST.tokens.find(item => item.address.toLowerCase() === address.toLowerCase())?.logoURI ||
-        getMumbaiTokenLogoURL(address)
+      imageURL = getMumbaiTokenLogoURL(address)
       break
     case ChainId.BSCTESTNET:
       imageURL = getBscTestnetTokenLogoURL(address)
       break
     case ChainId.BSCMAINNET:
-      imageURL =
-        BSC_MAINNET_TOKEN_LIST.tokens.find(item => item.address.toLowerCase() === address.toLowerCase())?.logoURI ||
-        getBscMainnetTokenLogoURL(address)
+      imageURL = getBscMainnetTokenLogoURL(address)
       break
     case ChainId.AVAXTESTNET:
       imageURL = getAvaxTestnetTokenLogoURL(address)
       break
     case ChainId.AVAXMAINNET:
-      imageURL =
-        AVAX_MAINNET_TOKEN_LIST.tokens.find(item => item.address.toLowerCase() === address.toLowerCase())?.logoURI ||
-        getAvaxMainnetTokenLogoURL(address)
+      imageURL = getAvaxMainnetTokenLogoURL(address)
       break
     case ChainId.FANTOM:
       imageURL =
-        FANTOM_MAINNET_TOKEN_LIST.tokens.find(item => item.address.toLowerCase() === address.toLowerCase())?.logoURI ||
-        getFantomTokenLogoURL(address)
+        FANTOM_MAINNET_TOKEN_LIST.tokens.find(
+          (item: { address: string }) => item.address.toLowerCase() === address.toLowerCase(),
+        )?.logoURI || getFantomTokenLogoURL(address)
       break
     case ChainId.CRONOS:
-      imageURL =
-        CRONOS_TOKEN_LIST.tokens.find(item => item.address.toLowerCase() === address.toLowerCase())?.logoURI ||
-        getCronosTokenLogoURL(address)
+      imageURL = getCronosTokenLogoURL(address)
       break
     case ChainId.AURORA:
-      imageURL =
-        AURORA_TOKEN_LIST.tokens.find(item => item.address.toLowerCase() === address.toLowerCase())?.logoURI ||
-        getAuroraTokenLogoURL(address)
+      imageURL = getAuroraTokenLogoURL(address)
       break
     case ChainId.ARBITRUM:
       imageURL =

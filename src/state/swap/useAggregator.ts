@@ -165,17 +165,14 @@ export function useDerivedSwapInfoV2(): {
     inputError = t`Insufficient ${convertToNativeTokenFromETH(amountIn.currency, chainId).symbol} balance`
   }
 
-  return useMemo(
-    () => ({
-      currencies,
-      currencyBalances,
-      parsedAmount,
-      v2Trade: v2Trade ?? undefined,
-      tradeComparer,
-      inputError,
-      onRefresh: onUpdateCallback,
-      loading,
-    }),
-    [currencies, currencyBalances, inputError, loading, onUpdateCallback, parsedAmount, tradeComparer, v2Trade],
-  )
+  return {
+    currencies,
+    currencyBalances,
+    parsedAmount,
+    v2Trade: v2Trade ?? undefined,
+    tradeComparer,
+    inputError,
+    onRefresh: onUpdateCallback,
+    loading,
+  }
 }

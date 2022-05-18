@@ -65,9 +65,7 @@ const MigrateLiquiditySUSHI = lazy(() =>
   import(/* webpackChunkName: 'migrate-sushi-page' */ './RemoveLiquidity/migrate_sushi'),
 )
 
-const AboutKyberSwap = lazy(() => import(/* webpackChunkName: 'about-page' */ './About/AboutKyberSwap'))
-
-const AboutKNC = lazy(() => import(/* webpackChunkName: 'about-knc' */ './About/AboutKNC'))
+const About = lazy(() => import(/* webpackChunkName: 'about-page' */ './About'))
 
 const CreateReferral = lazy(() => import(/* webpackChunkName: 'create-referral-page' */ './CreateReferral'))
 
@@ -96,6 +94,7 @@ const BodyWrapper = styled.div<{ isAboutPage?: boolean }>`
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
+  z-index: 1;
 `
 
 export default function App() {
@@ -235,8 +234,7 @@ export default function App() {
                       component={MigrateLiquiditySUSHI}
                     />
                     <Route exact strict path="/migrate/:currencyIdA/:currencyIdB" component={MigrateLiquidityUNI} />
-                    <Route exact path="/about/kyberswap" component={AboutKyberSwap} />
-                    <Route exact path="/about/knc" component={AboutKNC} />
+                    <Route exact path="/about" component={About} />
                     <Route exact path="/referral" component={CreateReferral} />
                     <Route exact path="/discover" component={TrueSight} />
                     <Route component={RedirectPathToSwapOnly} />

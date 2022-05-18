@@ -5,17 +5,12 @@ import { ethers } from 'ethers'
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { useActiveWeb3React } from '../../hooks'
-import { useAddPopup, useBlockNumber, useExchangeClient } from '../application/hooks'
+import { useAddPopup, useBlockNumber } from '../application/hooks'
 import { AppDispatch, AppState } from '../index'
-import { checkedTransaction, finalizeTransaction, checkedSubgraph } from './actions'
+import { checkedTransaction, finalizeTransaction } from './actions'
 import { AGGREGATOR_ROUTER_SWAPPED_EVENT_TOPIC } from 'constants/index'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
-import {
-  TRANSACTION_SWAP_AMOUNT_USD,
-  GET_POOL_VALUES_AFTER_MINTS_SUCCESS,
-  GET_POOL_VALUES_AFTER_BURNS_SUCCESS,
-} from 'apollo/queries'
 
 export function shouldCheck(
   lastBlockNumber: number,
@@ -42,7 +37,6 @@ export default function Updater(): null {
   const { chainId, library } = useActiveWeb3React()
 
   const lastBlockNumber = useBlockNumber()
-  const apolloClient = useExchangeClient()
 
   const dispatch = useDispatch<AppDispatch>()
   const state = useSelector<AppState, AppState['transactions']>(state => state.transactions)
@@ -130,9 +124,7 @@ export default function Updater(): null {
                     to: receipt.to,
                     transactionHash: receipt.transactionHash,
                     transactionIndex: receipt.transactionIndex,
-                    gasUsed: receipt.gasUsed,
                   },
-                  needCheckSubgraph: ['Swap', 'Add liquidity', 'Remove liquidity'].includes(transaction.type || ''),
                 }),
               )
 
@@ -149,11 +141,34 @@ export default function Updater(): null {
               )
               if (receipt.status === 1 && transaction && transaction.arbitrary) {
                 switch (transaction.type) {
+                  case 'Swap': {
+                    mixpanelHandler(MIXPANEL_TYPE.SWAP_COMPLETED, {
+                      arbitrary: transaction.arbitrary,
+                      actual_gas: receipt.gasUsed,
+                    })
+                    break
+                  }
                   case 'Create pool': {
                     mixpanelHandler(MIXPANEL_TYPE.CREATE_POOL_COMPLETED, {
                       token_1: transaction.arbitrary.token_1,
                       token_2: transaction.arbitrary.token_2,
                       amp: transaction.arbitrary.amp,
+                    })
+                    break
+                  }
+                  case 'Add liquidity': {
+                    mixpanelHandler(MIXPANEL_TYPE.ADD_LIQUIDITY_COMPLETED, {
+                      token_1: transaction.arbitrary.token_1,
+                      token_2: transaction.arbitrary.token_2,
+                      add_liquidity_method: transaction.arbitrary.add_liquidity_method,
+                    })
+                    break
+                  }
+                  case 'Remove liquidity': {
+                    mixpanelHandler(MIXPANEL_TYPE.REMOVE_LIQUIDITY_COMPLETED, {
+                      token_1: transaction.arbitrary.token_1,
+                      token_2: transaction.arbitrary.token_2,
+                      remove_liquidity_method: transaction.arbitrary.remove_liquidity_method,
                     })
                     break
                   }
@@ -169,100 +184,6 @@ export default function Updater(): null {
             console.error(`failed to check transaction hash: ${hash}`, error)
           })
       })
-    Object.keys(transactions)
-      .filter(hash => transactions[hash]?.needCheckSubgraph)
-      .forEach(async (hash: string) => {
-        const transaction = transactions[hash]
-        try {
-          switch (transaction.type) {
-            case 'Swap':
-              const res = await apolloClient.query({
-                query: TRANSACTION_SWAP_AMOUNT_USD,
-                variables: {
-                  transactionHash: hash,
-                },
-                fetchPolicy: 'network-only',
-              })
-              if (
-                !res.data?.transaction?.swaps &&
-                transaction.confirmedTime &&
-                new Date().getTime() - transaction.confirmedTime < 3600000
-              )
-                break
-              mixpanelHandler(MIXPANEL_TYPE.SWAP_COMPLETED, {
-                arbitrary: transaction.arbitrary,
-                actual_gas: transaction.receipt?.gasUsed || '',
-                amountUSD: !!res.data?.transaction?.swaps
-                  ? Math.max(res.data.transaction.swaps.map((s: any) => parseFloat(s.amountUSD).toPrecision(3)))
-                  : '',
-              })
-              dispatch(checkedSubgraph({ chainId, hash }))
-              break
-            case 'Add liquidity': {
-              const res = await apolloClient.query({
-                query: GET_POOL_VALUES_AFTER_MINTS_SUCCESS,
-                variables: {
-                  poolAddress: transaction.arbitrary.poolAddress.toLowerCase(),
-                },
-                fetchPolicy: 'network-only',
-              })
-              if (
-                !res.data?.pool?.mints &&
-                transaction.confirmedTime &&
-                new Date().getTime() - transaction.confirmedTime < 3600000
-              )
-                break
-              if (res.data.pool.mints.every((mint: { id: string }) => !mint.id.startsWith(transaction.hash))) break
-              const { reserve0, reserve1, reserveUSD } = res.data.pool
-              mixpanelHandler(MIXPANEL_TYPE.ADD_LIQUIDITY_COMPLETED, {
-                token_1_pool_qty: reserve0,
-                token_2_pool_qty: reserve1,
-                liquidity_USD: reserveUSD,
-                token_1: transaction.arbitrary.token_1,
-                token_2: transaction.arbitrary.token_2,
-                add_liquidity_method: transaction.arbitrary.add_liquidity_method,
-                amp: transaction.arbitrary.amp,
-              })
-              dispatch(checkedSubgraph({ chainId, hash }))
-              break
-            }
-            case 'Remove liquidity': {
-              const res = await apolloClient.query({
-                query: GET_POOL_VALUES_AFTER_BURNS_SUCCESS,
-                variables: {
-                  poolAddress: transaction.arbitrary.poolAddress.toLowerCase(),
-                },
-                fetchPolicy: 'network-only',
-              })
-
-              if (
-                !res.data?.pool?.burns &&
-                transaction.confirmedTime &&
-                new Date().getTime() - transaction.confirmedTime < 3600000
-              )
-                break
-              if (res.data.pool.burns.every((mint: { id: string }) => !mint.id.startsWith(transaction.hash))) break
-              const { reserve0, reserve1, reserveUSD } = res.data.pool
-              mixpanelHandler(MIXPANEL_TYPE.REMOVE_LIQUIDITY_COMPLETED, {
-                token_1_pool_qty: reserve0,
-                token_2_pool_qty: reserve1,
-                liquidity_USD: reserveUSD,
-                token_1: transaction.arbitrary.token_1,
-                token_2: transaction.arbitrary.token_2,
-                remove_liquidity_method: transaction.arbitrary.remove_liquidity_method,
-                amp: transaction.arbitrary.amp,
-              })
-              dispatch(checkedSubgraph({ chainId, hash }))
-              break
-            }
-            default:
-              break
-          }
-        } catch (error) {
-          console.log(error)
-        }
-      })
-
     // eslint-disable-next-line
   }, [
     chainId,

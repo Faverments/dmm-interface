@@ -52,7 +52,11 @@ const avaxTestnetExchangeClient: ApolloClient<NormalizedCacheObject> = new Apoll
 })
 
 const avaxMainnetExchangeClient: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  uri: 'https://api.thegraph.com/subgraphs/name/kybernetwork/kyberswap-exchange-avalanche',
+  uri:
+    process.env.REACT_APP_MAINNET_ENV === 'staging'
+      ? ''
+      : 'https://api.thegraph.com/subgraphs/name/nguyenhuudungz/dmm-exchange-avalanche',
+
   cache: new InMemoryCache(),
 })
 
@@ -191,7 +195,7 @@ const arbitrumBlockClient = new ApolloClient({
 })
 
 const bttcBlockClient = new ApolloClient({
-  uri: 'https://bttc-graph.kyberengineering.io/subgraphs/name/kybernetwork/bttc-blocks',
+  uri: 'https://bttc-graph.dev.kyberengineering.io/subgraphs/name/dynamic-amm/bttc-blocks',
   cache: new InMemoryCache(),
 })
 

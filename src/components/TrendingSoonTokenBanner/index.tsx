@@ -1,4 +1,4 @@
-import React, { CSSProperties, useMemo } from 'react'
+import React, { CSSProperties, memo, useMemo } from 'react'
 import { Currency, Token } from '@dynamic-amm/sdk'
 import { useActiveWeb3React } from 'hooks'
 import { wrappedCurrency } from 'utils/wrappedCurrency'
@@ -10,34 +10,31 @@ import DiscoverIcon from 'components/Icons/DiscoverIcon'
 import useGetTrendingSoonTokenId from 'pages/TrueSight/hooks/useGetTrendingSoonTokenId'
 import useTheme from 'hooks/useTheme'
 import { rgba } from 'polished'
-import useMixpanel, { MIXPANEL_TYPE, nativeNameFromETH } from 'hooks/useMixpanel'
+import { nativeNameFromETH } from 'hooks/useMixpanel'
 import { Flex } from 'rebass'
-import { Field } from '../../state/swap/actions'
 
 const TrendingSoonTokenBanner = ({
-  currencies,
+  currency0,
+  currency1,
   style,
 }: {
-  currencies: { [field in Field]?: Currency }
+  currency0?: Currency
+  currency1?: Currency
   style?: CSSProperties
 }) => {
   const { chainId } = useActiveWeb3React()
   const theme = useTheme()
-  const { mixpanelHandler } = useMixpanel()
 
-  const token0 = useMemo(() => wrappedCurrency(currencies[Field.INPUT], chainId), [chainId, currencies])
-  const token1 = useMemo(() => wrappedCurrency(currencies[Field.OUTPUT], chainId), [chainId, currencies])
+  const token0 = wrappedCurrency(currency0, chainId)
+  const token1 = wrappedCurrency(currency1, chainId)
   const trendingToken0Id = useGetTrendingSoonTokenId(token0)
   const trendingToken1Id = useGetTrendingSoonTokenId(token1)
   const trendingSoonCurrency = useMemo(
-    () => (trendingToken0Id ? currencies[Field.INPUT] : trendingToken1Id ? currencies[Field.OUTPUT] : undefined),
-    [currencies, trendingToken0Id, trendingToken1Id],
+    () => (trendingToken0Id ? currency0 : trendingToken1Id ? currency1 : undefined),
+    [currency0, currency1, trendingToken0Id, trendingToken1Id],
   )
 
   if (trendingSoonCurrency === undefined) return null
-
-  const currencySymbol =
-    trendingSoonCurrency instanceof Token ? trendingSoonCurrency.symbol : nativeNameFromETH(chainId)
 
   return (
     <Container style={style}>
@@ -47,7 +44,8 @@ const TrendingSoonTokenBanner = ({
       <Flex alignItems="center">
         <CurrencyLogo currency={trendingSoonCurrency} size="16px" style={{ marginRight: '4px' }} />
         <BannerText>
-          {currencySymbol} <Trans>could be trending very soon!</Trans> <Trans>View</Trans>{' '}
+          {trendingSoonCurrency instanceof Token ? trendingSoonCurrency.symbol : nativeNameFromETH(chainId)}{' '}
+          <Trans>could be trending very soon!</Trans> <Trans>See</Trans>{' '}
           <ExternalLink
             href={
               window.location.origin +
@@ -55,9 +53,6 @@ const TrendingSoonTokenBanner = ({
               (trendingToken0Id ?? trendingToken1Id)
             }
             target="_blank"
-            onClickCapture={() => {
-              mixpanelHandler(MIXPANEL_TYPE.DISCOVER_SWAP_SEE_HERE_CLICKED, { trending_token: currencySymbol })
-            }}
           >
             <Trans>here</Trans>
           </ExternalLink>
@@ -103,4 +98,4 @@ const BannerText = styled.div`
   //}
 `
 
-export default TrendingSoonTokenBanner
+export default memo(TrendingSoonTokenBanner)

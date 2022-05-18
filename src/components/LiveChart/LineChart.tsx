@@ -168,7 +168,7 @@ const LineChart = ({
   }, [formattedData])
 
   return (
-    <ResponsiveContainer minHeight={isMobile ? 300 : minHeight} height='100%'>
+    <ResponsiveContainer minHeight={isMobile ? 240 : minHeight}>
       {formattedData && formattedData.length > 0 ? (
         <AreaChartWrapper
           data={formattedData}
