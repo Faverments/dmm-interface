@@ -22,6 +22,7 @@ import {
   TrueSightSortSettings,
 } from 'pages/TrueSight'
 import { number } from '@lingui/core/cjs/formats'
+import Calendar from 'components/Calendar'
 
 export enum PercentChangeMode {
   PREDICTED_TO_CURRENT = 'predicted_to_current',
@@ -156,6 +157,7 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
               setSortSettings={setSortSettings}
             />
           </Flex>
+          {/* <Calendar /> */}
         </>
       )}
     </TrueSightPageWrapper>

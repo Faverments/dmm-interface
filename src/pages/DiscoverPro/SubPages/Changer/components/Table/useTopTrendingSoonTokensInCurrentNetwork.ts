@@ -37,15 +37,15 @@ export default function useTopTrendingSoonTokensInCurrentNetwork() {
 
   const { data: trendingSoon1dData, loading: isTrendingSoon1dDataLoading } = useGetPredictedDatesHistory('24h', [
     1652573532,
-    1652055336,
-    1652055334,
-    11652011912,
-    1652011918,
-    1652011902,
+    // 1652055336,
+    // 1652055334,
+    // 11652011912,
+    // 1652011918,
+    // 1652011902,
     1652011920,
-    1652487114,
-    1652011928,
-    1652443912,
+    // 1652487114,
+    // 1652011928,
+    // 1652443912,
   ])
   // const { data: trendingSoon1wData, isLoading: isTrendingSoon1wDataLoading } = useGetTrendingSoonData(
   //   trendingSoon1wFilter,

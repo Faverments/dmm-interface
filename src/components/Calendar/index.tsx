@@ -1,15 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import dayjs from 'dayjs'
 import localeData from 'dayjs/plugin/localeData'
 import useTheme from 'hooks/useTheme'
+import styled from 'styled-components'
 dayjs.extend(localeData)
 function range(end: number) {
   return [...Array(end).keys()]
 }
-export default function Calendar() {
+export default function Calendar({
+  cancelPicker,
+  isPicked,
+  setIspicked,
+  data,
+}: {
+  cancelPicker: any
+  isPicked: boolean
+  setIspicked: any
+  data: any
+}) {
+  console.log(data)
   const todayObj = dayjs()
   const weekdaysShort = dayjs.weekdaysShort()
   const [dayObj, setDayObj] = useState(todayObj)
+  const [activeDate, setActiveDate] = useState(dayjs(todayObj.format('YYYY-MM-DD')))
 
   const thisYear = dayObj.year()
   const thisMonth = dayObj.month() // (January as 0, December as 11)
@@ -30,11 +43,22 @@ export default function Calendar() {
   }
   const today = () => {
     setDayObj(todayObj)
+    setActiveDate(dayjs(todayObj.format('YYYY-MM-DD')))
   }
   const theme = useTheme()
 
+  const handleClick = (day: any) => {
+    console.log(day.format())
+    setActiveDate(day)
+
+    setIspicked(true)
+  }
+  useEffect(() => {
+    console.log(activeDate.format())
+  }, [activeDate])
+
   return (
-    <div>
+    <WapperCalendar>
       <h1>Calendar</h1>
       <button type="button" onClick={handlePrev}>
         &lt;
@@ -73,7 +97,9 @@ export default function Calendar() {
             style={{
               width: 'calc(500px / 7)',
               color: theme.disableText,
+              background: dayObjOf1.subtract(weekDayOf1 - i, 'day').isSame(activeDate) ? theme.primary : '',
             }}
+            onClick={() => handleClick(dayObjOf1.subtract(weekDayOf1 - i, 'day'))}
           >
             {dayObjOf1.subtract(weekDayOf1 - i, 'day').date()}
           </div>
@@ -84,11 +110,9 @@ export default function Calendar() {
             key={i}
             style={{
               width: 'calc(500px / 7)',
-              background:
-                i + 1 === todayObj.date() && thisMonth === todayObj.month() && thisYear === todayObj.year()
-                  ? theme.primary
-                  : '',
+              background: dayjs(`${thisYear}-${thisMonth + 1}-${i + 1}`).isSame(activeDate) ? theme.primary : '',
             }}
+            onClick={() => handleClick(dayjs(`${thisYear}-${thisMonth + 1}-${i + 1}`))}
           >
             {i + 1}
           </div>
@@ -100,12 +124,19 @@ export default function Calendar() {
             style={{
               width: 'calc(500px / 7)',
               color: theme.disableText,
+              background: dayObjOfLast.add(i + 1, 'day').isSame(activeDate) ? theme.primary : '',
             }}
+            onClick={() => handleClick(dayObjOfLast.add(i + 1, 'day'))}
           >
             {dayObjOfLast.add(i + 1, 'day').date()}
           </div>
         ))}
       </div>
-    </div>
+    </WapperCalendar>
   )
 }
+
+const WapperCalendar = styled.div`
+  background-color: ${({ theme }) => theme.bg10};
+  width: 300px;
+`

@@ -43,6 +43,7 @@ import MobileChartModal from 'pages/TrueSight/components/TrendingSoonLayout/Mobi
 import TrendingSoonTokenItem from 'pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItem'
 import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
 import useGetPredictedDatesHistory from 'pages/DiscoverPro/hooks/useGetPredictedDatesHistory'
+import Delayed from 'pages/DiscoverPro/SubPages/Changer/components/Table/Delayed'
 
 const TopTrendingSoonTokensInCurrentNetwork = () => {
   const theme = useTheme()
@@ -115,6 +116,7 @@ const TopTrendingSoonTokensInCurrentNetwork = () => {
               />
               <div></div>
               {topTrendingSoonTokens.map((listTokenByDate, indexDate) => (
+                // <Delayed waitBeforeShow={indexDate * 100} key={indexDate}>
                 <Flex
                   flexDirection="column"
                   justifyContent="flex-start"
@@ -135,6 +137,7 @@ const TopTrendingSoonTokensInCurrentNetwork = () => {
                     />
                   ))}
                 </Flex>
+                // </Delayed>
               ))}
             </TrendingSoonTokensContainer>
           </TrendingSoonTokensAndNoteContainer>

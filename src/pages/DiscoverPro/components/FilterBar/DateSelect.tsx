@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Flex, Text } from 'rebass'
 import { ArrowLeft, ArrowRight, Calendar } from 'react-feather'
 import { MouseoverTooltip } from 'components/Tooltip'
@@ -11,6 +11,8 @@ import useGetListPredictedDate from 'pages/DiscoverPro/hooks/useGetListPredicted
 import { TrueSightTimeframe } from 'pages/TrueSight/index'
 import { PredictedDate } from 'pages/DiscoverPro/index'
 import Loader from 'components/Loader'
+import CalendarPicker from 'components/Calendar'
+import { useOnClickOutside } from 'hooks/useOnClickOutside'
 const DateSelectWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -33,6 +35,7 @@ const DatePicker = styled.div`
   color: ${({ theme }) => theme.subText};
   font-size: 14px;
   font-weight: 500;
+  position: relative;
 `
 
 const NavigateButton = styled.div`
@@ -64,6 +67,11 @@ export default function DateSelect({
   const listPredictedDate24h = useGetListPredictedDate(TrueSightTimeframe.ONE_DAY)
   const listPredictedDate7d = useGetListPredictedDate(TrueSightTimeframe.ONE_WEEK)
 
+  const [isShowingCalendar, setIsShowingCalendar] = React.useState(false)
+  const [ispicked, setIspicked] = React.useState(false)
+  console.log(isShowingCalendar)
+  const containerRef = useRef<HTMLDivElement>(null)
+
   const currentDate24h = (() => {
     if (listPredictedDate24h.data.length > 0) {
       return dayjs.unix(listPredictedDate24h.data[0].mediumDate).format('h:m A - MMM D, YYYY')
@@ -83,6 +91,19 @@ export default function DateSelect({
   //   }
   // }, [listPredictedDate24h.data])
 
+  useOnClickOutside(containerRef, () => setIsShowingCalendar(false))
+  console.log('ispicked', ispicked)
+
+  const setisPickedWapper = (ol: boolean) => {
+    setIspicked(ol)
+  }
+
+  useEffect(() => {
+    if (ispicked == true) {
+      setIsShowingCalendar(false)
+    }
+  })
+
   return (
     <DateSelectWrapper>
       <MouseoverTooltip text={tooltipText}>
@@ -97,27 +118,96 @@ export default function DateSelect({
         <NavigateButton>
           <ArrowRight size={18} />
         </NavigateButton>
-        <DatePicker>
-          {activeTimeFrame === TrueSightTimeframe.ONE_DAY ? (
-            listPredictedDate24h.isLoading ? (
+        <DatePicker ref={containerRef}>
+          <DatePicker
+            onClick={() => {
+              setIsShowingCalendar(true)
+              setIspicked(false)
+              console.log('click calendar')
+            }}
+          >
+            {activeTimeFrame === TrueSightTimeframe.ONE_DAY ? (
+              listPredictedDate24h.isLoading ? (
+                <Loader />
+              ) : (
+                (() => {
+                  // setActivePredictedDate(listPredictedDate24h.data[0])
+                  return <div>{currentDate24h}</div>
+                })()
+              )
+            ) : listPredictedDate7d.isLoading ? (
               <Loader />
             ) : (
               (() => {
-                // setActivePredictedDate(listPredictedDate24h.data[0])
-                return <div>{currentDate24h}</div>
+                // setActivePredictedDate(listPredictedDate7d.data[0])
+                return (
+                  <div
+                    onClick={() => {
+                      setIsShowingCalendar(true)
+                      setIspicked(false)
+                      console.log('click calendar')
+                    }}
+                  >
+                    {currentDate7d}
+                  </div>
+                )
               })()
-            )
-          ) : listPredictedDate7d.isLoading ? (
-            <Loader />
-          ) : (
-            (() => {
-              // setActivePredictedDate(listPredictedDate7d.data[0])
-              return <div>{currentDate7d}</div>
-            })()
+            )}
+            <Calendar size={20}></Calendar>
+          </DatePicker>
+
+          {isShowingCalendar && (
+            <CalendarPickerContainer>
+              <CalendarPicker
+                cancelPicker={true}
+                setIspicked={setisPickedWapper}
+                isPicked={ispicked}
+                data={{ currentDate24h, currentDate7d }}
+              />
+            </CalendarPickerContainer>
           )}
-          <Calendar size={20}></Calendar>
         </DatePicker>
       </DateNavigateWarper>
     </DateSelectWrapper>
   )
 }
+
+const CalendarPickerContainer = styled(Flex)`
+  position: absolute;
+  bottom: -4px;
+  right: 0;
+  border-radius: 4px;
+  flex-direction: column;
+  background: ${({ theme }) => theme.tableHeader};
+  z-index: 9999;
+  width: 300px;
+  box-shadow: 0 0 0 1px ${({ theme }) => theme.bg4};
+  transform: translate(0, 100%);
+  /* min-width: max-content !important; */
+
+  & > * {
+    cursor: pointer;
+    padding: 12px;
+
+    &:hover {
+      background: ${({ theme }) => theme.background};
+    }
+  }
+
+  & div {
+    min-width: max-content !important;
+  }
+
+  .no-hover-effect {
+    cursor: default;
+    &:hover {
+      background: inherit;
+    }
+  }
+
+  .no-hover-effect-divider {
+    &:hover {
+      background: ${({ theme }) => theme.border};
+    }
+  }
+`
