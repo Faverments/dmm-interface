@@ -9,8 +9,7 @@ import { rgba } from 'polished'
 import { Info } from 'react-feather'
 import { ButtonEmpty } from 'components/Button'
 import useTheme from 'hooks/useTheme'
-import { MoneyBag } from 'components/Icons'
-import { formattedNum } from 'utils'
+import { formatNumberWithPrecisionRange, formattedNum } from 'utils'
 import { Link } from 'react-router-dom'
 import { TRUESIGHT_NETWORK_TO_CHAINID } from 'constants/networks'
 import { useActiveWeb3React } from 'hooks'
@@ -19,6 +18,8 @@ import { useToggleModal } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import { MouseoverTooltipDesktopOnly } from 'components/Tooltip'
 import { t } from '@lingui/macro'
+import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
+import Cart from 'components/Icons/Cart'
 
 const TopTrendingSoonTokenItem = ({
   tokenData,
@@ -30,7 +31,7 @@ const TopTrendingSoonTokenItem = ({
   setSelectedToken: React.Dispatch<React.SetStateAction<TrueSightTokenData | undefined>>
 }) => {
   const theme = useTheme()
-
+  const { mixpanelHandler } = useMixpanel()
   const { chainId = ChainId.MAINNET } = useActiveWeb3React()
   const currentNetworkIndex = Object.values(TRUESIGHT_NETWORK_TO_CHAINID).indexOf(chainId)
   const currentNetwork = Object.keys(TRUESIGHT_NETWORK_TO_CHAINID)[currentNetworkIndex]
@@ -39,6 +40,7 @@ const TopTrendingSoonTokenItem = ({
   const onSelectToken = () => {
     setSelectedToken(tokenData)
     toggleTrendingSoonTokenDetailModal()
+    mixpanelHandler(MIXPANEL_TYPE.DISCOVER_SWAP_MORE_INFO_CLICKED, { trending_token: tokenData.symbol })
   }
 
   return (
@@ -67,7 +69,13 @@ const TopTrendingSoonTokenItem = ({
             style={{ borderRadius: '50%', cursor: 'pointer' }}
             onClick={onSelectToken}
           />
-          <Text fontSize="14px" mr="5px" color={theme.subText} style={{ cursor: 'pointer' }} onClick={onSelectToken}>
+          <Text
+            fontSize="14px"
+            mr="5px"
+            color={theme.subText}
+            style={{ cursor: 'pointer', flex: '1' }}
+            onClick={onSelectToken}
+          >
             {tokenData.symbol}
           </Text>
           <MouseoverTooltipDesktopOnly text={t`More info`} placement="top" width="fit-content">
@@ -85,27 +93,33 @@ const TopTrendingSoonTokenItem = ({
               <Info size="10px" color={theme.subText} />
             </ButtonEmpty>
           </MouseoverTooltipDesktopOnly>
-          <MouseoverTooltipDesktopOnly text={t`Buy now`} placement="top" width="fit-content">
-            <ButtonEmpty
-              padding="0"
-              as={Link}
-              to={`/swap?inputCurrency=ETH&outputCurrency=${tokenData.platforms.get(currentNetwork)}`}
-              style={{
-                background: rgba(theme.primary, 0.2),
-                minWidth: '20px',
-                minHeight: '20px',
-                width: '20px',
-                height: '20px',
-              }}
-            >
-              <MoneyBag color={theme.primary} size={12} />
-            </ButtonEmpty>
-          </MouseoverTooltipDesktopOnly>
+          {/*<MouseoverTooltipDesktopOnly text={t`Buy now`} placement="top" width="fit-content">*/}
+          <ButtonEmpty
+            padding="0"
+            as={Link}
+            to={`/swap?inputCurrency=ETH&outputCurrency=${tokenData.platforms.get(currentNetwork)}`}
+            style={{
+              background: rgba(theme.primary, 0.2),
+              minWidth: '20px',
+              minHeight: '20px',
+              width: '20px',
+              height: '20px',
+            }}
+            onClick={() =>
+              mixpanelHandler(MIXPANEL_TYPE.DISCOVER_SWAP_BUY_NOW_CLICKED, { trending_token: tokenData.symbol })
+            }
+          >
+            <Cart color={theme.primary} size={12} />
+          </ButtonEmpty>
+          {/*</MouseoverTooltipDesktopOnly>*/}
         </Flex>
         <Flex alignItems="center" justifyContent="space-between">
           <Text fontSize="12px">{formattedNum(tokenData.price.toString(), true)}</Text>
           <Text fontSize="12px" color={tokenData.price_change_percentage_24h >= 0 ? theme.apr : theme.red}>
-            {formattedNum(tokenData.price_change_percentage_24h.toString(), false)}%
+            {tokenData.price_change_percentage_24h >= 1
+              ? formatNumberWithPrecisionRange(tokenData.price_change_percentage_24h, 0, 0)
+              : formatNumberWithPrecisionRange(tokenData.price_change_percentage_24h, 0, 2)}
+            %
           </Text>
         </Flex>
       </Flex>
@@ -118,6 +132,9 @@ const Container = styled.div`
   background: ${({ theme }) => theme.buttonBlack};
   border-radius: 4px;
   position: relative;
+  width: calc(20% - 70px);
+  min-width: 135px;
+  max-width: 176px;
 `
 
 export default TopTrendingSoonTokenItem

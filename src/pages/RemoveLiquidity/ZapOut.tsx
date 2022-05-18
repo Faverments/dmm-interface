@@ -17,6 +17,8 @@ import {
   Token,
   TokenAmount,
   WETH,
+  Fraction,
+  JSBI,
 } from '@dynamic-amm/sdk'
 import { ZAP_ADDRESSES, FEE_OPTIONS } from 'constants/index'
 import { ButtonPrimary, ButtonLight, ButtonError, ButtonConfirmed } from 'components/Button'
@@ -111,6 +113,8 @@ export default function ZapOut({
     error,
   } = useDerivedZapOutInfo(currencyA ?? undefined, currencyB ?? undefined, pairAddress)
   const { onUserInput: _onUserInput, onSwitchField } = useZapOutActionHandlers()
+
+  const amp = pair?.amp || JSBI.BigInt(0)
 
   const selectedCurrencyIsETHER = !!(
     chainId &&
@@ -388,9 +392,11 @@ export default function ZapOut({
               type: 'Remove liquidity',
               summary: parsedAmounts[independentTokenField]?.toSignificant(6) + ' ' + independentToken?.symbol,
               arbitrary: {
+                poolAddress: pairAddress,
                 token_1: convertToNativeTokenFromETH(currencyA, chainId).symbol,
                 token_2: convertToNativeTokenFromETH(currencyB, chainId).symbol,
                 remove_liquidity_method: 'single token',
+                amp: new Fraction(amp).divide(JSBI.BigInt(10000)).toSignificant(5),
               },
             })
 
