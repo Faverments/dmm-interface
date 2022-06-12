@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { PageWrapper } from 'pages/CreatePool/styled'
 import ScrollContainer from 'react-indiana-drag-scroll'
-import { ScrollContainerWithGradient } from 'components/RewardTokenPrices/index'
+// import { ScrollContainerWithGradient } from 'components/RewardTokenPrices/index'
 
 import {
-  TopBar,
+  // TopBar,
   TabWrapper,
   Tab,
   PoolTitleContainer,
@@ -109,6 +109,50 @@ const TabContainer = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+`
+
+const ScrollContainerWithGradient = styled.div<{ backgroundColor?: string }>`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  max-width: calc(100% - 130px);
+
+  &.left-visible:after,
+  &.right-visible:before {
+    content: '';
+    display: block;
+    z-index: 2;
+    pointer-events: none;
+    position: absolute;
+    inset: 0 0 auto auto;
+    width: 40px;
+    height: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &.left-visible:after {
+    background: linear-gradient(
+      to right,
+      ${({ theme, backgroundColor }) => backgroundColor ?? theme.bg12},
+      transparent
+    );
+    left: 0;
+  }
+
+  &.right-visible:before {
+    background: linear-gradient(to left, ${({ theme, backgroundColor }) => backgroundColor ?? theme.bg12}, transparent);
+    right: 0;
+  }
+`
+
+const TopBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
 `
 
 const HistoryTabs = ({ activeTab }: { activeTab: TrueSightTabs | undefined }) => {
