@@ -1,7 +1,7 @@
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import { createAction } from '@reduxjs/toolkit'
 import { TokenList } from '@uniswap/token-lists'
-import { ChainId } from '@dynamic-amm/sdk'
+import { ChainId } from '@kyberswap/ks-sdk-core'
 
 export type PopupContent =
   | {
@@ -25,6 +25,12 @@ export type PopupContent =
         title: string
         success: boolean
         summary: string
+      }
+    }
+  | {
+      truesightNoti: {
+        title: string
+        body: string
       }
     }
 
@@ -53,6 +59,7 @@ export enum ApplicationModal {
   CONTRACT_ADDRESS,
   FAUCET_POPUP,
   TABLE_CUSTOMIZE,
+  UNSUBSCRIBE_TRUESIGHT,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')
@@ -61,6 +68,12 @@ export const addPopup = createAction<{ key?: string; removeAfterMs?: number | nu
   'application/addPopup',
 )
 export const removePopup = createAction<{ key: string }>('application/removePopup')
+export const updatePrommETHPrice = createAction<{
+  currentPrice: string
+  oneDayBackPrice: string
+  pricePercentChange: number
+}>('application/updatePrommETHPrice')
+
 export const updateETHPrice = createAction<{
   currentPrice: string
   oneDayBackPrice: string
