@@ -52,6 +52,7 @@ export enum ApplicationModal {
   COMMUNITY,
   CONTRACT_ADDRESS,
   FAUCET_POPUP,
+  TABLE_CUSTOMIZE,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')

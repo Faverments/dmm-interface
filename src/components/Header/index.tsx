@@ -18,6 +18,7 @@ import Web3Network from 'components/Web3Network'
 import { useIsDarkMode } from 'state/user/hooks'
 import DiscoverIcon from 'components/Icons/DiscoverIcon'
 import AboutPageDropwdown from 'components/AboutPageDropDown'
+import DiscoverProPageDropwdown from 'components/DiscoverProPageDropDown'
 // import { MouseoverTooltip } from 'components/Tooltip'
 
 const HeaderFrame = styled.div`
@@ -147,6 +148,12 @@ const DiscoverWrapper = styled.span`
 `
 
 const AboutWrapper = styled.span`
+  @media (max-width: 1320px) {
+    display: none;
+  }
+`
+
+const DiscoverProWapper = styled.span`
   @media (max-width: 1320px) {
     display: none;
   }
@@ -359,6 +366,10 @@ export default function Header() {
               <DiscoverIcon size={14} style={{ marginTop: '-20px', marginLeft: '4px' }} />
             </StyledNavLink>
           </DiscoverWrapper>
+
+          <DiscoverProWapper>
+            <DiscoverProPageDropwdown />
+          </DiscoverProWapper>
 
           <AboutWrapper>
             <AboutPageDropwdown />

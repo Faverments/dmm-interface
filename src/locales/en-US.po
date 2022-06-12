@@ -13,6 +13,10 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "#"
+msgstr "#"
+
 #: src/pages/CreateReferral/index.tsx
 msgid "*Required"
 msgstr "*Required"
@@ -127,6 +131,8 @@ msgid "Account"
 msgstr "Account"
 
 #: src/components/PoolList/index.tsx
+#: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 msgid "Actions"
 msgstr "Actions"
@@ -182,11 +188,18 @@ msgstr "Advanced mode is on!"
 msgid "After harvesting, your rewards will unlock linearly over the indicated time period"
 msgstr "After harvesting, your rewards will unlock linearly over the indicated time period"
 
+#: src/components/DiscoverProNetworkModal/index.tsx
+#: src/components/DiscoverProNetworkModal/index.tsx
 #: src/components/TrueSightNetworkModal/index.tsx
 #: src/components/TrueSightNetworkModal/index.tsx
+#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
 #: src/pages/TrueSight/components/FilterBar/NetworkSelect.tsx
 msgid "All Chains"
 msgstr "All Chains"
+
+#: src/pages/DiscoverPro/components/FilterBar/TokenStatusSelect.tsx
+msgid "All Status"
+msgstr "All Status"
 
 #: src/components/PoolsCurrencyInputPanel/index.tsx
 msgid "All Tokens"
@@ -428,10 +441,15 @@ msgid "Common bases"
 msgstr "Common bases"
 
 #: src/components/ModalCommunity/index.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/CommunityButton.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Community"
 msgstr "Community"
+
+#: src/components/DiscoverProPageDropDown/index.tsx
+msgid "Compare"
+msgstr "Compare"
 
 #: src/components/TransactionSettings/index.tsx
 #: src/pages/RemoveLiquidity/migrate_sushi.tsx
@@ -507,6 +525,7 @@ msgstr "Contact Us"
 
 #: src/components/ModalContractAddress/index.tsx
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Contract Address"
 msgstr "Contract Address"
@@ -559,6 +578,14 @@ msgstr "Create a new pool"
 msgid "Create a new pool or select another pair of tokens to view the available pools."
 msgstr "Create a new pool or select another pair of tokens to view the available pools."
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Current Market Cap"
+msgstr "Current Market Cap"
+
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Current Number of Holders"
+msgstr "Current Number of Holders"
+
 #: src/components/ConfirmAddModalBottom/index.tsx
 #: src/components/swapv2/SwapModalFooter.tsx
 #: src/pages/AddLiquidity/TokenPair.tsx
@@ -568,10 +595,18 @@ msgstr "Create a new pool or select another pair of tokens to view the available
 msgid "Current Price"
 msgstr "Current Price"
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Current Price Change %"
+msgstr "Current Price Change %"
+
 #: src/pages/RemoveLiquidity/TokenPair.tsx
 #: src/pages/RemoveLiquidity/ZapOut.tsx
 msgid "Current Price:"
 msgstr "Current Price:"
+
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Current Volume"
+msgstr "Current Volume"
 
 #: src/components/YieldPools/index.tsx
 msgid "Currently there are no Farms."
@@ -606,6 +641,8 @@ msgstr "Details"
 msgid "Disable Metamask in C98"
 msgstr "Disable Metamask in C98"
 
+#: src/pages/DiscoverPro/History/HistoryTrendingSoonHero.tsx
+#: src/pages/DiscoverPro/TrueSight/TrendingSoonHero.tsx
 #: src/pages/TrueSight/TrendingSoonHero.tsx
 msgid "Disclaimer: The information here should not be treated as any form of financial advice"
 msgstr "Disclaimer: The information here should not be treated as any form of financial advice"
@@ -615,15 +652,23 @@ msgstr "Disclaimer: The information here should not be treated as any form of fi
 msgid "Discover"
 msgstr "Discover"
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Discover On"
+msgstr "Discover On"
+
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 msgid "Discover more"
 msgstr "Discover more"
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
+#: src/pages/DiscoverPro/components/TrendingLayout/index.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-v0.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
 msgid "Discovered On"
 msgstr "Discovered On"
 
+#: src/pages/DiscoverPro/components/TrendingSoonTokenItem.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItem.tsx
 msgid "Discovered on"
 msgstr "Discovered on"
@@ -827,6 +872,7 @@ msgstr "Fees (24H)"
 msgid "Fees are adjusted dynamically according to market conditions to maximise returns for liquidity providers."
 msgstr "Fees are adjusted dynamically according to market conditions to maximise returns for liquidity providers."
 
+#: src/components/DiscoverProNetworkModal/index.tsx
 #: src/components/TrueSightNetworkModal/index.tsx
 msgid "Filter tokens by chain"
 msgstr "Filter tokens by chain"
@@ -914,19 +960,34 @@ msgstr "Harvest"
 msgid "Harvest All"
 msgstr "Harvest All"
 
+#: src/pages/DiscoverPro/History/HistoryTrendingSoonHero.tsx
+msgid "Here you can view Predicted Tokens in History from <0>TrueSight Technology</0>, this tokens that could be trending in the near future"
+msgstr "Here you can view Predicted Tokens in History from <0>TrueSight Technology</0>, this tokens that could be trending in the near future"
+
 #: src/pages/Pool/index.tsx
 msgid "Here you can view all your liquidity and staked balances"
 msgstr "Here you can view all your liquidity and staked balances"
 
+#: src/pages/DiscoverPro/TrueSight/TrendingHero.tsx
 #: src/pages/TrueSight/TrendingHero.tsx
 msgid "Here you can view tokens that are currently trending in <0>Coingecko</0> and <1>Coinmarketcap</1>"
 msgstr "Here you can view tokens that are currently trending in <0>Coingecko</0> and <1>Coinmarketcap</1>"
 
+#: src/pages/DiscoverPro/History/HistoryTrendingHero.tsx
+msgid "Here you can view tokens that was trended in <0>Coingecko</0> and <1>Coinmarketcap</1> in the pass"
+msgstr "Here you can view tokens that was trended in <0>Coingecko</0> and <1>Coinmarketcap</1> in the pass"
+
+#: src/components/DiscoverProPageDropDown/index.tsx
 #: src/components/FarmHistoryModal/index.tsx
 #: src/pages/Yield/index.tsx
 msgid "History"
 msgstr "History"
 
+#: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonTokenDetail.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
+#: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -1189,6 +1250,10 @@ msgstr "LP Tokens Removed"
 msgid "Language"
 msgstr "Language"
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Last Rank"
+msgstr "Last Rank"
+
 #: src/pages/About/AboutKyberSwap.tsx
 #: src/pages/About/AboutKyberSwap.tsx
 #: src/pages/About/AboutKyberSwap.tsx
@@ -1285,6 +1350,11 @@ msgid "Manage your pools."
 msgstr "Manage your pools."
 
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonTokenDetail.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
+#: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -1334,6 +1404,10 @@ msgstr "Maximum sold"
 #: src/components/Menu/index.tsx
 msgid "Menu"
 msgstr "Menu"
+
+#: src/pages/DiscoverPro/components/FilterBar/TableCustomize-v0.tsx
+msgid "Metrics"
+msgstr "Metrics"
 
 #: src/components/PositionCard/PositionCardSUSHI.tsx
 #: src/components/PositionCard/PositionCardUNI.tsx
@@ -1410,6 +1484,12 @@ msgstr "My Vesting"
 msgid "My liquidity"
 msgstr "My liquidity"
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
+#: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
+#: src/pages/DiscoverPro/components/TrendingLayout/index.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-v0.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
@@ -1459,11 +1539,17 @@ msgstr "No results found."
 msgid "No staked liquidity found. Check out our <0>Farms.</0>"
 msgstr "No staked liquidity found. Check out our <0>Farms.</0>"
 
+#: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
+#: src/pages/DiscoverPro/components/TrendingLayout/index.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-v0.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/index.tsx
 msgid "No token found"
 msgstr "No token found"
 
+#: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 msgid "No token found. Try turn off truesight."
 msgstr "No token found. Try turn off truesight."
@@ -1520,6 +1606,7 @@ msgstr "Oops! An unknown error occurred. Please refresh the page, or visit from 
 msgid "Open C98 Browser Extension"
 msgstr "Open C98 Browser Extension"
 
+#: src/pages/DiscoverPro/TrueSight/TrendingSoonHero.tsx
 #: src/pages/TrueSight/TrendingSoonHero.tsx
 msgid "Our <0>TrueSight</0> technology analyzes on-chain data, trading volumes and price trendlines to discover tokens that could be trending in the near future"
 msgstr "Our <0>TrueSight</0> technology analyzes on-chain data, trading volumes and price trendlines to discover tokens that could be trending in the near future"
@@ -1555,6 +1642,10 @@ msgstr "Participation Rewards"
 #: src/components/PoolPriceBar/index.tsx
 msgid "Per"
 msgstr "Per"
+
+#: src/pages/DiscoverPro/History/index.tsx
+msgid "Picker"
+msgstr "Picker"
 
 #: src/components/UpcomingFarms/NoFarms.tsx
 msgid "Please check the <0>Active Farms</0> or come back later."
@@ -1664,11 +1755,37 @@ msgstr "Powered by <0>TrueSight</0>, our AI prediction model"
 msgid "Powered by TrueSight, our AI prediction model"
 msgstr "Powered by TrueSight, our AI prediction model"
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Predicted Market Cap"
+msgstr "Predicted Market Cap"
+
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Predicted Number of Holders"
+msgstr "Predicted Number of Holders"
+
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Predicted Price"
+msgstr "Predicted Price"
+
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Predicted Price Change %"
+msgstr "Predicted Price Change %"
+
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Predicted Volume"
+msgstr "Predicted Volume"
+
 #: src/components/Settings/index.tsx
 msgid "Preferences"
 msgstr "Preferences"
 
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonTokenDetail.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
+#: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/Chart.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
@@ -1676,6 +1793,10 @@ msgstr "Preferences"
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Price"
 msgstr "Price"
+
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Price Change % from Predicted"
+msgstr "Price Change % from Predicted"
 
 #: src/components/ConfirmAddModalBottom/index.tsx
 #: src/components/swap/AdvancedSwapDetails.tsx
@@ -1729,6 +1850,10 @@ msgstr "Prices and Pool share"
 msgid "Privacy Policy"
 msgstr "Privacy Policy"
 
+#: src/components/DiscoverProPageDropDown/index.tsx
+msgid "Pro"
+msgstr "Pro"
+
 #: src/pages/Pools/index.tsx
 #: src/pages/Pools/index.tsx
 msgid "Provide Liquidity"
@@ -1743,6 +1868,7 @@ msgstr "REWARD:"
 msgid "Rainmaker Yield Farming"
 msgstr "Rainmaker Yield Farming"
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 msgid "Ranking"
 msgstr "Ranking"
@@ -1804,7 +1930,7 @@ msgstr "Removing pool tokens converts your position back into underlying tokens 
 
 #: src/pages/RemoveLiquidity/migrate_sushi.tsx
 msgid "Removing {0} {1} and {2} {3}"
-msgstr "Removing {0} {1} and {2} {3}"
+msgstr "Removing {0} {1} and {2} {3}<<<<<<< Updated upstream"
 
 #: src/components/Menu/FaucetModal.tsx
 msgid "Request"
@@ -1812,7 +1938,7 @@ msgstr "Request"
 
 #: src/components/Menu/FaucetModal.tsx
 msgid "Request to Faucet - Submitted"
-msgstr "Request to Faucet - Submitted"
+msgstr "Request to Faucet - Submitted=======>>>>>>> Stashed changes"
 
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
@@ -1856,6 +1982,7 @@ msgstr "Search by pool address"
 msgid "Search by token name or pool address"
 msgstr "Search by token name or pool address"
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "Search by token name or tag"
 msgstr "Search by token name or tag"
@@ -1947,6 +2074,7 @@ msgstr "Something is wrong. Please try again later!"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 msgid "Sort by"
 msgstr "Sort by"
@@ -2069,6 +2197,12 @@ msgstr "TVL From DEXs"
 msgid "TVL equivalent compared to AMMs"
 msgstr "TVL equivalent compared to AMMs"
 
+#: src/pages/DiscoverPro/components/FilterBar/TableCustomize-v0.tsx
+msgid "Table Customize"
+msgstr "Table Customize"
+
+#: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
+#: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Tag"
@@ -2089,6 +2223,10 @@ msgstr "Terms"
 #: src/components/WalletModal/index.tsx
 msgid "Terms of Use"
 msgstr "Terms of Use"
+
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
+msgid "Tf & Lo"
+msgstr "Tf & Lo"
 
 #: src/pages/SwapV2/index.tsx
 msgid "The amount you save compared to <0>{0}</0>."
@@ -2137,6 +2275,7 @@ msgstr "This token doesn't appear on the active token list(s). Make sure this is
 msgid "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
 msgstr "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "Timeframe"
@@ -2176,6 +2315,7 @@ msgstr "Token Name"
 msgid "Token Pair"
 msgstr "Token Pair"
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "Token name or tag"
 msgstr "Token name or tag"
@@ -2256,6 +2396,11 @@ msgid "Trading Volume"
 msgstr "Trading Volume"
 
 #: src/components/swapv2/TokenInfo.tsx
+#: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonTokenDetail.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
+#: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -2279,16 +2424,19 @@ msgstr "Transaction will revert if it is pending for longer than the indicated t
 msgid "Transaction will revert if there is an adverse rate change that is higher than this %"
 msgstr "Transaction will revert if there is an adverse rate change that is higher than this %"
 
+#: src/pages/DiscoverPro/History/index.tsx
 #: src/pages/TrueSight/TrueSightTab.tsx
 msgid "Trending"
 msgstr "Trending"
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
+#: src/pages/DiscoverPro/History/index.tsx
 #: src/pages/TrueSight/TrueSightTab.tsx
 msgid "Trending Soon"
 msgstr "Trending Soon"
 
+#: src/components/DiscoverProPageDropDown/index.tsx
 #: src/pages/TrueSight/components/FilterBar/TrueSightToggle.tsx
 msgid "TrueSight"
 msgstr "TrueSight"
@@ -2410,6 +2558,8 @@ msgstr "View"
 msgid "View Farms"
 msgstr "View Farms"
 
+#: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
+#: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "View chart"
@@ -2430,6 +2580,10 @@ msgstr "Volume (24H)"
 #: src/components/PoolList/index.tsx
 msgid "Volume (24h)"
 msgstr "Volume (24h)"
+
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Volume Change % from Predicted"
+msgstr "Volume Change % from Predicted"
 
 #: src/components/FarmHistoryModal/index.tsx
 msgid "WITHDRAW"
@@ -2455,6 +2609,9 @@ msgstr "We automatically reinvest your trading fee earnings by adding it back in
 msgid "We can amplify liquidity pools to provide much higher capital efficiency and better slippage for you. Deposit less tokens and still achieve better liquidity and volume."
 msgstr "We can amplify liquidity pools to provide much higher capital efficiency and better slippage for you. Deposit less tokens and still achieve better liquidity and volume."
 
+#: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
+#: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 msgid "We discovered this on"
@@ -2468,6 +2625,8 @@ msgstr "We gives liquidity providers the option of choosing between two liquidit
 msgid "We will automatically remove your liquidity and convert it into your desired token (either token from the token pair), all in a single transaction."
 msgstr "We will automatically remove your liquidity and convert it into your desired token (either token from the token pair), all in a single transaction."
 
+#: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
+#: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Website"
@@ -2519,9 +2678,17 @@ msgstr "You can also include tokens to swap in your referral link so that refere
 msgid "You can choose to see currently trending tokens over the last 24 hours or 7 days"
 msgstr "You can choose to see currently trending tokens over the last 24 hours or 7 days"
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
+msgid "You can choose to see currently trending tokens over the last 24 hours or 7 days and LAYOUT MODE."
+msgstr "You can choose to see currently trending tokens over the last 24 hours or 7 days and LAYOUT MODE."
+
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 msgid "You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days"
 msgstr "You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days"
+
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
+msgid "You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days and LAYOUT MODE."
+msgstr "You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days and LAYOUT MODE."
 
 #: src/pages/CreateReferral/index.tsx
 msgid "You can create referral links here. If your referral link is used by anyone during a trade, you will receive a small commission from their transaction. The commission will be instantly sent to your wallet address. You can create multiple referral links with different configurations.<0/><1/>Read more <2>here</2>"
@@ -2707,6 +2874,8 @@ msgstr "via {0}"
 msgid "via {0} token list"
 msgstr "via {0} token list"
 
+#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
+#: src/pages/DiscoverPro/components/FilterBar/TokenStatusSelect.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx
@@ -2731,6 +2900,7 @@ msgstr "{0} removed"
 msgid "{0} tokens"
 msgstr "{0} tokens"
 
+#: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 msgid "{0} ↗"
 msgstr "{0} ↗"

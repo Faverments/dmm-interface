@@ -74,6 +74,10 @@ export function useToggleTransactionSettingsMenu(): () => void {
   return useToggleModal(ApplicationModal.TRANSACTION_SETTINGS)
 }
 
+export function useToggleTableCustomize(): () => void {
+  return useToggleModal(ApplicationModal.TABLE_CUSTOMIZE)
+}
+
 export function useShowClaimPopup(): boolean {
   return useModalOpen(ApplicationModal.CLAIM_POPUP)
 }

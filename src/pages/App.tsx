@@ -73,6 +73,10 @@ const CreateReferral = lazy(() => import(/* webpackChunkName: 'create-referral-p
 
 const TrueSight = lazy(() => import(/* webpackChunkName: 'true-sight-page' */ './TrueSight'))
 
+const TrueSightPro = lazy(() => import(/* webpackChunkName: 'true-sight-pro-page' */ './DiscoverPro/TrueSight'))
+
+const History = lazy(() => import(/* webpackChunkName: 'history-page' */ './DiscoverPro/History'))
+
 const AppWrapper = styled.div`
   display: flex;
   flex-flow: column;
@@ -237,6 +241,9 @@ export default function App() {
                     <Route exact strict path="/migrate/:currencyIdA/:currencyIdB" component={MigrateLiquidityUNI} />
                     <Route exact path="/about/kyberswap" component={AboutKyberSwap} />
                     <Route exact path="/about/knc" component={AboutKNC} />
+                    <Route exact path="/discoverpro/truesight" component={TrueSightPro} />
+                    <Route exact path="/discoverpro/history" component={History} />
+                    <Route exact path="/discoverpro/compare" component={AboutKNC} />
                     <Route exact path="/referral" component={CreateReferral} />
                     <Route exact path="/discover" component={TrueSight} />
                     <Route component={RedirectPathToSwapOnly} />
