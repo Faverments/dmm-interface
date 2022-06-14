@@ -3,19 +3,27 @@ import useParsedQueryString from 'hooks/useParsedQueryString'
 import { TrueSightFilter, TrueSightSortSettings, TrueSightTabs, TrueSightTimeframe } from 'pages/TrueSight'
 import { RouteComponentProps, useLocation } from 'react-router-dom'
 
-import { Flex } from 'rebass'
+import { Flex, Text } from 'rebass'
 
 import { TrueSightPageWrapper } from 'pages/TrueSight/styled'
 import TrendingSoonHero from 'pages/DiscoverPro/TrueSight/TrendingSoonHero'
 import TrendingHero from 'pages/DiscoverPro/TrueSight/TrendingHero'
 import TrueSightTab from 'pages/TrueSight/TrueSightTab'
 import FilterBar from 'pages/DiscoverPro/components/FilterBar/index'
-import TrendingSoonLayout from '../components/TrendingSoonLayout'
 
 import { TableDetail, TokenStatus, SortDirection, LayoutMode } from 'constants/discoverPro'
+
 import TrendingLayout from '../components/TrendingLayout'
+import TrendingSoonLayout from '../components/TrendingSoonLayout'
 import TrendingLayoutDefault from '../components/TrendingLayout/index-v0'
 import TrendingSoonLayoutDefault from '../components/TrendingSoonLayout/index-v0'
+
+import styled from 'styled-components'
+import { ButtonEmpty } from 'components/Button'
+import { Tool } from 'react-feather'
+import useTheme from 'hooks/useTheme'
+
+import { Trans } from '@lingui/macro'
 
 export type TableDetailObject = {
   // name: string
@@ -125,6 +133,24 @@ export const initialTableCustomize: TableDetail[] = [
   TableDetail.VOLUME_CHANGE_PERCENTAGE__FROM_PREDICTED,
 ]
 
+export const VisibleButton = styled(ButtonEmpty)`
+  width: 118px;
+  height: 36px;
+  padding: 6px;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    width: 36px;
+  `}
+`
+export const ButtonText = styled(Text)`
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 6px !important;
+  color: ${({ theme }) => theme.text13};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    display: none;
+  `}
+`
+
 export default function DiscoverPro({ history }: RouteComponentProps) {
   const { tab } = useParsedQueryString()
   const [activeTab, setActiveTab] = useState<TrueSightTabs>()
@@ -151,9 +177,19 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
     }
   }, [history, tab])
 
+  const theme = useTheme()
   return (
     <TrueSightPageWrapper>
-      <TrueSightTab activeTab={activeTab} />
+      <Flex justifyContent="space-between">
+        <TrueSightTab activeTab={activeTab} />
+        <VisibleButton>
+          <Tool color={theme.text13} size={20} />
+          <ButtonText>
+            <Trans>Visible</Trans>
+          </ButtonText>
+        </VisibleButton>
+      </Flex>
+
       {activeTab === TrueSightTabs.TRENDING_SOON && (
         <>
           <TrendingSoonHero />

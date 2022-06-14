@@ -67,6 +67,8 @@ const TrueSightPro = lazy(() => import(/* webpackChunkName: 'true-sight-pro-page
 
 const History = lazy(() => import(/* webpackChunkName: 'history-page' */ './DiscoverPro/History'))
 
+const Compare = lazy(() => import(/* webpackChunkName: 'compare-page' */ './DiscoverPro/Compare'))
+
 const AppWrapper = styled.div`
   display: flex;
   flex-flow: column;
@@ -240,7 +242,7 @@ export default function App() {
                     <Route exact path="/about/knc" component={AboutKNC} />
                     <Route exact path="/discoverpro/truesight" component={TrueSightPro} />
                     <Route exact path="/discoverpro/history" component={History} />
-                    <Route exact path="/discoverpro/compare" component={AboutKNC} />
+                    <Route exact path="/discoverpro/compare" component={Compare} />
                     <Route exact path="/referral" component={CreateReferral} />
                     <Route exact path="/discover" component={TrueSight} />
                     <Route component={RedirectPathToSwapOnly} />

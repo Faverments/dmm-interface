@@ -15,6 +15,8 @@ msgstr ""
 
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
 msgid "#"
+msgstr ""
+
 #: src/pages/ProAmmPool/PositionPage.tsx
 msgid "$- (todo)"
 msgstr ""
@@ -122,8 +124,8 @@ msgstr ""
 msgid "APR"
 msgstr ""
 
-#: src/components/PoolList/ItemCard/TabInfoItems.tsx
 #: src/components/PoolList/index.tsx
+#: src/components/PoolList/ItemCard/TabInfoItems.tsx
 #: src/components/YieldPools/index.tsx
 msgid "APY"
 msgstr ""
@@ -144,9 +146,9 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: src/components/WalletModal/index.tsx
 #: src/components/swap/SwapModalHeader.tsx
 #: src/components/swapv2/SwapModalHeader.tsx
+#: src/components/WalletModal/index.tsx
 msgid "Accept"
 msgstr ""
 
@@ -159,9 +161,9 @@ msgid "Account"
 msgstr ""
 
 #: src/components/PoolList/index.tsx
+#: src/components/YieldPools/ProMMFarms.tsx
 #: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
-#: src/components/YieldPools/ProMMFarms.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 msgid "Actions"
 msgstr ""
@@ -223,10 +225,10 @@ msgstr ""
 msgid "After harvesting, your rewards will begin vesting linearly (only if the farm has a vesting duration).<0/><1/>Vesting means that your reward tokens will be locked initially but released gradually. You can claim the reward tokens to your wallet as and when they are released.<2/><3/>To claim your rewards, go to the <4> Vesting</4> tab and click 'Claim'."
 msgstr ""
 
+#: src/components/YieldPools/index.tsx
 #: src/components/YieldPools/ListItem.tsx
 #: src/components/YieldPools/ProMMFarmGroup.tsx
 #: src/components/YieldPools/ProMMFarms.tsx
-#: src/components/YieldPools/index.tsx
 msgid "After harvesting, your rewards will unlock linearly over the indicated time period"
 msgstr ""
 
@@ -446,6 +448,11 @@ msgstr ""
 msgid "Bug Bounty"
 msgstr ""
 
+#: src/pages/DiscoverPro/Compare/CompareTrendingSoonTokenItem.tsx
+#: src/pages/DiscoverPro/Compare/TopTrendingSoonTokenItem-v0.tsx
+msgid "Buy now"
+msgstr ""
+
 #: src/components/SearchModal/ImportList.tsx
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr ""
@@ -514,9 +521,9 @@ msgstr ""
 msgid "Claim your rewards"
 msgstr ""
 
+#: src/components/Vesting/index.tsx
 #: src/components/Vesting/ProMMVesting.tsx
 #: src/components/Vesting/ScheduleCard.tsx
-#: src/components/Vesting/index.tsx
 msgid "Claimed Rewards"
 msgstr ""
 
@@ -621,6 +628,7 @@ msgid "Community"
 msgstr ""
 
 #: src/components/DiscoverProPageDropDown/index.tsx
+#: src/components/Menu/DiscoverProPageDropDown.tsx
 msgid "Compare"
 msgstr ""
 
@@ -786,11 +794,6 @@ msgstr ""
 msgid "Current Price Change %"
 msgstr ""
 
-#: src/pages/RemoveLiquidity/TokenPair.tsx
-#: src/pages/RemoveLiquidity/ZapOut.tsx
-msgid "Current Price:"
-msgstr "현재 가격:"
-
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
 msgid "Current Volume"
 msgstr ""
@@ -799,8 +802,8 @@ msgstr ""
 msgid "Current {0} Price"
 msgstr ""
 
-#: src/components/YieldPools/ProMMFarms.tsx
 #: src/components/YieldPools/index.tsx
+#: src/components/YieldPools/ProMMFarms.tsx
 msgid "Currently there are no Farms."
 msgstr ""
 
@@ -857,11 +860,11 @@ msgid "Deposited Liquidity"
 msgstr ""
 
 #: src/components/PoolList/ItemCard/index.tsx
-#: src/components/Vesting/ProMMVesting.tsx
-#: src/components/Vesting/ProMMVesting.tsx
-#: src/components/Vesting/ProMMVesting.tsx
-#: src/components/Vesting/ProMMVesting.tsx
 #: src/components/Vesting/index.tsx
+#: src/components/Vesting/ProMMVesting.tsx
+#: src/components/Vesting/ProMMVesting.tsx
+#: src/components/Vesting/ProMMVesting.tsx
+#: src/components/Vesting/ProMMVesting.tsx
 msgid "Details"
 msgstr ""
 
@@ -886,6 +889,7 @@ msgstr ""
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
+#: src/pages/DiscoverPro/Compare/TrendingSoonLayout-v0.tsx
 msgid "Discover more"
 msgstr ""
 
@@ -1009,10 +1013,10 @@ msgstr ""
 msgid "Ended"
 msgstr ""
 
+#: src/components/YieldPools/index.tsx
 #: src/components/YieldPools/ListItem.tsx
 #: src/components/YieldPools/ProMMFarmGroup.tsx
 #: src/components/YieldPools/ProMMFarms.tsx
-#: src/components/YieldPools/index.tsx
 msgid "Ending In"
 msgstr ""
 
@@ -1072,8 +1076,8 @@ msgstr ""
 msgid "Estimated network fee for your transaction"
 msgstr ""
 
-#: src/components/PoolList/ItemCard/TabInfoItems.tsx
 #: src/components/PoolList/index.tsx
+#: src/components/PoolList/ItemCard/TabInfoItems.tsx
 #: src/components/YieldPools/index.tsx
 msgid "Estimated return based on yearly fees of the pool"
 msgstr ""
@@ -1287,12 +1291,13 @@ msgstr ""
 msgid "Here you can view tokens that was trended in <0>Coingecko</0> and <1>Coinmarketcap</1> in the pass"
 msgstr ""
 
-#: src/components/DiscoverProPageDropDown/index.tsx
 #: src/pages/SwapProAmm/index.tsx
 msgid "High Price Impact"
 msgstr ""
 
+#: src/components/DiscoverProPageDropDown/index.tsx
 #: src/components/FarmHistoryModal/index.tsx
+#: src/components/Menu/DiscoverProPageDropDown.tsx
 #: src/pages/Yield/index.tsx
 #: src/pages/Yield/index.tsx
 msgid "History"
@@ -1305,7 +1310,6 @@ msgstr ""
 #: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
-#: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Holders"
@@ -1408,8 +1412,8 @@ msgstr ""
 msgid "Info"
 msgstr ""
 
-#: src/components/UpcomingFarms/ListItem.tsx
 #: src/components/UpcomingFarms/index.tsx
+#: src/components/UpcomingFarms/ListItem.tsx
 msgid "Information"
 msgstr ""
 
@@ -1660,8 +1664,8 @@ msgstr ""
 msgid "Loading"
 msgstr ""
 
-#: src/components/Vesting/ProMMVesting.tsx
 #: src/components/Vesting/index.tsx
+#: src/components/Vesting/ProMMVesting.tsx
 msgid "Locked Rewards"
 msgstr ""
 
@@ -1715,7 +1719,6 @@ msgstr ""
 #: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
-#: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Market Cap"
@@ -1769,8 +1772,6 @@ msgstr ""
 msgid "Metrics"
 msgstr ""
 
-#: src/components/PositionCard/PositionCardSUSHI.tsx
-#: src/components/PositionCard/PositionCardUNI.tsx
 #: src/components/PositionCard/V1.tsx
 msgid "Migrate"
 msgstr ""
@@ -1801,6 +1802,8 @@ msgid "Minimum amount you will receive or your transaction will revert"
 msgstr ""
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/TopTrendingSoonTokenItem.tsx
+#: src/pages/DiscoverPro/Compare/CompareTrendingSoonTokenItem.tsx
+#: src/pages/DiscoverPro/Compare/TopTrendingSoonTokenItem-v0.tsx
 msgid "More info"
 msgstr ""
 
@@ -1808,23 +1811,22 @@ msgstr ""
 msgid "More information about KNC is available on:"
 msgstr ""
 
+#: src/components/YieldPools/index.tsx
 #: src/components/YieldPools/ListItem.tsx
 #: src/components/YieldPools/ProMMFarmGroup.tsx
 #: src/components/YieldPools/ProMMFarms.tsx
-#: src/components/YieldPools/index.tsx
 msgid "My Deposit"
 msgstr ""
 
 #: src/components/Header/index.tsx
-#: src/components/Menu/index.tsx
 msgid "My Pools"
 msgstr ""
 
+#: src/components/YieldPools/index.tsx
 #: src/components/YieldPools/ListItem.tsx
 #: src/components/YieldPools/ProMMFarmGroup.tsx
 #: src/components/YieldPools/ProMMFarmModals/HarvestModal.tsx
 #: src/components/YieldPools/ProMMFarms.tsx
-#: src/components/YieldPools/index.tsx
 msgid "My Rewards"
 msgstr ""
 
@@ -1857,8 +1859,8 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: src/components/UpcomingFarms/ListItem.tsx
 #: src/components/UpcomingFarms/index.tsx
+#: src/components/UpcomingFarms/ListItem.tsx
 msgid "Network"
 msgstr ""
 
@@ -1868,8 +1870,8 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: src/components/YieldPools/ProMMFarms.tsx
 #: src/components/YieldPools/index.tsx
+#: src/components/YieldPools/ProMMFarms.tsx
 msgid "No Farms found"
 msgstr ""
 
@@ -1913,8 +1915,8 @@ msgstr ""
 msgid "No token found. Try turn off truesight."
 msgstr ""
 
-#: src/components/Vesting/ProMMVesting.tsx
 #: src/components/Vesting/index.tsx
+#: src/components/Vesting/ProMMVesting.tsx
 msgid "No vesting schedule!"
 msgstr ""
 
@@ -1950,9 +1952,9 @@ msgstr ""
 msgid "On-chain & Open Source"
 msgstr ""
 
+#: src/components/YieldPools/index.tsx
 #: src/components/YieldPools/ProMMFarmGroup.tsx
 #: src/components/YieldPools/ProMMFarms.tsx
-#: src/components/YieldPools/index.tsx
 msgid "Once a farm has ended, you will continue to receive returns through LP Fees"
 msgstr ""
 
@@ -2084,8 +2086,8 @@ msgid "Pooled {0}"
 msgstr ""
 
 #: src/components/Header/index.tsx
-#: src/components/UpcomingFarms/ListItem.tsx
 #: src/components/UpcomingFarms/index.tsx
+#: src/components/UpcomingFarms/ListItem.tsx
 msgid "Pools"
 msgstr ""
 
@@ -2107,6 +2109,7 @@ msgid "Powered by <0>TrueSight</0>, our AI prediction model"
 msgstr ""
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
+#: src/pages/DiscoverPro/Compare/TrendingSoonLayout-v0.tsx
 msgid "Powered by TrueSight, our AI prediction model"
 msgstr ""
 
@@ -2148,8 +2151,8 @@ msgstr ""
 #: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/Chart.tsx
-#: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
+#: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Price"
@@ -2218,12 +2221,8 @@ msgid "Privacy Policy"
 msgstr "개인 정보 정책"
 
 #: src/components/DiscoverProPageDropDown/index.tsx
+#: src/components/Menu/DiscoverProPageDropDown.tsx
 msgid "Pro"
-msgstr ""
-
-#: src/pages/Pools/index.tsx
-#: src/pages/Pools/index.tsx
-msgid "Provide Liquidity"
 msgstr ""
 
 #: src/components/YieldPools/ListItem.tsx
@@ -2315,9 +2314,6 @@ msgstr ""
 msgid "Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive"
 msgstr ""
 
-#: src/pages/RemoveLiquidity/migrate_sushi.tsx
-msgid "Removing {0} {1} and {2} {3}"
-msgstr "{0} {1} 및 {2} {3} 제거<<<<<<< Updated upstream"
 #: src/pages/RemoveLiquidityProAmm/index.tsx
 msgid "Removing {0} {1} and {2} {3}{4}{5}"
 msgstr ""
@@ -2336,8 +2332,8 @@ msgstr ""
 msgid "Request to Faucet - Submitted"
 msgstr "=======>>>>>>> Stashed changes"
 
-#: src/components/UpcomingFarms/ListItem.tsx
 #: src/components/UpcomingFarms/index.tsx
+#: src/components/UpcomingFarms/ListItem.tsx
 #: src/components/YieldPools/HarvestAll.tsx
 msgid "Rewards"
 msgstr ""
@@ -2371,8 +2367,8 @@ msgstr ""
 msgid "Search by pool address"
 msgstr ""
 
-#: src/components/YieldPools/ProMMFarms.tsx
 #: src/components/YieldPools/index.tsx
+#: src/components/YieldPools/ProMMFarms.tsx
 #: src/pages/Pool/index.tsx
 #: src/pages/Pools/index.tsx
 #: src/pages/Pools/index.tsx
@@ -2548,15 +2544,15 @@ msgstr ""
 msgid "Staked LP Tokens"
 msgstr ""
 
-#: src/components/YieldPools/ProMMFarms.tsx
 #: src/components/YieldPools/index.tsx
+#: src/components/YieldPools/ProMMFarms.tsx
 msgid "Staked Only"
 msgstr ""
 
+#: src/components/YieldPools/index.tsx
 #: src/components/YieldPools/ListItem.tsx
 #: src/components/YieldPools/ProMMFarmGroup.tsx
 #: src/components/YieldPools/ProMMFarms.tsx
-#: src/components/YieldPools/index.tsx
 msgid "Staked TVL"
 msgstr ""
 
@@ -2580,8 +2576,8 @@ msgstr ""
 msgid "Start Earning"
 msgstr ""
 
-#: src/components/UpcomingFarms/ListItem.tsx
 #: src/components/UpcomingFarms/index.tsx
+#: src/components/UpcomingFarms/ListItem.tsx
 msgid "Starting In"
 msgstr ""
 
@@ -2707,6 +2703,10 @@ msgstr ""
 msgid "Terms of Use"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
+msgid "Tf & Lo"
+msgstr ""
+
 #: src/components/Vesting/ProMMVesting.tsx
 msgid "The amount of rewards that are locked as they are currently vesting"
 msgstr ""
@@ -2717,10 +2717,6 @@ msgstr ""
 
 #: src/components/Vesting/ProMMVesting.tsx
 msgid "The amount of rewards you have already claimed"
-msgstr ""
-
-#: src/pages/DiscoverPro/components/FilterBar/index.tsx
-msgid "Tf & Lo"
 msgstr ""
 
 #: src/pages/SwapV2/index.tsx
@@ -2783,6 +2779,7 @@ msgstr ""
 msgid "Thousands of users and multiple decentralized applications are already providing and using our liquidity."
 msgstr ""
 
+#: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/DiscoverPro/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
 #: src/pages/TrueSight/components/FilterBar/index.tsx
@@ -2925,7 +2922,6 @@ msgstr ""
 #: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
-#: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "Trading Volume (24H)"
@@ -2947,6 +2943,7 @@ msgstr ""
 msgid "Transaction will revert if there is an adverse rate change that is higher than this %"
 msgstr ""
 
+#: src/pages/DiscoverPro/Compare/index.tsx
 #: src/pages/DiscoverPro/History/index.tsx
 #: src/pages/TrueSight/TrueSightTab.tsx
 msgid "Trending"
@@ -2954,12 +2951,15 @@ msgstr ""
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
+#: src/pages/DiscoverPro/Compare/index.tsx
+#: src/pages/DiscoverPro/Compare/TrendingSoonLayout-v0.tsx
 #: src/pages/DiscoverPro/History/index.tsx
 #: src/pages/TrueSight/TrueSightTab.tsx
 msgid "Trending Soon"
 msgstr ""
 
 #: src/components/DiscoverProPageDropDown/index.tsx
+#: src/components/Menu/DiscoverProPageDropDown.tsx
 #: src/pages/TrueSight/components/FilterBar/TrueSightToggle.tsx
 msgid "TrueSight"
 msgstr ""
@@ -3019,9 +3019,9 @@ msgstr ""
 msgid "Unlocked"
 msgstr ""
 
+#: src/components/Vesting/index.tsx
 #: src/components/Vesting/ProMMVesting.tsx
 #: src/components/Vesting/ScheduleCard.tsx
-#: src/components/Vesting/index.tsx
 msgid "Unlocked Rewards"
 msgstr ""
 
@@ -3118,10 +3118,10 @@ msgstr ""
 msgid "VOLUME (24H)"
 msgstr ""
 
+#: src/components/YieldPools/index.tsx
 #: src/components/YieldPools/ListItem.tsx
 #: src/components/YieldPools/ProMMFarmGroup.tsx
 #: src/components/YieldPools/ProMMFarms.tsx
-#: src/components/YieldPools/index.tsx
 msgid "Vesting"
 msgstr ""
 
@@ -3141,8 +3141,6 @@ msgstr ""
 msgid "View Farms"
 msgstr ""
 
-#: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
-#: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/ProAmmPools/CardItem.tsx
 msgid "View Positions"
 msgstr ""
@@ -3151,6 +3149,8 @@ msgstr ""
 msgid "View analytics"
 msgstr ""
 
+#: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
+#: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItemDetailsOnMobile.tsx
 msgid "View chart"
@@ -3166,6 +3166,11 @@ msgstr ""
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on Etherscan"
+msgstr ""
+
+#: src/pages/DiscoverPro/History/index.tsx
+#: src/pages/DiscoverPro/TrueSight/index.tsx
+msgid "Visible"
 msgstr ""
 
 #: src/components/PoolList/ItemCard/TabInfoItems.tsx
@@ -3210,7 +3215,6 @@ msgstr ""
 #: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
-#: src/pages/TrueSight/components/TrendingLayout/index.tsx
 msgid "We discovered this on"
 msgstr ""
 
@@ -3301,7 +3305,7 @@ msgid "You can choose to see currently trending tokens over the last 24 hours or
 msgstr ""
 
 #: src/pages/DiscoverPro/components/FilterBar/index.tsx
-msgid "You can choose to see currently trending tokens over the last 24 hours or 7 days and LAYOUT MODE."
+msgid "You can choose to see currently trending tokens over the last 24 hours or 7 days {0}"
 msgstr ""
 
 #: src/pages/TrueSight/components/FilterBar/index.tsx
@@ -3309,7 +3313,7 @@ msgid "You can choose to see the tokens with the highest growth potential over t
 msgstr ""
 
 #: src/pages/DiscoverPro/components/FilterBar/index.tsx
-msgid "You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days and LAYOUT MODE."
+msgid "You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days {0}"
 msgstr ""
 
 #: src/pages/CreateReferral/index.tsx
@@ -3562,14 +3566,14 @@ msgstr ""
 msgid "via {0} token list"
 msgstr ""
 
-#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
-#: src/pages/DiscoverPro/components/FilterBar/TokenStatusSelect.tsx
 #: src/components/PositionPreview/index.tsx
 #: src/components/ProAmm/ProAmmPooledTokens.tsx
 #: src/components/ProAmm/ProAmmPriceRange.tsx
 #: src/components/ProAmm/ProAmmPriceRange.tsx
 #: src/components/RateToggle/index.tsx
 #: src/components/RateToggle/index.tsx
+#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
+#: src/pages/DiscoverPro/components/FilterBar/TokenStatusSelect.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx

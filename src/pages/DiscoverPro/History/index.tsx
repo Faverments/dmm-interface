@@ -16,14 +16,13 @@ import {
 import styled from 'styled-components'
 import useTheme from 'hooks/useTheme'
 import PredictionIcon from 'assets/images/crystal-ball.png'
-import { Text } from 'rebass'
+import { Text, Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
-import { Calendar, ArrowLeft, ArrowRight } from 'react-feather'
+import { Calendar, ArrowLeft, ArrowRight, Tool } from 'react-feather'
 import { darken, rgba } from 'polished'
 import useParsedQueryString from 'hooks/useParsedQueryString'
 import DiscoverIcon from 'components/Icons/DiscoverIcon'
 import TrendingIcon from 'components/Icons/TrendingIcon'
-import { TrueSightTabs } from 'pages/TrueSight'
 import { useHistory } from 'react-router'
 import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
 import { RouteComponentProps } from 'react-router-dom'
@@ -33,6 +32,17 @@ import HistoryTrendingHero from 'pages//DiscoverPro/History/HistoryTrendingHero'
 import { useActiveWeb3React } from 'hooks'
 import useThrottle from 'hooks/useThrottle'
 import { useMedia } from 'react-use'
+import { DiscoverProFilter, DiscoverProSortSettings, initialSortSettings, initialTableCustomize } from '../TrueSight'
+import { TrueSightTabs, TrueSightTimeframe, TrueSightFilter, TrueSightSortSettings } from 'pages/TrueSight'
+import { LayoutMode, TableDetail } from 'constants/discoverPro'
+import FilterBar from 'pages/DiscoverPro/components/FilterBar/index'
+
+import TrendingLayout from '../components/TrendingLayout'
+import TrendingSoonLayout from '../components/TrendingSoonLayout'
+import TrendingLayoutDefault from '../components/TrendingLayout/index-v0'
+import TrendingSoonLayoutDefault from '../components/TrendingSoonLayout/index-v0'
+
+import { VisibleButton, ButtonText } from '../TrueSight'
 
 const PredictedDateWrapper = styled.div`
   display: flex;
@@ -49,6 +59,7 @@ const PredictedText = styled.span`
   padding-left: 8px;
   border-left: ${({ theme }) => `2px solid ${theme.border}`};
 `
+
 const DateText = styled.span`
   color: ${({ theme }) => theme.subText};
   font-size: 17px;
@@ -80,6 +91,7 @@ const NavigateButton = styled.div`
     transform: scale(0.9);
   }
 `
+
 const DatePickerButton = styled(NavigateButton)`
   margin-left: auto;
   white-space: nowrap;
@@ -99,6 +111,7 @@ const HistoryTitle = styled(Text)`
   font-weight: 400;
   padding-right: 8px;
 `
+
 const TabContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -258,11 +271,26 @@ const History = ({ history }: RouteComponentProps) => {
   const theme = useTheme()
   const { tab } = useParsedQueryString()
   const [activeTab, setActiveTab] = useState<TrueSightTabs>()
+  const initialFilter = (): DiscoverProFilter => ({
+    isShowTrueSightOnly: false,
+    timeframe: TrueSightTimeframe.ONE_DAY,
+    selectedTag: undefined,
+    selectedTokenData: undefined,
+    selectedNetwork: undefined,
+    selectedTokenStatus: undefined,
+    selectedLayoutMode: tab === TrueSightTabs.TRENDING_SOON ? LayoutMode.TABLE_LARGE : LayoutMode.TABLE_WITH_DETAILS,
+  })
+  const [filter, setFilter] = useState<DiscoverProFilter>(initialFilter)
+  const [sortSettings, setSortSettings] = useState<DiscoverProSortSettings>(initialSortSettings)
+  const [tableCustomize, setTableCustomize] = useState<TableDetail[]>(initialTableCustomize)
   useEffect(() => {
     if (tab === undefined) {
       history.push({ search: '?tab=' + TrueSightTabs.TRENDING_SOON })
     } else {
       setActiveTab(tab as TrueSightTabs)
+      setFilter(initialFilter)
+      setSortSettings(initialSortSettings)
+      setTableCustomize(initialTableCustomize)
     }
   }, [history, tab])
   const above768 = useMedia('(min-width: 768px)')
@@ -290,16 +318,78 @@ const History = ({ history }: RouteComponentProps) => {
             )} */}
           </DateNavigateWarper>
         </TopBar>
-        <HistoryTabs activeTab={activeTab} />
+        <Flex justifyContent="space-between">
+          <HistoryTabs activeTab={activeTab} />
+          <VisibleButton>
+            <Tool color={theme.text13} size={20} />
+            <ButtonText>
+              <Trans>Visible</Trans>
+            </ButtonText>
+          </VisibleButton>
+        </Flex>
       </div>
       {activeTab === TrueSightTabs.TRENDING_SOON && (
         <>
           <HistoryTrendingSoonHero />
+          <Flex flexDirection="column" style={{ gap: '16px' }}>
+            <FilterBar
+              activeTab={TrueSightTabs.TRENDING_SOON}
+              filter={filter}
+              setFilter={setFilter}
+              sortSettings={sortSettings}
+              setSortSettings={setSortSettings}
+              tableCustomize={tableCustomize}
+              setTableCustomize={setTableCustomize}
+            />
+            {filter.selectedLayoutMode === LayoutMode.TABLE_LARGE && (
+              <TrendingSoonLayout
+                filter={filter}
+                sortSettings={sortSettings}
+                setFilter={setFilter}
+                setSortSettings={setSortSettings}
+                tableCustomize={tableCustomize}
+                setTableCustomize={setTableCustomize}
+              />
+            )}
+            {filter.selectedLayoutMode === LayoutMode.TABLE_WITH_DETAILS && (
+              <TrendingSoonLayoutDefault
+                filter={filter}
+                sortSettings={sortSettings}
+                setFilter={setFilter}
+                setSortSettings={setSortSettings}
+              />
+            )}
+          </Flex>
         </>
       )}
       {activeTab === TrueSightTabs.TRENDING && (
         <>
           <HistoryTrendingHero />
+          <Flex flexDirection="column" style={{ gap: '16px' }}>
+            <FilterBar
+              activeTab={TrueSightTabs.TRENDING}
+              filter={filter}
+              setFilter={setFilter}
+              sortSettings={sortSettings}
+              setSortSettings={setSortSettings}
+              tableCustomize={tableCustomize}
+              setTableCustomize={setTableCustomize}
+            />
+            {filter.selectedLayoutMode === LayoutMode.TABLE_WITH_DETAILS && (
+              <TrendingLayout
+                filter={filter}
+                setFilter={setFilter}
+                sortSettings={sortSettings}
+                setSortSettings={setSortSettings}
+              />
+            )}
+            {filter.selectedLayoutMode === LayoutMode.TABLE_LARGE && (
+              <TrendingLayoutDefault
+                filter={filter as TrueSightFilter}
+                setFilter={setFilter as React.Dispatch<React.SetStateAction<TrueSightFilter>>}
+              />
+            )}
+          </Flex>
         </>
       )}
     </TrueSightPageWrapper>

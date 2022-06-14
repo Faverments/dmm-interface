@@ -35,6 +35,7 @@ import {
   UserPlus,
 } from 'react-feather'
 import { MoneyBag } from 'components/Icons'
+import DiscoverProPageDropDown from './DiscoverProPageDropDown'
 
 const sharedStylesMenuItem = css`
   flex: 1;
@@ -245,6 +246,7 @@ export default function Menu() {
             <Trans>Farm</Trans>
           </NavMenuItem>
         )}
+        {!above1320 && <DiscoverProPageDropDown />}
         {!above1320 && <AboutPageDropwdown />}
 
         <NavMenuItem to="/referral" onClick={toggle}>

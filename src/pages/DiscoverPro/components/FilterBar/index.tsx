@@ -59,6 +59,7 @@ export default function FilterBar({
   const { pathname } = useLocation()
   const isTrueSightPage = pathname.includes('/truesight')
   const isHistoryPage = pathname.includes('/history')
+  const isComparePage = pathname.includes('/compare')
 
   const above1000 = useMedia('(min-width: 1000px)')
 
@@ -102,19 +103,23 @@ export default function FilterBar({
   const { tab } = useParsedQueryString()
   const tooltipText =
     tab === TrueSightTabs.TRENDING_SOON
-      ? t`You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days and LAYOUT MODE.`
-      : t`You can choose to see currently trending tokens over the last 24 hours or 7 days and LAYOUT MODE.`
+      ? t`You can choose to see the tokens with the highest growth potential over the last 24 hours or 7 days ${
+          !isComparePage ? 'and LAYOUT MODE.' : ''
+        } `
+      : t`You can choose to see currently trending tokens over the last 24 hours or 7 days ${
+          !isComparePage ? 'and LAYOUT MODE.' : ''
+        } `
 
   return above1000 ? (
     <TrueSightFilterBarLayout>
       <TrueSightFilterBarSection style={{ gap: '8px' }}>
         <MouseoverTooltip text={tooltipText}>
           <TextTooltip color={theme.subText} fontSize="14px" fontWeight={500}>
-            <Trans>Tf &amp; Lo</Trans>
+            {isComparePage ? <Trans>Timeframe</Trans> : <Trans>Tf &amp; Lo</Trans>}
           </TextTooltip>
         </MouseoverTooltip>
         <TimeframePicker activeTimeframe={filter.timeframe} setActiveTimeframe={setActiveTimeframe} />
-        <LayoutPicker activeMode={filter.selectedLayoutMode} setActiveMode={setLayoutMode} />
+        {!isComparePage && <LayoutPicker activeMode={filter.selectedLayoutMode} setActiveMode={setLayoutMode} />}
       </TrueSightFilterBarSection>
       <TrueSightFilterBarSection style={{ gap: '12px' }}>
         {isActiveTabTrending && (
@@ -141,7 +146,7 @@ export default function FilterBar({
           }
         />
         <ResetFilter filter={filter} resetFilter={resetFilter} />
-        {isTableLargeLayoutMode && (
+        {isTableLargeLayoutMode && !isComparePage && (
           <TableCustomize tableCustomize={tableCustomize} setTableCustomize={setTableCustomize} />
         )}
       </TrueSightFilterBarSection>

@@ -13,7 +13,7 @@ const Hero = styled.div`
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: center;
-  padding: 18px 28px;
+  padding: 28px 28px;
   display: flex;
   flex-direction: column;
   justify-content: center;
