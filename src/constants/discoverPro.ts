@@ -50,3 +50,11 @@ export enum ComPonentAllocation {
   HISTORICAL_DETAILS_TABLE_LARGE,
   HISTORICAL_DETAILS_TABLE_WITH_DETAILS,
 }
+
+export const COMPARE_ITEM_PER_PAGE = 20
+export const COMPARE_MAX_ITEMS = 60
+export interface PredictedDate {
+  mediumDate: number
+  firstDate: number
+  index: number
+}

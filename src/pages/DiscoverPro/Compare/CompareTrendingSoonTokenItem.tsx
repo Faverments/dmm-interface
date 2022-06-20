@@ -1,11 +1,10 @@
 import React from 'react'
-import { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
 import styled from 'styled-components'
 import { Flex, Image, Text } from 'rebass'
 import Gold from 'assets/svg/gold_icon.svg'
 import Silver from 'assets/svg/silver_icon.svg'
 import Bronze from 'assets/svg/bronze_icon.svg'
-import { rgba } from 'polished'
+import { padding, rgba } from 'polished'
 import { Info } from 'react-feather'
 import { ButtonEmpty } from 'components/Button'
 import useTheme from 'hooks/useTheme'
@@ -21,14 +20,16 @@ import { MouseoverTooltipDesktopOnly } from 'components/Tooltip'
 import { t } from '@lingui/macro'
 import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
 
-const TopTrendingSoonTokenItem = ({
+import { TrueSightFilterTokenData } from '../hooks/useGetTrueSightFilterData'
+
+const CompareTrendingSoonTokenItem = ({
   tokenData,
   top,
   setSelectedToken,
 }: {
-  tokenData: TrueSightTokenData
+  tokenData: TrueSightFilterTokenData
   top: number
-  setSelectedToken: React.Dispatch<React.SetStateAction<TrueSightTokenData | undefined>>
+  setSelectedToken: React.Dispatch<React.SetStateAction<TrueSightFilterTokenData | undefined>>
 }) => {
   const theme = useTheme()
   const { mixpanelHandler } = useMixpanel()
@@ -44,7 +45,7 @@ const TopTrendingSoonTokenItem = ({
   }
 
   return (
-    <Container>
+    <Container style={{ margin: 8 }}>
       {top <= 2 && (
         <Image
           src={top === 0 ? Gold : top === 1 ? Silver : Bronze}
@@ -61,12 +62,15 @@ const TopTrendingSoonTokenItem = ({
       {top > 2 && (
         <div
           style={{
-            minWidth: '12px',
-            width: '12px',
+            fontSize: '12px',
             position: 'absolute',
             top: '2px',
             left: 0,
             transform: 'translate(-50%, -50%)',
+            backgroundColor: theme.bg1,
+            width: 16,
+            borderRadius: '50%',
+            textAlign: 'center',
           }}
         >
           {tokenData.rank}
@@ -139,4 +143,4 @@ const Container = styled.div`
   position: relative;
 `
 
-export default TopTrendingSoonTokenItem
+export default CompareTrendingSoonTokenItem

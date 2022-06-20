@@ -53,7 +53,7 @@ const PredictedDateWrapper = styled.div`
 
 const PredictedText = styled.span`
   margin-left: 8px;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 400;
   margin-right: 8px;
   padding-left: 8px;
@@ -62,8 +62,8 @@ const PredictedText = styled.span`
 
 const DateText = styled.span`
   color: ${({ theme }) => theme.subText};
-  font-size: 17px;
-  vertical-align: bottom;
+  font-size: 20px;
+  /* vertical-align: bottom; */
 `
 
 const DateNavigateWarper = styled.div`
@@ -254,7 +254,7 @@ const PredictedTimeHeader = () => {
               src={PredictionIcon}
               alt="predicted date"
               style={{
-                width: 24,
+                width: 28,
               }}
             />
             <PredictedText>
