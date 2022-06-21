@@ -1612,16 +1612,16 @@ msgstr "Token LP bị huỷ"
 msgid "Language"
 msgstr "Ngôn ngữ"
 
+#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
+msgid "Last Rank"
+msgstr ""
+
 #: src/pages/Campaign/index.tsx
 msgid "Leaderboard"
 msgstr ""
 
 #: src/pages/Campaign/LeaderboardLayout.tsx
 msgid "Leaderboard refresh in"
-msgstr ""
-
-#: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
-msgid "Last Rank"
 msgstr ""
 
 #: src/components/YieldPools/ProMMFarmGroup.tsx
@@ -1726,18 +1726,13 @@ msgstr "Quản lý danh sách Token"
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Manage your pools."
-msgstr "Quản lý các Pool của bạn."
+msgstr "Quản lý các Pool của bạn.<<<<<<< HEAD"
 
-<<<<<<< HEAD
-#: src/components/swapv2/TokenInfo.tsx
 #: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonTokenDetail.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
-=======
-#: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -1841,7 +1836,7 @@ msgstr "Tiền gửi của tôi"
 
 #: src/components/Header/index.tsx
 msgid "My Pools"
-msgstr "Pool của Tôi"
+msgstr ""
 
 #: src/components/YieldPools/index.tsx
 #: src/components/YieldPools/ListItem.tsx
@@ -1995,16 +1990,13 @@ msgstr "Oops! Đã xảy ra lỗi không xác định. Vui lòng làm mới tran
 
 #: src/components/WalletModal/WarningBox.tsx
 msgid "Open C98 Browser Extension"
-msgstr ""
+msgstr "<<<<<<< HEAD"
 
-<<<<<<< HEAD
-#: src/pages/DiscoverPro/TrueSight/TrendingSoonHero.tsx
-=======
 #: src/pages/Campaign/index.tsx
 msgid "Other Details"
-msgstr ""
+msgstr ">>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc"
 
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
+#: src/pages/DiscoverPro/TrueSight/TrendingSoonHero.tsx
 #: src/pages/TrueSight/TrendingSoonHero.tsx
 msgid "Our <0>TrueSight</0> technology analyzes on-chain data, trading volumes and price trendlines to discover tokens that could be trending in the near future"
 msgstr ""
@@ -2183,19 +2175,15 @@ msgstr "Các tùy chọn"
 #: src/pages/IncreaseLiquidity/index.tsx
 #: src/pages/RemoveLiquidityProAmm/index.tsx
 msgid "Preview"
-msgstr ""
+msgstr "<<<<<<< HEAD"
 
-<<<<<<< HEAD
-#: src/components/swapv2/TokenInfo.tsx
+#: src/components/swapv2/SingleTokenInfo.tsx
 #: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonTokenDetail.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
-=======
-#: src/components/swapv2/SingleTokenInfo.tsx
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
 #: src/pages/TrueSight/components/Chart.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
@@ -2264,15 +2252,12 @@ msgstr "Các mức Giá và Phần đóng góp Pool"
 
 #: src/components/WalletModal/index.tsx
 msgid "Privacy Policy"
-msgstr "Chính sách Bảo mật"
-<<<<<<< HEAD
+msgstr "Chính sách Bảo mật<<<<<<< HEAD"
 
 #: src/components/DiscoverProPageDropDown/index.tsx
 #: src/components/Menu/DiscoverProPageDropDown.tsx
 msgid "Pro"
-msgstr ""
-=======
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
+msgstr "=======>>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc"
 
 #: src/components/YieldPools/ListItem.tsx
 #: src/components/YieldPools/ListItem.tsx
@@ -2281,16 +2266,13 @@ msgstr ""
 
 #: src/pages/About/AboutKyberSwap.tsx
 msgid "Rainmaker Yield Farming"
-msgstr ""
+msgstr "<<<<<<< HEAD"
 
-<<<<<<< HEAD
-#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
-=======
 #: src/pages/Campaign/LeaderboardLayout.tsx
 msgid "Rank"
-msgstr ""
+msgstr ">>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc"
 
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 msgid "Ranking"
 msgstr ""
@@ -2391,9 +2373,9 @@ msgstr "=======>>>>>>> Stashed changes"
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
 #: src/components/YieldPools/HarvestAll.tsx
+#: src/pages/Campaign/index.tsx
+#: src/pages/Campaign/index.tsx
 #: src/pages/Campaign/LeaderboardLayout.tsx
-#: src/pages/Campaign/index.tsx
-#: src/pages/Campaign/index.tsx
 msgid "Rewards"
 msgstr "Các Phần thưởng"
 
@@ -2991,18 +2973,13 @@ msgstr ""
 
 #: src/pages/TrueSight/components/Chart.tsx
 msgid "Trading Volume"
-msgstr ""
+msgstr "<<<<<<< HEAD"
 
-<<<<<<< HEAD
-#: src/components/swapv2/TokenInfo.tsx
 #: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonTokenDetail.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
-=======
-#: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -3663,14 +3640,11 @@ msgstr "qua danh sách token {0}"
 #: src/components/ProAmm/ProAmmPriceRange.tsx
 #: src/components/RateToggle/index.tsx
 #: src/components/RateToggle/index.tsx
-<<<<<<< HEAD
-#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
-#: src/pages/DiscoverPro/components/FilterBar/TokenStatusSelect.tsx
-=======
 #: src/components/swapv2/TokenInfo.tsx
 #: src/pages/Campaign/EnterNowButton.tsx
 #: src/pages/Campaign/index.tsx
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
+#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
+#: src/pages/DiscoverPro/components/FilterBar/TokenStatusSelect.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx

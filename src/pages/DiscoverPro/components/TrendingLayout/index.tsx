@@ -5,7 +5,7 @@ import { useMedia } from 'react-use'
 import { ArrowDown } from 'react-feather'
 import { Trans } from '@lingui/macro'
 
-import Pagination from 'components/Pagination'
+import Pagination from 'components/Pagination/index-v0'
 import LocalLoader from 'components/LocalLoader'
 import TrendingSoonTokenItem from 'pages/DiscoverPro/components/TrendingSoonTokenItem'
 import TrendingSoonTokenDetail from 'pages/DiscoverPro/components/TrendingSoonTokenDetail'

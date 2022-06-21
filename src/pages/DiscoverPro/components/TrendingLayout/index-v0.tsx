@@ -6,7 +6,7 @@ import { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData
 import { TrueSightChartCategory, TrueSightFilter, TrueSightTimeframe } from 'pages/TrueSight/index'
 import useGetCoinGeckoChartData from 'pages/TrueSight/hooks/useGetCoinGeckoChartData'
 import useTheme from 'hooks/useTheme'
-import Pagination from 'components/Pagination'
+import Pagination from 'components/Pagination/index-v0'
 import { Box, Flex, Text } from 'rebass'
 import MobileChartModal from 'pages/DiscoverPro/components/MobileChartModal'
 import useGetTrendingData from 'pages/TrueSight/hooks/useGetTrendingData'

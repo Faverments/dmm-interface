@@ -1610,21 +1610,19 @@ msgstr "LP Tokens Removed"
 
 #: src/components/Settings/index.tsx
 msgid "Language"
-msgstr "Language"
+msgstr "Language<<<<<<< HEAD"
 
-<<<<<<< HEAD
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
 msgid "Last Rank"
-msgstr "Last Rank"
-=======
+msgstr "Last Rank======="
+
 #: src/pages/Campaign/index.tsx
 msgid "Leaderboard"
 msgstr "Leaderboard"
 
 #: src/pages/Campaign/LeaderboardLayout.tsx
 msgid "Leaderboard refresh in"
-msgstr "Leaderboard refresh in"
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
+msgstr "Leaderboard refresh in>>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc"
 
 #: src/components/YieldPools/ProMMFarmGroup.tsx
 #: src/pages/About/AboutKyberSwap.tsx
@@ -1728,18 +1726,13 @@ msgstr "Manage Token Lists"
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Manage your pools."
-msgstr "Manage your pools."
+msgstr "Manage your pools.<<<<<<< HEAD"
 
-<<<<<<< HEAD
-#: src/components/swapv2/TokenInfo.tsx
 #: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonTokenDetail.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
-=======
-#: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -1997,16 +1990,13 @@ msgstr "Oops! An unknown error occurred. Please refresh the page, or visit from 
 
 #: src/components/WalletModal/WarningBox.tsx
 msgid "Open C98 Browser Extension"
-msgstr "Open C98 Browser Extension"
+msgstr "Open C98 Browser Extension<<<<<<< HEAD"
 
-<<<<<<< HEAD
-#: src/pages/DiscoverPro/TrueSight/TrendingSoonHero.tsx
-=======
 #: src/pages/Campaign/index.tsx
 msgid "Other Details"
-msgstr "Other Details"
+msgstr "Other Details>>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc"
 
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
+#: src/pages/DiscoverPro/TrueSight/TrendingSoonHero.tsx
 #: src/pages/TrueSight/TrendingSoonHero.tsx
 msgid "Our <0>TrueSight</0> technology analyzes on-chain data, trading volumes and price trendlines to discover tokens that could be trending in the near future"
 msgstr "Our <0>TrueSight</0> technology analyzes on-chain data, trading volumes and price trendlines to discover tokens that could be trending in the near future"
@@ -2185,19 +2175,15 @@ msgstr "Preferences"
 #: src/pages/IncreaseLiquidity/index.tsx
 #: src/pages/RemoveLiquidityProAmm/index.tsx
 msgid "Preview"
-msgstr "Preview"
+msgstr "Preview<<<<<<< HEAD"
 
-<<<<<<< HEAD
-#: src/components/swapv2/TokenInfo.tsx
+#: src/components/swapv2/SingleTokenInfo.tsx
 #: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index-ct.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonTokenDetail.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
-=======
-#: src/components/swapv2/SingleTokenInfo.tsx
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
 #: src/pages/TrueSight/components/Chart.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
@@ -2280,16 +2266,13 @@ msgstr "REWARD:"
 
 #: src/pages/About/AboutKyberSwap.tsx
 msgid "Rainmaker Yield Farming"
-msgstr "Rainmaker Yield Farming"
+msgstr "Rainmaker Yield Farming<<<<<<< HEAD"
 
-<<<<<<< HEAD
-#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
-=======
 #: src/pages/Campaign/LeaderboardLayout.tsx
 msgid "Rank"
-msgstr "Rank"
+msgstr "Rank>>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc"
 
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
+#: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
 msgid "Ranking"
 msgstr "Ranking"
@@ -2390,9 +2373,9 @@ msgstr "Request to Faucet - Submitted=======>>>>>>> Stashed changes"
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
 #: src/components/YieldPools/HarvestAll.tsx
+#: src/pages/Campaign/index.tsx
+#: src/pages/Campaign/index.tsx
 #: src/pages/Campaign/LeaderboardLayout.tsx
-#: src/pages/Campaign/index.tsx
-#: src/pages/Campaign/index.tsx
 msgid "Rewards"
 msgstr "Rewards"
 
@@ -2990,18 +2973,13 @@ msgstr "Trade Route"
 
 #: src/pages/TrueSight/components/Chart.tsx
 msgid "Trading Volume"
-msgstr "Trading Volume"
+msgstr "Trading Volume<<<<<<< HEAD"
 
-<<<<<<< HEAD
-#: src/components/swapv2/TokenInfo.tsx
 #: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonTokenDetail.tsx
 #: src/pages/DiscoverPro/components/TrendingSoonTokenItemDetailsOnMobile.tsx
 #: src/pages/DiscoverPro/components/TrendingTokenItemMobileOnly.tsx
-=======
-#: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
 #: src/pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail.tsx
@@ -3662,14 +3640,11 @@ msgstr "via {0} token list"
 #: src/components/ProAmm/ProAmmPriceRange.tsx
 #: src/components/RateToggle/index.tsx
 #: src/components/RateToggle/index.tsx
-<<<<<<< HEAD
-#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
-#: src/pages/DiscoverPro/components/FilterBar/TokenStatusSelect.tsx
-=======
 #: src/components/swapv2/TokenInfo.tsx
 #: src/pages/Campaign/EnterNowButton.tsx
 #: src/pages/Campaign/index.tsx
->>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc
+#: src/pages/DiscoverPro/components/FilterBar/NetworkSelect.tsx
+#: src/pages/DiscoverPro/components/FilterBar/TokenStatusSelect.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx
 #: src/pages/TrueSight/components/ButtonWithOptions.tsx

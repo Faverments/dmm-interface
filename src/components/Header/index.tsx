@@ -18,7 +18,7 @@ import Web3Network from 'components/Web3Network'
 import { useIsDarkMode } from 'state/user/hooks'
 import DiscoverIcon from 'components/Icons/DiscoverIcon'
 import { useWindowSize } from 'hooks/useWindowSize'
-import AboutPageDropwdown from 'components/AboutPageDropDown'
+import AboutPageDropDown from 'components/AboutPageDropDown'
 import DiscoverProPageDropwdown from 'components/DiscoverProPageDropDown'
 // import { MouseoverTooltip } from 'components/Tooltip'
 
@@ -143,12 +143,15 @@ const CampaignWrapper = styled.span`
 
 const DiscoverProWapper = styled.span`
   @media (max-width: 1320px) {
+    display: none;
+  }
 `
 
 const AboutWrapper = styled.span`
   @media (max-width: 1440px) {
     display: none;
   }
+`
 
 const BalanceText = styled(Text)`
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
