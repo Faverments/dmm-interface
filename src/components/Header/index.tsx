@@ -1,6 +1,6 @@
 import { ChainId } from '@kyberswap/ks-sdk-core'
 import React, { useState } from 'react'
-import { Text, Flex } from 'rebass'
+import { Flex, Text } from 'rebass'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { darken } from 'polished'
 import { Trans } from '@lingui/macro'
@@ -31,7 +31,7 @@ const HeaderFrame = styled.div`
   width: 100%;
   top: 0;
   position: relative;
-  background-color: ${({ theme }) => theme.bg6};
+  background-color: ${({ theme }) => theme.background};
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 1rem;
   z-index: 2;
@@ -93,6 +93,7 @@ const HeaderRow = styled(RowFixed)`
 
 const HeaderLinks = styled(Row)`
   justify-content: center;
+
   ${({ theme }) => theme.mediaWidth.upToLarge`
     justify-content: flex-end;
   `};
@@ -134,7 +135,7 @@ const DiscoverWrapper = styled.span`
   }
 `
 
-const AboutWrapper = styled.span`
+const CampaignWrapper = styled.span`
   @media (max-width: 1320px) {
     display: none;
   }
@@ -142,9 +143,12 @@ const AboutWrapper = styled.span`
 
 const DiscoverProWapper = styled.span`
   @media (max-width: 1320px) {
+`
+
+const AboutWrapper = styled.span`
+  @media (max-width: 1440px) {
     display: none;
   }
-`
 
 const BalanceText = styled(Text)`
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -280,8 +284,8 @@ const Dropdown = styled.div`
   position: absolute;
   background: ${({ theme }) => theme.tableHeader};
   filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.36));
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
-    0px 24px 32px rgba(0, 0, 0, 0.01);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.01), 0 4px 8px rgba(0, 0, 0, 0.04), 0 16px 24px rgba(0, 0, 0, 0.04),
+    0 24px 32px rgba(0, 0, 0, 0.01);
   border-radius: 8px;
   padding: 8px 4px;
   width: max-content;
@@ -424,6 +428,12 @@ export default function Header() {
           <DiscoverProWapper>
             <DiscoverProPageDropwdown />
           </DiscoverProWapper>
+          <CampaignWrapper>
+            <StyledNavLink id={`campaigns`} to={'/campaigns'} isActive={match => Boolean(match)}>
+              <Trans>Campaigns</Trans>
+            </StyledNavLink>
+          </CampaignWrapper>
+
           <AnalyticsWrapper>
             <StyledNavExternalLink href={PROMM_ANALYTICS_URL[chainId as ChainId] + '/home'}>
               <Trans>Analytics</Trans>
@@ -431,7 +441,7 @@ export default function Header() {
           </AnalyticsWrapper>
 
           <AboutWrapper>
-            <AboutPageDropwdown />
+            <AboutPageDropDown />
           </AboutWrapper>
         </HeaderLinks>
       </HeaderRow>

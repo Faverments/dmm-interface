@@ -70,6 +70,7 @@ const History = lazy(() => import(/* webpackChunkName: 'history-page' */ './Disc
 const Compare = lazy(() => import(/* webpackChunkName: 'compare-page' */ './DiscoverPro/Compare'))
 
 const NviSignal = lazy(() => import(/* webpackChunkName: 'nvi-signal-page' */ './DiscoverPro/NviSignal'))
+const Campaign = lazy(() => import(/* webpackChunkName: 'campaigns-page' */ './Campaign'))
 
 const AppWrapper = styled.div`
   display: flex;
@@ -95,10 +96,10 @@ const BodyWrapper = styled.div<{ isAboutPage?: boolean }>`
   overflow-y: auto;
   overflow-x: hidden;
 `
-
+const AppPaths = { SWAP_LEGACY: '/swap-legacy', ABOUT: '/about', SWAP: '/swap' }
 export default function App() {
   const { account, chainId, library } = useActiveWeb3React()
-  const aboutPage = useRouteMatch('/about')
+  const aboutPage = useRouteMatch(AppPaths.ABOUT)
   const apolloClient = useExchangeClient()
   const dispatch = useDispatch<AppDispatch>()
   useEffect(() => {
@@ -162,6 +163,9 @@ export default function App() {
 
   const { width } = useWindowSize()
   useGlobalMixpanelEvents()
+  const { pathname } = window.location
+  const showFooter =
+    pathname === AppPaths.SWAP_LEGACY ? true : !pathname.includes(AppPaths.ABOUT) && !pathname.includes(AppPaths.SWAP)
 
   return (
     <>
@@ -194,9 +198,14 @@ export default function App() {
                 <Popups />
                 <Web3ReactManager>
                   <Switch>
-                    <Route exact strict path="/swap-legacy" component={Swap} />
+                    <Route exact strict path={AppPaths.SWAP_LEGACY} component={Swap} />
+
+                    <Route exact strict path="/swap/:network/:fromCurrency-to-:toCurrency" component={SwapV2} />
+                    <Route exact strict path="/swap/:network/:fromCurrency" component={SwapV2} />
+
                     <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
                     <Route exact strict path="/swap" component={SwapV2} />
+
                     <Route exact strict path="/find" component={PoolFinder} />
                     <Route exact strict path="/pools" component={Pools} />
                     <Route exact strict path="/pools/:currencyIdA" component={Pools} />
@@ -223,20 +232,20 @@ export default function App() {
                       component={RemoveLiquidity}
                     />
 
-                    <Route exact strict path="/proamm/swap" component={ProAmmSwap} />
-                    <Route exact strict path="/proamm/pool/:tokenId" component={ProAmmPositionPage} />
-                    <Route exact strict path="/proamm/remove/:tokenId" component={ProAmmRemoveLiquidity} />
+                    <Route exact strict path="/elasic/swap" component={ProAmmSwap} />
+                    <Route exact strict path="/elasic/pool/:tokenId" component={ProAmmPositionPage} />
+                    <Route exact strict path="/elastic/remove/:tokenId" component={ProAmmRemoveLiquidity} />
                     <Route
                       exact
                       strict
-                      path="/proamm/add/:currencyIdA?/:currencyIdB?/:feeAmount?"
+                      path="/elastic/add/:currencyIdA?/:currencyIdB?/:feeAmount?"
                       component={RedirectDuplicateTokenIds}
                     />
 
                     <Route
                       exact
                       strict
-                      path="/proamm/increase/:currencyIdA?/:currencyIdB?/:feeAmount?/:tokenId?"
+                      path="/elastic/increase/:currencyIdA?/:currencyIdB?/:feeAmount?/:tokenId?"
                       component={IncreaseLiquidity}
                     />
 
@@ -248,11 +257,13 @@ export default function App() {
                     <Route exact path="/discoverpro/nvisignal" component={NviSignal} />
                     <Route exact path="/referral" component={CreateReferral} />
                     <Route exact path="/discover" component={TrueSight} />
+                    <Route exact path="/campaigns" component={Campaign} />
+
                     <Route component={RedirectPathToSwapOnly} />
                   </Switch>
                 </Web3ReactManager>
               </BodyWrapper>
-              {!window.location.href.includes('about') && <Footer />}
+              {showFooter && <Footer />}
             </Suspense>
           </AppWrapper>
         </ApolloProvider>
