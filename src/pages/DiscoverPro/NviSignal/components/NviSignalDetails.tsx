@@ -6,6 +6,7 @@ import { CheckCircle, Share2 } from 'react-feather'
 import styled from 'styled-components'
 import Facebook from 'components/Icons/Facebook'
 import Telegram from 'components/Icons/Telegram'
+import { ExternalLink } from 'theme'
 
 const Divider = styled.div`
   width: 1px;
@@ -99,7 +100,8 @@ export default function NviSignalDetails() {
       <Flex justifyContent="space-between">
         <Flex style={{ marginTop: 40, paddingLeft: 10 }} alignItems="center">
           <Text fontSize={30} fontWeight={500} color={theme.subText}>
-            Nvi Signal
+            {/* Nvi Signal */}
+            Nvi Signal ( In_Development )
           </Text>
           <CheckCircle size={18} color={theme.primary} style={{ marginLeft: 10, marginTop: 6 }} />
         </Flex>
@@ -110,10 +112,14 @@ export default function NviSignalDetails() {
           }}
         >
           <SocialIconWrapper>
-            <Facebook size={26} color={theme.subText} />
+            <ExternalLink href="https://www.facebook.com/groups/nvigroup">
+              <Facebook size={26} color={theme.subText} />
+            </ExternalLink>
           </SocialIconWrapper>
           <SocialIconWrapper>
-            <Telegram size={26} color={theme.subText} />
+            <ExternalLink href="https://t.me/nhatviet02">
+              <Telegram size={26} color={theme.subText} />
+            </ExternalLink>
           </SocialIconWrapper>
           <Divider />
           <ShareButtonWrapper>
@@ -121,7 +127,7 @@ export default function NviSignalDetails() {
               <Share2 size={20} color={theme.text} />
             </StyledShareButton>
             <Text fontSize={16} fontWeight={200} color={theme.text}>
-              Share
+              Share ( Not_Available )
             </Text>
           </ShareButtonWrapper>
         </Flex>

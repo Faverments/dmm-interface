@@ -38,13 +38,9 @@ export default function NviSignal() {
       <PageWrapper>
         <NviSignalDetails />
         <Container>
-          <Flex justifyContent={'center'} alignItems={'flex-start'}>
-            <AppBodyWrapped>
-              <Text fontWeight={300} fontSize={42}>
-                IN_DEVELOPMENT
-              </Text>
-            </AppBodyWrapped>
-            {/* <div></div> */}
+          <Flex justifyContent={'space-between'} alignItems={'flex-start'}>
+            {/* <AppBodyWrapped>
+            </AppBodyWrapped> */}
           </Flex>
         </Container>
       </PageWrapper>
