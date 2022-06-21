@@ -17,6 +17,7 @@ const Hero = styled.div`
   justify-content: center;
   gap: 8px;
   overflow: hidden;
+  border-radius: 8px;
 `
 
 const HeroWallHeader = () => {

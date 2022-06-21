@@ -41,6 +41,10 @@ export default function DiscoverProPageDropDown() {
           <NavMenuItem to={'/discoverpro/compare'} onClick={toggle}>
             <Trans>Compare</Trans>
           </NavMenuItem>
+
+          <NavMenuItem to={'/discoverpro/nvisignal'} onClick={toggle}>
+            <Trans>NVI Signal</Trans>
+          </NavMenuItem>
         </LinkCointainer>
       )}
     </div>

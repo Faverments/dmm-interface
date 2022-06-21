@@ -20,7 +20,7 @@ import { MouseoverTooltipDesktopOnly } from 'components/Tooltip'
 import { t } from '@lingui/macro'
 import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
 
-import { TrueSightFilterTokenData } from '../hooks/useGetTrueSightFilterData'
+import { TrueSightFilterTokenData } from '../../hooks/useGetTrueSightFilterData'
 
 const CompareTrendingSoonTokenItem = ({
   tokenData,
@@ -87,7 +87,13 @@ const CompareTrendingSoonTokenItem = ({
             style={{ borderRadius: '50%', cursor: 'pointer' }}
             onClick={onSelectToken}
           />
-          <Text fontSize="14px" mr="5px" color={theme.subText} style={{ cursor: 'pointer' }} onClick={onSelectToken}>
+          <Text
+            fontSize="14px"
+            mr="5px"
+            color={theme.subText}
+            style={{ cursor: 'pointer', textOverflow: 'ellipsis', maxWidth: '60px', overflow: 'hidden' }}
+            onClick={onSelectToken}
+          >
             {tokenData.symbol}
           </Text>
           <MouseoverTooltipDesktopOnly text={t`More info`} placement="top" width="fit-content">

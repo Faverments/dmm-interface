@@ -20,7 +20,7 @@ const TokenStatusSelectContainer = styled.div`
   gap: 20px;
   padding: 10px 12px;
   position: relative;
-  border-radius: 4px;
+  border-radius: 40px;
   background: ${({ theme }) => theme.background};
   min-width: 160px;
   cursor: pointer;

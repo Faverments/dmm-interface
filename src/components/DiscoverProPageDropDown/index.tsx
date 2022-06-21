@@ -128,6 +128,10 @@ export default function DiscoverProPageDropwdown({}) {
         <StyledNavLink id={`discoverpro-History`} to={'/discoverpro/compare'} isActive={match => Boolean(match)}>
           <Trans>Compare</Trans>
         </StyledNavLink>
+
+        <StyledNavLink id={`discoverpro-Nvisignal`} to={'/discoverpro/nvisignal'} isActive={match => Boolean(match)}>
+          <Trans>NVI Signal</Trans>
+        </StyledNavLink>
       </Dropdown>
     </HoverDropdown>
   )

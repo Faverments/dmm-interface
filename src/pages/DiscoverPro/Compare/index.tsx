@@ -20,7 +20,7 @@ import FilterBar from '../components/FilterBar'
 import { DiscoverProFilter, DiscoverProSortSettings, initialSortSettings, initialTableCustomize } from '../TrueSight'
 import { TrueSightTabs, TrueSightTimeframe, TrueSightFilter, TrueSightSortSettings } from 'pages/TrueSight'
 import { LayoutMode, TableDetail } from 'constants/discoverPro'
-import TrendingSoonLayout from './CompareTrendingSoonLayout'
+import TrendingSoonLayout from './CompareTrendingSoon/CompareTrendingSoonLayout'
 
 const TabContainer = styled.div`
   display: flex;
@@ -119,9 +119,10 @@ export default function Compare({ history }: RouteComponentProps) {
           Tokens in history
         </Trans>
       </Text> */}
-      <HeroWallHeader />
+
       <PoolsPageWrapper>
         <CompareTabs activeTab={activeTab} />
+        <HeroWallHeader />
         {activeTab === TrueSightTabs.TRENDING_SOON && (
           <>
             <Flex flexDirection="column" style={{ gap: '16px' }}>

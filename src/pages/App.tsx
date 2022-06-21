@@ -69,6 +69,8 @@ const History = lazy(() => import(/* webpackChunkName: 'history-page' */ './Disc
 
 const Compare = lazy(() => import(/* webpackChunkName: 'compare-page' */ './DiscoverPro/Compare'))
 
+const NviSignal = lazy(() => import(/* webpackChunkName: 'nvi-signal-page' */ './DiscoverPro/NviSignal'))
+
 const AppWrapper = styled.div`
   display: flex;
   flex-flow: column;
@@ -243,6 +245,7 @@ export default function App() {
                     <Route exact path="/discoverpro/truesight" component={TrueSightPro} />
                     <Route exact path="/discoverpro/history" component={History} />
                     <Route exact path="/discoverpro/compare" component={Compare} />
+                    <Route exact path="/discoverpro/nvisignal" component={NviSignal} />
                     <Route exact path="/referral" component={CreateReferral} />
                     <Route exact path="/discover" component={TrueSight} />
                     <Route component={RedirectPathToSwapOnly} />

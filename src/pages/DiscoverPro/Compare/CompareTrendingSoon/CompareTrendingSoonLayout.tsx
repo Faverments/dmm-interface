@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { t, Trans } from '@lingui/macro'
 import { Box, Flex, Text } from 'rebass'
-import { DiscoverProFilter } from '../TrueSight'
+import { DiscoverProFilter } from '../../TrueSight'
 import lottie from 'lottie-web'
-import RainBowCat from './rocket-loader.json'
-import useGetListTrueSightFilterData from '../hooks/useGetListTrueSightFilterData'
-import { TrueSightFilterTokenData } from '../hooks/useGetTrueSightFilterData'
+import RainBowCat from '../rocket-loader.json'
+import useGetListTrueSightFilterData from '../../hooks/useGetListTrueSightFilterData'
+import { TrueSightFilterTokenData } from '../../hooks/useGetTrueSightFilterData'
 import CompareTrendingSoonTokenItem from './CompareTrendingSoonTokenItem'
 import useTheme from 'hooks/useTheme'
 import LocalLoader from 'components/LocalLoader'
 import Pagination from 'components/Pagination'
 import { COMPARE_ITEM_PER_PAGE, COMPARE_MAX_ITEMS, PredictedDate } from 'constants/discoverPro'
-import DateSelect from './DateSelect'
+import DateSelect from '../DateSelect'
 // import { FixedSizeList } from 'react-window'
 
 const Container = styled.div``
@@ -21,6 +21,10 @@ const Wapper = styled.div`
   justify-content: space-between; */
   display: grid;
   grid-template-columns: 2fr 1fr 2fr;
+  /* padding: 20px;
+  background-color: ${({ theme }) => theme.bg16};
+  border: 8px; */
+  padding-top: 10px;
 `
 
 const ListTokenWrapper = styled.div`
@@ -63,9 +67,12 @@ const ListTokenWithPickerDay = ({
           display: 'flex',
           justifyContent: 'center',
           backgroundColor: theme.oddRow,
-          borderRadius: 8,
-          marginBottom: 6,
-          padding: 18,
+          // borderRadius: 8,
+          borderTopLeftRadius: 8,
+          borderTopRightRadius: 8,
+          borderBottom: `1px solid ${theme.border}`,
+          // marginBottom: 8,
+          padding: 20,
         }}
       >
         <DateSelect activeTimeFrame={filter.timeframe} setActivePredictedDate={setActivePredictedDate} />
@@ -75,9 +82,8 @@ const ListTokenWithPickerDay = ({
           style={{
             minHeight: '388px',
             backgroundColor: theme.oddRow,
-            // borderRadius: '8px',
-            borderTopLeftRadius: 8,
-            borderTopRightRadius: 8,
+            // borderTopLeftRadius: 8,
+            // borderTopRightRadius: 8,
           }}
         >
           <ListTokenWrapper>
@@ -129,9 +135,9 @@ export default function CompareTrendingSoonLayout({ filter }: { filter: Discover
           <div
             id="energy-rocket"
             style={{
-              width: 220,
+              width: 280,
               transform: 'rotate(30deg)',
-              marginLeft: 40,
+              marginLeft: 5,
             }}
           />
           <ListTokenWithPickerDay filter={filter} tokenData={secondTokensData} />

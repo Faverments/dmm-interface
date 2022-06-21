@@ -448,8 +448,8 @@ msgstr ""
 msgid "Bug Bounty"
 msgstr ""
 
-#: src/pages/DiscoverPro/Compare/CompareTrendingSoonTokenItem.tsx
-#: src/pages/DiscoverPro/Compare/TopTrendingSoonTokenItem-v0.tsx
+#: src/pages/DiscoverPro/Compare/CompareTrendingSoon/CompareTrendingSoonTokenItem.tsx
+#: src/pages/DiscoverPro/Compare/v0/TopTrendingSoonTokenItem-v0.tsx
 msgid "Buy now"
 msgstr ""
 
@@ -889,7 +889,7 @@ msgstr ""
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
-#: src/pages/DiscoverPro/Compare/TrendingSoonLayout-v0.tsx
+#: src/pages/DiscoverPro/Compare/v0/TrendingSoonLayout-v0.tsx
 msgid "Discover more"
 msgstr ""
 
@@ -1802,8 +1802,8 @@ msgid "Minimum amount you will receive or your transaction will revert"
 msgstr "Minimum tutarı alacaksınız veya işleminiz geri dönecek"
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/TopTrendingSoonTokenItem.tsx
-#: src/pages/DiscoverPro/Compare/CompareTrendingSoonTokenItem.tsx
-#: src/pages/DiscoverPro/Compare/TopTrendingSoonTokenItem-v0.tsx
+#: src/pages/DiscoverPro/Compare/CompareTrendingSoon/CompareTrendingSoonTokenItem.tsx
+#: src/pages/DiscoverPro/Compare/v0/TopTrendingSoonTokenItem-v0.tsx
 msgid "More info"
 msgstr ""
 
@@ -1845,6 +1845,11 @@ msgstr ""
 
 #: src/components/PoolList/index.tsx
 msgid "My liquidity"
+msgstr ""
+
+#: src/components/DiscoverProPageDropDown/index.tsx
+#: src/components/Menu/DiscoverProPageDropDown.tsx
+msgid "NVI Signal"
 msgstr ""
 
 #: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
@@ -2109,7 +2114,7 @@ msgid "Powered by <0>TrueSight</0>, our AI prediction model"
 msgstr ""
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
-#: src/pages/DiscoverPro/Compare/TrendingSoonLayout-v0.tsx
+#: src/pages/DiscoverPro/Compare/v0/TrendingSoonLayout-v0.tsx
 msgid "Powered by TrueSight, our AI prediction model"
 msgstr ""
 
@@ -2952,7 +2957,7 @@ msgstr ""
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 #: src/pages/DiscoverPro/Compare/index.tsx
-#: src/pages/DiscoverPro/Compare/TrendingSoonLayout-v0.tsx
+#: src/pages/DiscoverPro/Compare/v0/TrendingSoonLayout-v0.tsx
 #: src/pages/DiscoverPro/History/index.tsx
 #: src/pages/TrueSight/TrueSightTab.tsx
 msgid "Trending Soon"

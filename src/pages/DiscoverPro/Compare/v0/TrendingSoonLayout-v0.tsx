@@ -26,7 +26,7 @@ import DiscoverIconTriangle from 'assets/svg/discover_icon_triangle.svg'
 import useTopTrendingSoonTokensInCurrentNetwork, {
   TOP_TRENDING_TOKENS_MAX_ITEMS,
 } from 'pages/DiscoverPro/hooks/useMakeCompareData-v0'
-import TopTrendingSoonTokenItem from 'pages/DiscoverPro/Compare/TopTrendingSoonTokenItem-v0'
+import TopTrendingSoonTokenItem from 'pages/DiscoverPro/Compare/v0/TopTrendingSoonTokenItem-v0'
 import { useMedia } from 'react-use'
 import { TextTooltip } from 'pages/TrueSight/styled'
 import DiscoverIcon from 'components/Icons/DiscoverIcon'

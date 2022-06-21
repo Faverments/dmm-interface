@@ -33,6 +33,7 @@ import TokenStatusSelect from 'pages/DiscoverPro/components/FilterBar/TokenStatu
 import ResetFilter from 'pages/DiscoverPro/components/FilterBar/ResetFilter'
 import TableCustomize from 'pages/DiscoverPro/components/FilterBar/TableCustomize'
 import LayoutPicker from './LayoutPicker'
+import styled from 'styled-components'
 
 interface FilterBarProps {
   activeTab: TrueSightTabs | undefined
@@ -43,6 +44,13 @@ interface FilterBarProps {
   tableCustomize: TableDetail[]
   setTableCustomize: React.Dispatch<React.SetStateAction<TableDetail[]>>
 }
+
+const DiscoverProFilterBarLayout = styled.div<{ isComparePage: boolean }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: ${({ theme, isComparePage }) => (isComparePage ? theme.bg10 : undefined)}; */
+`
 
 export default function FilterBar({
   activeTab,
@@ -111,7 +119,7 @@ export default function FilterBar({
         } `
 
   return above1000 ? (
-    <TrueSightFilterBarLayout>
+    <DiscoverProFilterBarLayout isComparePage={isComparePage}>
       <TrueSightFilterBarSection style={{ gap: '8px' }}>
         <MouseoverTooltip text={tooltipText}>
           <TextTooltip color={theme.subText} fontSize="14px" fontWeight={500}>
@@ -120,6 +128,7 @@ export default function FilterBar({
         </MouseoverTooltip>
         <TimeframePicker activeTimeframe={filter.timeframe} setActiveTimeframe={setActiveTimeframe} />
         {!isComparePage && <LayoutPicker activeMode={filter.selectedLayoutMode} setActiveMode={setLayoutMode} />}
+        {isComparePage && <TokenStatusSelect filter={filter} setFilter={setFilter} />}
       </TrueSightFilterBarSection>
       <TrueSightFilterBarSection style={{ gap: '12px' }}>
         {isActiveTabTrending && (
@@ -128,7 +137,7 @@ export default function FilterBar({
             toggle={() => setFilter(prev => ({ ...prev, isShowTrueSightOnly: !prev.isShowTrueSightOnly }))}
           />
         )}
-        {isActiveTabTrendingSoon && <TokenStatusSelect filter={filter} setFilter={setFilter} />}
+        {isActiveTabTrendingSoon && !isComparePage && <TokenStatusSelect filter={filter} setFilter={setFilter} />}
         <NetworkSelect filter={filter} setFilter={setFilter} />
         <TrueSightSearchBox
           placeholder={t`Search by token name or tag`}
@@ -145,12 +154,13 @@ export default function FilterBar({
             setFilter(prev => ({ ...prev, selectedTag: undefined, selectedTokenData: tokenData }))
           }
         />
+
         <ResetFilter filter={filter} resetFilter={resetFilter} />
         {isTableLargeLayoutMode && !isComparePage && (
           <TableCustomize tableCustomize={tableCustomize} setTableCustomize={setTableCustomize} />
         )}
       </TrueSightFilterBarSection>
-    </TrueSightFilterBarLayout>
+    </DiscoverProFilterBarLayout>
   ) : (
     <TrueSightFilterBarLayoutMobile>
       <Flex justifyContent="space-between" style={{ gap: '16px' }}>

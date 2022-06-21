@@ -448,8 +448,8 @@ msgstr "Bridge Assets"
 msgid "Bug Bounty"
 msgstr "Bug Bounty"
 
-#: src/pages/DiscoverPro/Compare/CompareTrendingSoonTokenItem.tsx
-#: src/pages/DiscoverPro/Compare/TopTrendingSoonTokenItem-v0.tsx
+#: src/pages/DiscoverPro/Compare/CompareTrendingSoon/CompareTrendingSoonTokenItem.tsx
+#: src/pages/DiscoverPro/Compare/v0/TopTrendingSoonTokenItem-v0.tsx
 msgid "Buy now"
 msgstr "Buy now"
 
@@ -889,7 +889,7 @@ msgstr "Discover On"
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
-#: src/pages/DiscoverPro/Compare/TrendingSoonLayout-v0.tsx
+#: src/pages/DiscoverPro/Compare/v0/TrendingSoonLayout-v0.tsx
 msgid "Discover more"
 msgstr "Discover more"
 
@@ -1802,8 +1802,8 @@ msgid "Minimum amount you will receive or your transaction will revert"
 msgstr "Minimum amount you will receive or your transaction will revert"
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/TopTrendingSoonTokenItem.tsx
-#: src/pages/DiscoverPro/Compare/CompareTrendingSoonTokenItem.tsx
-#: src/pages/DiscoverPro/Compare/TopTrendingSoonTokenItem-v0.tsx
+#: src/pages/DiscoverPro/Compare/CompareTrendingSoon/CompareTrendingSoonTokenItem.tsx
+#: src/pages/DiscoverPro/Compare/v0/TopTrendingSoonTokenItem-v0.tsx
 msgid "More info"
 msgstr "More info"
 
@@ -1846,6 +1846,11 @@ msgstr "My Vesting"
 #: src/components/PoolList/index.tsx
 msgid "My liquidity"
 msgstr "My liquidity"
+
+#: src/components/DiscoverProPageDropDown/index.tsx
+#: src/components/Menu/DiscoverProPageDropDown.tsx
+msgid "NVI Signal"
+msgstr "NVI Signal"
 
 #: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/DiscoverPro/components/TrendingLayout/index-v0.tsx
@@ -2109,7 +2114,7 @@ msgid "Powered by <0>TrueSight</0>, our AI prediction model"
 msgstr "Powered by <0>TrueSight</0>, our AI prediction model"
 
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
-#: src/pages/DiscoverPro/Compare/TrendingSoonLayout-v0.tsx
+#: src/pages/DiscoverPro/Compare/v0/TrendingSoonLayout-v0.tsx
 msgid "Powered by TrueSight, our AI prediction model"
 msgstr "Powered by TrueSight, our AI prediction model"
 
@@ -2952,7 +2957,7 @@ msgstr "Trending"
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 #: src/components/TopTrendingSoonTokensInCurrentNetwork/index.tsx
 #: src/pages/DiscoverPro/Compare/index.tsx
-#: src/pages/DiscoverPro/Compare/TrendingSoonLayout-v0.tsx
+#: src/pages/DiscoverPro/Compare/v0/TrendingSoonLayout-v0.tsx
 #: src/pages/DiscoverPro/History/index.tsx
 #: src/pages/TrueSight/TrueSightTab.tsx
 msgid "Trending Soon"
