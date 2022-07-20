@@ -3,7 +3,6 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import styled from 'styled-components'
 import { ApolloProvider } from '@apollo/client'
 
-import { defaultExchangeClient } from 'apollo/client'
 import Loader from 'components/LocalLoader'
 import Header from '../components/Header'
 import Popups from '../components/Popups'
@@ -15,13 +14,11 @@ import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import SwapV2 from './SwapV2'
 import { BLACKLIST_WALLETS } from 'constants/index'
 import { useActiveWeb3React } from 'hooks'
-import { useExchangeClient } from 'state/application/hooks'
 import { ChainId } from '@kyberswap/ks-sdk-core'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'state'
 import { setGasPrice } from 'state/application/actions'
 import Footer from 'components/Footer/Footer'
-import GoogleAnalyticsReporter from 'components/GoogleAnalyticsReporter'
 import { RedirectDuplicateTokenIds } from './AddLiquidityV2/redirects'
 import { useIsDarkMode } from 'state/user/hooks'
 import { Sidetab, Popover } from '@typeform/embed-react'
@@ -30,16 +27,18 @@ import { useWindowSize } from 'hooks/useWindowSize'
 import { useGlobalMixpanelEvents } from 'hooks/useMixpanel'
 import { ethers } from 'ethers'
 import TopBanner from 'components/Header/TopBanner'
+import { NETWORKS_INFO } from 'constants/networks'
 
 // Route-based code splitting
 const Pools = lazy(() => import(/* webpackChunkName: 'pools-page' */ './Pools'))
-const Pool = lazy(() => import(/* webpackChunkName: 'pool-page' */ './Pool'))
-const ProAmmPositionPage = lazy(() => import(/* webpackChunkName: 'pool-page' */ './ProAmmPool/PositionPage'))
+const Pool = lazy(() => import(/* webpackChunkName: 'my-pool-page' */ './Pool'))
 
 const Yield = lazy(() => import(/* webpackChunkName: 'yield-page' */ './Yield'))
 const PoolFinder = lazy(() => import(/* webpackChunkName: 'pool-finder-page' */ './PoolFinder'))
 const CreatePool = lazy(() => import(/* webpackChunkName: 'create-pool-page' */ './CreatePool'))
-const ProAmmRemoveLiquidity = lazy(() => import(/* webpackChunkName: 'create-pool-page' */ './RemoveLiquidityProAmm'))
+const ProAmmRemoveLiquidity = lazy(() =>
+  import(/* webpackChunkName: 'elastic-remove-liquidity-page' */ './RemoveLiquidityProAmm'),
+)
 const RedirectCreatePoolDuplicateTokenIds = lazy(() =>
   import(
     /* webpackChunkName: 'redirect-create-pool-duplicate-token-ids-page' */ './CreatePool/RedirectDuplicateTokenIds'
@@ -70,6 +69,8 @@ const History = lazy(() => import(/* webpackChunkName: 'history-page' */ './Disc
 const Compare = lazy(() => import(/* webpackChunkName: 'compare-page' */ './DiscoverPro/Compare'))
 
 const NviSignal = lazy(() => import(/* webpackChunkName: 'nvi-signal-page' */ './DiscoverPro/NviSignal'))
+const BuyCrypto = lazy(() => import(/* webpackChunkName: 'true-sight-page' */ './BuyCrypto'))
+
 const Campaign = lazy(() => import(/* webpackChunkName: 'campaigns-page' */ './Campaign'))
 
 const AppWrapper = styled.div`
@@ -100,7 +101,7 @@ const AppPaths = { SWAP_LEGACY: '/swap-legacy', ABOUT: '/about', SWAP: '/swap' }
 export default function App() {
   const { account, chainId, library } = useActiveWeb3React()
   const aboutPage = useRouteMatch(AppPaths.ABOUT)
-  const apolloClient = useExchangeClient()
+  const classicClient = NETWORKS_INFO[chainId || ChainId.MAINNET].classicClient
   const dispatch = useDispatch<AppDispatch>()
   useEffect(() => {
     const fallback = () => {
@@ -184,8 +185,7 @@ export default function App() {
       )}
 
       {(!account || !BLACKLIST_WALLETS.includes(account)) && (
-        <ApolloProvider client={apolloClient || defaultExchangeClient}>
-          <Route component={GoogleAnalyticsReporter} />
+        <ApolloProvider client={classicClient}>
           <Route component={DarkModeQueryParamReader} />
           <AppWrapper>
             <TopBanner />
@@ -232,8 +232,7 @@ export default function App() {
                       component={RemoveLiquidity}
                     />
 
-                    <Route exact strict path="/elasic/swap" component={ProAmmSwap} />
-                    <Route exact strict path="/elasic/pool/:tokenId" component={ProAmmPositionPage} />
+                    <Route exact strict path="/elastic/swap" component={ProAmmSwap} />
                     <Route exact strict path="/elastic/remove/:tokenId" component={ProAmmRemoveLiquidity} />
                     <Route
                       exact
@@ -257,6 +256,7 @@ export default function App() {
                     <Route exact path="/discoverpro/nvisignal" component={NviSignal} />
                     <Route exact path="/referral" component={CreateReferral} />
                     <Route exact path="/discover" component={TrueSight} />
+                    <Route exact path="/buy-crypto" component={BuyCrypto} />
                     <Route exact path="/campaigns" component={Campaign} />
 
                     <Route component={RedirectPathToSwapOnly} />

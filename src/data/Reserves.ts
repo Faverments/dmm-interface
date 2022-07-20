@@ -2,9 +2,14 @@ import { JSBI, DMMPool, Pair } from '@kyberswap/ks-sdk-classic'
 import { TokenAmount, Currency, Token } from '@kyberswap/ks-sdk-core'
 import { useMemo } from 'react'
 import { Interface } from '@ethersproject/abi'
-
 import { useMultipleContractSingleData, useSingleContractMultipleData } from '../state/multicall/hooks'
-import { useFactoryContract } from 'hooks/useContract'
+import {
+  useOldStaticFeeFactoryContract,
+  useStaticFeeFactoryContract,
+  useDynamicFeeFactoryContract,
+} from 'hooks/useContract'
+import { useActiveWeb3React } from 'hooks'
+import { NETWORKS_INFO } from 'constants/networks'
 
 export enum PairState {
   LOADING,
@@ -18,10 +23,26 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
     currencies,
   ])
 
-  const contract = useFactoryContract()
+  const oldStaticContract = useOldStaticFeeFactoryContract()
+  const staticContract = useStaticFeeFactoryContract()
+  const dynamicContract = useDynamicFeeFactoryContract()
 
-  const ress = useSingleContractMultipleData(
-    contract,
+  const oldStaticRess = useSingleContractMultipleData(
+    oldStaticContract,
+    'getPools',
+    tokens
+      .filter(([tokenA, tokenB]) => tokenA && tokenB && !tokenA.equals(tokenB))
+      .map(([tokenA, tokenB]) => [tokenA?.address, tokenB?.address]),
+  )
+  const staticRess = useSingleContractMultipleData(
+    staticContract,
+    'getPools',
+    tokens
+      .filter(([tokenA, tokenB]) => tokenA && tokenB && !tokenA.equals(tokenB))
+      .map(([tokenA, tokenB]) => [tokenA?.address, tokenB?.address]),
+  )
+  const dynamicRess = useSingleContractMultipleData(
+    dynamicContract,
     'getPools',
     tokens
       .filter(([tokenA, tokenB]) => tokenA && tokenB && !tokenA.equals(tokenB))
@@ -31,30 +52,36 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
   let start = 0
 
   tokens.forEach(([tokenA, tokenB]) => {
-    if (!!(tokenA && tokenB && !tokenA.equals(tokenB)) && !!ress[start]) {
-      result.push(ress[start])
+    if (
+      !!(tokenA && tokenB && !tokenA.equals(tokenB)) &&
+      (!!oldStaticRess[start] || !!staticRess[start] || !!dynamicRess[start])
+    ) {
+      result.push(oldStaticRess[start])
+      result.push(staticRess[start])
+      result.push(dynamicRess[start])
       start += 1
     } else {
       result.push('')
     }
   })
 
-  const lens = result.map(item => (!!item.result ? item.result?.[0].length : 0))
+  const lens = result.map(item => (!!item?.result ? item.result?.[0].length : 0))
   const pairAddresses = result.reduce((acc: string[], i) => {
-    if (!!i.result) {
+    if (!!i?.result) {
       acc = [...acc, ...i.result?.[0]]
     }
     return acc
   }, [])
   const results = useMultipleContractSingleData(pairAddresses, new Interface(DMMPool.abi), 'getTradeInfo')
   const ampResults = useMultipleContractSingleData(pairAddresses, new Interface(DMMPool.abi), 'ampBps')
+
   return useMemo(() => {
     let start = 0
     const vv: any[] = []
     lens.forEach((len, index) => {
       vv.push([])
-      const tokenA = tokens[index][0]
-      const tokenB = tokens[index][1]
+      const tokenA = tokens[index]?.[0]
+      const tokenB = tokens[index]?.[1]
       if (len > 0) {
         for (let j = 0; j < len; j++) {
           const { result: reserves, loading } = results[start]
@@ -68,6 +95,7 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
           } else {
             const { _reserve0, _reserve1, _vReserve0, _vReserve1, feeInPrecision } = reserves
             const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
+
             vv[vv.length - 1].push([
               PairState.EXISTS,
               // TODO: Check reserve
@@ -87,12 +115,13 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
       }
     })
     return vv
-  }, [results, tokens, lens, ampResults, pairAddresses])
+  }, [results, lens, ampResults, pairAddresses, tokens])
 }
 
 export function usePairsByAddress(
   pairInfo: { address: string | undefined; currencies: [Currency | undefined, Currency | undefined] }[],
-): [PairState, Pair | null][] {
+): [PairState, Pair | null, boolean?, boolean?][] {
+  const { chainId } = useActiveWeb3React()
   const results = useMultipleContractSingleData(
     pairInfo.map(info => info.address),
     new Interface(DMMPool.abi),
@@ -103,11 +132,17 @@ export function usePairsByAddress(
     new Interface(DMMPool.abi),
     'ampBps',
   )
+  const factories = useMultipleContractSingleData(
+    pairInfo.map(info => info.address),
+    new Interface(DMMPool.abi),
+    'factory',
+  )
 
   return useMemo(() => {
     return results.map((result, i) => {
       const { result: reserves, loading } = result
       const { result: amp, loading: loadingAmp } = ampResults[i]
+      const { result: factoryAddresses } = factories[i]
       const tokenA = pairInfo[i].currencies[0]?.wrapped
       const tokenB = pairInfo[i].currencies[1]?.wrapped
 
@@ -117,6 +152,10 @@ export function usePairsByAddress(
       if (!reserves) return [PairState.NOT_EXISTS, null]
       const { _reserve0, _reserve1, _vReserve0, _vReserve1, feeInPrecision } = reserves
       const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
+      const isStaticFeePair =
+        chainId && factoryAddresses && factoryAddresses[0] === NETWORKS_INFO[chainId].classic.static.factory
+      const isOldStaticFeeContract =
+        chainId && factoryAddresses && factoryAddresses[0] === NETWORKS_INFO[chainId].classic.oldStatic?.factory
       return [
         PairState.EXISTS,
         new Pair(
@@ -128,16 +167,22 @@ export function usePairsByAddress(
           JSBI.BigInt(feeInPrecision),
           JSBI.BigInt(amp[0]),
         ),
+        isStaticFeePair || isOldStaticFeeContract,
+        isOldStaticFeeContract,
       ]
     })
-  }, [results, ampResults, pairInfo])
+  }, [chainId, pairInfo, results, ampResults, factories])
 }
 
 export function usePair(tokenA?: Currency, tokenB?: Currency): [PairState, Pair | null][] {
   return usePairs([[tokenA, tokenB]])[0]
 }
 
-export function usePairByAddress(tokenA?: Token, tokenB?: Token, address?: string): [PairState, Pair | null] {
+export function usePairByAddress(
+  tokenA?: Token,
+  tokenB?: Token,
+  address?: string,
+): [PairState, Pair | null, boolean?, boolean?] {
   return usePairsByAddress([{ address, currencies: [tokenA, tokenB] }])[0]
 }
 
@@ -145,31 +190,41 @@ export function useUnAmplifiedPairs(currencies: [Currency | undefined, Currency 
   const tokens = useMemo(() => currencies.map(([currencyA, currencyB]) => [currencyA?.wrapped, currencyB?.wrapped]), [
     currencies,
   ])
-  const contract = useFactoryContract()
-  const ress = useSingleContractMultipleData(
-    contract,
+  const dynamicContract = useDynamicFeeFactoryContract()
+  const dynamicRess = useSingleContractMultipleData(
+    dynamicContract,
     'getUnamplifiedPool',
     tokens
       .filter(([tokenA, tokenB]) => tokenA && tokenB && !tokenA.equals(tokenB))
       .map(([tokenA, tokenB]) => [tokenA?.address, tokenB?.address]),
   )
+
+  const staticContract = useStaticFeeFactoryContract()
+  const staticRess = useSingleContractMultipleData(
+    staticContract,
+    'getUnamplifiedPool',
+    tokens
+      .filter(([tokenA, tokenB]) => tokenA && tokenB && !tokenA.equals(tokenB))
+      .map(([tokenA, tokenB]) => [tokenA?.address, tokenB?.address]),
+  )
+
   return useMemo(() => {
-    return ress.map(res => {
+    return [...staticRess, ...dynamicRess].map(res => {
       const { result } = res
       return result?.[0]
     })
-  }, [ress])
+  }, [dynamicRess, staticRess])
 }
 
 export function useUnAmplifiedPairsFull(
   currencies: [Currency | undefined, Currency | undefined][],
-): [PairState, Pair | null][] {
+): [PairState, Pair | null, boolean?, boolean?][] {
   const pairAddresses = useUnAmplifiedPairs(currencies)
   return usePairsByAddress(pairAddresses.map((address, index) => ({ address, currencies: currencies[index] })))
 }
 
-export function useUnAmplifiedPair(tokenA?: Currency, tokenB?: Currency): string {
-  return useUnAmplifiedPairs([[tokenA, tokenB]])[0]
+export function useUnAmplifiedPair(tokenA?: Currency, tokenB?: Currency): string[] {
+  return useUnAmplifiedPairs([[tokenA, tokenB]])
 }
 
 // export function usePair(tokenA?: Currency, tokenB?: Currency): [PairState, Pair | null] {

@@ -27,6 +27,7 @@ export function useDerivedMintInfo(
   currencyA: Currency | undefined,
   currencyB: Currency | undefined,
   pairAddress: string | undefined,
+  isStaticFee?: boolean,
 ): {
   dependentField: Field
   currencies: { [field in Field]?: Currency }
@@ -40,6 +41,8 @@ export function useDerivedMintInfo(
   poolTokenPercentage?: Percent
   error?: string
   unAmplifiedPairAddress?: string
+  isStaticFeePair?: boolean
+  isOldStaticFeeContract?: boolean
 } {
   const { account, chainId } = useActiveWeb3React()
 
@@ -58,8 +61,13 @@ export function useDerivedMintInfo(
   // pair
   const tokenA = currencies[Field.CURRENCY_A]?.wrapped
   const tokenB = currencies[Field.CURRENCY_B]?.wrapped
-  const [pairState, pair] = usePairByAddress(tokenA, tokenB, pairAddress)
-  const unAmplifiedPairAddress = useUnAmplifiedPair(tokenA, tokenB)
+  const [pairState, pair, isStaticFeePair, isOldStaticFeeContract] = usePairByAddress(tokenA, tokenB, pairAddress)
+  const unAmplifiedPairAddresses = useUnAmplifiedPair(tokenA, tokenB)
+  const unAmplifiedPairAddress = unAmplifiedPairAddresses
+    ? isStaticFee || isStaticFeePair
+      ? unAmplifiedPairAddresses[0]
+      : unAmplifiedPairAddresses[1]
+    : ''
   const totalSupply = useTotalSupply(pair?.liquidityToken)
 
   const noLiquidity: boolean =
@@ -79,7 +87,7 @@ export function useDerivedMintInfo(
   // amounts
   const independentAmount: CurrencyAmount<Currency> | undefined = tryParseAmount(
     typedValue,
-    currencies[independentField]
+    currencies[independentField],
   )
 
   const dependentAmount: CurrencyAmount<Currency> | undefined = useMemo(() => {
@@ -158,7 +166,7 @@ export function useDerivedMintInfo(
     error = t`Connect wallet`
   }
 
-  if ((pairAddress && pairState === PairState.INVALID) || (tokenA?.symbol === 'WETH' && tokenB?.symbol === 'WETH')) {
+  if ((pairAddress && pairState === PairState.INVALID) || tokenA?.symbol === tokenB?.symbol) {
     error = error ?? 'Invalid pair'
   }
 
@@ -200,6 +208,8 @@ export function useDerivedMintInfo(
     poolTokenPercentage,
     error,
     unAmplifiedPairAddress,
+    isStaticFeePair,
+    isOldStaticFeeContract,
   }
 }
 
@@ -248,6 +258,8 @@ export function useDerivedZapInInfo(
   insufficientLiquidity?: boolean
   error?: string
   unAmplifiedPairAddress?: string
+  isStaticFeePair?: boolean
+  isOldStaticFeeContract?: boolean
 } {
   const { account, chainId } = useActiveWeb3React()
 
@@ -266,8 +278,13 @@ export function useDerivedZapInInfo(
   // pair
   const tokenA = currencies[Field.CURRENCY_A]?.wrapped
   const tokenB = currencies[Field.CURRENCY_B]?.wrapped
-  const [pairState, pair] = usePairByAddress(tokenA, tokenB, pairAddress)
-  const unAmplifiedPairAddress = useUnAmplifiedPair(tokenA, tokenB)
+  const [pairState, pair, isStaticFeePair, isOldStaticFeeContract] = usePairByAddress(tokenA, tokenB, pairAddress)
+  const unAmplifiedPairAddresses = useUnAmplifiedPair(tokenA, tokenB)
+  const unAmplifiedPairAddress = unAmplifiedPairAddresses
+    ? isStaticFeePair
+      ? unAmplifiedPairAddresses[0]
+      : unAmplifiedPairAddresses[1]
+    : ''
   const totalSupply = useTotalSupply(pair?.liquidityToken)
   const noLiquidity: boolean =
     (pairState === PairState.NOT_EXISTS || Boolean(totalSupply && JSBI.equal(totalSupply.quotient, ZERO))) &&
@@ -292,6 +309,8 @@ export function useDerivedZapInInfo(
   }, [userInCurrencyAmount])
 
   const zapInAmounts = useZapInAmounts(
+    !!isStaticFeePair,
+    !!isOldStaticFeeContract,
     dependentField === Field.CURRENCY_B ? tokenA?.address : tokenB?.address,
     dependentField === Field.CURRENCY_B ? tokenB?.address : tokenA?.address,
     pair?.address,
@@ -302,7 +321,7 @@ export function useDerivedZapInInfo(
   const independentAmount: CurrencyAmount<Currency> | undefined = tryParseAmount(
     zapInAmounts.amounts.tokenInAmount.toString(),
     currencies[independentField]?.wrapped,
-    false
+    false,
   )
 
   const dependentAmount: CurrencyAmount<Currency> | undefined = useMemo(() => {
@@ -315,7 +334,7 @@ export function useDerivedZapInInfo(
         const dependentTokenAmount = tryParseAmount(
           zapInAmounts.amounts.tokenOutAmount.toString(),
           currencies[dependentField]?.wrapped,
-          false
+          false,
         )
 
         return dependentTokenAmount
@@ -392,8 +411,9 @@ export function useDerivedZapInInfo(
     (currencyBalances?.[independentField]?.lessThan(independentAmount) ||
       currencyBalances?.[independentField]?.lessThan(userInCurrencyAmount))
   ) {
-    error = t`Insufficient ${selectedCurrency.isNative ? nativeOnChain(chainId as ChainId).symbol : selectedCurrency.symbol
-      } balance`
+    error = t`Insufficient ${
+      selectedCurrency.isNative ? nativeOnChain(chainId as ChainId).symbol : selectedCurrency.symbol
+    } balance`
   }
 
   if (zapInAmounts.error && zapInAmounts.error.message.includes('INSUFFICIENT_LIQUIDITY')) {
@@ -418,6 +438,8 @@ export function useDerivedZapInInfo(
     insufficientLiquidity,
     error,
     unAmplifiedPairAddress,
+    isStaticFeePair,
+    isOldStaticFeeContract,
   }
 }
 

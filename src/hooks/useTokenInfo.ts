@@ -1,8 +1,9 @@
 import useSWR from 'swr'
 
 import { ChainId, Token, WETH } from '@kyberswap/ks-sdk-core'
-import { COINGECKO_API_URL, COINGECKO_NATIVE_TOKEN_ID, COINGECKO_NETWORK_ID } from 'constants/index'
+import { COINGECKO_API_URL } from 'constants/index'
 import { useActiveWeb3React } from 'hooks'
+import { NETWORKS_INFO } from 'constants/networks'
 
 export interface TokenInfo {
   price: number
@@ -14,24 +15,25 @@ export interface TokenInfo {
   allTimeLow: number
   tradingVolume: number
   description: { en: string }
+  name: string
 }
 
 export default function useTokenInfo(token: Token | undefined): { data: TokenInfo; loading: boolean; error: any } {
   const { chainId } = useActiveWeb3React()
 
-  const fetcher = (url: string) => fetch(url).then(r => r.json())
+  const fetcher = (url: string) => (url ? fetch(url).then(r => r.json()) : Promise.reject({ data: {}, error: '' }))
 
-  const tokenAddress = token?.address
+  const tokenAddress = (token?.address || '').toLowerCase()
 
-  let url
+  let url = ''
 
-  if (tokenAddress?.toLowerCase() === WETH[chainId as ChainId].address.toLowerCase()) {
+  if (tokenAddress === WETH[chainId as ChainId].address.toLowerCase()) {
     // If the token is native token, we have to use different endpoint
-    url = `${COINGECKO_API_URL}/coins/${COINGECKO_NATIVE_TOKEN_ID[chainId || ChainId.MAINNET]}`
-  } else {
+    url = `${COINGECKO_API_URL}/coins/${NETWORKS_INFO[chainId || ChainId.MAINNET].coingeckoNativeTokenId}`
+  } else if (tokenAddress) {
     url = `${COINGECKO_API_URL}/coins/${
-      COINGECKO_NETWORK_ID[chainId || ChainId.MAINNET]
-    }/contract/${tokenAddress?.toLowerCase()}`
+      NETWORKS_INFO[chainId || ChainId.MAINNET].coingeckoNetworkId
+    }/contract/${tokenAddress}`
   }
 
   const { data, error } = useSWR(url, fetcher, {
@@ -70,6 +72,7 @@ export default function useTokenInfo(token: Token | undefined): { data: TokenInf
     allTimeLow: data?.market_data?.atl?.usd || 0,
     tradingVolume: data?.market_data?.total_volume?.usd || 0,
     description: data?.description || { en: '' },
+    name: data?.name || '',
   }
 
   return { data: result, loading, error }

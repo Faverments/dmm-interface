@@ -257,7 +257,7 @@ export default function PositionListItem({
 
                 <StakedRow>
                   <Text color={theme.subText}>
-                    <Trans>Farm APY</Trans>
+                    <Trans>Farm APR</Trans>
                   </Text>
                   <Text color={theme.apr}>--</Text>
                 </StakedRow>
@@ -367,7 +367,7 @@ export default function PositionListItem({
             <ButtonEmpty width="max-content" style={{ fontSize: '14px' }} padding="0">
               <ExternalLink
                 style={{ width: '100%', textAlign: 'center' }}
-                href={`${PROMM_ANALYTICS_URL[chainId as ChainId]}/pool/${positionDetails.poolId}`}
+                href={`${PROMM_ANALYTICS_URL[chainId as ChainId]}/pool/${positionDetails.poolId.toLowerCase()}`}
               >
                 <Trans>Pool Analytics ↗</Trans>
               </ExternalLink>

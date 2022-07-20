@@ -10,7 +10,7 @@ import { PROMM_ANALYTICS_URL } from 'constants/index'
 import { useActiveWeb3React } from 'hooks'
 import { useETHBalances } from 'state/wallet/hooks'
 import Settings from 'components/Settings'
-import Menu from 'components/Menu'
+import Menu, { NewLabel } from 'components/Menu'
 import Row, { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import { ExternalLink } from 'theme/components'
@@ -20,7 +20,19 @@ import DiscoverIcon from 'components/Icons/DiscoverIcon'
 import { useWindowSize } from 'hooks/useWindowSize'
 import AboutPageDropDown from 'components/AboutPageDropDown'
 import DiscoverProPageDropwdown from 'components/DiscoverProPageDropDown'
+import { NETWORKS_INFO } from 'constants/networks'
+// import { Repeat } from 'react-feather'
+// import { ReactComponent as Dollar } from 'assets/svg/dollar.svg'
+// import { ReactComponent as Visa } from 'assets/buy-crypto/visa.svg'
+// import { ReactComponent as MasterCard } from 'assets/buy-crypto/master-card.svg'
 // import { MouseoverTooltip } from 'components/Tooltip'
+import AboutPageDropdown from 'components/AboutPageDropDown'
+
+// const VisaSVG = styled(Visa)`
+//   path {
+//     fill: ${({ theme }) => theme.text};
+//   }
+// `
 
 const HeaderFrame = styled.div`
   display: grid;
@@ -363,14 +375,44 @@ export default function Header() {
           </UniIcon>
         </Title>
         <HeaderLinks>
-          <StyledNavLink
-            id={`swapv2-nav-link`}
-            to={'/swap'}
-            isActive={match => Boolean(match)}
-            style={{ flexDirection: 'column' }}
-          >
-            <Trans>Swap</Trans>
+          <StyledNavLink id={`swapv2-nav-link`} to={'/swap'} isActive={match => Boolean(match)}>
+            <Flex alignItems="center" sx={{ gap: '10px' }}>
+              <Trans>Swap</Trans>
+            </Flex>
           </StyledNavLink>
+
+          {/* temporary hide Dropdown while waiting for legal confirm
+          <HoverDropdown active={pathname.includes('/swap') || pathname === '/buy-crypto'}>
+            <Flex alignItems="center">
+              <Trans>Swap</Trans>
+              <DropdownIcon />
+            </Flex>
+
+            <Dropdown>
+              <StyledNavLink
+                id={`swapv2-nav-link`}
+                to={'/swap'}
+                isActive={match => Boolean(match)}
+                style={{ flexDirection: 'column' }}
+              >
+                <Flex alignItems="center" sx={{ gap: '10px' }}>
+                  <Repeat size={16} />
+                  <Trans>Swap</Trans>
+                </Flex>
+              </StyledNavLink>{' '}
+              <StyledNavLink id={`buy-crypto-nav-link`} to={'/buy-crypto'} isActive={match => Boolean(match)}>
+                <Flex alignItems="center" sx={{ gap: '8px' }}>
+                  <Dollar />
+                  <Trans>Buy Crypto</Trans>
+                  <Flex sx={{ gap: '8px' }}>
+                    <VisaSVG width="20" height="20" />
+                    <MasterCard width="20" height="20" />
+                  </Flex>
+                </Flex>
+              </StyledNavLink>
+            </Dropdown>
+          </HoverDropdown>
+          */}
 
           <HoverDropdown active={pathname.toLowerCase().includes('pools')}>
             <Flex alignItems="center">
@@ -434,6 +476,9 @@ export default function Header() {
           <CampaignWrapper>
             <StyledNavLink id={`campaigns`} to={'/campaigns'} isActive={match => Boolean(match)}>
               <Trans>Campaigns</Trans>
+              <NewLabel>
+                <Trans>New</Trans>
+              </NewLabel>
             </StyledNavLink>
           </CampaignWrapper>
 
@@ -444,7 +489,7 @@ export default function Header() {
           </AnalyticsWrapper>
 
           <AboutWrapper>
-            <AboutPageDropDown />
+            <AboutPageDropdown />
           </AboutWrapper>
         </HeaderLinks>
       </HeaderRow>
@@ -466,26 +511,7 @@ export default function Header() {
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
             {account && userEthBalance ? (
               <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
-                {userEthBalance?.toSignificant(4)}{' '}
-                {chainId && [1, 3, 4, 5, 42].includes(chainId)
-                  ? `ETH`
-                  : chainId && [137, 80001].includes(chainId)
-                  ? `MATIC`
-                  : chainId && [56, 97].includes(chainId)
-                  ? `BNB`
-                  : chainId && [43113, 43114].includes(chainId)
-                  ? `AVAX`
-                  : chainId && [250].includes(chainId)
-                  ? `FTM`
-                  : chainId && [25, 338].includes(chainId)
-                  ? `CRO`
-                  : chainId && [199, 1028].includes(chainId)
-                  ? 'BTT'
-                  : chainId && [ChainId.VELAS, 111].includes(chainId)
-                  ? 'VLX'
-                  : chainId && [ChainId.OASIS].includes(chainId)
-                  ? 'ROSE'
-                  : `ETH`}
+                {userEthBalance?.toSignificant(4)} {NETWORKS_INFO[chainId || ChainId.MAINNET].nativeToken.symbol}
               </BalanceText>
             ) : null}
             <Web3Status />

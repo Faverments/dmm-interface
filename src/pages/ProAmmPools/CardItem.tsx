@@ -21,6 +21,7 @@ import { MouseoverTooltip } from 'components/Tooltip'
 import DropIcon from 'components/Icons/DropIcon'
 import { useProMMFarms } from 'state/farms/promm/hooks'
 import { ELASTIC_BASE_FEE_UNIT, PROMM_ANALYTICS_URL } from 'constants/index'
+import { VERSION } from 'constants/v2'
 
 interface ListItemProps {
   pair: ProMMPoolData[]
@@ -31,7 +32,7 @@ interface ListItemProps {
 
 const getPrommAnalyticLink = (chainId: ChainId | undefined, poolAddress: string) => {
   if (!chainId) return ''
-  return `${PROMM_ANALYTICS_URL[chainId]}/pool/${poolAddress}`
+  return `${PROMM_ANALYTICS_URL[chainId]}/pool/${poolAddress.toLowerCase()}`
 }
 
 export const Wrapper = styled.div`
@@ -82,9 +83,9 @@ export default function ProAmmPoolCardItem({ pair, onShared, userPositions }: Li
       ? nativeOnChain(chainId as ChainId).symbol
       : token0.symbol
   const token1Address =
-      token1.address.toLowerCase() === WETH[chainId as ChainId].address.toLowerCase()
-        ? nativeOnChain(chainId as ChainId).symbol
-        : token1.address
+    token1.address.toLowerCase() === WETH[chainId as ChainId].address.toLowerCase()
+      ? nativeOnChain(chainId as ChainId).symbol
+      : token1.address
   const token1Symbol =
     token1.address.toLowerCase() === WETH[chainId as ChainId].address.toLowerCase()
       ? nativeOnChain(chainId as ChainId).symbol
@@ -169,7 +170,7 @@ export default function ProAmmPoolCardItem({ pair, onShared, userPositions }: Li
 
             <Flex marginTop="16px" justifyContent="space-between">
               <Text color={theme.subText} fontWeight="500">
-                AVG APY
+                AVG APR
                 <InfoHelper size={14} text={t`Average estimated return based on yearly fees of the pool`} />
               </Text>
               <DataText alignItems="flex-end" color={theme.apr}>
@@ -203,7 +204,7 @@ export default function ProAmmPoolCardItem({ pair, onShared, userPositions }: Li
                 as={Link}
                 to={
                   myLiquidity
-                    ? `/myPools?search=${pool.address}`
+                    ? `/myPools?tab=${VERSION.ELASTIC}&search=${pool.address}`
                     : `/elastic/add/${token0Address}/${token1Address}/${pool.feeTier}`
                 }
               >

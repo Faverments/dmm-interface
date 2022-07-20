@@ -1,17 +1,19 @@
 import { createAction } from '@reduxjs/toolkit'
+import { ChainId } from '@kyberswap/ks-sdk-core'
 
 export type CampaignStatus = 'Upcoming' | 'Ongoing' | 'Ended'
 
-export enum RewardState {
-  RewardStateReady,
-  RewardStateRewarded,
+export enum CampaignState {
+  CampaignStateReady,
+  CampaignStateFinalizedLeaderboard,
+  CampaignStateDistributedRewards,
 }
 
 export type RewardSingle = {
   type: 'Single'
   rank?: number
   amount?: number
-  token?: string
+  tokenSymbol?: string
 }
 
 export type RewardRange = {
@@ -19,7 +21,7 @@ export type RewardRange = {
   from?: number
   to?: number
   amount?: number
-  token?: string
+  tokenSymbol?: string
 }
 
 export type RewardRandom = {
@@ -28,21 +30,37 @@ export type RewardRandom = {
   to?: number
   nWinners?: number
   amount?: number
-  token?: string
+  tokenSymbol?: string
 }
 
 export type RewardDistribution = RewardSingle | RewardRange | RewardRandom
 
+export interface CampaignLeaderboardRankings {
+  userAddress: string
+  totalPoint: number
+  rankNo: number
+  rewardAmount: number
+  tokenSymbol: string
+}
+
+export interface CampaignLeaderboardRewards {
+  rewardAmount: number
+  tokenSymbol: string
+  ref: string
+  claimed: boolean
+}
+
 export interface CampaignLeaderboard {
   numberOfParticipants: number
   userRank: number
-  ranking: {
-    address: string
-    point: number
-    rank: number
-    rewardAmount: number
-    token: string
-  }[]
+  rankings: CampaignLeaderboardRankings[]
+  rewards: CampaignLeaderboardRewards[]
+}
+
+export interface CampaignLuckyWinner {
+  userAddress: string
+  rewardAmount: string
+  tokenSymbol: string
 }
 
 export interface CampaignData {
@@ -60,13 +78,23 @@ export interface CampaignData {
   isRewardShown: boolean
   enterNowUrl: string
   rewardDistribution: RewardDistribution[]
-  rewardState: RewardState
+  campaignState: CampaignState
   chainIds: string
   rewardChainIds: string
+  tradingVolumeRequired: number
+}
+
+export interface CampaignProofData {
+  id: number
+  chainId: ChainId
+  txPoint: string
+  utcTimestamp: number
+  txHash: string
 }
 
 export const setCampaignData = createAction<{ campaigns: CampaignData[] }>('campaigns/setCampaignData')
 export const setLoadingCampaignData = createAction<boolean>('campaigns/setLoadingCampaignData')
+export const setLoadingCampaignDataError = createAction<Error | undefined>('campaigns/setLoadingCampaignDataError')
 
 export const setSelectedCampaign = createAction<{ campaign: CampaignData }>('campaigns/setSelectedCampaign')
 
@@ -75,4 +103,23 @@ export const setSelectedCampaignLeaderboard = createAction<{ leaderboard: Campai
 )
 export const setLoadingSelectedCampaignLeaderboard = createAction<boolean>(
   'campaigns/setLoadingSelectedCampaignLeaderboard',
+)
+export const setSelectedCampaignLeaderboardPageNumber = createAction<number>(
+  'campaigns/setSelectedCampaignLeaderboardPageNumber',
+)
+export const setSelectedCampaignLeaderboardLookupAddress = createAction<string>(
+  'campaigns/setSelectedCampaignLeaderboardLookupAddress',
+)
+
+export const setSelectedCampaignLuckyWinners = createAction<{ luckyWinners: CampaignLuckyWinner[] }>(
+  'campaigns/setSelectedCampaignLuckyWinners',
+)
+export const setLoadingSelectedCampaignLuckyWinners = createAction<boolean>(
+  'campaigns/setLoadingSelectedCampaignLuckyWinners',
+)
+export const setSelectedCampaignLuckyWinnersPageNumber = createAction<number>(
+  'campaigns/setSelectedCampaignLuckyWinnersPageNumber',
+)
+export const setSelectedCampaignLuckyWinnersLookupAddress = createAction<string>(
+  'campaigns/setSelectedCampaignLuckyWinnersLookupAddress',
 )

@@ -27,6 +27,8 @@ import {
   VelasLogoFull,
   Oasis,
   OasisLogoFull,
+  OptimismLogo,
+  OptimismLogoFull,
   Drop,
   FarmIcon,
 } from 'components/Icons'
@@ -42,9 +44,6 @@ import { ExternalLink, StyledInternalLink } from 'theme'
 import { useDarkModeManager } from 'state/user/hooks'
 import githubImg from 'assets/svg/about_icon_github.png'
 import githubImgLight from 'assets/svg/about_icon_github_light.png'
-import { KNC } from 'constants/index'
-import { ChainId } from '@kyberswap/ks-sdk-core'
-import { useActiveWeb3React } from 'hooks'
 import { useGlobalData } from 'state/about/hooks'
 import { formatBigLiquidity } from 'utils/formatBalance'
 import {
@@ -76,30 +75,68 @@ import {
 import { ButtonEmpty } from 'components/Button'
 import { FooterSocialLink } from 'components/Footer/Footer'
 import { dexListConfig } from 'constants/dexes'
-import { SUPPORTED_NETWORKS } from 'constants/networks'
+import { MAINNET_NETWORKS } from 'constants/networks'
 import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
 import Banner from 'components/Banner'
-// import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
-// import { Pagination, FreeMode } from 'swiper'
-import { nativeOnChain } from 'constants/tokens'
 import AntiSnippingAttack from 'components/Icons/AntiSnippingAttack'
 import { VERSION } from 'constants/v2'
 
-const KNC_NOT_AVAILABLE_IN = [
-  ChainId.CRONOS,
-  ChainId.AVAXMAINNET,
-  ChainId.FANTOM,
-  ChainId.BTTC,
-  ChainId.ARBITRUM,
-  ChainId.AURORA,
-  ChainId.VELAS,
-  ChainId.OASIS,
-]
+export const KSStatistic = () => {
+  const theme = useTheme()
+  const above992 = useMedia('(min-width: 992px)')
 
-const getPoolsMenuLink = (chainId?: ChainId, path?: string) => {
-  const pathname = path || 'pools'
-  if (chainId && KNC_NOT_AVAILABLE_IN.includes(chainId)) return `/${pathname}/${nativeOnChain(chainId).symbol}`
-  return `/${pathname}/${nativeOnChain(chainId as ChainId).symbol || 'ETH'}/${KNC[chainId as ChainId].address}`
+  return (
+    <>
+      <div style={{ position: 'relative', marginTop: '20px' }}>
+        <ForTraderInfoShadow />
+        <ForTraderInfo>
+          <Flex sx={{ gap: '24px' }} height={above992 ? '100%' : 'unset'} width={above992 ? 'unset' : '100%'}>
+            <Flex flexDirection="column" alignItems="center" flex={!above992 ? 1 : 'unset'}>
+              <Text fontWeight="600" fontSize="24px">
+                $24B
+              </Text>
+              <Text color={theme.subText} marginTop="4px" fontSize="14px">
+                <Trans>TVL From DEXs</Trans>
+              </Text>
+            </Flex>
+
+            <ForTraderDivider />
+
+            <Flex flexDirection="column" alignItems="center" flex={!above992 ? 1 : 'unset'}>
+              <Text fontWeight="600" fontSize="24px">
+                {Object.keys(dexListConfig).length - 1}+{/* DMM and KyberSwap are one */}
+              </Text>
+              <Text color={theme.subText} marginTop="4px" fontSize="14px">
+                <Trans>DEXs</Trans>
+              </Text>
+            </Flex>
+          </Flex>
+
+          <ForTraderDivider horizontal={!above992} />
+
+          <Flex sx={{ gap: '24px' }} height={above992 ? '100%' : 'unset'} width={above992 ? 'unset' : '100%'}>
+            <Flex flexDirection="column" alignItems="center" flex={!above992 ? 1 : 'unset'}>
+              <Text fontWeight="600" fontSize="24px">
+                {MAINNET_NETWORKS.length}
+              </Text>
+              <Text color={theme.subText} marginTop="4px" fontSize="14px">
+                <Trans>Chains</Trans>
+              </Text>
+            </Flex>
+            <ForTraderDivider />
+            <Flex flexDirection="column" alignItems="center" flex={!above992 ? 1 : 'unset'}>
+              <Text fontWeight="600" fontSize="24px">
+                20,000+
+              </Text>
+              <Text color={theme.subText} marginTop="4px" fontSize="14px">
+                <Trans>Tokens</Trans>
+              </Text>
+            </Flex>
+          </Flex>
+        </ForTraderInfo>
+      </div>
+    </>
+  )
 }
 
 function AboutKyberSwap() {
@@ -109,9 +146,6 @@ function AboutKyberSwap() {
   const above768 = useMedia('(min-width: 768px)')
   const above500 = useMedia('(min-width: 500px)')
 
-  const { chainId } = useActiveWeb3React()
-  const poolsMenuLink = getPoolsMenuLink(chainId)
-  const createPoolLink = getPoolsMenuLink(chainId, 'create')
   const data = useGlobalData()
 
   const globalData = data && data.dmmFactories[0]
@@ -404,6 +438,7 @@ function AboutKyberSwap() {
             <Aurora />
             <Oasis />
             <Bttc />
+            <OptimismLogo />
           </SupportedChain>
 
           <Flex
@@ -421,7 +456,7 @@ function AboutKyberSwap() {
             </BtnPrimary>
             <BtnOutlined
               as={Link}
-              to={poolsMenuLink}
+              to={'/pools?tab=elastic'}
               onClick={() => mixpanelHandler(MIXPANEL_TYPE.ABOUT_START_EARNING_CLICKED)}
             >
               <MoneyBag color={theme.btnOutline} />
@@ -512,7 +547,7 @@ function AboutKyberSwap() {
                           }&search=${dataToShow.maxAPRAvailable.id}`}
                           style={{ textDecorationLine: 'none' }}
                         >
-                          <Trans>Max APY Available</Trans>↗
+                          <Trans>Max APR Available</Trans>↗
                         </Link>
                       </Text>
                     </StatisticItem>
@@ -549,7 +584,7 @@ function AboutKyberSwap() {
               >
                 <Trans>
                   KNC is a utility and governance token, and an integral part of Kyber Network and its flagship product
-                  KyberSwap. It is the glue that connects different stakeholders in Kyber's ecosystem
+                  KyberSwap. It is the glue that connects different stakeholders in Kyber&apos;s ecosystem
                 </Trans>
               </Text>
               <img
@@ -630,54 +665,7 @@ function AboutKyberSwap() {
                 alt="ForTrader"
                 style={{ marginTop: above992 ? '0.25rem' : '40px' }}
               />
-              <div style={{ position: 'relative', marginTop: '20px' }}>
-                <ForTraderInfoShadow />
-                <ForTraderInfo>
-                  <Flex sx={{ gap: '24px' }} height={above992 ? '100%' : 'unset'} width={above992 ? 'unset' : '100%'}>
-                    <Flex flexDirection="column" alignItems="center" flex={!above992 ? 1 : 'unset'}>
-                      <Text fontWeight="600" fontSize="24px">
-                        $24B
-                      </Text>
-                      <Text color={theme.subText} marginTop="4px" fontSize="14px">
-                        <Trans>TVL From DEXs</Trans>
-                      </Text>
-                    </Flex>
-
-                    <ForTraderDivider />
-
-                    <Flex flexDirection="column" alignItems="center" flex={!above992 ? 1 : 'unset'}>
-                      <Text fontWeight="600" fontSize="24px">
-                        {Object.keys(dexListConfig).length - 1}+{/* DMM and KyberSwap are one */}
-                      </Text>
-                      <Text color={theme.subText} marginTop="4px" fontSize="14px">
-                        <Trans>DEXs</Trans>
-                      </Text>
-                    </Flex>
-                  </Flex>
-
-                  <ForTraderDivider horizontal={!above992} />
-
-                  <Flex sx={{ gap: '24px' }} height={above992 ? '100%' : 'unset'} width={above992 ? 'unset' : '100%'}>
-                    <Flex flexDirection="column" alignItems="center" flex={!above992 ? 1 : 'unset'}>
-                      <Text fontWeight="600" fontSize="24px">
-                        {SUPPORTED_NETWORKS.length}
-                      </Text>
-                      <Text color={theme.subText} marginTop="4px" fontSize="14px">
-                        <Trans>Chains</Trans>
-                      </Text>
-                    </Flex>
-                    <ForTraderDivider />
-                    <Flex flexDirection="column" alignItems="center" flex={!above992 ? 1 : 'unset'}>
-                      <Text fontWeight="600" fontSize="24px">
-                        20,000+
-                      </Text>
-                      <Text color={theme.subText} marginTop="4px" fontSize="14px">
-                        <Trans>Tokens</Trans>
-                      </Text>
-                    </Flex>
-                  </Flex>
-                </ForTraderInfo>
-              </div>
+              <KSStatistic />
             </Flex>
             {!above500 && (
               <BtnPrimary
@@ -801,7 +789,7 @@ function AboutKyberSwap() {
           >
             <BtnPrimary
               as={Link}
-              to={poolsMenuLink}
+              to={activeTab === VERSION.ELASTIC ? '/pools?tab=elastic' : '/pools?tab=classic'}
               onClick={() => mixpanelHandler(MIXPANEL_TYPE.ABOUT_START_EARNING_CLICKED)}
             >
               <MoneyBag size={20} color={theme.textReverse} />
@@ -809,7 +797,11 @@ function AboutKyberSwap() {
                 <Trans>Start Earning</Trans>
               </Text>
             </BtnPrimary>
-            <BtnOutlined as={Link} to="/farms" onClick={() => mixpanelHandler(MIXPANEL_TYPE.ABOUT_VIEW_FARMS_CLICKED)}>
+            <BtnOutlined
+              as={Link}
+              to={activeTab === VERSION.ELASTIC ? '/farms?farmType=elastic' : '/farms?farmType=classic'}
+              onClick={() => mixpanelHandler(MIXPANEL_TYPE.ABOUT_VIEW_FARMS_CLICKED)}
+            >
               <FarmIcon size={20} color={theme.btnOutline} />
               <Text fontSize="16px" marginLeft="8px">
                 <Trans>View Farms</Trans>
@@ -878,7 +870,7 @@ function AboutKyberSwap() {
           >
             <BtnPrimary
               as={Link}
-              to={createPoolLink}
+              to={'/pools?tab=elastic&highlightCreateButton=true'}
               onClick={() => mixpanelHandler(MIXPANEL_TYPE.ABOUT_CREATE_NEW_POOL_CLICKED)}
             >
               <Plus size={20} />
@@ -1031,12 +1023,14 @@ function AboutKyberSwap() {
               />
               <VelasLogoFull color={isDarkMode ? undefined : 'black'} />
               <AuroraFull />
+              <div />
               <OasisLogoFull />
               <img
                 src={require(`../../assets/images/btt-logo${isDarkMode ? '-dark' : ''}.svg`)}
                 alt="btt"
                 width="100%"
               />
+              <OptimismLogoFull />
             </Powered>
           </Text>
         </Wrapper>

@@ -4,7 +4,7 @@ import { CurrencyAmount, Percent, TradeType, ChainId, validateAndParseAddress, C
 import { SwapParameters, TradeOptions, TradeOptionsDeadline } from '@kyberswap/ks-sdk-classic'
 import JSBI from 'jsbi'
 import { useMemo, useCallback } from 'react'
-import { BIPS_BASE, ETHER_ADDRESS, INITIAL_ALLOWED_SLIPPAGE, ROUTER_ADDRESSES_V2 } from 'constants/index'
+import { BIPS_BASE, ETHER_ADDRESS, INITIAL_ALLOWED_SLIPPAGE } from 'constants/index'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import {
   calculateGasMargin,
@@ -34,6 +34,8 @@ import { AppState } from 'state'
 import { ethers } from 'ethers'
 import { useSwapState } from 'state/swap/hooks'
 import { getAmountPlusFeeInQuotient } from 'utils/fee'
+import { NETWORKS_INFO } from 'constants/networks'
+import useSendTransactionCallback from 'hooks/useSendTransactionCallback'
 
 /**
  * The parameters to use in the call to the DmmExchange Router to execute a trade.
@@ -333,7 +335,15 @@ function useSwapV2CallArguments(
   // TODO: resolve this
   // @ts-ignore
   return useMemo(() => {
-    if (!trade || !recipient || !library || !account || !chainId || !deadline || !(ROUTER_ADDRESSES_V2[chainId] || ''))
+    if (
+      !trade ||
+      !recipient ||
+      !library ||
+      !account ||
+      !chainId ||
+      !deadline ||
+      !(NETWORKS_INFO[chainId].classic.routerV2 || '')
+    )
       return []
 
     const contract: Contract | null = getRouterV2Contract(chainId, library, account)
@@ -423,6 +433,8 @@ export function useSwapV2Callback(
     },
     [account, addTransactionWithType, feeConfig, recipient, recipientAddressOrName, saveGas, trade, typedValue],
   )
+
+  const sendTransaction = useSendTransactionCallback()
 
   return useMemo(() => {
     if (!trade || !library || !account || !chainId) {
@@ -531,50 +543,9 @@ export function useSwapV2Callback(
 
     const onSwapWithBackendEncode = async (): Promise<string> => {
       const value = BigNumber.from(trade.inputAmount.currency.isNative ? trade.inputAmount.quotient.toString() : 0)
-
-      const estimateGasOption = {
-        from: account,
-        to: trade.routerAddress,
-        data: trade.encodedSwapData,
-        value,
-      }
-
-      const gasEstimate = await library
-        .getSigner()
-        .estimateGas(estimateGasOption)
-        .then(response => {
-          return response
-        })
-        .catch(error => {
-          console.error(error)
-          throw new Error(
-            'gasEstimate not found: Unexpected error. Please contact support: none of the calls threw an error',
-          )
-        })
-
-      const sendTransactionOption = {
-        from: account,
-        to: trade.routerAddress,
-        data: trade.encodedSwapData,
-        gasLimit: calculateGasMargin(gasEstimate),
-        ...(gasPrice?.standard ? { gasPrice: ethers.utils.parseUnits(gasPrice?.standard, 'wei') } : {}),
-        ...(trade.inputAmount.currency.isToken ? {} : { value }),
-      }
-
-      return library
-        .getSigner()
-        .sendTransaction(sendTransactionOption)
-        .then(onHandleResponse)
-        .catch((error: any) => {
-          // if the user rejected the tx, pass this along
-          if (error?.code === 4001) {
-            throw new Error('Transaction rejected.')
-          } else {
-            // otherwise, the error was unexpected and we need to convey that
-            console.error(`Swap failed`, error)
-            throw new Error(`Swap failed: ${error.message}`)
-          }
-        })
+      const hash = await sendTransaction(trade.routerAddress, trade.encodedSwapData, value, onHandleResponse)
+      if (hash === undefined) throw new Error('sendTransaction returned undefined.')
+      return hash
     }
 
     return {
@@ -593,5 +564,6 @@ export function useSwapV2Callback(
     swapCalls,
     gasPrice,
     onHandleResponse,
+    sendTransaction,
   ])
 }

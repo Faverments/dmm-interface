@@ -5,7 +5,7 @@ import { ApplicationModal } from 'state/application/actions'
 import { useAddPopup, useModalOpen, useToggleModal, useWalletModalToggle } from 'state/application/hooks'
 import { ThemeContext } from 'styled-components'
 import { ButtonPrimary } from 'components/Button'
-import { getTokenLogoURL, isAddress, nativeNameFromETH, shortenAddress } from 'utils'
+import { getTokenLogoURL, isAddress, shortenAddress } from 'utils'
 import styled from 'styled-components'
 import { CloseIcon } from 'theme'
 import { RowBetween } from 'components/Row'
@@ -16,10 +16,10 @@ import { BigNumber } from 'ethers'
 import { useAllTokens } from 'hooks/Tokens'
 import { filterTokens } from 'components/SearchModal/filtering'
 import Logo from 'components/Logo'
-import { logo } from 'components/CurrencyLogo'
 import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
 import JSBI from 'jsbi'
 import { nativeOnChain } from 'constants/tokens'
+import { NETWORKS_INFO } from 'constants/networks'
 
 const AddressWrapper = styled.div`
   background: ${({ theme }) => theme.buttonBlack};
@@ -65,17 +65,17 @@ function FaucetModal() {
   }, [rewardData, chainId, account, allTokens])
   const tokenLogo = useMemo(() => {
     if (!chainId || !token) return
-    if (token.isNative) return logo[chainId]
+    if (token.isNative) return NETWORKS_INFO[chainId].nativeToken.logo
     return getTokenLogoURL(token.address, chainId)
   }, [chainId, token])
   const tokenSymbol = useMemo(() => {
-    if (token?.isNative) return nativeNameFromETH(chainId)
+    if (token?.isNative && chainId) return NETWORKS_INFO[chainId].nativeToken.name
     return token?.symbol
   }, [token, chainId])
   const claimRewardCallBack = async () => {
     if (!rewardData) return
     try {
-      const rawResponse = await fetch(process.env.REACT_APP_FAUCET_API + '/rewards/claim', {
+      const rawResponse = await fetch(process.env.REACT_APP_REWARD_SERVICE_API + '/rewards/claim', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ function FaucetModal() {
     const getRewardAmount = async () => {
       try {
         const { data } = await fetch(
-          `${process.env.REACT_APP_FAUCET_API}/faucets?wallet=${account}&chainId=${chainId}`,
+          `${process.env.REACT_APP_REWARD_SERVICE_API}/faucets?wallet=${account}&chainId=${chainId}`,
         ).then(res => res.json())
         if (data[0])
           setRewardData({

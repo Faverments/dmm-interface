@@ -26,7 +26,7 @@ import { ButtonPrimary } from 'components/Button'
 import InfoHelper from 'components/InfoHelper'
 import { isMobile } from 'react-device-detect'
 import { Info } from 'react-feather'
-import { OUTSIDE_FAIRLAUNCH_ADDRESSES, DMM_ANALYTICS, CHAIN_ROUTE } from 'constants/index'
+import { OUTSIDE_FAIRLAUNCH_ADDRESSES, DMM_ANALYTICS_URL } from 'constants/index'
 import { PoolElasticIcon, PoolClassicIcon } from 'components/Icons'
 import useTheme from 'hooks/useTheme'
 import { auto } from '@popperjs/core'
@@ -157,13 +157,13 @@ export default function PoolCombination() {
   const history = useHistory()
   const location = useLocation()
   const qs = useParsedQueryString()
-  const tab = (qs.tab as string) || VERSION.CLASSIC
+  const tab = (qs.tab as string) || VERSION.ELASTIC
   const setTab = (tab: VERSION) => {
     history.replace(location.pathname + '?tab=' + tab)
   }
 
   const { chainId } = useActiveWeb3React()
-
+  const { mixpanelHandler } = useMixpanel()
   const notSupportedMsg = ELASTIC_NOT_SUPPORTED[chainId as ChainId]
 
   return (
@@ -175,7 +175,10 @@ export default function PoolCombination() {
               <Flex
                 onClick={() => {
                   if (!!notSupportedMsg) return
-                  if (tab === VERSION.CLASSIC) setTab(VERSION.ELASTIC)
+                  if (tab === VERSION.CLASSIC) {
+                    mixpanelHandler(MIXPANEL_TYPE.ELASTIC_MYPOOLS_ELASTIC_POOLS_CLICKED)
+                    setTab(VERSION.ELASTIC)
+                  }
                 }}
                 alignItems="center"
                 role="button"
@@ -357,7 +360,7 @@ function Pool() {
                   </Tab>
                 </Flex>
 
-                <ExternalLink href={`${DMM_ANALYTICS}/${CHAIN_ROUTE[chainId as ChainId]}/account/${account}`}>
+                <ExternalLink href={`${DMM_ANALYTICS_URL[chainId as ChainId]}/account/${account}`}>
                   <Flex alignItems="center">
                     <Wallet size={16} />
                     <Text fontSize="14px" marginLeft="4px">

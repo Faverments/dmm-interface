@@ -7,7 +7,7 @@ import styled, { ThemeContext } from 'styled-components'
 import { RouteComponentProps, useParams } from 'react-router-dom'
 import { t, Trans } from '@lingui/macro'
 import { BrowserView, MobileView } from 'react-device-detect'
-
+import { SEOSwap } from 'components/SEO'
 import AddressInputPanel from 'components/AddressInputPanel'
 import { ButtonConfirmed, ButtonError, ButtonLight, ButtonPrimary } from 'components/Button'
 import Card, { GreyCard } from 'components/Card/index'
@@ -53,6 +53,7 @@ import {
   useShowProLiveChart,
   useShowTokenInfo,
   useShowTradeRoutes,
+  useUserAddedTokens,
   useUserSlippageTolerance,
 } from 'state/user/hooks'
 import { LinkStyledButton, TYPE } from 'theme'
@@ -83,20 +84,21 @@ import Banner from 'components/Banner'
 import TrendingSoonTokenBanner from 'components/TrendingSoonTokenBanner'
 import TopTrendingSoonTokensInCurrentNetwork from 'components/TopTrendingSoonTokensInCurrentNetwork'
 import { clientData } from 'constants/clientData'
-import { MAP_TOKEN_HAS_MULTI_BY_NETWORK, NETWORK_LABEL, NETWORK_TO_CHAINID } from 'constants/networks'
+import { NETWORKS_INFO, SUPPORTED_NETWORKS } from 'constants/networks'
 import { useActiveNetwork } from 'hooks/useActiveNetwork'
-import { convertToSlug } from 'utils/string'
+import { convertToSlug, getNetworkSlug, getSymbolSlug } from 'utils/string'
+import { checkPairInWhiteList, convertSymbol } from 'utils/tokenInfo'
 import { filterTokensWithExactKeyword } from 'components/SearchModal/filtering'
 import { useRef } from 'react'
 import { nativeOnChain } from 'constants/tokens'
+import * as Sentry from '@sentry/react'
 
 import Footer from 'components/Footer/Footer'
+import usePrevious from 'hooks/usePrevious'
 enum ACTIVE_TAB {
   SWAP,
   INFO,
 }
-const getSymbolSlug = (token: Currency | Token | undefined) =>
-  token ? convertToSlug(token?.symbol || token?.wrapped?.symbol || '') : ''
 
 export const AppBodyWrapped = styled(AppBody)`
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.04);
@@ -134,8 +136,10 @@ export default function Swap({ history }: RouteComponentProps) {
   const isShowLiveChart = useShowLiveChart()
   const isShowTradeRoutes = useShowTradeRoutes()
   const isShowTokenInfoSetting = useShowTokenInfo()
+  const showProChartStore = useShowProLiveChart()
 
-  const [isSelectCurencyMannual, setIsSelectCurencyMannual] = useState(false) // true when select input/output mannual else select via url
+  const [isSelectCurencyMannual, setIsSelectCurencyMannual] = useState(false) // true when: select token input, output mannualy or click rotate token.
+  // else select via url
 
   const [activeTab, setActiveTab] = useState<ACTIVE_TAB>(ACTIVE_TAB.SWAP)
 
@@ -152,9 +156,6 @@ export default function Swap({ history }: RouteComponentProps) {
     () => [loadedInputCurrency, loadedOutputCurrency]?.filter((c): c is Token => c instanceof Token) ?? [],
     [loadedInputCurrency, loadedOutputCurrency],
   )
-  const handleConfirmTokenWarning = useCallback(() => {
-    setDismissTokenWarning(true)
-  }, [])
 
   // dismiss warning if all imported tokens are in active lists
   const defaultTokens = useAllTokens()
@@ -212,7 +213,13 @@ export default function Swap({ history }: RouteComponentProps) {
         [Field.OUTPUT]: independentField === Field.OUTPUT ? parsedAmount : trade?.outputAmount,
       }
 
-  const { onSwitchTokensV2, onCurrencySelection, onUserInput, onChangeRecipient } = useSwapActionHandlers()
+  const {
+    onSwitchTokensV2,
+    onCurrencySelection,
+    onResetSelectCurrency,
+    onUserInput,
+    onChangeRecipient,
+  } = useSwapActionHandlers()
 
   const isValid = !swapInputError
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
@@ -269,6 +276,7 @@ export default function Swap({ history }: RouteComponentProps) {
     setApprovalSubmitted(false) // reset 2 step UI for approvals
     setRotate(prev => !prev)
     onSwitchTokensV2()
+    setIsSelectCurencyMannual(true)
   }, [onSwitchTokensV2])
 
   // mark when a user has submitted an approval, reset onTokenSelection for input field
@@ -301,6 +309,7 @@ export default function Swap({ history }: RouteComponentProps) {
         setSwapState({ attemptingTxn: false, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: hash })
       })
       .catch(error => {
+        Sentry.captureException(error)
         setSwapState({
           attemptingTxn: false,
           tradeToConfirm,
@@ -361,11 +370,16 @@ export default function Swap({ history }: RouteComponentProps) {
     mixpanelHandler(MIXPANEL_TYPE.SWAP_INITIATED)
   }
 
+  /** check url params format `/swap/network/x-to-y` and then auto select token input
+   * - Flow: check network first and find token pairs (x vs y)
+   */
+
   const params = useParams<{
     fromCurrency: string
     toCurrency: string
     network: string
   }>()
+
   const getUrlMatchParams = () => {
     const fromCurrency = (params.fromCurrency || '').toLowerCase()
     const toCurrency = (params.toCurrency || '').toLowerCase()
@@ -373,10 +387,9 @@ export default function Swap({ history }: RouteComponentProps) {
     return { fromCurrency, toCurrency, network }
   }
 
-  const showProChartStore = useShowProLiveChart()
-
   const { changeNetwork } = useActiveNetwork()
-  const refIsCheckNetwork = useRef<boolean>() // to prevent call function many time
+  const refIsCheckNetworkAutoSelect = useRef<boolean>(false) // has done check network
+  const refIsImportUserToken = useRef<boolean>(false)
 
   const findToken = (keyword: string) => {
     const nativeToken = nativeOnChain(chainId as ChainId)
@@ -386,10 +399,20 @@ export default function Swap({ history }: RouteComponentProps) {
     return filterTokensWithExactKeyword(Object.values(defaultTokens), keyword)[0]
   }
 
+  const navigate = (url: string) => {
+    history.push(`${url}${window.location.search}`) // keep query params
+  }
+
   function findTokenPairFromUrl() {
-    if (!refIsCheckNetwork.current || !Object.keys(defaultTokens).length) return
-    let { fromCurrency, toCurrency } = getUrlMatchParams()
-    const { network } = getUrlMatchParams()
+    let { fromCurrency, toCurrency, network } = getUrlMatchParams()
+
+    const compareNetwork = getNetworkSlug(chainId)
+
+    if (compareNetwork && network !== compareNetwork) {
+      // when select change network => force get new network
+      network = compareNetwork
+      navigate(`/swap/${network}/${fromCurrency}${toCurrency ? `-to-${toCurrency}` : ''}`)
+    }
 
     const isSame = fromCurrency && fromCurrency === toCurrency
     if (!toCurrency || isSame) {
@@ -397,8 +420,8 @@ export default function Swap({ history }: RouteComponentProps) {
       const fromToken = findToken(fromCurrency)
       if (fromToken) {
         onCurrencySelection(Field.INPUT, fromToken)
-        if (isSame) history.push(`/swap/${network}/${fromCurrency}`)
-      } else history.push('/swap')
+        if (isSame) navigate(`/swap/${network}/${fromCurrency}`)
+      } else navigate('/swap')
       return
     }
 
@@ -410,26 +433,22 @@ export default function Swap({ history }: RouteComponentProps) {
       const fromToken = findToken(fromCurrency)
       const toToken = findToken(toCurrency)
       if (fromToken && toToken) {
-        history.push(`/swap/${network}/${getSymbolSlug(fromToken)}-to-${getSymbolSlug(toToken)}`)
-      } else history.push('/swap')
+        navigate(`/swap/${network}/${getSymbolSlug(fromToken)}-to-${getSymbolSlug(toToken)}`)
+        onCurrencySelection(Field.INPUT, fromToken)
+        onCurrencySelection(Field.OUTPUT, toToken)
+      } else navigate('/swap')
       return
     }
 
     // sym-to-sym
-    // hard code: ex: usdt => usdt_e, ...
-    const mapData = MAP_TOKEN_HAS_MULTI_BY_NETWORK[network as keyof typeof MAP_TOKEN_HAS_MULTI_BY_NETWORK]
-    if (mapData) {
-      type KeyType = keyof typeof mapData
-      const newValue1 = mapData[fromCurrency as KeyType]
-      const newValue2 = mapData[toCurrency as KeyType]
-      if (newValue1) fromCurrency = newValue1
-      if (newValue2) toCurrency = newValue2
-    }
+    fromCurrency = convertSymbol(network, fromCurrency)
+    toCurrency = convertSymbol(network, toCurrency)
+
     const fromToken = findToken(fromCurrency)
     const toToken = findToken(toCurrency)
 
     if (!toToken || !fromToken) {
-      history.push('/swap')
+      navigate('/swap')
       return
     }
     onCurrencySelection(Field.INPUT, fromToken)
@@ -441,17 +460,17 @@ export default function Swap({ history }: RouteComponentProps) {
     const { fromCurrency, network } = getUrlMatchParams()
     if (!fromCurrency || !network) return
 
-    const findChainId = +NETWORK_TO_CHAINID[network] // check network first and then find token pair at findTokenPairFromUrl()
+    const findChainId = SUPPORTED_NETWORKS.find(chainId => NETWORKS_INFO[chainId].route === network) || ChainId.MAINNET
     if (findChainId !== chainId) {
       changeNetwork(findChainId)
         .then(() => {
-          refIsCheckNetwork.current = true
+          refIsCheckNetworkAutoSelect.current = true
         })
         .catch(() => {
-          history.push('/swap')
+          navigate('/swap')
         })
     } else {
-      refIsCheckNetwork.current = true
+      refIsCheckNetworkAutoSelect.current = true
     }
   }
 
@@ -459,14 +478,58 @@ export default function Swap({ history }: RouteComponentProps) {
     const symbolIn = getSymbolSlug(currencyIn)
     const symbolOut = getSymbolSlug(currencyOut)
     if (symbolIn && symbolOut && chainId) {
-      history.push(`/swap/${convertToSlug(NETWORK_LABEL[chainId] || '')}/${symbolIn}-to-${symbolOut}`)
+      navigate(`/swap/${getNetworkSlug(chainId)}/${symbolIn}-to-${symbolOut}`)
     }
   }
 
+  const tokenImports: Token[] = useUserAddedTokens()
+  const prevTokenImports = usePrevious(tokenImports) || []
+
   useEffect(() => {
-    findTokenPairFromUrl()
+    const { network } = getUrlMatchParams()
+    const compareNetwork = getNetworkSlug(chainId)
+    const isChangeNetwork = compareNetwork !== network
+    if (isChangeNetwork) return
+
+    // when import/remove token
+    const isRemoved = prevTokenImports?.length > tokenImports.length
+    const addressIn = currencyIn?.wrapped?.address
+    const addressOut = currencyOut?.wrapped?.address
+
+    if (isRemoved) {
+      // removed token => deselect input
+      const tokenRemoved = prevTokenImports.filter(
+        token => !tokenImports.find(token2 => token2.address === token.address),
+      )
+      tokenRemoved.forEach(({ address }: Token) => {
+        if (address === addressIn || !currencyIn) {
+          onResetSelectCurrency(Field.INPUT)
+        }
+        if (address === addressOut || !currencyOut) {
+          onResetSelectCurrency(Field.OUTPUT)
+        }
+      })
+    }
+    // import token
+    else if (tokenImports.find(({ address }: Token) => address === addressIn || address === addressOut)) {
+      refIsImportUserToken.current = true
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultTokens])
+  }, [tokenImports])
+
+  useEffect(() => {
+    /**
+     * defaultTokens change only when:
+     * - the first time get data
+     * - change network
+     * - import/remove token */
+    if (refIsCheckNetworkAutoSelect.current && !refIsImportUserToken.current && Object.keys(defaultTokens).length) {
+      findTokenPairFromUrl()
+    }
+    refIsImportUserToken.current = false
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultTokens, refIsCheckNetworkAutoSelect.current])
 
   useEffect(() => {
     checkAutoSelectTokenFromUrl()
@@ -474,7 +537,7 @@ export default function Swap({ history }: RouteComponentProps) {
   }, [])
 
   useEffect(() => {
-    if (isSelectCurencyMannual) syncUrl() // run only when we select mannual
+    if (isSelectCurencyMannual) syncUrl() // when we select token mannual
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currencyIn, currencyOut])
 
@@ -499,18 +562,30 @@ export default function Swap({ history }: RouteComponentProps) {
           currencyOut as Currency,
           chainId,
         )}&networkId=${chainId}`
-      : undefined
+      : window.location.origin + `/swap?networkId=${chainId}`
 
-  const renderTokenInfo = false // Boolean(isShowTokenInfoSetting && (currencyIn || currencyOut))
+  const { isInWhiteList: isPairInWhiteList, canonicalUrl } = checkPairInWhiteList(
+    chainId,
+    getSymbolSlug(currencyIn),
+    getSymbolSlug(currencyOut),
+  )
+
+  const shouldRenderTokenInfo = isShowTokenInfoSetting && currencyIn && currencyOut && isPairInWhiteList
 
   const [actualShowTokenInfo, setActualShowTokenInfo] = useState(true)
 
   return (
     <>
+      {/**
+       * /swap/bnb/knc-to-usdt vs /swap/bnb/usdt-to-knc has same content
+       * => add canonical link that specify which is main page, => /swap/bnb/knc-to-usdt
+       */}
+      <SEOSwap canonicalUrl={canonicalUrl} />
+
       <TokenWarningModal
         isOpen={importTokensNotInDefault.length > 0 && !dismissTokenWarning}
         tokens={importTokensNotInDefault}
-        onConfirm={handleConfirmTokenWarning}
+        onConfirm={handleDismissTokenWarning}
         onDismiss={handleDismissTokenWarning}
       />
       <PageWrapper>
@@ -593,15 +668,7 @@ export default function Swap({ history }: RouteComponentProps) {
                       />
                       <AutoColumn justify="space-between">
                         <AutoRow justify={isExpertMode ? 'space-between' : 'center'} style={{ padding: '0 1rem' }}>
-                          <ArrowWrapper
-                            clickable
-                            rotated={rotate}
-                            onClick={() => {
-                              setApprovalSubmitted(false) // reset 2 step UI for approvals
-                              setRotate(prev => !prev)
-                              onSwitchTokensV2()
-                            }}
-                          >
+                          <ArrowWrapper clickable rotated={rotate} onClick={handleRotateClick}>
                             <SwapIcon size={22} />
                           </ArrowWrapper>
                           {recipient === null && !showWrap && isExpertMode ? (
@@ -740,7 +807,7 @@ export default function Swap({ history }: RouteComponentProps) {
                           <Trans>Connect Wallet</Trans>
                         </ButtonLight>
                       ) : isLoading ? (
-                        <GreyCard style={{ textAlign: 'center', borderRadius: '5.5px', padding: '18px' }}>
+                        <GreyCard style={{ textAlign: 'center', borderRadius: '999px', padding: '18px' }}>
                           <TYPE.main>
                             <Dots>
                               <Trans>Calculating best route</Trans>
@@ -868,7 +935,9 @@ export default function Swap({ history }: RouteComponentProps) {
                 {isShowLiveChart && (
                   <LiveChartWrapper
                     borderBottom={
-                      showProChartStore ? false : isShowTradeRoutes || (renderTokenInfo ? actualShowTokenInfo : false)
+                      showProChartStore
+                        ? false
+                        : isShowTradeRoutes || (shouldRenderTokenInfo ? actualShowTokenInfo : false)
                     }
                   >
                     <LiveChart onRotateClick={handleRotateClick} currencies={currencies} />
@@ -877,7 +946,7 @@ export default function Swap({ history }: RouteComponentProps) {
                 {isShowTradeRoutes && (
                   <RoutesWrapper
                     isOpenChart={isShowLiveChart}
-                    borderBottom={renderTokenInfo ? actualShowTokenInfo : false}
+                    borderBottom={shouldRenderTokenInfo ? actualShowTokenInfo : false}
                   >
                     <Flex flexDirection="column" width="100%">
                       <Flex alignItems={'center'}>
@@ -897,7 +966,7 @@ export default function Swap({ history }: RouteComponentProps) {
                   </RoutesWrapper>
                 )}
               </BrowserView>
-              {renderTokenInfo ? (
+              {shouldRenderTokenInfo ? (
                 <TokenInfoV2 currencyIn={currencyIn} currencyOut={currencyOut} callback={setActualShowTokenInfo} />
               ) : null}
               <SwitchLocaleLinkWrapper>

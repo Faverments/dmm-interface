@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 import { ETH_PRICE, TOKEN_DERIVED_ETH, PROMM_ETH_PRICE } from 'apollo/queries'
 import { Token, ChainId, NativeCurrency } from '@kyberswap/ks-sdk-core'
-import { KNC, OUTSITE_FARM_REWARDS_QUERY } from '../../constants'
+import { KNC, OUTSITE_FARM_REWARDS_QUERY, ZERO_ADDRESS } from '../../constants'
 import { useActiveWeb3React } from '../../hooks'
 import { AppDispatch, AppState } from '../index'
 import {
@@ -20,18 +20,8 @@ import {
 import { getPercentChange, getBlockFromTimestamp } from 'utils'
 import { useDeepCompareEffect } from 'react-use'
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
-import { defaultExchangeClient, prommClient } from 'apollo/client'
 import { VERSION } from 'constants/v2'
-
-export function useExchangeClient() {
-  const { chainId } = useActiveWeb3React()
-  const exchangeSubgraphClients = useSelector((state: AppState) => state.application.exchangeSubgraphClients)
-
-  return useMemo(() => {
-    if (!chainId) return defaultExchangeClient
-    return exchangeSubgraphClients[chainId] || defaultExchangeClient
-  }, [chainId, exchangeSubgraphClients])
-}
+import { NETWORKS_INFO } from 'constants/networks'
 
 export function useBlockNumber(): number | undefined {
   const { chainId } = useActiveWeb3React()
@@ -94,6 +84,10 @@ export function useToggleSelfClaimModal(): () => void {
 
 export function useToggleDelegateModal(): () => void {
   return useToggleModal(ApplicationModal.DELEGATE)
+}
+
+export function useToggleYourCampaignTransactionsModal(): () => void {
+  return useToggleModal(ApplicationModal.YOUR_CAMPAIGN_TRANSACTIONS)
 }
 
 export function useToggleVoteModal(): () => void {
@@ -233,17 +227,17 @@ const getPrommEthPrice = async (chainId: ChainId, apolloClient: ApolloClient<Nor
 export function useETHPrice(version: string = VERSION.CLASSIC): AppState['application']['ethPrice'] {
   const dispatch = useDispatch()
   const { chainId } = useActiveWeb3React()
-  const apolloClient = useExchangeClient()
+  const apolloClient = NETWORKS_INFO[chainId || ChainId.MAINNET].classicClient
 
   const ethPrice = useSelector((state: AppState) =>
     version === VERSION.ELASTIC ? state.application.prommEthPrice : state.application.ethPrice,
   )
 
   useEffect(() => {
-    const apolloProMMClient = prommClient[chainId as ChainId]
+    const apolloProMMClient = NETWORKS_INFO[chainId || ChainId.MAINNET].elasticClient
 
     async function checkForEthPrice() {
-      let [newPrice, oneDayBackPrice, pricePercentChange] = await (version === VERSION.ELASTIC && apolloProMMClient
+      const [newPrice, oneDayBackPrice, pricePercentChange] = await (version === VERSION.ELASTIC && apolloProMMClient
         ? getPrommEthPrice(chainId as ChainId, apolloProMMClient)
         : getEthPrice(chainId as ChainId, apolloClient))
 
@@ -298,7 +292,7 @@ export function useKNCPrice(): AppState['application']['kncPrice'] {
   const ethPrice = useETHPrice()
   const { chainId } = useActiveWeb3React()
   const blockNumber = useBlockNumber()
-  const apolloClient = useExchangeClient()
+  const apolloClient = NETWORKS_INFO[chainId || ChainId.MAINNET].classicClient
 
   const kncPrice = useSelector((state: AppState) => state.application.kncPrice)
 
@@ -357,9 +351,9 @@ export function useTokensPrice(tokens: (Token | NativeCurrency | null | undefine
 
   const { chainId } = useActiveWeb3React()
   const [prices, setPrices] = useState<number[]>([])
-  const apolloClient = useExchangeClient()
+  const apolloClient = NETWORKS_INFO[chainId || ChainId.MAINNET].classicClient
 
-  const client = version !== VERSION.ELASTIC ? apolloClient : prommClient[chainId as ChainId]
+  const client = version !== VERSION.ELASTIC ? apolloClient : NETWORKS_INFO[chainId || ChainId.MAINNET].elasticClient
 
   useDeepCompareEffect(() => {
     async function checkForTokenPrice() {
@@ -372,7 +366,7 @@ export function useTokensPrice(tokens: (Token | NativeCurrency | null | undefine
           return 0
         }
 
-        if (token.isNative) {
+        if (token.isNative || token?.address === ZERO_ADDRESS) {
           return parseFloat(ethPrice.currentPrice)
         }
 

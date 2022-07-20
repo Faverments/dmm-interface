@@ -10,8 +10,11 @@ import useTheme from 'hooks/useTheme'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import { SelectedHighlight } from 'pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenItem'
-import { NETWORK_ICON } from 'constants/networks'
+import { NETWORKS_INFO } from 'constants/networks'
 import { ChainId } from '@kyberswap/ks-sdk-core'
+import { BigNumber } from '@ethersproject/bignumber'
+import BigNumberJS from 'bignumber.js'
+import { formatNumberWithPrecisionRange } from 'utils'
 
 export default function CampaignListAndSearch({
   onSelectCampaign,
@@ -42,9 +45,17 @@ export default function CampaignListAndSearch({
       <CampaignList>
         {filteredCampaigns.map((campaign, index) => {
           const isSelected = selectedCampaign && selectedCampaign.id === campaign.id
-          const totalRewardAmount = campaign.rewardDistribution.reduce(
-            (acc, value) => acc + (value ? Number(value.amount) || 0 : 0),
-            0,
+
+          // Temporary use BigNumberJS for handling float of reward amount
+          // Backward compatibility.
+          const totalRewardAmountInWei: BigNumberJS = campaign.rewardDistribution.reduce((acc, value) => {
+            const valueBn = new BigNumberJS(value.amount ?? 0)
+            return acc.plus(valueBn)
+          }, new BigNumberJS(0))
+          const totalRewardAmount = totalRewardAmountInWei.div(
+            BigNumber.from(10)
+              .pow(18) // TODO nguyenhuudungz: Wait for backend refactoring.
+              .toString(),
           )
           return (
             <CampaignItem key={index} onClick={() => onSelectCampaign(campaign)}>
@@ -67,15 +78,16 @@ export default function CampaignListAndSearch({
                       .map(chainId => (
                         <img
                           key={chainId}
-                          src={NETWORK_ICON[(chainId as unknown) as ChainId]}
+                          src={NETWORKS_INFO[(chainId as any) as ChainId].icon}
                           alt="network_icon"
                           style={{ width: '16px', minWidth: '16px', height: '16px', minHeight: '16px' }}
                         />
                       ))}
                 </Flex>
-                {!!totalRewardAmount && (
+                {totalRewardAmount.gt(0) && (
                   <Text fontSize="14px">
-                    {totalRewardAmount} {campaign.rewardDistribution[0].token}
+                    {formatNumberWithPrecisionRange(totalRewardAmount.toNumber(), 0, 2)}{' '}
+                    {campaign.rewardDistribution[0].tokenSymbol}
                   </Text>
                 )}
               </Flex>

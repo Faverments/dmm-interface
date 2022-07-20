@@ -18,7 +18,6 @@ import {
   WETH,
 } from '@kyberswap/ks-sdk-core'
 
-import { ZAP_ADDRESSES, FEE_OPTIONS } from 'constants/index'
 import { ButtonPrimary, ButtonLight, ButtonError, ButtonConfirmed } from 'components/Button'
 import { BlackCard } from 'components/Card'
 import { AutoColumn } from 'components/Column'
@@ -69,6 +68,8 @@ import {
 } from './styled'
 import { nativeOnChain } from 'constants/tokens'
 import JSBI from 'jsbi'
+import { NETWORKS_INFO } from 'constants/networks'
+import * as Sentry from '@sentry/react'
 
 export default function ZapOut({
   currencyIdA,
@@ -106,6 +107,8 @@ export default function ZapOut({
     insufficientLiquidity,
     price,
     error,
+    isStaticFeePair,
+    isOldStaticFeeContract,
   } = useDerivedZapOutInfo(currencyA ?? undefined, currencyB ?? undefined, pairAddress)
   const { onUserInput: _onUserInput, onSwitchField } = useZapOutActionHandlers()
 
@@ -159,7 +162,13 @@ export default function ZapOut({
   const [signatureData, setSignatureData] = useState<{ v: number; r: string; s: string; deadline: number } | null>(null)
   const [approval, approveCallback] = useApproveCallback(
     parsedAmounts[Field.LIQUIDITY],
-    !!chainId ? ZAP_ADDRESSES[chainId] : undefined,
+    !!chainId
+      ? isStaticFeePair
+        ? isOldStaticFeeContract
+          ? NETWORKS_INFO[chainId].classic.oldStatic?.zap
+          : NETWORKS_INFO[chainId].classic.static.zap
+        : NETWORKS_INFO[chainId].classic.dynamic?.zap
+      : undefined,
   )
 
   // if user liquidity change => remove signature
@@ -180,7 +189,6 @@ export default function ZapOut({
       return approveCallback()
     }
 
-    const isWithoutDynamicFee = !!(chainId && FEE_OPTIONS[chainId])
     // try to gather a signature for permission
     const nonce = await pairContract.nonces(account)
 
@@ -191,7 +199,7 @@ export default function ZapOut({
       { name: 'verifyingContract', type: 'address' },
     ]
     const domain = {
-      name: !isWithoutDynamicFee ? 'KyberDMM LP' : 'KyberSwap LP',
+      name: isStaticFeePair ? 'KyberSwap LP' : 'KyberDMM LP',
       version: '1',
       chainId: chainId,
       verifyingContract: pair.liquidityToken.address,
@@ -205,7 +213,11 @@ export default function ZapOut({
     ]
     const message = {
       owner: account,
-      spender: ZAP_ADDRESSES[chainId],
+      spender: isStaticFeePair
+        ? isOldStaticFeeContract
+          ? NETWORKS_INFO[chainId].classic.oldStatic?.zap
+          : NETWORKS_INFO[chainId].classic.static.zap
+        : NETWORKS_INFO[chainId].classic.dynamic?.zap,
       value: liquidityAmount.quotient.toString(),
       nonce: nonce.toHexString(),
       deadline: deadline.toNumber(),
@@ -264,7 +276,7 @@ export default function ZapOut({
     if (!currencyAmountA || !currencyAmountB) {
       throw new Error('missing currency amounts')
     }
-    const router = getZapContract(chainId, library, account)
+    const zapContract = getZapContract(chainId, library, account, isStaticFeePair, isOldStaticFeeContract)
 
     if (!currencyA || !currencyB) throw new Error('missing tokens')
     const liquidityAmount = parsedAmounts[Field.LIQUIDITY]
@@ -346,9 +358,13 @@ export default function ZapOut({
       throw new Error('Attempting to confirm without approval or a signature. Please contact support.')
     }
 
+    // All methods of new zap static fee contract include factory address as first arg
+    if (isStaticFeePair && !isOldStaticFeeContract) {
+      args.unshift(NETWORKS_INFO[chainId].classic.static.factory)
+    }
     const safeGasEstimates: (BigNumber | undefined)[] = await Promise.all(
       methodNames.map(methodName =>
-        router.estimateGas[methodName](...args)
+        zapContract.estimateGas[methodName](...args)
           .then(calculateGasMargin)
           .catch(err => {
             // we only care if the error is something other than the user rejected the tx
@@ -382,7 +398,7 @@ export default function ZapOut({
       const safeGasEstimate = safeGasEstimates[indexOfSuccessfulEstimation]
 
       setAttemptingTxn(true)
-      await router[methodName](...args, {
+      await zapContract[methodName](...args, {
         gasLimit: safeGasEstimate,
       })
         .then((response: TransactionResponse) => {
@@ -406,6 +422,7 @@ export default function ZapOut({
         })
         .catch((err: Error) => {
           setAttemptingTxn(false)
+          Sentry.captureException(err)
           // we only care if the error is something _other_ than the user rejected the tx
           if ((err as any)?.code !== 4001) {
             console.error(err)

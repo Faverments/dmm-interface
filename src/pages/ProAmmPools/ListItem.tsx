@@ -24,6 +24,7 @@ import DropIcon from 'components/Icons/DropIcon'
 import { useProMMFarms } from 'state/farms/promm/hooks'
 import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
 import { ELASTIC_BASE_FEE_UNIT, PROMM_ANALYTICS_URL } from 'constants/index'
+import { VERSION } from 'constants/v2'
 interface ListItemProps {
   pair: ProMMPoolData[]
   idx: number
@@ -33,7 +34,7 @@ interface ListItemProps {
 
 const getPrommAnalyticLink = (chainId: ChainId | undefined, poolAddress: string) => {
   if (!chainId) return ''
-  return `${PROMM_ANALYTICS_URL[chainId]}/pool/${poolAddress}`
+  return `${PROMM_ANALYTICS_URL[chainId]}/pool/${poolAddress.toLowerCase()}`
 }
 
 export const TableRow = styled.div<{ isOpen?: boolean; isShowBorderBottom: boolean; hoverable: boolean }>`
@@ -218,7 +219,7 @@ export default function ProAmmPoolListItem({ pair, idx, onShared, userPositions 
                   <ButtonEmpty
                     padding="0"
                     as={Link}
-                    to={`/myPools?search=${pool.address}`}
+                    to={`/myPools?tab=${VERSION.ELASTIC}&search=${pool.address}`}
                     style={{
                       background: rgba(theme.primary, 0.2),
                       minWidth: '28px',

@@ -17,6 +17,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { isMobile } from 'react-device-detect'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
+import { StyledActionButtonSwapForm } from 'components/swapv2/styleds'
 
 const ButtonWrapper = styled.div`
   text-align: center;
@@ -68,36 +69,6 @@ const AlertMessage = styled.span`
     opacity: 0.9;
   }
 `
-const IconButton = styled.button`
-  cursor: pointer;
-  height: 36px;
-  width: 36px;
-  border-radius: 4px;
-  //transition: background 0.2s;
-  outline: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  :hover,
-  :focus {
-    cursor: pointer;
-    outline: none;
-    background-color: ${({ theme }) => theme.buttonBlack};
-  }
-`
-
-const StyledShareButton = styled(IconButton)`
-  svg {
-    circle {
-      fill: ${({ theme }) => theme.text};
-    }
-  }
-`
 
 const ButtonWithHoverEffect = ({ children, onClick }: { children: (color: string) => any; onClick: () => void }) => {
   const theme = useContext(ThemeContext)
@@ -115,7 +86,7 @@ const ButtonWithHoverEffect = ({ children, onClick }: { children: (color: string
   )
 }
 
-export default function ShareModal({ url, onShared = () => {} }: { url?: string; onShared?: () => void }) {
+export default function ShareModal({ url, onShared = () => null }: { url?: string; onShared?: () => void }) {
   const isOpen = useModalOpen(ApplicationModal.SHARE)
   const toggle = useToggleModal(ApplicationModal.SHARE)
   const theme = useContext(ThemeContext)
@@ -221,9 +192,9 @@ export function ShareButtonWithModal({ url, onShared }: { url?: string; onShared
 
   return (
     <>
-      <StyledShareButton onClick={toggle}>
+      <StyledActionButtonSwapForm onClick={toggle}>
         <Share2 size={16} color={theme.text} />
-      </StyledShareButton>
+      </StyledActionButtonSwapForm>
       <ShareModal url={url} onShared={onShared} />
     </>
   )

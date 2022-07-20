@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 
-import { GLOBAL_DATA } from 'apollo/queries'
+import { GLOBAL_DATA, GLOBAL_DATA_ELASTIC } from 'apollo/queries'
 import { useActiveWeb3React } from 'hooks'
 import { ChainId } from '@kyberswap/ks-sdk-core'
-import { useBlockNumber, useExchangeClient } from 'state/application/hooks'
-import { getExchangeSubgraphUrls } from 'apollo/manager'
-import { ApolloClient, InMemoryCache } from '@apollo/client'
+import { useBlockNumber } from 'state/application/hooks'
 import useAggregatorVolume from 'hooks/useAggregatorVolume'
-import { SUPPORTED_NETWORKS } from 'constants/networks'
+import { NETWORKS_INFO, MAINNET_NETWORKS } from 'constants/networks'
 import useAggregatorAPR from 'hooks/useAggregatorAPR'
+import { ELASTIC_NOT_SUPPORTED } from 'constants/v2'
 
 interface GlobalData {
   dmmFactories: {
@@ -39,7 +38,6 @@ interface GlobalData {
 export function useGlobalData() {
   const { chainId } = useActiveWeb3React()
   const blockNumber = useBlockNumber()
-  const apolloClient = useExchangeClient()
   const [globalData, setGlobalData] = useState<GlobalData>()
   const aggregatorData = useAggregatorVolume()
   const aggregatorAPR = useAggregatorAPR()
@@ -48,27 +46,40 @@ export function useGlobalData() {
     const getSumValues = (results: { data: GlobalData }[], field: string) => {
       return results
         .reduce((total, item) => {
-          return total + parseFloat(item?.data?.dmmFactories?.[0]?.[field] || '0')
+          if (!item?.data?.dmmFactories?.length) return total
+          const sum = item.data.dmmFactories.reduce((sum, factory) => sum + parseFloat(factory[field] || '0'), 0)
+          return total + sum
         }, 0)
         .toString()
     }
-
     const getResultByChainIds = async (chainIds: readonly ChainId[]) => {
-      const allChainPromises = chainIds.map(chain => {
-        const subgraphPromises = getExchangeSubgraphUrls(chain)
-          .map(uri => new ApolloClient({ uri, cache: new InMemoryCache() }))
-          .map(client =>
-            client.query({
-              query: GLOBAL_DATA(chain),
-              fetchPolicy: 'no-cache',
-            }),
-          )
-        return subgraphPromises
-      })
+      const elasticChains = chainIds.filter(id => !ELASTIC_NOT_SUPPORTED[id])
 
-      const queryResult = (
-        await Promise.all(allChainPromises.map(promises => Promise.any(promises.map(p => p.catch(e => e)))))
-      ).filter(res => !(res instanceof Error))
+      const elasticPromises = elasticChains.map(chain =>
+        NETWORKS_INFO[chain].elasticClient.query({
+          query: GLOBAL_DATA_ELASTIC(),
+          fetchPolicy: 'cache-first',
+        }),
+      )
+
+      const elasticResult = (await Promise.all(elasticPromises.map(promises => promises.catch(e => e)))).filter(
+        res => !(res instanceof Error),
+      )
+
+      const tvlElastic = elasticResult.reduce((total, item) => {
+        return total + parseFloat(item?.data?.factories?.[0]?.totalValueLockedUSD || '0')
+      }, 0)
+
+      const allChainPromises = chainIds.map(chain =>
+        NETWORKS_INFO[chain].classicClient.query({
+          query: GLOBAL_DATA(),
+          fetchPolicy: 'no-cache',
+        }),
+      )
+
+      const queryResult = (await Promise.all(allChainPromises.map(promises => promises.catch(e => e)))).filter(
+        res => !(res instanceof Error),
+      )
 
       return {
         data: {
@@ -79,7 +90,7 @@ export function useGlobalData() {
               totalFeeUSD: getSumValues(queryResult, 'totalFeeUSD'),
               untrackedVolumeUSD: getSumValues(queryResult, 'untrackedVolumeUSD'),
               untrackedFeeUSD: getSumValues(queryResult, 'untrackedFeeUSD'),
-              totalLiquidityUSD: getSumValues(queryResult, 'totalLiquidityUSD'),
+              totalLiquidityUSD: parseFloat(getSumValues(queryResult, 'totalLiquidityUSD')) + tvlElastic,
               totalLiquidityETH: getSumValues(queryResult, 'totalLiquidityETH'),
               totalAmplifiedLiquidityUSD: getSumValues(queryResult, 'totalAmplifiedLiquidityUSD'),
               totalAmplifiedLiquidityETH: getSumValues(queryResult, 'totalAmplifiedLiquidityETH'),
@@ -90,7 +101,7 @@ export function useGlobalData() {
     }
 
     async function getGlobalData() {
-      const result = await getResultByChainIds(SUPPORTED_NETWORKS)
+      const result = await getResultByChainIds(MAINNET_NETWORKS)
 
       setGlobalData({
         ...result.data,
@@ -104,7 +115,7 @@ export function useGlobalData() {
     }
 
     getGlobalData()
-  }, [chainId, blockNumber, apolloClient, aggregatorData, aggregatorAPR])
+  }, [chainId, blockNumber, aggregatorData, aggregatorAPR])
 
   return globalData
 }

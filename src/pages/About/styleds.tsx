@@ -145,7 +145,8 @@ export const ForTraderInfoShadow = styled.div`
 export const ForTraderDivider = styled.div<{ horizontal?: boolean }>`
   background-color: ${({ theme }) => theme.border};
   width: ${({ horizontal }) => (horizontal ? '100%' : '1px')};
-  height: ${({ horizontal }) => (horizontal ? '1px' : '100%')};
+  height: ${({ horizontal }) => (horizontal ? '1px' : '50px')};
+
   ${({ theme, horizontal }) => theme.mediaWidth.upToMedium`
     ${!horizontal && 'height: auto;'}
   `}
@@ -220,7 +221,7 @@ export const FooterContainer = styled.div`
 
 export const Powered = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   margin-top: 48px;
   gap: 52px;
   align-items: center;
