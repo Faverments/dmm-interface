@@ -101,7 +101,7 @@ export default function NviSignalDetails() {
         <Flex style={{ marginTop: 40, paddingLeft: 10 }} alignItems="center">
           <Text fontSize={30} fontWeight={500} color={theme.subText}>
             {/* Nvi Signal */}
-            Nvi Signal ( In_Development )
+            Nvi Signal
           </Text>
           <CheckCircle size={18} color={theme.primary} style={{ marginLeft: 10, marginTop: 6 }} />
         </Flex>
@@ -127,7 +127,7 @@ export default function NviSignalDetails() {
               <Share2 size={20} color={theme.text} />
             </StyledShareButton>
             <Text fontSize={16} fontWeight={200} color={theme.text}>
-              Share ( Not_Available )
+              Share
             </Text>
           </ShareButtonWrapper>
         </Flex>

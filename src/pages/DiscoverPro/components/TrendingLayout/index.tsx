@@ -5,10 +5,10 @@ import { useMedia } from 'react-use'
 import { ArrowDown } from 'react-feather'
 import { Trans } from '@lingui/macro'
 
-import Pagination from 'components/Pagination/index-v0'
+import Pagination from 'components/Pagination/index'
 import LocalLoader from 'components/LocalLoader'
 import TrendingSoonTokenItem from 'pages/DiscoverPro/components/TrendingSoonTokenItem'
-import TrendingSoonTokenDetail from 'pages/DiscoverPro/components/TrendingSoonTokenDetail'
+import TrendingTokenDetail from 'pages/DiscoverPro/components/TrendingTokenDetail'
 import MobileChartModal from 'pages/DiscoverPro/components/MobileChartModal'
 import useGetTrendingSoonData, { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
 import {
@@ -261,7 +261,7 @@ const TrendingLayout = ({
               </TrendingSoonTokenListBody>
               <TrendingSoonTokenDetailContainer>
                 {selectedToken && (
-                  <TrendingSoonTokenDetail
+                  <TrendingTokenDetail
                     tokenData={selectedToken}
                     chartData={chartData}
                     isChartDataLoading={isChartDataLoading}
@@ -275,11 +275,10 @@ const TrendingLayout = ({
               </TrendingSoonTokenDetailContainer>
             </TrendingSoonTokenListBodyAndDetailContainer>
             <Pagination
-              onPrev={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-              onNext={() => setCurrentPage(prev => Math.min(maxPage, prev + 1))}
+              pageSize={TRENDING_SOON_ITEM_PER_PAGE}
+              onPageChange={newPage => setCurrentPage(newPage)}
               currentPage={currentPage}
-              maxPage={maxPage}
-              style={{ padding: '20px' }}
+              totalCount={trendingSoonData?.total_number_tokens ?? 1}
             />
           </Box>
         )}

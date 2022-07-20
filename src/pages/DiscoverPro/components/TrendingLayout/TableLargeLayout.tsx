@@ -6,7 +6,7 @@ import { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData
 import { TrueSightChartCategory, TrueSightFilter, TrueSightTimeframe } from 'pages/TrueSight/index'
 import useGetCoinGeckoChartData from 'pages/TrueSight/hooks/useGetCoinGeckoChartData'
 import useTheme from 'hooks/useTheme'
-import Pagination from 'components/Pagination/index-v0'
+import Pagination from 'components/Pagination/index'
 import { Box, Flex, Text } from 'rebass'
 import MobileChartModal from 'pages/DiscoverPro/components/MobileChartModal'
 import useGetTrendingData from 'pages/TrueSight/hooks/useGetTrendingData'
@@ -53,11 +53,6 @@ const TrendingLayout = ({
   } = useGetTrendingData(filter, currentPage, TRENDING_ITEM_PER_PAGE)
   const trendingSoonTokens = trendingSoonData?.tokens ?? []
 
-  const maxPage = Math.min(
-    Math.ceil((trendingSoonData?.total_number_tokens ?? 1) / TRENDING_ITEM_PER_PAGE),
-    TRENDING_MAX_ITEM / TRENDING_ITEM_PER_PAGE,
-  )
-
   useEffect(() => {
     setCurrentPage(1)
     setSelectedToken(undefined)
@@ -94,11 +89,10 @@ const TrendingLayout = ({
         />
       ))}
       <Pagination
-        onPrev={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-        onNext={() => setCurrentPage(prev => Math.min(maxPage, prev + 1))}
+        pageSize={TRENDING_ITEM_PER_PAGE}
+        onPageChange={newPage => setCurrentPage(newPage)}
         currentPage={currentPage}
-        maxPage={maxPage}
-        style={{ padding: '20px' }}
+        totalCount={trendingSoonData?.total_number_tokens ?? 1}
       />
       <MobileChartModal
         isOpen={isOpenChartModal}
@@ -263,11 +257,10 @@ const TrendingLayout = ({
         />
       ))}
       <Pagination
-        onPrev={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-        onNext={() => setCurrentPage(prev => Math.min(maxPage, prev + 1))}
+        pageSize={TRENDING_ITEM_PER_PAGE}
+        onPageChange={newPage => setCurrentPage(newPage)}
         currentPage={currentPage}
-        maxPage={maxPage}
-        style={{ padding: '20px' }}
+        totalCount={trendingSoonData?.total_number_tokens ?? 1}
       />
     </TableContainer>
   )

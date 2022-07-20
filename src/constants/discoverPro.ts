@@ -21,13 +21,15 @@ export enum TableDetail {
 
   PRICE_CHANGE_PERCENTAGE_FROM_PREDICTED = 'PRICE_CHANGE_PERCENTAGE_FROM_PREDICTED',
   VOLUME_CHANGE_PERCENTAGE__FROM_PREDICTED = 'VOLUME_CHANGE_PERCENTAGE_FROM_PREDICTED',
+
+  ACTION = 'ACTION',
 }
 
 export enum TokenStatus {
-  NEW_DISCOVER = 'NEW_DISCOVER',
-  CHANGE_DISCOVER = 'CHANGE_DISCOVER',
-  PREVIOUS_PREDICT = 'PREVIOUS_PREDICT',
-  NEXT_PREDICT = 'NEXT_PREDICT',
+  NEW_DISCOVERED = 'NEW_DISCOVERED',
+  PREVIOUS_PREDICTED = 'PREVIOUS_PREDICTED',
+  NEXT_PREDICTED = 'NEXT_PREDICTED',
+  DISCOVERED_DATE_CHANGE = 'DISCOVERED_DATE_CHANGE',
 }
 
 export enum SortDirection {
@@ -57,4 +59,9 @@ export interface PredictedDate {
   mediumDate: number
   firstDate: number
   index: number
+}
+
+export interface ChartDisplaySettings {
+  showPredictedDate: boolean
+  showRanking: boolean
 }

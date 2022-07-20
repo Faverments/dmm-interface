@@ -147,6 +147,7 @@ const Container = styled.div`
   background: ${({ theme }) => theme.buttonBlack};
   border-radius: 4px;
   position: relative;
+  max-width: 125px;
 `
 
 export default CompareTrendingSoonTokenItem

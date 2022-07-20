@@ -15,8 +15,8 @@ import { TableDetail, TokenStatus, SortDirection, LayoutMode } from 'constants/d
 
 import TrendingLayout from '../components/TrendingLayout'
 import TrendingSoonLayout from '../components/TrendingSoonLayout'
-import TrendingLayoutDefault from '../components/TrendingLayout/index-v0'
-import TrendingSoonLayoutDefault from '../components/TrendingSoonLayout/index-v0'
+import TrendingLayoutDefault from '../components/TrendingLayout/TableLargeLayout'
+import TrendingSoonLayoutDefault from '../components/TrendingSoonLayout/TableWithDetailsLayout'
 
 import styled from 'styled-components'
 import { ButtonEmpty } from 'components/Button'
@@ -41,7 +41,7 @@ type TableDetailDisplaySome = {
 export const tableDetailsDisplay: TableDetailDisplayAll = {
   [TableDetail.RANK]: {
     // name: 'Rank',
-    template: '0.2fr',
+    template: '0.15fr',
   },
   [TableDetail.NAME]: {
     // name: 'Name',
@@ -58,7 +58,7 @@ export const tableDetailsDisplay: TableDetailDisplayAll = {
 
   [TableDetail.CURRENT_PRICE]: {
     // name: 'Current Price',
-    template: '1fr',
+    template: '1.25fr',
   },
   [TableDetail.CURRENT_VOLUME_24H]: {
     // name: 'Current Volume',
@@ -66,11 +66,11 @@ export const tableDetailsDisplay: TableDetailDisplayAll = {
   },
   [TableDetail.CURRENT_MARKET_CAP]: {
     // name: 'Current Market Cap',
-    template: '1.5fr',
+    template: '1fr',
   },
   [TableDetail.CURRENT_NUMBER_HOLDERS]: {
     // name: 'Current Number of Holders',
-    template: '1.5fr',
+    template: '1fr',
   },
   [TableDetail.CURRENT_PRICE_CHANGE_PERCENTAGE_24H]: {
     // name: 'Current Price Change %',
@@ -106,6 +106,9 @@ export const tableDetailsDisplay: TableDetailDisplayAll = {
     // name: 'Volume Change % from Predicted',
     template: '1.5fr',
   },
+  [TableDetail.ACTION]: {
+    template: '1fr',
+  },
 }
 
 export interface DiscoverProFilter extends TrueSightFilter {
@@ -128,9 +131,10 @@ export const initialTableCustomize: TableDetail[] = [
   TableDetail.RANK,
   TableDetail.NAME,
   TableDetail.CURRENT_PRICE,
-  TableDetail.PRICE_CHANGE_PERCENTAGE_FROM_PREDICTED,
   TableDetail.CURRENT_VOLUME_24H,
-  TableDetail.VOLUME_CHANGE_PERCENTAGE__FROM_PREDICTED,
+  TableDetail.CURRENT_MARKET_CAP,
+  TableDetail.CURRENT_NUMBER_HOLDERS,
+  TableDetail.ACTION,
 ]
 
 export const VisibleButton = styled(ButtonEmpty)`

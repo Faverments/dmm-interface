@@ -39,8 +39,8 @@ import FilterBar from 'pages/DiscoverPro/components/FilterBar/index'
 
 import TrendingLayout from '../components/TrendingLayout'
 import TrendingSoonLayout from '../components/TrendingSoonLayout'
-import TrendingLayoutDefault from '../components/TrendingLayout/index-v0'
-import TrendingSoonLayoutDefault from '../components/TrendingSoonLayout/index-v0'
+import TrendingLayoutDefault from '../components/TrendingLayout/TableLargeLayout'
+import TrendingSoonLayoutDefault from '../components/TrendingSoonLayout/TableWithDetailsLayout'
 
 import { VisibleButton, ButtonText } from '../TrueSight'
 

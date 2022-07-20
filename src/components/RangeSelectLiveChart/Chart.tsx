@@ -2,12 +2,12 @@ import { max, scaleLinear, ZoomTransform } from 'd3'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Bound } from 'state/mint/proamm/actions'
 
-import { Area } from './Area'
-import { AxisBottom } from './AxisBottom'
-import { Brush } from './Brush'
-import { Line } from './Line'
-import { ChartEntry, LiquidityChartRangeInputProps } from './types'
-import Zoom, { ZoomOverlay } from './Zoom'
+import { Area } from 'components/LiquidityChartRangeInput/Area'
+import { AxisBottom } from 'components/LiquidityChartRangeInput/AxisBottom'
+import { Brush } from 'components/LiquidityChartRangeInput/Brush'
+import { Line } from 'components/LiquidityChartRangeInput/Line'
+import { ChartEntry, LiquidityChartRangeInputProps } from 'components/LiquidityChartRangeInput/types'
+import Zoom, { ZoomOverlay } from 'components/LiquidityChartRangeInput/Zoom'
 
 export const xAccessor = (d: ChartEntry) => d.price0
 export const yAccessor = (d: ChartEntry) => d.activeLiquidity

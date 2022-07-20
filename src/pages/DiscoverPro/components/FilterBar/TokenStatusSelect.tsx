@@ -35,11 +35,11 @@ const TokenStatusSelect = ({
   setFilter: Dispatch<SetStateAction<DiscoverProFilter>>
   style?: CSSProperties
 }) => {
-  const TOKEN_STATUS_LABEL: { [key in TokenStatus]: string } = {
-    [TokenStatus.NEW_DISCOVER]: 'New Discover',
-    [TokenStatus.CHANGE_DISCOVER]: 'Change Discover',
-    [TokenStatus.NEXT_PREDICT]: 'Next Predict',
-    [TokenStatus.PREVIOUS_PREDICT]: 'Previous Predict',
+  const TOKEN_STATUS_LABEL: { [key in TokenStatus]?: string } = {
+    [TokenStatus.NEW_DISCOVERED]: 'New Discovered',
+    [TokenStatus.PREVIOUS_PREDICTED]: 'Previous Predicted',
+    // [TokenStatus.NEXT_PREDICTED]: 'Next Predicted', // only in Historical
+    [TokenStatus.DISCOVERED_DATE_CHANGE]: 'Discovered Date Change',
   }
   const theme = useTheme()
   const { selectedTokenStatus } = filter
@@ -81,18 +81,21 @@ const TokenStatusSelect = ({
 
         {isShowOptions && !isMobile && (
           <OptionsContainer>
-            {(Object.keys(TokenStatus) as Array<keyof typeof TokenStatus>).map((status, index) => (
-              <div
-                key={index}
-                onClick={() => {
-                  setFilter(prev => ({ ...prev, selectedTokenStatus: status as TokenStatus }))
-                }}
-              >
-                <Text key={index} color={theme.subText} fontSize="12px">
-                  <Trans>{TOKEN_STATUS_LABEL[status]}</Trans>
-                </Text>
-              </div>
-            ))}
+            {/* {(Object.keys(TokenStatus) as Array<keyof typeof TokenStatus>).map((status, index) => ( */}
+            {[TokenStatus.NEW_DISCOVERED, TokenStatus.PREVIOUS_PREDICTED, TokenStatus.DISCOVERED_DATE_CHANGE].map(
+              (status, index) => (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setFilter(prev => ({ ...prev, selectedTokenStatus: status as TokenStatus }))
+                  }}
+                >
+                  <Text key={index} color={theme.subText} fontSize="12px">
+                    <Trans>{TOKEN_STATUS_LABEL[status]}</Trans>
+                  </Text>
+                </div>
+              ),
+            )}
           </OptionsContainer>
         )}
       </Flex>

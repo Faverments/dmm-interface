@@ -18,6 +18,7 @@ import { useToggleModal } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 
 import { DiscoverProFilter } from 'pages/DiscoverPro/TrueSight'
+import { DiscoverProToken } from '../hooks/useMakeDiscoverProTokensList'
 
 const StyledTrendingSoonTokenItem = styled(Flex)<{
   isSelected: boolean
@@ -87,7 +88,7 @@ export const FieldValue = styled(TruncatedText)`
 interface TrendingSoonTokenItemProps {
   isSelected: boolean
   tokenIndex?: number
-  tokenData: TrueSightTokenData
+  tokenData: DiscoverProToken | TrueSightTokenData
   onSelect?: () => void
   setIsOpenChartModal: React.Dispatch<React.SetStateAction<boolean>>
   setFilter?: React.Dispatch<React.SetStateAction<DiscoverProFilter>>

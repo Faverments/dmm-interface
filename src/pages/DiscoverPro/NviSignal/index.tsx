@@ -25,8 +25,10 @@ export const AppBodyWrapped = styled(AppBody)`
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.04);
   z-index: 1;
   padding: 30px 24px;
-  margin-top: 0;
+  margin-top: 35px;
   margin-left: 8px;
+  text-align: center;
+  font-size: 20px;
   @media only screen and (min-width: 768px) {
     /* width: 404px; */
   }
@@ -38,10 +40,7 @@ export default function NviSignal() {
       <PageWrapper>
         <NviSignalDetails />
         <Container>
-          <Flex justifyContent={'space-between'} alignItems={'flex-start'}>
-            {/* <AppBodyWrapped>
-            </AppBodyWrapped> */}
-          </Flex>
+          <AppBodyWrapped>CURRENT IN DEVELOPMENT</AppBodyWrapped>
         </Container>
       </PageWrapper>
     </>

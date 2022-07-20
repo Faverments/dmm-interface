@@ -5,7 +5,7 @@ import { useMedia } from 'react-use'
 import { ArrowDown } from 'react-feather'
 import { Trans } from '@lingui/macro'
 
-import Pagination from 'components/Pagination/index-v0'
+import Pagination from 'components/Pagination/index'
 import LocalLoader from 'components/LocalLoader'
 import TrendingSoonTokenItem from 'pages/DiscoverPro/components/TrendingSoonTokenItem'
 import TrendingSoonTokenDetail from 'pages/DiscoverPro/components/TrendingSoonTokenDetail'
@@ -27,7 +27,11 @@ import { useLocation } from 'react-router-dom'
 
 import { DiscoverProFilter, DiscoverProSortSettings } from 'pages/DiscoverPro/TrueSight/index'
 
-import { TableDetail, SortDirection } from 'constants/discoverPro'
+import { TableDetail, SortDirection, ChartDisplaySettings } from 'constants/discoverPro'
+
+import useGetTrueSightFilterData from 'pages/DiscoverPro/hooks/useGetTrueSightFilterData'
+import useMakeDiscoverProTokensList, { DiscoverProToken } from 'pages/DiscoverPro/hooks/useMakeDiscoverProTokensList'
+import useGetTokenPredictedDetails from 'pages/DiscoverPro/hooks/useGetTokenPredictedDetails'
 
 const TrendingSoonLayout = ({
   filter,
@@ -52,10 +56,6 @@ const TrendingSoonLayout = ({
     isLoading: isLoadingTrendingSoonTokens,
     error: errorWhenLoadingTrendingSoonData,
   } = useGetTrendingSoonData(filter, TRENDING_SOON_MAX_ITEMS)
-  const maxPage = Math.min(
-    Math.ceil((trendingSoonData?.total_number_tokens ?? 1) / TRENDING_SOON_ITEM_PER_PAGE),
-    TRENDING_SOON_MAX_ITEMS / TRENDING_SOON_ITEM_PER_PAGE,
-  )
   const trendingSoonTokens = useMemo(() => trendingSoonData?.tokens ?? [], [trendingSoonData])
 
   // token_id in query param
@@ -79,6 +79,12 @@ const TrendingSoonLayout = ({
     () => (selectedToken ? selectedToken.platforms.keys().next().value ?? undefined : undefined),
     [selectedToken],
   )
+
+  const [chartDisplaySettings, setChartDisplaySettings] = useState<ChartDisplaySettings>({
+    showPredictedDate: true,
+    showRanking: true,
+  })
+
   const selectedTokenAddress = useMemo(
     () => (selectedToken && selectedTokenNetwork ? selectedToken.platforms.get(selectedTokenNetwork) : undefined),
     [selectedToken, selectedTokenNetwork],
@@ -89,15 +95,28 @@ const TrendingSoonLayout = ({
     chartTimeframe,
   )
 
+  const {
+    data: trueSightFilterData,
+    isLoading: isLoadingTrueSightFilterTokens,
+    error: errorWhenLoadingTrueSightFilterData,
+  } = useGetTrueSightFilterData(filter.timeframe)
+
+  const { tokens: discoverProTokens, total_number_tokens } = useMakeDiscoverProTokensList(
+    trendingSoonData?.tokens ?? [],
+    trueSightFilterData?.tokens ?? [],
+    // currentPage,
+    filter.selectedTokenStatus,
+  )
+
   const theme = useTheme()
 
-  const sortedPaginatedTrendingSoonTokens = useMemo(() => {
+  const sortedPaginatedDiscoverProTokens = useMemo(() => {
     const { sortBy, sortDirection } = sortSettings
-    const rankComparer = (a: TrueSightTokenData, b: TrueSightTokenData) => (a.rank && b.rank ? a.rank - b.rank : 0)
-    const nameComparer = (a: TrueSightTokenData, b: TrueSightTokenData) =>
+    const rankComparer = (a: DiscoverProToken, b: DiscoverProToken) => (a.rank && b.rank ? a.rank - b.rank : 0)
+    const nameComparer = (a: DiscoverProToken, b: DiscoverProToken) =>
       a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
-    const discoveredOnComparer = (a: TrueSightTokenData, b: TrueSightTokenData) => a.discovered_on - b.discovered_on
-    let res = trendingSoonTokens.sort(
+    const discoveredOnComparer = (a: DiscoverProToken, b: DiscoverProToken) => a.discovered_on - b.discovered_on
+    let res = discoverProTokens.sort(
       sortBy === TableDetail.RANK ? rankComparer : sortBy === TableDetail.NAME ? nameComparer : discoveredOnComparer,
     )
     res = sortDirection === SortDirection.ASC ? res : res.reverse()
@@ -106,20 +125,37 @@ const TrendingSoonLayout = ({
     res = res.slice((currentPage - 1) * TRENDING_SOON_ITEM_PER_PAGE, currentPage * TRENDING_SOON_ITEM_PER_PAGE)
 
     return res
-  }, [currentPage, sortSettings, trendingSoonTokens])
+  }, [currentPage, sortSettings, discoverProTokens])
 
   const above1200 = useMedia('(min-width: 1200px)')
 
   useEffect(() => {
-    if (above1200 && sortedPaginatedTrendingSoonTokens.length) setSelectedToken(sortedPaginatedTrendingSoonTokens[0])
-  }, [currentPage, above1200, sortedPaginatedTrendingSoonTokens])
+    if (above1200 && sortedPaginatedDiscoverProTokens.length) setSelectedToken(sortedPaginatedDiscoverProTokens[0])
+  }, [currentPage, above1200, sortedPaginatedDiscoverProTokens])
+
+  useEffect(() => {
+    const e = document.getElementById('token-detail-container')
+    if (e) {
+      e.scrollTop = 0
+    }
+  }, [selectedToken])
+
+  const selectedTokenId = useMemo(() => (selectedToken ? selectedToken.token_id : undefined), [selectedToken])
+
+  const {
+    data: tokenPredictedDetails,
+    isLoading: isTokenPredictedDetailsLoading,
+    error: errorWhenLoadingTokenPredictedDetails,
+  } = useGetTokenPredictedDetails(selectedTokenId, filter.timeframe)
 
   return (
     <>
       <TrueSightContainer>
-        {isLoadingTrendingSoonTokens ? (
+        {isLoadingTrendingSoonTokens || isLoadingTrueSightFilterTokens ? (
           <LocalLoader />
-        ) : errorWhenLoadingTrendingSoonData || sortedPaginatedTrendingSoonTokens.length === 0 ? (
+        ) : errorWhenLoadingTrendingSoonData ||
+          errorWhenLoadingTrueSightFilterData ||
+          sortedPaginatedDiscoverProTokens.length === 0 ? (
           <Flex
             flexDirection="column"
             height="100%"
@@ -229,7 +265,7 @@ const TrendingSoonLayout = ({
             </TrendingSoonTokenListHeaderWrapper>
             <TrendingSoonTokenListBodyAndDetailContainer>
               <TrendingSoonTokenListBody>
-                {sortedPaginatedTrendingSoonTokens.map((tokenData, index) => (
+                {sortedPaginatedDiscoverProTokens.map((tokenData, index) => (
                   <TrendingSoonTokenItem
                     key={tokenData.token_id}
                     isSelected={selectedToken?.token_id === tokenData.token_id}
@@ -248,10 +284,15 @@ const TrendingSoonLayout = ({
                   />
                 ))}
               </TrendingSoonTokenListBody>
-              <TrendingSoonTokenDetailContainer>
+              <TrendingSoonTokenDetailContainer
+                id="token-detail-container"
+                onScroll={e => {
+                  console.log((e.target as HTMLElement).scrollTop)
+                }}
+              >
                 {selectedToken && (
                   <TrendingSoonTokenDetail
-                    tokenData={selectedToken}
+                    tokenData={selectedToken as DiscoverProToken}
                     chartData={chartData}
                     isChartDataLoading={isChartDataLoading}
                     chartCategory={chartCategory}
@@ -259,16 +300,19 @@ const TrendingSoonLayout = ({
                     chartTimeframe={chartTimeframe}
                     setChartTimeframe={setChartTimeframe}
                     setFilter={setFilter}
+                    predictedDetails={tokenPredictedDetails}
+                    isPredictedDetailsLoading={isTokenPredictedDetailsLoading}
+                    chartDisplaySettings={chartDisplaySettings}
+                    setChartDisplaySettings={setChartDisplaySettings}
                   />
                 )}
               </TrendingSoonTokenDetailContainer>
             </TrendingSoonTokenListBodyAndDetailContainer>
             <Pagination
-              onPrev={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-              onNext={() => setCurrentPage(prev => Math.min(maxPage, prev + 1))}
+              pageSize={TRENDING_SOON_ITEM_PER_PAGE}
+              onPageChange={newPage => setCurrentPage(newPage)}
               currentPage={currentPage}
-              maxPage={maxPage}
-              style={{ padding: '20px' }}
+              totalCount={total_number_tokens ?? 1}
             />
           </Box>
         )}
@@ -334,7 +378,7 @@ export const TrendingSoonTokenListBodyAndDetailContainer = styled(Flex)`
 `
 
 export const TrendingSoonTokenListBody = styled.div`
-  width: 40%;
+  width: 35%;
   border-top: 1px solid ${({ theme }) => theme.border};
   border-bottom: 1px solid ${({ theme }) => theme.border};
 
@@ -348,11 +392,15 @@ export const TrendingSoonTokenListBody = styled.div`
 `
 
 export const TrendingSoonTokenDetailContainer = styled.div`
-  width: 60%;
+  width: 65%;
   border-top: 1px solid ${({ theme }) => theme.border};
   border-left: 1px solid ${({ theme }) => theme.border};
   border-bottom: 1px solid ${({ theme }) => theme.border};
   padding: 20px;
+
+  overflow-y: scroll;
+  height: 562px;
+  scroll-behavior: smooth;
 
   ${({ theme }) => theme.mediaWidth.upToLarge`
     display: none;

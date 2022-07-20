@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
 import { TrueSightFilterTokenData, LastPredicted } from 'pages/DiscoverPro/hooks/useGetTrueSightFilterData'
 import { TokenStatus } from 'constants/discoverPro'
-
+import { TRENDING_ITEM_PER_PAGE, TRENDING_MAX_ITEM } from 'constants/index'
 export interface DiscoverProToken extends TrueSightTokenData {
   filter: TokenStatus[]
   predicted_details: {
@@ -20,9 +20,11 @@ export interface DiscoverProToken extends TrueSightTokenData {
 export default function useMakeDiscoverProTokensList(
   trendingSoonTokens: TrueSightTokenData[],
   trueSightFilterTokens: TrueSightFilterTokenData[],
+  // currentPage: number,
+  selectedTokenStatus: TokenStatus | undefined,
 ) {
   return useMemo(() => {
-    const trendingSoonTokensList: DiscoverProToken[] = []
+    let trendingSoonTokensList: DiscoverProToken[] = []
     trendingSoonTokens.forEach(trendingSoonToken => {
       const matchToken = trueSightFilterTokens.find(
         predictedToken => predictedToken.token_id === trendingSoonToken.token_id,
@@ -46,6 +48,18 @@ export default function useMakeDiscoverProTokensList(
         })
       }
     })
-    return trendingSoonTokensList
-  }, [trendingSoonTokens, trueSightFilterTokens])
+    if (selectedTokenStatus) {
+      trendingSoonTokensList = trendingSoonTokensList.filter(token => token.filter.includes(selectedTokenStatus))
+    }
+
+    // const trendingSoonTokensListSlide = trendingSoonTokensList.slice(
+    //   (currentPage - 1) * TRENDING_ITEM_PER_PAGE,
+    //   currentPage * TRENDING_ITEM_PER_PAGE,
+    // )
+
+    return {
+      total_number_tokens: trendingSoonTokensList.length,
+      tokens: trendingSoonTokensList,
+    }
+  }, [trendingSoonTokens, trueSightFilterTokens, selectedTokenStatus])
 }
