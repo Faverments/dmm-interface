@@ -204,7 +204,7 @@ const ChartDataTypeItem = styled.div<{ isActive?: boolean }>`
   padding: 7px 12px;
   border-radius: 14px;
   background: ${({ theme, isActive }) => (isActive ? theme.primary : theme.buttonBlack)};
-  color: ${({ theme, isActive }) => (isActive ? theme.text14 : theme.subText)};
+  color: ${({ theme, isActive }) => (isActive ? theme.text : theme.subText)};
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -218,7 +218,7 @@ const ChartTimeframeContainer = styled.div`
 const ChartTimeframeItem = styled.div<{ isActive?: boolean }>`
   padding: 7px 6px;
   background: ${({ theme, isActive }) => (isActive ? theme.primary : theme.buttonBlack)};
-  color: ${({ theme, isActive }) => (isActive ? theme.text14 : theme.subText)};
+  color: ${({ theme, isActive }) => (isActive ? theme.text : theme.subText)};
   font-size: 12px;
   font-weight: 500;
   border-radius: 4px;

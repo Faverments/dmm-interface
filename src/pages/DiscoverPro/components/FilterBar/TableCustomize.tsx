@@ -145,7 +145,7 @@ export default function TableCustomize({
         aria-label="Table Customize"
       >
         {/* <TableIcon size={18} /> */}
-        <TableIcon fill={theme.text14} />
+        <TableIcon fill={theme.text} />
       </ButtonPrimary>
       <Modal isOpen={isOpen} onDismiss={toggle} maxWidth="728px" maxHeight="500px">
         <Scrollable>

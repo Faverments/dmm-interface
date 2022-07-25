@@ -90,7 +90,7 @@ export default function NviSignalDetails() {
           alt="NVI Group"
           width={168}
           style={{
-            border: `4px solid ${theme.bg12}`,
+            border: `4px solid ${theme.bg1}`,
             borderRadius: '10px',
             position: 'absolute',
             top: '-130px',

@@ -56,7 +56,7 @@ const LayoutPicker = ({
             setActiveMode(LayoutMode.TABLE_LARGE)
           }}
         >
-          <TableLarge size={16} color={activeMode === LayoutMode.TABLE_LARGE ? theme.text14 : theme.subText} />
+          <TableLarge size={16} color={activeMode === LayoutMode.TABLE_LARGE ? theme.text : theme.subText} />
         </LayoutPickerItem>
         <LayoutPickerItem
           active={activeMode === LayoutMode.TABLE_WITH_DETAILS}
@@ -66,7 +66,7 @@ const LayoutPicker = ({
         >
           <TableWithDetails
             size={16}
-            color={activeMode === LayoutMode.TABLE_WITH_DETAILS ? theme.text14 : theme.subText}
+            color={activeMode === LayoutMode.TABLE_WITH_DETAILS ? theme.text : theme.subText}
           />
         </LayoutPickerItem>
       </Flex>

@@ -14,7 +14,7 @@ import { AutoColumn } from 'components/Column'
 import { t, Trans } from '@lingui/macro'
 import { RowBetween, RowFixed } from 'components/Row'
 import QuestionHelper from 'components/QuestionHelper'
-import Toggle from 'components/Toggle'
+import Toggle from 'components/Toggle/LegacyToggle'
 import { isMobile } from 'react-device-detect'
 const StyledTitle = styled.div`
   font-size: ${isMobile ? '15px' : '15px'};
@@ -47,7 +47,7 @@ const OptionsContainer = styled(Flex)`
 
 const ChartTimeframeSettingIcon = styled.div<{ isActive?: boolean }>`
   background: ${({ theme, isActive }) => (isActive ? theme.primary : theme.buttonBlack)};
-  color: ${({ theme, isActive }) => (isActive ? theme.text14 : theme.subText)};
+  color: ${({ theme, isActive }) => (isActive ? theme.text : theme.subText)};
   border-radius: 4px;
   cursor: pointer;
   display: flex;
@@ -57,7 +57,7 @@ const ChartTimeframeSettingIcon = styled.div<{ isActive?: boolean }>`
   height: 28px;
   &:hover {
     background: ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.text14};
+    color: ${({ theme }) => theme.text};
   }
   &:active {
     box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.1, theme.primary)};

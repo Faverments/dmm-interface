@@ -11,7 +11,6 @@ import {
   UpcomingPoolsWrapper,
   NewText,
   HistoryButton,
-  Divider,
 } from 'components/YieldPools/styleds'
 import styled, { css } from 'styled-components'
 import useTheme from 'hooks/useTheme'
@@ -50,6 +49,17 @@ import useGetTrueSightHistoryData, {
 } from '../hooks/useGetTrueSightHistoryData'
 import dayjs from 'dayjs'
 import { TrendingHistoryData, TrendingHistoryResponse } from '../hooks/useGetTrendingHistoryData'
+
+const Divider = styled.div`
+  width: 1px;
+  height: 20px;
+  background: ${({ theme }) => theme.border};
+  margin-right: 1.5rem;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin-right: 12px;
+  `}
+`
 
 const PredictedDateWrapper = styled.div`
   display: flex;
@@ -155,16 +165,12 @@ const ScrollContainerWithGradient = styled.div<{ backgroundColor?: string }>`
   }
 
   &.left-visible:after {
-    background: linear-gradient(
-      to right,
-      ${({ theme, backgroundColor }) => backgroundColor ?? theme.bg12},
-      transparent
-    );
+    background: linear-gradient(to right, ${({ theme, backgroundColor }) => backgroundColor ?? theme.bg1}, transparent);
     left: 0;
   }
 
   &.right-visible:before {
-    background: linear-gradient(to left, ${({ theme, backgroundColor }) => backgroundColor ?? theme.bg12}, transparent);
+    background: linear-gradient(to left, ${({ theme, backgroundColor }) => backgroundColor ?? theme.bg1}, transparent);
     right: 0;
   }
 `

@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom'
 import useParsedQueryString from 'hooks/useParsedQueryString'
 import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
 
-import { TabWrapper, Divider, Tab } from 'components/YieldPools/styleds'
+import { TabWrapper, Tab } from 'components/YieldPools/styleds'
 import styled from 'styled-components'
 
 import DiscoverIcon from 'components/Icons/DiscoverIcon'
@@ -21,6 +21,17 @@ import { DiscoverProFilter, DiscoverProSortSettings, initialSortSettings, initia
 import { TrueSightTabs, TrueSightTimeframe, TrueSightFilter, TrueSightSortSettings } from 'pages/TrueSight'
 import { LayoutMode, TableDetail } from 'constants/discoverPro'
 import TrendingSoonLayout from './CompareTrendingSoon/CompareTrendingSoonLayout'
+
+const Divider = styled.div`
+  width: 1px;
+  height: 20px;
+  background: ${({ theme }) => theme.border};
+  margin-right: 1.5rem;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin-right: 12px;
+  `}
+`
 
 const TabContainer = styled.div`
   display: flex;
