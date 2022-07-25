@@ -1626,7 +1626,7 @@ msgstr "Language"
 
 #: src/pages/DiscoverPro/components/TrendingSoonLayout/index.tsx
 msgid "Last Rank"
-msgstr "Last Rank======="
+msgstr "Last Rank"
 
 #: src/pages/Campaign/index.tsx
 msgid "Leaderboard"
@@ -1634,7 +1634,7 @@ msgstr "Leaderboard"
 
 #: src/pages/Campaign/LeaderboardLayout.tsx
 msgid "Leaderboard refresh in"
-msgstr "Leaderboard refresh in>>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc"
+msgstr "Leaderboard refresh in"
 
 #: src/components/YieldPools/ProMMFarmGroup.tsx
 #: src/pages/About/AboutKyberSwap.tsx
@@ -2010,7 +2010,7 @@ msgstr "Open C98 Browser Extension"
 
 #: src/pages/Campaign/index.tsx
 msgid "Other Details"
-msgstr "Other Details>>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc"
+msgstr "Other Details
 
 #: src/pages/DiscoverPro/TrueSight/TrendingSoonHero.tsx
 #: src/pages/TrueSight/TrendingSoonHero.tsx
@@ -2278,7 +2278,7 @@ msgstr "Rainmaker Yield Farming"
 
 #: src/pages/Campaign/LeaderboardLayout.tsx
 msgid "Rank"
-msgstr "Rank>>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc"
+msgstr "Rank
 
 #: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
@@ -2375,7 +2375,7 @@ msgstr "Request"
 
 #: src/components/Menu/FaucetModal.tsx
 msgid "Request to Faucet - Submitted"
-msgstr "Request to Faucet - Submitted=======>>>>>>> Stashed changes"
+msgstr "Request to Faucet - Submitted"
 
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx

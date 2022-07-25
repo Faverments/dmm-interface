@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 import { useMedia } from 'react-use'
 import { TrueSightContainer } from 'pages/TrueSight/components/TrendingSoonLayout'
 import TrendingTokenItemMobileOnly from 'pages/DiscoverPro/components/TrendingTokenItemMobileOnly'
@@ -56,7 +56,6 @@ import Bronze from 'assets/svg/bronze_icon.svg'
 import { Circle, ArrowRight } from 'react-feather'
 
 import useGetTokenPredictedDetails from 'pages/DiscoverPro/hooks/useGetTokenPredictedDetails'
-import useScrollToTopWhenPageChange from 'pages/DiscoverPro/hooks/useScrollToTopWhenPageChange'
 
 function getPropertyNameOfObjectV1(obj: any, propertyName: string) {
   return Object.keys(obj).find(key => key === propertyName)
@@ -518,8 +517,6 @@ const TrendingLayout = ({
       />
     </Box>
   )
-
-  useScrollToTopWhenPageChange(currentPage, 300)
 
   const DesktopLayout = () => (
     <TableContainer>

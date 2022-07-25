@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { PageWrapper } from 'pages/CreatePool/styled'
 import ScrollContainer from 'react-indiana-drag-scroll'
 // import { ScrollContainerWithGradient } from 'components/RewardTokenPrices/index'
@@ -13,12 +13,13 @@ import {
   HistoryButton,
   Divider,
 } from 'components/YieldPools/styleds'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import useTheme from 'hooks/useTheme'
 import PredictionIcon from 'assets/images/crystal-ball.png'
+import SnapshotIcon from 'assets/images/camera-icon.png'
 import { Text, Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
-import { Calendar, ArrowLeft, ArrowRight, Tool } from 'react-feather'
+import { Calendar, ArrowLeft, ArrowRight, Tool, Square, Underline } from 'react-feather'
 import { darken, rgba } from 'polished'
 import useParsedQueryString from 'hooks/useParsedQueryString'
 import DiscoverIcon from 'components/Icons/DiscoverIcon'
@@ -26,7 +27,7 @@ import TrendingIcon from 'components/Icons/TrendingIcon'
 import { useHistory } from 'react-router'
 import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
 import { RouteComponentProps } from 'react-router-dom'
-import { TrueSightPageWrapper } from 'pages/TrueSight/styled'
+import { ButtonText, TrueSightPageWrapper } from 'pages/TrueSight/styled'
 import HistoryTrendingSoonHero from 'pages/DiscoverPro/History/HistoryTrendingSoonHero'
 import HistoryTrendingHero from 'pages//DiscoverPro/History/HistoryTrendingHero'
 import { useActiveWeb3React } from 'hooks'
@@ -37,12 +38,18 @@ import { TrueSightTabs, TrueSightTimeframe, TrueSightFilter, TrueSightSortSettin
 import { LayoutMode, TableDetail } from 'constants/discoverPro'
 import FilterBar from 'pages/DiscoverPro/components/FilterBar/index'
 
-import TrendingLayout from '../components/TrendingLayout'
-import TrendingSoonLayout from '../components/TrendingSoonLayout'
-import TrendingLayoutDefault from '../components/TrendingLayout/TableLargeLayout'
-import TrendingSoonLayoutDefault from '../components/TrendingSoonLayout/TableWithDetailsLayout'
+import TrendingLayout from '../History/components/TrendingLayout'
+import TrendingSoonLayout from '../History/components/TrendingSoonLayout'
+import TrendingLayoutDefault from '../History/components/TrendingLayout/TableLargeLayout'
+import TrendingSoonLayoutDefault from '../History/components/TrendingSoonLayout/TableWithDetailsLayout'
 
-import { VisibleButton, ButtonText } from '../TrueSight'
+import { ButtonPrimary } from 'components/Button'
+import useGetTrueSightHistoryData, {
+  TrueSightHistoryData,
+  TrueSightHistoryResponse,
+} from '../hooks/useGetTrueSightHistoryData'
+import dayjs from 'dayjs'
+import { TrendingHistoryData, TrendingHistoryResponse } from '../hooks/useGetTrendingHistoryData'
 
 const PredictedDateWrapper = styled.div`
   display: flex;
@@ -63,6 +70,7 @@ const PredictedText = styled.span`
 const DateText = styled.span`
   color: ${({ theme }) => theme.subText};
   font-size: 20px;
+  /* font-style: italic; */
   /* vertical-align: bottom; */
 `
 
@@ -74,7 +82,7 @@ const DateNavigateWarper = styled.div`
   margin-left: 16px;
 `
 
-const NavigateButton = styled.div`
+const NavigateDateButton = styled.div<{ disabled?: boolean }>`
   padding: 8px 12px;
   background: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.subText};
@@ -83,33 +91,33 @@ const NavigateButton = styled.div`
   align-items: center;
   border-radius: 4px;
   cursor: pointer;
-  &:hover {
-    background-color: ${({ theme }) => darken(0.1, theme.primary)};
-    color: ${({ theme }) => theme.textReverse};
-  }
-  &:active {
-    transform: scale(0.9);
-  }
-`
 
-const DatePickerButton = styled(NavigateButton)`
-  margin-left: auto;
-  white-space: nowrap;
-  font-size: 17px;
-  font-weight: 400;
-
-  @media only screen and (min-width: 768px) {
-    svg {
-      vertical-align: bottom;
-      margin-right: 6px;
-    }
-  }
+  ${({ disabled }) =>
+    disabled
+      ? css`
+          background-color: ${({ theme }) => theme.buttonGray};
+          color: ${({ theme }) => theme.disableText};
+          cursor: not-allowed;
+          pointer-events: none;
+        `
+      : css`
+          &:hover {
+            background-color: ${({ theme }) => darken(0.1, theme.primary)};
+            color: ${({ theme }) => theme.textReverse};
+          }
+          &:active {
+            transform: scale(0.9);
+          }
+        `};
 `
 
 const HistoryTitle = styled(Text)`
-  font-size: 20px;
+  font-size: 28px;
   font-weight: 400;
   padding-right: 8px;
+  @media screen and (max-width: 728px) {
+    font-size: 20px;
+  }
 `
 
 const TabContainer = styled.div`
@@ -165,13 +173,14 @@ const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
+  /* margin-bottom: 32px; */
 `
 
 const HistoryTabs = ({ activeTab }: { activeTab: TrueSightTabs | undefined }) => {
   const history = useHistory()
   const { tab } = useParsedQueryString()
   const { mixpanelHandler } = useMixpanel()
+  const above728 = useMedia('(min-width: 728px)')
   return (
     <TabContainer>
       <TabWrapper>
@@ -187,7 +196,7 @@ const HistoryTabs = ({ activeTab }: { activeTab: TrueSightTabs | undefined }) =>
           <HistoryTitle>
             <Trans>Trending Soon</Trans>
           </HistoryTitle>
-          <DiscoverIcon size={18} />
+          <DiscoverIcon size={above728 ? 20 : 16} />
         </Tab>
         <Divider />
         <Tab
@@ -202,14 +211,27 @@ const HistoryTabs = ({ activeTab }: { activeTab: TrueSightTabs | undefined }) =>
           <HistoryTitle>
             <Trans>Trending</Trans>
           </HistoryTitle>
-          <TrendingIcon size={18} />
+          <TrendingIcon size={above728 ? 20 : 16} />
         </Tab>
       </TabWrapper>
     </TabContainer>
   )
 }
 
-const PredictedTimeHeader = () => {
+const StyledIconHeader = styled.img`
+  width: 42px;
+  @media screen and (max-width: 728px) {
+    width: 30px;
+  }
+`
+
+const PredictedTimeHeader = ({
+  activeTab,
+  headerDetails,
+}: {
+  activeTab: TrueSightTabs | undefined
+  headerDetails: HeaderDetails
+}) => {
   const scrollRef = useRef(null)
   const contentRef: any = useRef(null)
   const shadowRef: any = useRef(null)
@@ -250,16 +272,32 @@ const PredictedTimeHeader = () => {
           ref={contentRef}
         >
           <PredictedDateWrapper>
-            <img
-              src={PredictionIcon}
-              alt="predicted date"
-              style={{
-                width: 28,
-              }}
-            />
-            <PredictedText>
-              {above768 && 'Predicted Time :'} <DateText> 7:15 AM - Jun 12, 2022</DateText>
-            </PredictedText>
+            {activeTab == TrueSightTabs.TRENDING_SOON && (
+              <>
+                <StyledIconHeader src={PredictionIcon} alt="predicted date" />
+                <PredictedText>
+                  {above768 && 'Predicted Time :'}{' '}
+                  <DateText>
+                    {headerDetails.predictedTime
+                      ? dayjs(headerDetails.predictedTime * 1000).format('h:m A - MMM D')
+                      : ''}
+                  </DateText>
+                </PredictedText>
+              </>
+            )}
+            {activeTab == TrueSightTabs.TRENDING && (
+              <>
+                <StyledIconHeader src={SnapshotIcon} alt="predicted date" />
+                <PredictedText>
+                  {above768 && 'Snapshot Time :'}{' '}
+                  <DateText>
+                    {headerDetails.snapshotTime
+                      ? dayjs(new Date(headerDetails.snapshotTime)).format('h:m A - MMM D')
+                      : ''}
+                  </DateText>
+                </PredictedText>
+              </>
+            )}
           </PredictedDateWrapper>
         </div>
       </ScrollContainer>
@@ -267,7 +305,29 @@ const PredictedTimeHeader = () => {
   )
 }
 
+const defaultFilter = {
+  isShowTrueSightOnly: false,
+  selectedTag: undefined,
+  selectedTokenData: undefined,
+  selectedNetwork: undefined,
+  selectedTokenStatus: undefined,
+  isShowTokensBeforeChange: false,
+}
+export interface HeaderDetails {
+  predictedTime: number | undefined
+  snapshotTime: string | undefined
+  disablePreviousButton: boolean
+  disableNextButton: boolean
+  current_data_id: string | undefined
+  previous_data_id: string | undefined
+  next_data_id: string | undefined
+  selected_id: string | undefined
+  isLoading: boolean
+  fakeLoading: boolean
+}
+
 const History = ({ history }: RouteComponentProps) => {
+  console.log('render')
   const theme = useTheme()
   const { tab } = useParsedQueryString()
   const [activeTab, setActiveTab] = useState<TrueSightTabs>()
@@ -278,11 +338,32 @@ const History = ({ history }: RouteComponentProps) => {
     selectedTokenData: undefined,
     selectedNetwork: undefined,
     selectedTokenStatus: undefined,
-    selectedLayoutMode: tab === TrueSightTabs.TRENDING_SOON ? LayoutMode.TABLE_LARGE : LayoutMode.TABLE_WITH_DETAILS,
+    selectedLayoutMode: tab === TrueSightTabs.TRENDING_SOON ? LayoutMode.TABLE_WITH_DETAILS : LayoutMode.TABLE_LARGE,
+    isShowTokensBeforeChange: false,
   })
   const [filter, setFilter] = useState<DiscoverProFilter>(initialFilter)
   const [sortSettings, setSortSettings] = useState<DiscoverProSortSettings>(initialSortSettings)
   const [tableCustomize, setTableCustomize] = useState<TableDetail[]>(initialTableCustomize)
+  const [headerDetails, setHeaderDetails] = useState<HeaderDetails>({
+    predictedTime: undefined,
+    snapshotTime: undefined,
+    disablePreviousButton: true,
+    disableNextButton: true,
+    current_data_id: undefined,
+    previous_data_id: undefined,
+    next_data_id: undefined,
+    selected_id: undefined,
+    isLoading: true,
+    fakeLoading: false,
+  })
+  const [trueSightHistoryResponse, setTrueSightHistoryResponse] = useState<TrueSightHistoryResponse>({
+    previous_data: null,
+    current_data: null,
+    next_data: null,
+  })
+  // const [trendingHistoryData, setTrendingHistoryData] = useState<TrendingHistoryData>()
+  const [trueSightHistoryData, setTrueSightHistoryData] = useState<TrueSightHistoryData | null>(null)
+
   useEffect(() => {
     if (tab === undefined) {
       history.push({ search: '?tab=' + TrueSightTabs.TRENDING_SOON })
@@ -291,43 +372,134 @@ const History = ({ history }: RouteComponentProps) => {
       setFilter(initialFilter)
       setSortSettings(initialSortSettings)
       setTableCustomize(initialTableCustomize)
+      setTrueSightHistoryData(null)
+      setHeaderDetails(pre => ({
+        ...pre,
+        id: undefined,
+      }))
     }
   }, [history, tab])
+
+  useEffect(() => {
+    setHeaderDetails(pre => ({
+      ...pre,
+      snapshotTime: trueSightHistoryData?.createAt,
+      predictedTime: trueSightHistoryData?.data.tokens[0].predicted_date,
+      disablePreviousButton: trueSightHistoryResponse.previous_data === null,
+      disableNextButton: trueSightHistoryResponse.next_data === null,
+      current_data_id: trueSightHistoryResponse.current_data?._id,
+      previous_data_id: trueSightHistoryResponse.previous_data?._id,
+      next_data_id: trueSightHistoryResponse.next_data?._id,
+    }))
+  }, [trueSightHistoryResponse, trueSightHistoryData])
   const above768 = useMedia('(min-width: 768px)')
+
+  // const scrollRef = useRef(null)
+
+  // const executeScroll = () => {
+  //   // IN_DEV fix performance issue
+  //   setTimeout(() => {
+  //     const element: any = scrollRef.current
+  //     element.scrollIntoView({ behavior: 'smooth' })
+  //   }, 100)
+  // }
+  const scrollToDiv = () => {
+    window.scrollTo({
+      top: 300,
+      behavior: 'smooth',
+    })
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setHeaderDetails(pre => ({
+        ...pre,
+        fakeLoading: false,
+      }))
+    }, 100)
+  }, [headerDetails.fakeLoading])
+
   return (
     <TrueSightPageWrapper>
-      <div>
-        <TopBar>
-          <PredictedTimeHeader />
-          <DateNavigateWarper>
-            <NavigateButton>
-              <ArrowLeft size={20} />
-            </NavigateButton>
-            <NavigateButton>
-              <ArrowRight size={20} />
-            </NavigateButton>
-            <DatePickerButton>
-              <Calendar size={20} />
-              {above768 && <Trans>Picker</Trans>}
-            </DatePickerButton>
-            {/* {above768 && (
-              <DatePickerButton>
-                <Calendar size={20} />
-                {above768 && <Trans>Picker</Trans>}
-              </DatePickerButton>
-            )} */}
-          </DateNavigateWarper>
-        </TopBar>
+      <Flex flexDirection="column" style={{ gap: 32 }}>
         <Flex justifyContent="space-between">
           <HistoryTabs activeTab={activeTab} />
-          <VisibleButton>
-            <Tool color={theme.text13} size={20} />
-            <ButtonText>
-              <Trans>Visible</Trans>
-            </ButtonText>
-          </VisibleButton>
+          <ButtonPrimary
+            width="max-content"
+            // onClick={() => setShowModalTutorial(true)}
+            padding="10px 12px"
+            style={{ gap: '4px', fontSize: '14px', height: 'fit-content' }}
+          >
+            <Tool color={theme.textReverse} size={16} />
+            <Trans>Visible</Trans>
+          </ButtonPrimary>
         </Flex>
-      </div>
+        <TopBar>
+          <PredictedTimeHeader activeTab={activeTab} headerDetails={headerDetails} />
+          <DateNavigateWarper>
+            <NavigateDateButton
+              disabled={headerDetails.disablePreviousButton || headerDetails.isLoading}
+              onClick={() => {
+                // scrollToDiv()
+                setTrueSightHistoryData(trueSightHistoryResponse.previous_data)
+                setHeaderDetails(pre => ({
+                  ...pre,
+                  selected_id: pre.previous_data_id,
+                  fakeLoading: true,
+                }))
+                setFilter(pre => ({
+                  ...pre,
+                  ...defaultFilter,
+                }))
+              }}
+            >
+              <ArrowLeft size={20} />
+            </NavigateDateButton>
+            <NavigateDateButton
+              onClick={() => {
+                // scrollToDiv()
+                if (headerDetails.selected_id !== undefined) {
+                  setTrueSightHistoryData(null)
+                }
+                setHeaderDetails(pre => ({
+                  ...pre,
+                  selected_id: undefined,
+                  fakeLoading: true,
+                }))
+                setFilter(pre => ({
+                  ...pre,
+                  ...defaultFilter,
+                }))
+              }}
+            >
+              <Square size={20} />
+            </NavigateDateButton>
+            <NavigateDateButton
+              disabled={headerDetails.disableNextButton || headerDetails.isLoading}
+              onClick={() => {
+                // scrollToDiv()
+                setTrueSightHistoryData(trueSightHistoryResponse.next_data)
+                setHeaderDetails(pre => ({
+                  ...pre,
+                  selected_id: pre.next_data_id,
+                  fakeLoading: true,
+                }))
+                setFilter(pre => ({
+                  ...pre,
+                  ...defaultFilter,
+                }))
+              }}
+            >
+              <ArrowRight size={20} />
+            </NavigateDateButton>
+            <NavigateDateButton>
+              <Calendar size={20} />
+            </NavigateDateButton>
+          </DateNavigateWarper>
+        </TopBar>
+      </Flex>
+      {/* <div> */}
+      {/* <div ref={scrollRef}></div> */}
       {activeTab === TrueSightTabs.TRENDING_SOON && (
         <>
           <HistoryTrendingSoonHero />
@@ -357,6 +529,12 @@ const History = ({ history }: RouteComponentProps) => {
                 sortSettings={sortSettings}
                 setFilter={setFilter}
                 setSortSettings={setSortSettings}
+                headerDetails={headerDetails}
+                setHeaderDetails={setHeaderDetails}
+                trueSightHistoryData={trueSightHistoryData}
+                setTrueSightHistoryData={setTrueSightHistoryData}
+                trueSightHistoryResponse={trueSightHistoryResponse}
+                setTrueSightHistoryResponse={setTrueSightHistoryResponse}
               />
             )}
           </Flex>
@@ -385,13 +563,24 @@ const History = ({ history }: RouteComponentProps) => {
             )}
             {filter.selectedLayoutMode === LayoutMode.TABLE_LARGE && (
               <TrendingLayoutDefault
-                filter={filter as TrueSightFilter}
-                setFilter={setFilter as React.Dispatch<React.SetStateAction<TrueSightFilter>>}
+                filter={filter}
+                setFilter={setFilter}
+                headerDetails={headerDetails}
+                setHeaderDetails={setHeaderDetails}
+                trendingHistoryData={trueSightHistoryData as TrendingHistoryData | null}
+                setTrendingHistoryData={
+                  setTrueSightHistoryData as React.Dispatch<React.SetStateAction<TrendingHistoryData | null>>
+                }
+                trendingHistoryResponse={trueSightHistoryResponse as TrendingHistoryResponse}
+                setTrendingHistoryResponse={
+                  setTrueSightHistoryResponse as React.Dispatch<React.SetStateAction<TrendingHistoryResponse>>
+                }
               />
             )}
           </Flex>
         </>
       )}
+      {/* </div> */}
     </TrueSightPageWrapper>
   )
 }

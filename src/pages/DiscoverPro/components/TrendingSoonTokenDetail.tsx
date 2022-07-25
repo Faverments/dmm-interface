@@ -59,7 +59,7 @@ const TrendingSoonTokenDetail = ({
   const now = dayjs().format('h:m A - MMM D')
   const predictedDate = dayjs(Number(tokenData.predicted_date) * 1000).format('h:m A - MMM D')
   const lastPredictedDate = dayjs(Number(tokenData.last_predicted.predicted_date) * 1000).format('h:m A - MMM D')
-  console.log(tokenData)
+  // console.log(tokenData)
   const theme = useTheme()
   const formattedDetails = getFormattedNumLongDiscoverProTokenDetails(tokenData)
   return (
@@ -356,7 +356,7 @@ const RankWrapper = styled.span`
   color: ${({ theme }) => theme.text};
   font-size: 14px;
   background: ${({ theme }) => theme.buttonBlack};
-  padding: 3px 6px 3px 4px;
+  padding: 5px 6px 3px 4px;
   border-radius: 8px;
   display: flex;
   width: fit-content;

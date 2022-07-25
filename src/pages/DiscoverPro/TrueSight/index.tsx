@@ -19,7 +19,7 @@ import TrendingLayoutDefault from '../components/TrendingLayout/TableLargeLayout
 import TrendingSoonLayoutDefault from '../components/TrendingSoonLayout/TableWithDetailsLayout'
 
 import styled from 'styled-components'
-import { ButtonEmpty } from 'components/Button'
+import { ButtonPrimary } from 'components/Button'
 import { Tool } from 'react-feather'
 import useTheme from 'hooks/useTheme'
 
@@ -114,6 +114,7 @@ export const tableDetailsDisplay: TableDetailDisplayAll = {
 export interface DiscoverProFilter extends TrueSightFilter {
   selectedTokenStatus: TokenStatus | undefined
   selectedLayoutMode: LayoutMode
+  isShowTokensBeforeChange?: boolean
 }
 
 // export interface DiscoverProSortSettings extends Omit<TrueSightSortSettings, 'sortBy'> {
@@ -136,24 +137,6 @@ export const initialTableCustomize: TableDetail[] = [
   TableDetail.CURRENT_NUMBER_HOLDERS,
   TableDetail.ACTION,
 ]
-
-export const VisibleButton = styled(ButtonEmpty)`
-  width: 118px;
-  height: 36px;
-  padding: 6px;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    width: 36px;
-  `}
-`
-export const ButtonText = styled(Text)`
-  font-size: 18px;
-  font-weight: 500;
-  margin-left: 6px !important;
-  color: ${({ theme }) => theme.text13};
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    display: none;
-  `}
-`
 
 export default function DiscoverPro({ history }: RouteComponentProps) {
   const { tab } = useParsedQueryString()
@@ -186,12 +169,15 @@ export default function DiscoverPro({ history }: RouteComponentProps) {
     <TrueSightPageWrapper>
       <Flex justifyContent="space-between">
         <TrueSightTab activeTab={activeTab} />
-        <VisibleButton>
-          <Tool color={theme.text13} size={20} />
-          <ButtonText>
-            <Trans>Visible</Trans>
-          </ButtonText>
-        </VisibleButton>
+        <ButtonPrimary
+          width="max-content"
+          // onClick={() => setShowModalTutorial(true)}
+          padding="10px 12px"
+          style={{ gap: '4px', fontSize: '14px', height: 'fit-content' }}
+        >
+          <Tool color={theme.textReverse} size={16} />
+          <Trans>Visible</Trans>
+        </ButtonPrimary>
       </Flex>
 
       {activeTab === TrueSightTabs.TRENDING_SOON && (

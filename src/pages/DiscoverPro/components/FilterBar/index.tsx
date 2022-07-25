@@ -34,6 +34,7 @@ import ResetFilter from 'pages/DiscoverPro/components/FilterBar/ResetFilter'
 import TableCustomize from 'pages/DiscoverPro/components/FilterBar/TableCustomize'
 import LayoutPicker from './LayoutPicker'
 import styled from 'styled-components'
+import TrendingToggle from './TrendingToggle'
 
 interface FilterBarProps {
   activeTab: TrueSightTabs | undefined
@@ -129,6 +130,12 @@ export default function FilterBar({
         <TimeframePicker activeTimeframe={filter.timeframe} setActiveTimeframe={setActiveTimeframe} />
         {!isComparePage && <LayoutPicker activeMode={filter.selectedLayoutMode} setActiveMode={setLayoutMode} />}
         {isComparePage && <TokenStatusSelect filter={filter} setFilter={setFilter} />}
+        {isActiveTabTrending && isHistoryPage && (
+          <TrendingToggle
+            isActive={filter.isShowTokensBeforeChange}
+            toggle={() => setFilter(prev => ({ ...prev, isShowTokensBeforeChange: !prev.isShowTokensBeforeChange }))}
+          />
+        )}
       </TrueSightFilterBarSection>
       <TrueSightFilterBarSection style={{ gap: '12px' }}>
         {isActiveTabTrending && (

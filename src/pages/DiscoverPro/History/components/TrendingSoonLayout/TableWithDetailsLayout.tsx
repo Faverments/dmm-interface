@@ -8,7 +8,7 @@ import { Trans } from '@lingui/macro'
 import Pagination from 'components/Pagination/index'
 import LocalLoader from 'components/LocalLoader'
 import TrendingSoonTokenItem from 'pages/DiscoverPro/components/TrendingSoonTokenItem'
-import TrendingSoonTokenDetail from 'pages/DiscoverPro/components/TrendingSoonTokenDetail'
+import TrendingSoonTokenDetail from 'pages/TrueSight/components/TrendingSoonLayout/TrendingSoonTokenDetail'
 import MobileChartModal from 'pages/DiscoverPro/components/MobileChartModal'
 import useGetTrendingSoonData, { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
 import {
@@ -29,23 +29,42 @@ import { DiscoverProFilter, DiscoverProSortSettings } from 'pages/DiscoverPro/Tr
 
 import { TableDetail, SortDirection, ChartDisplaySettings } from 'constants/discoverPro'
 
-import useGetTrueSightFilterData from 'pages/DiscoverPro/hooks/useGetTrueSightFilterData'
+import useGetTrueSightFilterData, { TrueSightFilterTokenData } from 'pages/DiscoverPro/hooks/useGetTrueSightFilterData'
 import useMakeDiscoverProTokensList, { DiscoverProToken } from 'pages/DiscoverPro/hooks/useMakeDiscoverProTokensList'
 import useGetTokenPredictedDetails from 'pages/DiscoverPro/hooks/useGetTokenPredictedDetails'
+import useGetTrueSightHistoryData, {
+  TrueSightHistoryData,
+  TrueSightHistoryResponse,
+} from 'pages/DiscoverPro/hooks/useGetTrueSightHistoryData'
+import useFilterTrueSightHistoryData from 'pages/DiscoverPro/hooks/useFilterTrueSightHistoryData'
+import { HeaderDetails } from '../..'
 
 const TrendingSoonLayout = ({
+  // ref,
   filter,
   setFilter,
   sortSettings,
   setSortSettings,
+  trueSightHistoryResponse,
+  setTrueSightHistoryResponse,
+  trueSightHistoryData,
+  setTrueSightHistoryData,
+  headerDetails,
+  setHeaderDetails,
 }: {
+  // ref: React.MutableRefObject<null>
   filter: DiscoverProFilter
   setFilter: React.Dispatch<React.SetStateAction<DiscoverProFilter>>
   sortSettings: DiscoverProSortSettings
   setSortSettings: React.Dispatch<React.SetStateAction<DiscoverProSortSettings>>
+  trueSightHistoryResponse: TrueSightHistoryResponse
+  setTrueSightHistoryResponse: React.Dispatch<React.SetStateAction<TrueSightHistoryResponse>>
+  trueSightHistoryData: TrueSightHistoryData | null
+  setTrueSightHistoryData: React.Dispatch<React.SetStateAction<TrueSightHistoryData | null>>
+  headerDetails: HeaderDetails
+  setHeaderDetails: React.Dispatch<React.SetStateAction<HeaderDetails>>
 }) => {
-  const [selectedToken, setSelectedToken] = useState<TrueSightTokenData>()
-  console.log('selectedToken top', selectedToken)
+  const [selectedToken, setSelectedToken] = useState<TrueSightFilterTokenData>()
   const [isOpenChartModal, setIsOpenChartModal] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const { tab, token_id: selectedTokenIdFromQs } = useParsedQueryString()
@@ -53,11 +72,33 @@ const TrendingSoonLayout = ({
   const location = useLocation()
 
   const {
-    data: trendingSoonData,
-    isLoading: isLoadingTrendingSoonTokens,
-    error: errorWhenLoadingTrendingSoonData,
-  } = useGetTrendingSoonData(filter, TRENDING_SOON_MAX_ITEMS)
-  const trendingSoonTokens = useMemo(() => trendingSoonData?.tokens ?? [], [trendingSoonData])
+    data: trueSightHistoryRes,
+    isLoading: isLoadingTrueSightHistoryRes,
+    error: errorWhenLoadingTrueSightHistoryRes,
+  } = useGetTrueSightHistoryData(filter.timeframe, headerDetails.selected_id)
+
+  useEffect(() => {
+    if (trueSightHistoryRes) {
+      setTrueSightHistoryResponse(trueSightHistoryRes)
+
+      if (trueSightHistoryData == null) {
+        setTrueSightHistoryData(trueSightHistoryRes.current_data)
+      }
+    }
+  }, [trueSightHistoryRes])
+
+  useEffect(() => {
+    setHeaderDetails(pre => {
+      return {
+        ...pre,
+        isLoading: isLoadingTrueSightHistoryRes,
+      }
+    })
+  }, [isLoadingTrueSightHistoryRes])
+
+  const filterTrueSightHistoryData = useFilterTrueSightHistoryData(trueSightHistoryData?.data, filter)
+
+  const trendingSoonTokens = useMemo(() => filterTrueSightHistoryData?.tokens ?? [], [filterTrueSightHistoryData])
 
   // token_id in query param
   useEffect(() => {
@@ -72,13 +113,14 @@ const TrendingSoonLayout = ({
 
   useEffect(() => {
     setCurrentPage(1)
-  }, [filter])
+  }, [filter, headerDetails.selected_id])
 
   const [chartTimeframe, setChartTimeframe] = useState<TrueSightTimeframe>(TrueSightTimeframe.ONE_DAY)
   const [chartCategory, setChartCategory] = useState<TrueSightChartCategory>(TrueSightChartCategory.TRADING_VOLUME)
-  const selectedTokenNetwork = useMemo(() => {
-    return selectedToken ? selectedToken.platforms.keys().next().value ?? undefined : undefined
-  }, [selectedToken])
+  const selectedTokenNetwork = useMemo(
+    () => (selectedToken ? selectedToken.platforms.keys().next().value ?? undefined : undefined),
+    [selectedToken],
+  )
 
   const [chartDisplaySettings, setChartDisplaySettings] = useState<ChartDisplaySettings>({
     showPredictedDate: true,
@@ -89,34 +131,24 @@ const TrendingSoonLayout = ({
     () => (selectedToken && selectedTokenNetwork ? selectedToken.platforms.get(selectedTokenNetwork) : undefined),
     [selectedToken, selectedTokenNetwork],
   )
+
   const { data: chartData, isLoading: isChartDataLoading } = useGetCoinGeckoChartData(
     selectedTokenNetwork,
     selectedTokenAddress,
     chartTimeframe,
   )
 
-  const {
-    data: trueSightFilterData,
-    isLoading: isLoadingTrueSightFilterTokens,
-    error: errorWhenLoadingTrueSightFilterData,
-  } = useGetTrueSightFilterData(filter.timeframe)
-
-  const { tokens: discoverProTokens, total_number_tokens } = useMakeDiscoverProTokensList(
-    trendingSoonData?.tokens ?? [],
-    trueSightFilterData?.tokens ?? [],
-    // currentPage,
-    filter.selectedTokenStatus,
-  )
-
   const theme = useTheme()
 
   const sortedPaginatedDiscoverProTokens = useMemo(() => {
     const { sortBy, sortDirection } = sortSettings
-    const rankComparer = (a: DiscoverProToken, b: DiscoverProToken) => (a.rank && b.rank ? a.rank - b.rank : 0)
-    const nameComparer = (a: DiscoverProToken, b: DiscoverProToken) =>
+    const rankComparer = (a: TrueSightFilterTokenData, b: TrueSightFilterTokenData) =>
+      a.rank && b.rank ? a.rank - b.rank : 0
+    const nameComparer = (a: TrueSightFilterTokenData, b: TrueSightFilterTokenData) =>
       a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
-    const discoveredOnComparer = (a: DiscoverProToken, b: DiscoverProToken) => a.discovered_on - b.discovered_on
-    let res = discoverProTokens.sort(
+    const discoveredOnComparer = (a: TrueSightFilterTokenData, b: TrueSightFilterTokenData) =>
+      a.discovered_on - b.discovered_on
+    let res = trendingSoonTokens.sort(
       sortBy === TableDetail.RANK ? rankComparer : sortBy === TableDetail.NAME ? nameComparer : discoveredOnComparer,
     )
     res = sortDirection === SortDirection.ASC ? res : res.reverse()
@@ -125,7 +157,7 @@ const TrendingSoonLayout = ({
     res = res.slice((currentPage - 1) * TRENDING_SOON_ITEM_PER_PAGE, currentPage * TRENDING_SOON_ITEM_PER_PAGE)
 
     return res
-  }, [currentPage, sortSettings, discoverProTokens])
+  }, [currentPage, sortSettings, trendingSoonTokens])
 
   const above1200 = useMedia('(min-width: 1200px)')
 
@@ -151,11 +183,9 @@ const TrendingSoonLayout = ({
   return (
     <>
       <TrueSightContainer>
-        {isLoadingTrendingSoonTokens || isLoadingTrueSightFilterTokens ? (
+        {trueSightHistoryData == null || headerDetails.fakeLoading ? (
           <LocalLoader />
-        ) : errorWhenLoadingTrendingSoonData ||
-          errorWhenLoadingTrueSightFilterData ||
-          sortedPaginatedDiscoverProTokens.length === 0 ? (
+        ) : errorWhenLoadingTrueSightHistoryRes || sortedPaginatedDiscoverProTokens.length === 0 ? (
           <Flex
             flexDirection="column"
             height="100%"
@@ -286,24 +316,24 @@ const TrendingSoonLayout = ({
               </TrendingSoonTokenListBody>
               <TrendingSoonTokenDetailContainer
                 id="token-detail-container"
-                onScroll={e => {
-                  console.log((e.target as HTMLElement).scrollTop)
-                }}
+                // onScroll={e => {
+                //   console.log((e.target as HTMLElement).scrollTop)
+                // }}
               >
                 {selectedToken && (
                   <TrendingSoonTokenDetail
-                    tokenData={selectedToken as DiscoverProToken}
+                    tokenData={selectedToken as TrueSightTokenData}
                     chartData={chartData}
                     isChartDataLoading={isChartDataLoading}
                     chartCategory={chartCategory}
                     setChartCategory={setChartCategory}
                     chartTimeframe={chartTimeframe}
                     setChartTimeframe={setChartTimeframe}
-                    setFilter={setFilter}
-                    predictedDetails={tokenPredictedDetails}
-                    isPredictedDetailsLoading={isTokenPredictedDetailsLoading}
-                    chartDisplaySettings={chartDisplaySettings}
-                    setChartDisplaySettings={setChartDisplaySettings}
+                    setFilter={setFilter as any}
+                    // predictedDetails={tokenPredictedDetails}
+                    // isPredictedDetailsLoading={isTokenPredictedDetailsLoading}
+                    // chartDisplaySettings={chartDisplaySettings}
+                    // setChartDisplaySettings={setChartDisplaySettings}
                   />
                 )}
               </TrendingSoonTokenDetailContainer>
@@ -312,7 +342,7 @@ const TrendingSoonLayout = ({
               pageSize={TRENDING_SOON_ITEM_PER_PAGE}
               onPageChange={newPage => setCurrentPage(newPage)}
               currentPage={currentPage}
-              totalCount={total_number_tokens ?? 1}
+              totalCount={filterTrueSightHistoryData?.total_number_tokens ?? 1}
             />
           </Box>
         )}

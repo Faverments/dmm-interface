@@ -2045,7 +2045,7 @@ msgstr ""
 
 #: src/pages/Campaign/index.tsx
 msgid "Other Details"
-msgstr ">>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc"
+msgstr ""
 
 #: src/pages/DiscoverPro/TrueSight/TrendingSoonHero.tsx
 #: src/pages/TrueSight/TrendingSoonHero.tsx
@@ -2308,7 +2308,7 @@ msgstr "Chính sách Bảo mật"
 #: src/components/DiscoverProPageDropDown/index.tsx
 #: src/components/Menu/DiscoverProPageDropDown.tsx
 msgid "Pro"
-msgstr "=======>>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc"
+msgstr ""
 
 #: src/components/YieldPools/ListItem.tsx
 #: src/components/YieldPools/ListItem.tsx
@@ -2321,7 +2321,7 @@ msgstr ""
 
 #: src/pages/Campaign/LeaderboardLayout.tsx
 msgid "Rank"
-msgstr ">>>>>>> b8938b62aa40d5400a067a8853b5c5db7674e7cc"
+msgstr ""
 
 #: src/pages/DiscoverPro/components/FilterBar/ModalSorting.tsx
 #: src/pages/TrueSight/components/FilterBar/ModalSorting.tsx
@@ -2418,7 +2418,7 @@ msgstr ""
 
 #: src/components/Menu/FaucetModal.tsx
 msgid "Request to Faucet - Submitted"
-msgstr "=======>>>>>>> Stashed changes"
+msgstr ""
 
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
