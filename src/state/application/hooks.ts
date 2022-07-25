@@ -98,10 +98,6 @@ export function usePoolDetailModalToggle(): () => void {
   return useToggleModal(ApplicationModal.POOL_DETAIL)
 }
 
-export function useFarmHistoryModalToggle(): () => void {
-  return useToggleModal(ApplicationModal.FARM_HISTORY)
-}
-
 export function useTrendingSoonSortingModalToggle(): () => void {
   return useToggleModal(ApplicationModal.TRENDING_SOON_SORTING)
 }

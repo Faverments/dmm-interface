@@ -1,6 +1,6 @@
 import { ChainId } from '@kyberswap/ks-sdk-core'
 import React, { useState } from 'react'
-import { Flex, Text } from 'rebass'
+import { Flex } from 'rebass'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { darken } from 'polished'
 import { Trans } from '@lingui/macro'
@@ -8,7 +8,6 @@ import styled, { keyframes } from 'styled-components'
 
 import { PROMM_ANALYTICS_URL } from 'constants/index'
 import { useActiveWeb3React } from 'hooks'
-import { useETHBalances } from 'state/wallet/hooks'
 import Settings from 'components/Settings'
 import Menu, { NewLabel } from 'components/Menu'
 import Row, { RowFixed } from '../Row'
@@ -27,12 +26,17 @@ import { NETWORKS_INFO } from 'constants/networks'
 // import { ReactComponent as MasterCard } from 'assets/buy-crypto/master-card.svg'
 // import { MouseoverTooltip } from 'components/Tooltip'
 import AboutPageDropdown from 'components/AboutPageDropDown'
+import { Repeat } from 'react-feather'
+import { ReactComponent as Dollar } from 'assets/svg/dollar.svg'
+import { ReactComponent as Visa } from 'assets/buy-crypto/visa.svg'
+import { ReactComponent as MasterCard } from 'assets/buy-crypto/master-card.svg'
+import { ReactComponent as DropdownSVG } from 'assets/svg/down.svg'
 
-// const VisaSVG = styled(Visa)`
-//   path {
-//     fill: ${({ theme }) => theme.text};
-//   }
-// `
+const VisaSVG = styled(Visa)`
+  path {
+    fill: ${({ theme }) => theme.text};
+  }
+`
 
 const HeaderFrame = styled.div`
   display: grid;
@@ -78,7 +82,7 @@ const HeaderControls = styled.div`
     z-index: 98;
     height: 72px;
     border-radius: 12px 12px 0 0;
-    background-color: ${({ theme }) => theme.bg1};
+    background-color: ${({ theme }) => theme.background};
   `};
 `
 
@@ -118,25 +122,25 @@ const IconImage = styled.img`
   ${({ theme }) => theme.mediaWidth.upToSmall`
     width: 114px;
   `};
+
+  @media only screen and (max-width: 400px) {
+    width: 100px;
+  }
 `
 
 const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: ${({ theme, active }) => (!active ? theme.bg1 : theme.bg3)};
+  background-color: ${({ theme, active }) => (!active ? theme.background : theme.buttonGray)};
   border-radius: 999px;
   white-space: nowrap;
   width: 100%;
   cursor: pointer;
-
-  :focus {
-    border: 1px solid blue;
-  }
 `
 
 const AnalyticsWrapper = styled.span`
-  @media (max-width: 576px) {
+  @media (max-width: 1320px) {
     display: none;
   }
 `
@@ -147,11 +151,7 @@ const DiscoverWrapper = styled.span`
   }
 `
 
-const CampaignWrapper = styled.span`
-  @media (max-width: 1320px) {
-    display: none;
-  }
-`
+const CampaignWrapper = styled.span``
 
 const DiscoverProWapper = styled.span`
   @media (max-width: 1320px) {
@@ -163,12 +163,6 @@ const AboutWrapper = styled.span`
   @media (max-width: 1440px) {
     display: none;
   }
-`
-
-const BalanceText = styled(Text)`
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    display: none;
-  `};
 `
 
 const Title = styled(Link)`
@@ -225,6 +219,10 @@ const StyledNavLink = styled(NavLink).attrs({
   :hover {
     color: ${({ theme }) => darken(0.1, theme.primary)};
   }
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 8px 6px;
+  `}
 `
 
 const StyledNavExternalLink = styled(ExternalLink).attrs({
@@ -264,6 +262,10 @@ const StyledNavExternalLink = styled(ExternalLink).attrs({
 `
 
 const YieldMenuWrapper = styled.div`
+  @media (max-width: 576px) {
+    display: none;
+  }
+
   position: relative;
 `
 
@@ -301,22 +303,12 @@ const Dropdown = styled.div`
   filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.36));
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.01), 0 4px 8px rgba(0, 0, 0, 0.04), 0 16px 24px rgba(0, 0, 0, 0.04),
     0 24px 32px rgba(0, 0, 0, 0.01);
-  border-radius: 8px;
-  padding: 8px 4px;
+  border-radius: 16px;
+  padding: 8px;
   width: max-content;
   top: 32px;
-
-  left: 50%;
-  transform: translate(-50%, 0);
 `
-const DropdownIcon = styled.div`
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 6px solid ${({ theme }) => theme.subText};
-  margin-left: 4px;
-
+const DropdownIcon = styled(DropdownSVG)`
   transition: transform 300ms;
 `
 
@@ -328,12 +320,12 @@ const HoverDropdown = styled.div<{ active: boolean }>`
   color: ${({ theme, active }) => (active ? theme.primary : theme.subText)};
   font-size: 1rem;
   width: fit-content;
-  padding: 8px 12px;
+  padding: 8px 6px 8px 12px;
   font-weight: 500;
 
-  ${DropdownIcon} {
-    border-top: 6px solid ${({ theme, active }) => (active ? theme.primary : theme.subText)};
-  }
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 8px 2px 8px 6px;
+  `}
 
   :hover {
     color: ${({ theme }) => darken(0.1, theme.primary)};
@@ -349,14 +341,12 @@ const HoverDropdown = styled.div<{ active: boolean }>`
 
     ${DropdownIcon} {
       transform: rotate(-180deg);
-      border-top: 6px solid ${({ theme }) => theme.primary};
     }
   }
 `
 
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
-  const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
   const isDark = useIsDarkMode()
   const { pathname } = useLocation()
@@ -365,6 +355,7 @@ export default function Header() {
   const { width } = useWindowSize()
 
   const under369 = width && width < 369
+  const under500 = width && width < 500
 
   return (
     <HeaderFrame>
@@ -375,13 +366,6 @@ export default function Header() {
           </UniIcon>
         </Title>
         <HeaderLinks>
-          <StyledNavLink id={`swapv2-nav-link`} to={'/swap'} isActive={match => Boolean(match)}>
-            <Flex alignItems="center" sx={{ gap: '10px' }}>
-              <Trans>Swap</Trans>
-            </Flex>
-          </StyledNavLink>
-
-          {/* temporary hide Dropdown while waiting for legal confirm
           <HoverDropdown active={pathname.includes('/swap') || pathname === '/buy-crypto'}>
             <Flex alignItems="center">
               <Trans>Swap</Trans>
@@ -412,7 +396,6 @@ export default function Header() {
               </StyledNavLink>
             </Dropdown>
           </HoverDropdown>
-          */}
 
           <HoverDropdown active={pathname.toLowerCase().includes('pools')}>
             <Flex alignItems="center">
@@ -445,12 +428,23 @@ export default function Header() {
             </Dropdown>
           </HoverDropdown>
 
-          {!under369 && (
+          <YieldMenuWrapper>
             <StyledNavLink id={`farms-nav-link`} to={'/farms'} isActive={match => Boolean(match)}>
-              <YieldMenuWrapper>
-                <Trans>Farm</Trans>
-              </YieldMenuWrapper>
+              <Trans>Farm</Trans>
             </StyledNavLink>
+          </YieldMenuWrapper>
+
+          {!under369 && (
+            <CampaignWrapper>
+              <StyledNavLink id={`campaigns`} to={'/campaigns'} isActive={match => Boolean(match)}>
+                <Trans>Campaigns</Trans>
+                {!under500 && (
+                  <NewLabel>
+                    <Trans>New</Trans>
+                  </NewLabel>
+                )}
+              </StyledNavLink>
+            </CampaignWrapper>
           )}
 
           <DiscoverWrapper>
@@ -489,7 +483,21 @@ export default function Header() {
           </AnalyticsWrapper>
 
           <AboutWrapper>
-            <AboutPageDropdown />
+            <HoverDropdown active={pathname.toLowerCase().includes('about')}>
+              <Flex alignItems="center">
+                <Trans>About</Trans>
+                <DropdownIcon />
+              </Flex>
+              <Dropdown>
+                <StyledNavLink id={`about-kyberswap`} to={'/about/kyberswap'} isActive={match => Boolean(match)}>
+                  <Trans>KyberSwap</Trans>
+                </StyledNavLink>
+
+                <StyledNavLink id={`about-knc`} to={'/about/knc'} isActive={match => Boolean(match)}>
+                  <Trans> KNC</Trans>
+                </StyledNavLink>
+              </Dropdown>
+            </HoverDropdown>
           </AboutWrapper>
         </HeaderLinks>
       </HeaderRow>
@@ -509,11 +517,6 @@ export default function Header() {
           <Web3Network />
 
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
-            {account && userEthBalance ? (
-              <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
-                {userEthBalance?.toSignificant(4)} {NETWORKS_INFO[chainId || ChainId.MAINNET].nativeToken.symbol}
-              </BalanceText>
-            ) : null}
             <Web3Status />
           </AccountElement>
         </HeaderElement>
