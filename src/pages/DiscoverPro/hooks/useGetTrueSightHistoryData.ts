@@ -15,11 +15,7 @@ export interface TrueSightHistoryResponse {
   next_data: TrueSightHistoryData | null
 }
 
-export default function useGetTrueSightHistoryData(
-  timeframe: TrueSightTimeframe,
-  id: string | undefined,
-  // filter: DiscoverProFilter,
-) {
+export default function useGetTrueSightHistoryData(timeframe: TrueSightTimeframe, predictedDate: number | undefined) {
   const [data, setData] = useState<TrueSightHistoryResponse>()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error>()
@@ -28,7 +24,11 @@ export default function useGetTrueSightHistoryData(
     const fetchData = async () => {
       try {
         const timeFrame = timeframe === TrueSightTimeframe.ONE_DAY ? '24h' : '7d'
-        const url = `${process.env.REACT_APP_DISCOVER_PRO_API}/truesight_history/${timeFrame}?id=${id ? id : ''}`
+
+        const url = `${process.env.REACT_APP_DISCOVER_PRO_API}/truesight_history_by_date/${timeFrame}?predicted_date=${
+          predictedDate ? predictedDate : ''
+        }`
+
         setError(undefined)
         setIsLoading(true)
         const response = await fetch(url)
@@ -68,7 +68,7 @@ export default function useGetTrueSightHistoryData(
     }
     fetchData()
     // }, [timeframe, id, filter])
-  }, [timeframe, id])
+  }, [timeframe, predictedDate])
 
   return useMemo(() => {
     return { isLoading, data, error }

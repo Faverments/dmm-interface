@@ -17,7 +17,7 @@ import {
   TrueSightSortSettings,
   TrueSightTimeframe,
 } from 'pages/TrueSight/index'
-import useGetCoinGeckoChartData from 'pages/TrueSight/hooks/useGetCoinGeckoChartData'
+import useGetCoinGeckoChartData from 'pages/DiscoverPro/hooks/useGetCoinGeckoChartData'
 import WarningIcon from 'components/LiveChart/WarningIcon'
 import useTheme from 'hooks/useTheme'
 import { TRENDING_SOON_ITEM_PER_PAGE, TRENDING_SOON_MAX_ITEMS } from 'constants/index'

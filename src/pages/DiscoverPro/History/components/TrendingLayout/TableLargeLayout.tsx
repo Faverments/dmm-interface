@@ -4,7 +4,7 @@ import { TrueSightContainer } from 'pages/TrueSight/components/TrendingSoonLayou
 import TrendingTokenItemMobileOnly from 'pages/DiscoverPro/components/TrendingTokenItemMobileOnly'
 import { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
 import { TrueSightChartCategory, TrueSightFilter, TrueSightTimeframe } from 'pages/TrueSight/index'
-import useGetCoinGeckoChartData from 'pages/TrueSight/hooks/useGetCoinGeckoChartData'
+import useGetCoinGeckoChartData from 'pages/DiscoverPro/hooks/useGetCoinGeckoChartData'
 import useTheme from 'hooks/useTheme'
 import Pagination from 'components/Pagination/index'
 import { Box, Flex, Text } from 'rebass'
@@ -76,19 +76,23 @@ const TrendingLayout = ({
     data: trendingHistoryRes,
     isLoading: isLoadingTrendingHistoryRes,
     error: errorWhenLoadingTrendingHistoryRes,
-  } = useGetTrendingHistoryData(filter.timeframe, headerDetails.selected_id)
+  } = useGetTrendingHistoryData(filter.timeframe, headerDetails.selectedId)
   useEffect(() => {
-    console.log('set trending useEffect')
     if (trendingHistoryRes) {
       setTrendingHistoryResponse(trendingHistoryRes)
-
-      if (trendingHistoryData == null) {
-        setTrendingHistoryData(trendingHistoryRes.current_data)
-      }
+      setTrendingHistoryData(trendingHistoryRes.current_data)
+      setHeaderDetails(pre => ({
+        ...pre,
+        snapshotTime: trendingHistoryRes.current_data?.createAt,
+        predictedTime: trendingHistoryRes.current_data?.data.tokens[0].predicted_date,
+        disablePreviousButton: trendingHistoryRes.previous_data === null,
+        disableNextButton: trendingHistoryRes.next_data === null,
+        current_data_id: trendingHistoryRes.current_data?._id,
+        previous_data_id: trendingHistoryRes.previous_data?._id,
+        next_data_id: trendingHistoryRes.next_data?._id,
+      }))
     }
   }, [trendingHistoryRes])
-
-  console.log('trendingHistoryData', trendingHistoryData)
 
   useEffect(() => {
     setHeaderDetails(pre => {
@@ -115,7 +119,7 @@ const TrendingLayout = ({
   useEffect(() => {
     setCurrentPage(1)
     setSelectedToken(undefined)
-  }, [filter, headerDetails.selected_id])
+  }, [filter, headerDetails.selectedId])
 
   const [chartTimeframe, setChartTimeframe] = useState<TrueSightTimeframe>(TrueSightTimeframe.ONE_DAY)
   const [chartCategory, setChartCategory] = useState<TrueSightChartCategory>(TrueSightChartCategory.TRADING_VOLUME)
@@ -327,7 +331,7 @@ const TrendingLayout = ({
   return (
     <>
       <TrueSightContainer style={{ minHeight: 'unset' }}>
-        {trendingHistoryData == null || headerDetails.fakeLoading ? (
+        {sortedPaginatedTrendingSoonTokens.length == 0 || isLoadingTrendingHistoryRes ? (
           <LocalLoader />
         ) : errorWhenLoadingTrendingHistoryRes || trendingSoonTokens.length === 0 ? (
           <Flex

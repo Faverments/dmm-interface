@@ -11,7 +11,7 @@ import Tags from 'pages/DiscoverPro/components/Tags'
 import Chart from 'pages/TrueSight/components/Chart'
 import { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
 import { formattedNumLong } from 'utils'
-import { FormattedCoinGeckoChartData } from 'pages/TrueSight/hooks/useGetCoinGeckoChartData'
+import { FormattedCoinGeckoChartData } from 'pages/DiscoverPro/hooks/useGetCoinGeckoChartData'
 import { TrueSightChartCategory, TrueSightFilter, TrueSightTimeframe } from 'pages/TrueSight/index'
 import { DiscoverProFilter } from '../TrueSight'
 

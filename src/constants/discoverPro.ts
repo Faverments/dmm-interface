@@ -42,6 +42,11 @@ export enum LayoutMode {
   TABLE_WITH_DETAILS,
 }
 
+export enum OpenMode {
+  INTERNAL,
+  EXTERNAL,
+}
+
 export enum ComPonentAllocation {
   TRENDING_SOON_TABLE_LARGE,
   TRENDING_SOON_TABLE_WITH_DETAILS,
@@ -55,6 +60,7 @@ export enum ComPonentAllocation {
 
 export const COMPARE_ITEM_PER_PAGE = 20
 export const COMPARE_MAX_ITEMS = 60
+export const PREDICTED_DETAILS_ITEM_PER_PAGE = 5
 export interface PredictedDate {
   mediumDate: number
   firstDate: number

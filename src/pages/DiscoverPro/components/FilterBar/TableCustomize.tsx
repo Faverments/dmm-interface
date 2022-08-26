@@ -19,6 +19,11 @@ import { TableDetail } from 'constants/discoverPro'
 import { Flex } from 'rebass'
 import { AlignJustify } from 'react-feather'
 
+import { useSprings, animated } from 'react-spring/web'
+import { useDrag } from 'react-use-gesture'
+import clamp from '../../utils/clamp'
+import swap from '../../utils/swap'
+
 const StyledMenu = styled.div`
   display: flex;
   justify-content: center;
@@ -92,6 +97,10 @@ export function MetricsBox({
   setTableCustomize: React.Dispatch<React.SetStateAction<TableDetail[]>>
 }) {
   const theme = useTheme()
+  const onDragOver = (e: unknown, i: number) => {
+    console.log(e)
+    console.log(i)
+  }
   return (
     <div style={{ width: '100%', padding: 16, display: 'flex', justifyContent: 'center' }}>
       <Flex
@@ -107,7 +116,7 @@ export function MetricsBox({
         {Object.keys(tablePropertyLabels).map((metric, index) => {
           if (typeof metric === 'string') {
             return (
-              <ItemWrapper draggable>
+              <ItemWrapper draggable onDragOver={e => onDragOver(e, index)}>
                 <StyledLabel key={index}>{tablePropertyLabels[metric as TableDetail]}</StyledLabel>
                 <IconWrapper>
                   <AlignJustify size={20} />
@@ -147,7 +156,7 @@ export default function TableCustomize({
         {/* <TableIcon size={18} /> */}
         <TableIcon fill={theme.text14} />
       </ButtonPrimary>
-      <Modal isOpen={isOpen} onDismiss={toggle} maxWidth="728px" maxHeight="500px">
+      <Modal isOpen={isOpen} onDismiss={toggle} maxWidth="728px" maxHeight="700px">
         <Scrollable>
           <MetricsBox tableCustomize={tableCustomize} setTableCustomize={setTableCustomize} />
         </Scrollable>

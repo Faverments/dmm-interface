@@ -4,7 +4,7 @@ import { TrueSightContainer } from 'pages/TrueSight/components/TrendingSoonLayou
 import TrendingTokenItemMobileOnly from 'pages/DiscoverPro/components/TrendingTokenItemMobileOnly'
 import useGetTrendingSoonData, { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
 import { TrueSightChartCategory, TrueSightFilter, TrueSightTimeframe } from 'pages/TrueSight/index'
-import useGetCoinGeckoChartData from 'pages/TrueSight/hooks/useGetCoinGeckoChartData'
+import useGetCoinGeckoChartData from 'pages/DiscoverPro/hooks/useGetCoinGeckoChartData'
 import useTheme from 'hooks/useTheme'
 import Pagination from 'components/Pagination/index'
 import { Box, Flex, Text, Image } from 'rebass'
@@ -40,7 +40,7 @@ import {
   TableDetailObject,
   tableDetailsDisplay,
 } from 'pages/DiscoverPro/TrueSight/index'
-import { TableDetail, SortDirection, ChartDisplaySettings } from 'constants/discoverPro'
+import { TableDetail, SortDirection, ChartDisplaySettings, OpenMode } from 'constants/discoverPro'
 import Modal from 'components/Modal'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
@@ -57,6 +57,7 @@ import { Circle, ArrowRight } from 'react-feather'
 
 import useGetTokenPredictedDetails from 'pages/DiscoverPro/hooks/useGetTokenPredictedDetails'
 import useScrollToTopWhenPageChange from 'pages/DiscoverPro/hooks/useScrollToTopWhenPageChange'
+import { useHistory } from 'react-router-dom'
 
 function getPropertyNameOfObjectV1(obj: any, propertyName: string) {
   return Object.keys(obj).find(key => key === propertyName)
@@ -199,12 +200,15 @@ const TableBody = ({
   selectedToken,
   setSelectedToken,
   tableCustomize,
+  openMode,
 }: {
   tokenData: DiscoverProToken
   selectedToken: DiscoverProToken | undefined
   setSelectedToken: Dispatch<SetStateAction<DiscoverProToken | undefined>>
   tableCustomize: TableDetail[]
+  openMode: OpenMode | undefined
 }) => {
+  const history = useHistory()
   const isThisTokenSelected = !!selectedToken && selectedToken.token_id === tokenData.token_id
   const isTopToken = tokenData.rank == 1 || tokenData.rank == 2 || tokenData.rank == 3
   const date = dayjs(tokenData.discovered_on * 1000).format('YYYY/MM/DD')
@@ -213,8 +217,12 @@ const TableBody = ({
   const toggleTrendingSoonTokenDetailModal = useToggleModal(ApplicationModal.TRENDING_SOON_TOKEN_DETAIL)
 
   const onSelectToken = () => {
-    setSelectedToken(prev => (prev?.token_id === tokenData.token_id ? undefined : tokenData))
-    toggleTrendingSoonTokenDetailModal()
+    if (openMode == OpenMode.EXTERNAL) {
+      history.push(`/token/${tokenData.token_id}`)
+    } else {
+      setSelectedToken(prev => (prev?.token_id === tokenData.token_id ? undefined : tokenData))
+      toggleTrendingSoonTokenDetailModal()
+    }
   }
   const theme = useTheme()
   const tableCustomizeLayout = tableCustomize.map(e => tableDetailsDisplay[e])
@@ -551,6 +559,7 @@ const TrendingLayout = ({
           selectedToken={selectedToken}
           setSelectedToken={setSelectedToken}
           tableCustomize={tableCustomize}
+          openMode={filter.selectedOpenMode}
         />
       ))}
       <Pagination
@@ -565,31 +574,33 @@ const TrendingLayout = ({
   return (
     <div>
       {above768 ? (
-        <Modal isOpen={isTrendingSoonTokenDetailModalOpen} onDismiss={onDismiss} maxWidth="928px">
-          {selectedToken && (
-            <Scrollable>
-              <TrendingSoonTokenDetail
-                tokenData={selectedToken}
-                chartData={chartData}
-                isChartDataLoading={isChartDataLoading}
-                chartCategory={chartCategory}
-                setChartCategory={setChartCategory}
-                chartTimeframe={chartTimeframe}
-                setChartTimeframe={setChartTimeframe}
-                setFilter={undefined}
-                predictedDetails={tokenPredictedDetails}
-                isPredictedDetailsLoading={isTokenPredictedDetailsLoading}
-                chartDisplaySettings={chartDisplaySettings}
-                setChartDisplaySettings={setChartDisplaySettings}
-                style={{
-                  // width: '928px',
-                  // height: '570px',
-                  padding: '20px',
-                }}
-              />
-            </Scrollable>
-          )}
-        </Modal>
+        filter.selectedOpenMode == OpenMode.INTERNAL && (
+          <Modal isOpen={isTrendingSoonTokenDetailModalOpen} onDismiss={onDismiss} maxWidth="928px">
+            {selectedToken && (
+              <Scrollable>
+                <TrendingSoonTokenDetail
+                  tokenData={selectedToken}
+                  chartData={chartData}
+                  isChartDataLoading={isChartDataLoading}
+                  chartCategory={chartCategory}
+                  setChartCategory={setChartCategory}
+                  chartTimeframe={chartTimeframe}
+                  setChartTimeframe={setChartTimeframe}
+                  setFilter={undefined}
+                  predictedDetails={tokenPredictedDetails}
+                  isPredictedDetailsLoading={isTokenPredictedDetailsLoading}
+                  chartDisplaySettings={chartDisplaySettings}
+                  setChartDisplaySettings={setChartDisplaySettings}
+                  style={{
+                    // width: '928px',
+                    // height: '570px',
+                    padding: '20px',
+                  }}
+                />
+              </Scrollable>
+            )}
+          </Modal>
+        )
       ) : (
         <Modal isOpen={isTrendingSoonTokenDetailModalOpen} onDismiss={onDismiss}>
           {selectedToken && (

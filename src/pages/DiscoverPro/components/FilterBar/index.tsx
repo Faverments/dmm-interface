@@ -25,7 +25,7 @@ import { BarChart } from 'react-feather'
 import { useTrendingSoonSortingModalToggle } from 'state/application/hooks'
 
 import { DiscoverProFilter, DiscoverProSortSettings } from 'pages/DiscoverPro/TrueSight/index'
-import { TableDetail, LayoutMode } from 'constants/discoverPro'
+import { TableDetail, LayoutMode, OpenMode } from 'constants/discoverPro'
 import NetworkSelect from 'pages/DiscoverPro/components/FilterBar/NetworkSelect'
 import ModalSorting from 'pages/DiscoverPro/components/FilterBar/ModalSorting'
 
@@ -35,6 +35,7 @@ import TableCustomize from 'pages/DiscoverPro/components/FilterBar/TableCustomiz
 import LayoutPicker from './LayoutPicker'
 import styled from 'styled-components'
 import TrendingToggle from './TrendingToggle'
+import OpenModeSelect from './OpenModeSelect'
 
 interface FilterBarProps {
   activeTab: TrueSightTabs | undefined
@@ -80,6 +81,9 @@ export default function FilterBar({
 
   const setLayoutMode = (selectedLayoutMode: LayoutMode) => {
     setFilter(prev => ({ ...prev, selectedLayoutMode }))
+  }
+  const setOpenMode = (selectedOpenMode: OpenMode) => {
+    setFilter(prev => ({ ...prev, selectedOpenMode }))
   }
 
   const [searchText, setSearchText] = useState('')
@@ -129,6 +133,9 @@ export default function FilterBar({
         </MouseoverTooltip>
         <TimeframePicker activeTimeframe={filter.timeframe} setActiveTimeframe={setActiveTimeframe} />
         {!isComparePage && <LayoutPicker activeMode={filter.selectedLayoutMode} setActiveMode={setLayoutMode} />}
+        {/* {isActiveTabTrendingSoon && isTrueSightPage && (
+          <OpenModeSelect activeMode={filter.selectedOpenMode} setActiveMode={setOpenMode} />
+        )} */}
         {isComparePage && <TokenStatusSelect filter={filter} setFilter={setFilter} />}
         {isActiveTabTrending && isHistoryPage && (
           <TrendingToggle

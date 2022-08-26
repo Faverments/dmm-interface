@@ -6,7 +6,7 @@ import LineChart from 'components/LiveChart/LineChart'
 import styled from 'styled-components'
 import { rgba } from 'polished'
 import useTheme from 'hooks/useTheme'
-import { FormattedCoinGeckoChartData } from 'pages/TrueSight/hooks/useGetCoinGeckoChartData'
+import { FormattedCoinGeckoChartData } from 'pages/DiscoverPro/hooks/useGetCoinGeckoChartData'
 import { formattedNumLong } from 'utils'
 import LocalLoader from 'components/LocalLoader'
 import { LiveDataTimeframeEnum } from 'hooks/useLiveChartData'
@@ -68,7 +68,15 @@ const Chart = ({
       : '--'
   let subValueDesc = ''
   if (subValue !== '--' && hoverValue === null) {
-    subValueDesc = 'Past ' + (chartTimeframe === TrueSightTimeframe.ONE_DAY ? '24 Hours' : '7 Days')
+    subValueDesc =
+      'Past ' +
+      (chartTimeframe === TrueSightTimeframe.ONE_DAY
+        ? '24 Hours'
+        : chartTimeframe === TrueSightTimeframe.ONE_WEEK
+        ? '7 Days'
+        : chartTimeframe === TrueSightTimeframe.ONE_MONTH
+        ? '30 Days'
+        : '6 Months')
   }
 
   const [index, setIndex] = useState<{ startIndex: number | undefined; endIndex: number | undefined }>({
@@ -126,6 +134,24 @@ const Chart = ({
               >
                 <Trans>7D</Trans>
               </ChartTimeframeItem>
+              <ChartTimeframeItem
+                isActive={chartTimeframe === TrueSightTimeframe.ONE_MONTH}
+                onClick={() => {
+                  setChartTimeframe(TrueSightTimeframe.ONE_MONTH)
+                  resetIndex()
+                }}
+              >
+                <Trans>1M</Trans>
+              </ChartTimeframeItem>
+              <ChartTimeframeItem
+                isActive={chartTimeframe === TrueSightTimeframe.SIX_MONTHS}
+                onClick={() => {
+                  setChartTimeframe(TrueSightTimeframe.SIX_MONTHS)
+                  resetIndex()
+                }}
+              >
+                <Trans>6M</Trans>
+              </ChartTimeframeItem>
               <ChartDisplayButton
                 chartDisplaySettings={chartDisplaySettings}
                 setChartDisplaySettings={setChartDisplaySettings}
@@ -142,7 +168,13 @@ const Chart = ({
               color={theme.primary}
               setHoverValue={setHoverValue}
               timeFrame={
-                chartTimeframe === TrueSightTimeframe.ONE_DAY ? LiveDataTimeframeEnum.DAY : LiveDataTimeframeEnum.WEEK
+                chartTimeframe === TrueSightTimeframe.ONE_DAY
+                  ? LiveDataTimeframeEnum.DAY
+                  : chartTimeframe === TrueSightTimeframe.ONE_WEEK
+                  ? LiveDataTimeframeEnum.WEEK
+                  : chartTimeframe === TrueSightTimeframe.ONE_MONTH
+                  ? LiveDataTimeframeEnum.MONTH
+                  : LiveDataTimeframeEnum.SIX_MONTHS
               }
               minHeight={0}
               showYAsis

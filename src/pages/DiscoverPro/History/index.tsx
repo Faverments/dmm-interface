@@ -35,7 +35,7 @@ import useThrottle from 'hooks/useThrottle'
 import { useMedia } from 'react-use'
 import { DiscoverProFilter, DiscoverProSortSettings, initialSortSettings, initialTableCustomize } from '../TrueSight'
 import { TrueSightTabs, TrueSightTimeframe, TrueSightFilter, TrueSightSortSettings } from 'pages/TrueSight'
-import { LayoutMode, TableDetail } from 'constants/discoverPro'
+import { LayoutMode, PredictedDate, TableDetail } from 'constants/discoverPro'
 import FilterBar from 'pages/DiscoverPro/components/FilterBar/index'
 
 import TrendingLayout from '../History/components/TrendingLayout'
@@ -50,6 +50,10 @@ import useGetTrueSightHistoryData, {
 } from '../hooks/useGetTrueSightHistoryData'
 import dayjs from 'dayjs'
 import { TrendingHistoryData, TrendingHistoryResponse } from '../hooks/useGetTrendingHistoryData'
+import { useOnClickOutside } from 'hooks/useOnClickOutside'
+import CalendarPicker from 'components/CalendarPicker'
+import Loader from 'components/Loader'
+import useGetListPredictedDate from '../hooks/useGetListPredictedDate'
 
 const PredictedDateWrapper = styled.div`
   display: flex;
@@ -82,7 +86,7 @@ const DateNavigateWarper = styled.div`
   margin-left: 16px;
 `
 
-const NavigateDateButton = styled.div<{ disabled?: boolean }>`
+export const NavigateDateButton = styled.div<{ disabled?: boolean }>`
   padding: 8px 12px;
   background: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.subText};
@@ -277,11 +281,15 @@ const PredictedTimeHeader = ({
                 <StyledIconHeader src={PredictionIcon} alt="predicted date" />
                 <PredictedText>
                   {above768 && 'Predicted Time :'}{' '}
-                  <DateText>
-                    {headerDetails.predictedTime
-                      ? dayjs(headerDetails.predictedTime * 1000).format('h:m A - MMM D')
-                      : ''}
-                  </DateText>
+                  {headerDetails.isLoading ? (
+                    <Loader />
+                  ) : (
+                    <DateText>
+                      {headerDetails.predictedTime
+                        ? dayjs(headerDetails.predictedTime * 1000).format('h:m A - MMM D')
+                        : ''}
+                    </DateText>
+                  )}
                 </PredictedText>
               </>
             )}
@@ -290,11 +298,15 @@ const PredictedTimeHeader = ({
                 <StyledIconHeader src={SnapshotIcon} alt="predicted date" />
                 <PredictedText>
                   {above768 && 'Snapshot Time :'}{' '}
-                  <DateText>
-                    {headerDetails.snapshotTime
-                      ? dayjs(new Date(headerDetails.snapshotTime)).format('h:m A - MMM D')
-                      : ''}
-                  </DateText>
+                  {headerDetails.isLoading ? (
+                    <Loader />
+                  ) : (
+                    <DateText>
+                      {headerDetails.snapshotTime
+                        ? dayjs(new Date(headerDetails.snapshotTime)).format('h:m A - MMM D')
+                        : ''}
+                    </DateText>
+                  )}
                 </PredictedText>
               </>
             )}
@@ -318,12 +330,9 @@ export interface HeaderDetails {
   snapshotTime: string | undefined
   disablePreviousButton: boolean
   disableNextButton: boolean
-  current_data_id: string | undefined
-  previous_data_id: string | undefined
-  next_data_id: string | undefined
-  selected_id: string | undefined
+  selectedPredictedDate: number | undefined
+  selectedId: string | undefined
   isLoading: boolean
-  fakeLoading: boolean
 }
 
 const History = ({ history }: RouteComponentProps) => {
@@ -344,18 +353,17 @@ const History = ({ history }: RouteComponentProps) => {
   const [filter, setFilter] = useState<DiscoverProFilter>(initialFilter)
   const [sortSettings, setSortSettings] = useState<DiscoverProSortSettings>(initialSortSettings)
   const [tableCustomize, setTableCustomize] = useState<TableDetail[]>(initialTableCustomize)
+  const [couter, setCouter] = useState(1)
   const [headerDetails, setHeaderDetails] = useState<HeaderDetails>({
     predictedTime: undefined,
     snapshotTime: undefined,
     disablePreviousButton: true,
     disableNextButton: true,
-    current_data_id: undefined,
-    previous_data_id: undefined,
-    next_data_id: undefined,
-    selected_id: undefined,
-    isLoading: true,
-    fakeLoading: false,
+    selectedPredictedDate: undefined,
+    selectedId: undefined,
+    isLoading: false,
   })
+
   const [trueSightHistoryResponse, setTrueSightHistoryResponse] = useState<TrueSightHistoryResponse>({
     previous_data: null,
     current_data: null,
@@ -379,19 +387,17 @@ const History = ({ history }: RouteComponentProps) => {
       }))
     }
   }, [history, tab])
-
+  console.log('headerDetails', headerDetails)
   useEffect(() => {
     setHeaderDetails(pre => ({
       ...pre,
-      snapshotTime: trueSightHistoryData?.createAt,
-      predictedTime: trueSightHistoryData?.data.tokens[0].predicted_date,
-      disablePreviousButton: trueSightHistoryResponse.previous_data === null,
-      disableNextButton: trueSightHistoryResponse.next_data === null,
-      current_data_id: trueSightHistoryResponse.current_data?._id,
-      previous_data_id: trueSightHistoryResponse.previous_data?._id,
-      next_data_id: trueSightHistoryResponse.next_data?._id,
+      selected_id: undefined,
     }))
-  }, [trueSightHistoryResponse, trueSightHistoryData])
+    setFilter(pre => ({
+      ...pre,
+      ...defaultFilter,
+    }))
+  }, [filter.timeframe])
   const above768 = useMedia('(min-width: 768px)')
 
   // const scrollRef = useRef(null)
@@ -410,15 +416,18 @@ const History = ({ history }: RouteComponentProps) => {
     })
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      setHeaderDetails(pre => ({
-        ...pre,
-        fakeLoading: false,
-      }))
-    }, 100)
-  }, [headerDetails.fakeLoading])
+  const [isShowingCalendar, setIsShowingCalendar] = React.useState(false)
+  const [isPicked, setIsPicked] = React.useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  useOnClickOutside(containerRef, () => setIsShowingCalendar(false))
+  const setIsPickedWrapper = (date: dayjs.Dayjs, predictedDate: PredictedDate[], day: PredictedDate) => {
+    setHeaderDetails(pre => ({
+      ...pre,
+      selectedPredictedDate: day.firstDate,
+    }))
+  }
 
+  const listPredictedDate = useGetListPredictedDate(filter.timeframe)
   return (
     <TrueSightPageWrapper>
       <Flex flexDirection="column" style={{ gap: 32 }}>
@@ -438,14 +447,16 @@ const History = ({ history }: RouteComponentProps) => {
           <PredictedTimeHeader activeTab={activeTab} headerDetails={headerDetails} />
           <DateNavigateWarper>
             <NavigateDateButton
-              disabled={headerDetails.disablePreviousButton || headerDetails.isLoading}
+              disabled={
+                headerDetails.disablePreviousButton ||
+                listPredictedDate.isLoading ||
+                listPredictedDate.data[listPredictedDate.data.length - 1] == listPredictedDate.data[couter]
+              }
               onClick={() => {
                 // scrollToDiv()
-                setTrueSightHistoryData(trueSightHistoryResponse.previous_data)
                 setHeaderDetails(pre => ({
                   ...pre,
-                  selected_id: pre.previous_data_id,
-                  fakeLoading: true,
+                  selectedPredictedDate: listPredictedDate.data[couter + 1].firstDate,
                 }))
                 setFilter(pre => ({
                   ...pre,
@@ -456,33 +467,16 @@ const History = ({ history }: RouteComponentProps) => {
               <ArrowLeft size={20} />
             </NavigateDateButton>
             <NavigateDateButton
+              disabled={
+                headerDetails.disableNextButton ||
+                listPredictedDate.isLoading ||
+                listPredictedDate.data[1] == listPredictedDate.data[couter]
+              }
               onClick={() => {
                 // scrollToDiv()
-                if (headerDetails.selected_id !== undefined) {
-                  setTrueSightHistoryData(null)
-                }
                 setHeaderDetails(pre => ({
                   ...pre,
-                  selected_id: undefined,
-                  fakeLoading: true,
-                }))
-                setFilter(pre => ({
-                  ...pre,
-                  ...defaultFilter,
-                }))
-              }}
-            >
-              <Square size={20} />
-            </NavigateDateButton>
-            <NavigateDateButton
-              disabled={headerDetails.disableNextButton || headerDetails.isLoading}
-              onClick={() => {
-                // scrollToDiv()
-                setTrueSightHistoryData(trueSightHistoryResponse.next_data)
-                setHeaderDetails(pre => ({
-                  ...pre,
-                  selected_id: pre.next_data_id,
-                  fakeLoading: true,
+                  selectedPredictedDate: listPredictedDate.data[couter - 1].firstDate,
                 }))
                 setFilter(pre => ({
                   ...pre,
@@ -492,9 +486,42 @@ const History = ({ history }: RouteComponentProps) => {
             >
               <ArrowRight size={20} />
             </NavigateDateButton>
-            <NavigateDateButton>
-              <Calendar size={20} />
+            <NavigateDateButton
+              onClick={() => {
+                // scrollToDiv()
+                setHeaderDetails(pre => ({
+                  ...pre,
+                  selected_id: undefined,
+                }))
+                setFilter(pre => ({
+                  ...pre,
+                  ...defaultFilter,
+                }))
+              }}
+            >
+              <Square size={20} />
             </NavigateDateButton>
+            <div ref={containerRef} style={{ position: 'relative', zIndex: 99 }}>
+              <NavigateDateButton
+                disabled={listPredictedDate.isLoading}
+                onClick={e => {
+                  e.stopPropagation()
+                  setIsShowingCalendar(prev => !prev)
+                }}
+              >
+                <Calendar size={20} />
+              </NavigateDateButton>
+              {isShowingCalendar && (
+                <CalendarPickerContainer>
+                  <CalendarPicker
+                    cancelPicker={true}
+                    setIsPicked={setIsPickedWrapper}
+                    isPicked={isPicked}
+                    listPredictedDate={listPredictedDate.data}
+                  />
+                </CalendarPickerContainer>
+              )}
+            </div>
           </DateNavigateWarper>
         </TopBar>
       </Flex>
@@ -514,28 +541,30 @@ const History = ({ history }: RouteComponentProps) => {
               setTableCustomize={setTableCustomize}
             />
             {filter.selectedLayoutMode === LayoutMode.TABLE_LARGE && (
-              <TrendingSoonLayout
-                filter={filter}
-                sortSettings={sortSettings}
-                setFilter={setFilter}
-                setSortSettings={setSortSettings}
-                tableCustomize={tableCustomize}
-                setTableCustomize={setTableCustomize}
-              />
+              // <TrendingSoonLayout
+              //   filter={filter}
+              //   sortSettings={sortSettings}
+              //   setFilter={setFilter}
+              //   setSortSettings={setSortSettings}
+              //   tableCustomize={tableCustomize}
+              //   setTableCustomize={setTableCustomize}
+              // />
+              <></>
             )}
             {filter.selectedLayoutMode === LayoutMode.TABLE_WITH_DETAILS && (
-              <TrendingSoonLayoutDefault
-                filter={filter}
-                sortSettings={sortSettings}
-                setFilter={setFilter}
-                setSortSettings={setSortSettings}
-                headerDetails={headerDetails}
-                setHeaderDetails={setHeaderDetails}
-                trueSightHistoryData={trueSightHistoryData}
-                setTrueSightHistoryData={setTrueSightHistoryData}
-                trueSightHistoryResponse={trueSightHistoryResponse}
-                setTrueSightHistoryResponse={setTrueSightHistoryResponse}
-              />
+              // <TrendingSoonLayoutDefault
+              //   filter={filter}
+              //   sortSettings={sortSettings}
+              //   setFilter={setFilter}
+              //   setSortSettings={setSortSettings}
+              //   headerDetails={headerDetails}
+              //   setHeaderDetails={setHeaderDetails}
+              //   trueSightHistoryData={trueSightHistoryData}
+              //   setTrueSightHistoryData={setTrueSightHistoryData}
+              //   trueSightHistoryResponse={trueSightHistoryResponse}
+              //   setTrueSightHistoryResponse={setTrueSightHistoryResponse}
+              // />
+              <></>
             )}
           </Flex>
         </>
@@ -585,3 +614,21 @@ const History = ({ history }: RouteComponentProps) => {
   )
 }
 export default History
+
+const CalendarPickerContainer = styled(Flex)`
+  position: absolute;
+  background: ${({ theme }) => theme.tableHeader};
+  filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.36));
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
+    0px 24px 32px rgba(0, 0, 0, 0.01);
+  border-radius: 8px;
+  padding: 16px;
+  width: fit-content;
+  transform: translate(-50%, 0);
+  top: 50px;
+  right: -200px;
+  gap: 16px;
+  color: ${({ theme }) => theme.subText};
+  display: flex;
+  flex-direction: column;
+`

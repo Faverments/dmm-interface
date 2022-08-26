@@ -7,6 +7,7 @@ import { TRENDING_SOON_SUPPORTED_NETWORKS } from 'constants/index'
 export interface TrendingHistoryData {
   data: TrueSightTokenResponse
   _id: string
+  createAt: string
 }
 
 export interface TrendingHistoryResponse {

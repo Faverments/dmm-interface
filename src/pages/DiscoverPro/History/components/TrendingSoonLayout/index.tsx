@@ -4,7 +4,7 @@ import { TrueSightContainer } from 'pages/TrueSight/components/TrendingSoonLayou
 import TrendingTokenItemMobileOnly from 'pages/DiscoverPro/components/TrendingTokenItemMobileOnly'
 import useGetTrendingSoonData, { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
 import { TrueSightChartCategory, TrueSightFilter, TrueSightTimeframe } from 'pages/TrueSight/index'
-import useGetCoinGeckoChartData from 'pages/TrueSight/hooks/useGetCoinGeckoChartData'
+import useGetCoinGeckoChartData from 'pages/DiscoverPro/hooks/useGetCoinGeckoChartData'
 import useTheme from 'hooks/useTheme'
 import Pagination from 'components/Pagination/index'
 import { Box, Flex, Text, Image } from 'rebass'

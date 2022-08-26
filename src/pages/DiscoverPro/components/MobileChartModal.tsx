@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from 'components/Modal'
 import Chart from 'pages/TrueSight/components/Chart'
-import { FormattedCoinGeckoChartData } from 'pages/TrueSight/hooks/useGetCoinGeckoChartData'
+import { FormattedCoinGeckoChartData } from 'pages/DiscoverPro/hooks/useGetCoinGeckoChartData'
 import { TrueSightChartCategory, TrueSightTimeframe } from 'pages/TrueSight/index'
 
 const MobileChartModal = ({

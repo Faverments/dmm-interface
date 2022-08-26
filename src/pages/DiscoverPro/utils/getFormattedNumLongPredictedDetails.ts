@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { formattedNumLong } from 'utils'
+import { PredictedDetails } from '../hooks/useGetTokenPredictedDetails'
 import { DiscoverProToken } from '../hooks/useMakeDiscoverProTokensList'
 
 interface PredictedDetailsFormat {
@@ -13,22 +14,11 @@ interface PredictedDetailsFormat {
   numberHoldersPercent: string
 }
 
-export default function getFormattedNumLongDiscoverProTokenDetails(
+export default function getFormattedNumLongPredictedDetails(
   tokenData: DiscoverProToken,
-): {
-  predicted_details: PredictedDetailsFormat
-  last_predicted: PredictedDetailsFormat
-} {
-  console.log('formatted token data', tokenData)
-  const {
-    price,
-    trading_volume,
-    market_cap,
-    number_holders,
-    discovered_details,
-    predicted_details,
-    last_predicted,
-  } = tokenData
+  predictedDetail: PredictedDetails,
+): PredictedDetailsFormat {
+  const { price, trading_volume, market_cap, number_holders, discovered_details } = tokenData
 
   function getPredictedDetailsFormat(
     Pprice: number,
@@ -56,18 +46,10 @@ export default function getFormattedNumLongDiscoverProTokenDetails(
           : formattedNumLong((number_holders / Pnumber_holders) * 100 - 100, false) + '%',
     }
   }
-  return {
-    predicted_details: getPredictedDetailsFormat(
-      predicted_details.price,
-      predicted_details.trading_volume,
-      predicted_details.market_cap,
-      predicted_details.number_holders,
-    ),
-    last_predicted: getPredictedDetailsFormat(
-      last_predicted.price,
-      last_predicted.trading_volume,
-      last_predicted.market_cap,
-      last_predicted.number_holders,
-    ),
-  }
+  return getPredictedDetailsFormat(
+    predictedDetail.price,
+    predictedDetail.trading_volume,
+    predictedDetail.market_cap,
+    predictedDetail.number_holders,
+  )
 }
