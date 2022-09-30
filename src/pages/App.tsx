@@ -73,6 +73,8 @@ const BuyCrypto = lazy(() => import(/* webpackChunkName: 'true-sight-page' */ '.
 
 const Campaign = lazy(() => import(/* webpackChunkName: 'campaigns-page' */ './Campaign'))
 
+const Bridge = lazy(() => import(/* webpackChunkName: 'bridge-page' */ './Bridge'))
+
 const AppWrapper = styled.div`
   display: flex;
   flex-flow: column;
@@ -250,6 +252,7 @@ export default function App() {
                     <Route exact path="/referral" component={CreateReferral} />
                     <Route exact path="/discover" component={TrueSight} />
                     <Route exact path="/buy-crypto" component={BuyCrypto} />
+                    <Route exact path="/bridge" component={Bridge} />
                     <Route exact path={`${AppPaths.CAMPAIGN}/:slug?`} component={Campaign} />
 
                     <Route component={RedirectPathToSwapOnly} />
