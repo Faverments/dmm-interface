@@ -6,6 +6,8 @@ declare module 'jazzicon' {
 
 declare module 'fortmatic'
 
+declare module 'toformat'
+
 interface Navigator {
   brave?: {
     isBrave: () => Promise<boolean | undefined>

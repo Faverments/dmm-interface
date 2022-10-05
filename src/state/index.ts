@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { load, save } from 'redux-localstorage-simple'
 
 import application from './application/reducer'
+import bridgeLists from './bridgeLists/reducer'
 import burnProAmm from './burn/proamm/reducer'
 import burn from './burn/reducer'
 import campaigns from './campaigns/reducer'
@@ -21,7 +22,7 @@ import tutorial from './tutorial/reducer'
 import user from './user/reducer'
 import vesting from './vesting/reducer'
 
-const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists']
+const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'bridgeLists']
 
 const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
@@ -45,6 +46,7 @@ const store = configureStore({
     campaigns,
     tutorial,
     customizeDexes,
+    bridgeLists,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({ thunk: false, immutableCheck: false, serializableCheck: false })

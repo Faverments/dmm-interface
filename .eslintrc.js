@@ -26,6 +26,7 @@ module.exports = {
     'public',
     'package-lock.json',
     'yarn.lock',
+    'src/pages/Bridge/config/chainConfig/**/*.js',
   ],
   settings: {
     react: {

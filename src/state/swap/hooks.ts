@@ -292,8 +292,11 @@ function validatedRecipient(recipient: any): string | null {
 }
 
 export function queryParametersToSwapState(parsedQs: ParsedQs, chainId: ChainId): Omit<SwapState, 'saveGas'> {
+  console.log('parsedQs', parsedQs)
   let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency, chainId)
+  console.log('inputCurrency', inputCurrency)
   let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency, chainId)
+  console.log('outputCurrency', outputCurrency)
   if (inputCurrency === outputCurrency) {
     if (typeof parsedQs.outputCurrency === 'string') {
       inputCurrency = ''
@@ -366,8 +369,11 @@ export const useDefaultsFromURLSearch = ():
     }
 
     const parsed = queryParametersToSwapState(parsedQs, chainId)
+    console.log('parsed', parsed)
 
     const outputCurrencyAddress = DEFAULT_OUTPUT_TOKEN_BY_CHAIN[chainId]?.address || ''
+
+    console.log('outputCurrencyAddress', outputCurrencyAddress)
 
     // symbol or address of the input
     const storedInputValue = getCurrencySymbolOrAddress(currenciesRef.current[Field.INPUT])
