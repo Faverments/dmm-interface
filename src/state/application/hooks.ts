@@ -58,6 +58,10 @@ export function useNetworkModalToggle(): () => void {
   return useToggleModal(ApplicationModal.NETWORK)
 }
 
+export function useToggleSearchExploreModal(): () => void {
+  return useToggleModal(ApplicationModal.SEARCH_EXPLORE)
+}
+
 export function useWalletModalToggle(): () => void {
   return useToggleModal(ApplicationModal.WALLET)
 }

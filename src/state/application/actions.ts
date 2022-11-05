@@ -62,6 +62,8 @@ export enum ApplicationModal {
   UNSUBSCRIBE_TRUESIGHT,
   YOUR_CAMPAIGN_TRANSACTIONS,
   ETH_POW_ACK,
+
+  SEARCH_EXPLORE,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')

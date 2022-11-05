@@ -31,6 +31,7 @@ import { isAddressString, shortenAddress } from 'utils'
 
 import { RedirectDuplicateTokenIds } from './AddLiquidityV2/redirects'
 import Bridge from './Bridge'
+import Account from './Explore/account'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import ProAmmSwap from './SwapProAmm'
@@ -264,6 +265,8 @@ export default function App() {
                     <Route exact path="/buy-crypto" component={BuyCrypto} />
                     <Route exact path={`${AppPaths.CAMPAIGN}/:slug?`} component={Campaign} />
                     <Route exact path={AppPaths.BRIDGE} component={Bridge} />
+
+                    <Route exact path="/account/:address" component={Account} />
 
                     <Route component={RedirectPathToSwapOnly} />
                   </Switch>

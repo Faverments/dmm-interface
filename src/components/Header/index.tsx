@@ -16,6 +16,7 @@ import { ReactComponent as Dollar } from 'assets/svg/dollar.svg'
 import { ReactComponent as DropdownSVG } from 'assets/svg/down.svg'
 import DiscoverIcon from 'components/Icons/DiscoverIcon'
 import Menu, { NewLabel } from 'components/Menu'
+import SearchExplore from 'components/SearchExplore'
 import Settings from 'components/Settings'
 import { TutorialIds, TutorialNumbers } from 'components/Tutorial/TutorialSwap/constant'
 import Web3Network from 'components/Web3Network'
@@ -541,6 +542,8 @@ export default function Header() {
       </HeaderRow>
       <HeaderControls>
         <HeaderElement>
+          <SearchExplore />
+
           <Web3Network />
 
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
