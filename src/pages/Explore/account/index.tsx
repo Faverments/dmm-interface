@@ -1,4 +1,3 @@
-import React, { useMemo } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import SocketProvider from 'websocket/socketContext'
 

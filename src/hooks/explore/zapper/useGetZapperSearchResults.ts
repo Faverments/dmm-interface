@@ -1,5 +1,5 @@
 import { ApolloError, gql } from '@apollo/client'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { zapperClient } from 'apollo/ZapperClient'
 import useDebounce from 'hooks/useDebounce'

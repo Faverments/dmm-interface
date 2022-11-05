@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Search, X } from 'react-feather'
 import { Link } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
@@ -7,7 +7,6 @@ import styled from 'styled-components'
 
 import Modal from 'components/Modal'
 import useGetZapperSearchResults from 'hooks/explore/zapper/useGetZapperSearchResults'
-import useDebounce from 'hooks/useDebounce'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleSearchExploreModal } from 'state/application/hooks'
 
