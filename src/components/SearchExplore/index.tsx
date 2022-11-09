@@ -3,10 +3,10 @@ import { useState } from 'react'
 import { Search, X } from 'react-feather'
 import { Link } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
+import useGetZapperSearchResults from 'services/zapper/hooks/useGetZapperSearchResults'
 import styled from 'styled-components'
 
 import Modal from 'components/Modal'
-import useGetZapperSearchResults from 'hooks/explore/zapper/useGetZapperSearchResults'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleSearchExploreModal } from 'state/application/hooks'
 

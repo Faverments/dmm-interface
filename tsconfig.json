@@ -27,5 +27,5 @@
     "useUnknownInCatchVariables": false
   },
   "exclude": ["node_modules", "cypress"],
-  "include": ["./src/**/*.ts", "./src/**/*.tsx", "src/websocket/socketContext/index.tsz"]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "src/services/zerion/websocket/socketContext/index.tsz"]
 }

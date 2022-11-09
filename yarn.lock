@@ -4189,6 +4189,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/socket.io-client@1.4.36":
+  version "1.4.36"
+  resolved "https://registry.yarnpkg.com/@types/socket.io-client/-/socket.io-client-1.4.36.tgz#e4f1ca065f84c20939e9850e70222202bd76ff3f"
+  integrity sha512-ZJWjtFBeBy1kRSYpVbeGYTElf6BqPQUkXDlHHD4k/42byCN5Rh027f4yARHCink9sKAkbtGZXEAmR0ZCnc2/Ag==
+
 "@types/source-list-map@*":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
@@ -4427,6 +4432,11 @@
     "@uniswap/v3-core" "1.0.0"
     base64-sol "1.0.1"
     hardhat-watcher "^2.1.1"
+
+"@vukhaihoan/blockies@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@vukhaihoan/blockies/-/blockies-1.0.3.tgz#4d521193d52cb03f769113884cc825b8d55043a9"
+  integrity sha512-tf/9ohY2lQkiTZ8ZsFwhUZyqCRH6MjI1ommr/g6ZD3AjD3TKUcJob2z7dBbu3HcuJ0lGzubGYpsVipQ/rEndzA==
 
 "@walletconnect/browser-utils@^1.8.0":
   version "1.8.0"
