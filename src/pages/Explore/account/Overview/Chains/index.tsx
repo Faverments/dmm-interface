@@ -5,6 +5,7 @@ import { useChainBalances } from 'services/zapper/hooks/useBalances'
 import styled from 'styled-components/macro'
 
 import AllNetworks from 'assets/images/all-networks.png'
+import { Kyber } from 'components/Icons'
 import useTheme from 'hooks/useTheme'
 import { formattedNumLong } from 'utils'
 
@@ -44,7 +45,7 @@ export default function Chains({
         >
           <Flex alignItems="center" style={{ gap: 8 }} justifyContent="space-between">
             <Flex alignItems="center" style={{ gap: 8 }}>
-              <img src={AllNetworks} alt="All Networks" height={24} />
+              <Kyber size={24} color={theme.border} />
 
               <Text fontSize={16} fontWeight={500} color={network === 'all-networks' ? theme.textReverse : theme.text}>
                 All Networks

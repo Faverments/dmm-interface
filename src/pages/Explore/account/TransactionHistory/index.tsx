@@ -10,8 +10,8 @@ import styled, { useTheme } from 'styled-components/macro'
 import Pagination from 'components/Pagination'
 import { useFuse } from 'hooks/useFuse'
 
+import FuseHighlight from '../../../../components/FuseHighlight/FuseHighlight'
 import { ChainWrapper } from '../styleds'
-import FuseHighlight from './FuseHighlight'
 
 export default function TransactionsHistory() {
   const listChainAvailable = [
