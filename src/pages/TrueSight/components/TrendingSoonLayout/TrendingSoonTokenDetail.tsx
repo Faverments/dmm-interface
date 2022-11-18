@@ -36,6 +36,7 @@ const TrendingSoonTokenDetail = ({
   setFilter?: React.Dispatch<React.SetStateAction<TrueSightFilter>>
   style?: CSSProperties
 }) => {
+  console.log('chartData', chartData)
   return (
     <Flex height="100%" flexDirection="column" style={{ ...style, gap: '24px' }}>
       <LogoNameSwapContainer>

@@ -1,5 +1,5 @@
 import { Transaction } from '../models'
 
-export type TransactionResp = {
+export type TransactionResponse = {
   data: Transaction[]
 }

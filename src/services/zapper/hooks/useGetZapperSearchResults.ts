@@ -4,6 +4,8 @@ import { zapperClient } from 'services/zapper/apollo/client'
 
 import useDebounce from 'hooks/useDebounce'
 
+import { SearchRecommendations } from '../apollo/types'
+
 enum SearchType {
   AppResult = 'AppResult',
   BaseTokenResult = 'BaseTokenResult',
@@ -206,17 +208,19 @@ function formattedSearchResults(result: any, searchQuery: string) {
 export default function useGetZapperSearchResults(searchQuery: string) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApolloError>()
-  const [searchResults, setSearchResults] = useState<any>()
+  const [searchResults, setSearchResults] = useState<SearchRecommendations>()
   const debouncedQuery = useDebounce(searchQuery, 200)
   useMemo(async () => {
-    setError(undefined)
-    setIsLoading(true)
-    const result = await getZapperSearchResults(debouncedQuery)
+    try {
+      setError(undefined)
+      setIsLoading(true)
+      const result = await getZapperSearchResults(debouncedQuery)
 
-    setSearchResults(formattedSearchResults(result, debouncedQuery))
-    setIsLoading(false)
-    if (result.error) {
-      setError(result.error)
+      setSearchResults(formattedSearchResults(result, debouncedQuery))
+      setIsLoading(false)
+    } catch (error) {
+      setError(error)
+      setIsLoading(false)
     }
   }, [debouncedQuery])
   return { searchResults, isLoading, error }

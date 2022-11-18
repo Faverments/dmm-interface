@@ -4438,6 +4438,13 @@
   resolved "https://registry.yarnpkg.com/@vukhaihoan/blockies/-/blockies-1.0.3.tgz#4d521193d52cb03f769113884cc825b8d55043a9"
   integrity sha512-tf/9ohY2lQkiTZ8ZsFwhUZyqCRH6MjI1ommr/g6ZD3AjD3TKUcJob2z7dBbu3HcuJ0lGzubGYpsVipQ/rEndzA==
 
+"@vukhaihoan/react-blockies@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@vukhaihoan/react-blockies/-/react-blockies-1.4.2.tgz#3ac3bbab2d4190b5f9b2433b2065c3e799015a5a"
+  integrity sha512-gPU6cuEmNI3lXUiedpfWIxPPLMhd4iM7G1BVu6QkXpbns5fPAZXjr6KkPq7gEKxfFlEtNHfTKUzYWcUGEQYCIA==
+  dependencies:
+    prop-types "^15.5.10"
+
 "@walletconnect/browser-utils@^1.8.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@walletconnect/browser-utils/-/browser-utils-1.8.0.tgz#33c10e777aa6be86c713095b5206d63d32df0951"
@@ -10544,6 +10551,11 @@ functions-have-names@^1.2.2:
   resolved "https://registry.yarnpkg.com/functions-have-names/-/functions-have-names-1.2.3.tgz#0404fe4ee2ba2f607f0e0ec3c80bae994133b834"
   integrity sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==
 
+fuse.js@^6.6.2:
+  version "6.6.2"
+  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-6.6.2.tgz#fe463fed4b98c0226ac3da2856a415576dc9a111"
+  integrity sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==
+
 fuzzaldrin@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/fuzzaldrin/-/fuzzaldrin-2.1.0.tgz#90204c3e2fdaa6941bb28d16645d418063a90e9b"
@@ -15811,7 +15823,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.5.0, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.5.0, prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==

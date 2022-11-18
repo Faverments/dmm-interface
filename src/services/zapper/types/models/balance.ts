@@ -7,12 +7,12 @@ import { BaseToken, NonFungibleTokenBreakdown, PositionBreakdown, TokenBreakdown
 
 export type CategoryNames = 'claimable' | 'debt' | 'deposits' | 'locked' | 'nft' | 'vesting' | 'wallet'
 
+export type EachBalance = {
+  [token_key: string]: PositionBreakdown | NonFungibleTokenBreakdown | TokenBreakdown
+}
+
 export type BalancePayload = {
-  [category_name in CategoryNames]:
-    | {
-        [token_key: string]: PositionBreakdown | NonFungibleTokenBreakdown | TokenBreakdown
-      }
-    | Record<string, unknown>
+  [category_name in CategoryNames]: EachBalance | Record<string, unknown>
 }
 
 export type PartialTotal = {

@@ -1,8 +1,6 @@
 import io from 'socket.io-client'
 
-const ZERRION_BASE_URL = 'wss://api-v4.zerion.io'
-
-const ZERRION_KEY = 'Zerion.oSQAHALTonDN9HYZiYSX5k6vnm4GZNcM'
+import { ZERRION_BASE_URL, ZERRION_KEY } from '../config'
 
 /**
  * Creates a socket with a given endpoint and the correct configuration.

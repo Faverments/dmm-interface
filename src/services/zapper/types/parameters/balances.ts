@@ -2,6 +2,7 @@ import { Network } from '../models'
 
 export interface BalancesGet {
   addresses: string[]
+  // address: string
   networks?: Network[]
   bundled?: boolean
 }

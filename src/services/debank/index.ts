@@ -1,8 +1,11 @@
+import { DebankApi } from 'services/config'
 import useSWR from 'swr'
 
-export default function useGetUserTransactionHistory(address: string) {
+export * from './types'
+
+export function useGetUserTransactionHistory(address: string) {
   const { data, error } = useSWR(
-    `https://api.debank.com/history/list?page_count=20&start_time=0&token_id=&user_addr=${address}`,
+    `${DebankApi}/history/list?page_count=20&start_time=0&token_id=&user_addr=${address}`,
     async (url: string) => {
       const response = await fetch(url)
       if (response.ok) {

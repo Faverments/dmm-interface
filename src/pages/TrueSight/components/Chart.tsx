@@ -57,6 +57,8 @@ const Chart = ({
     subValueDesc = 'Past ' + (chartTimeframe === TrueSightTimeframe.ONE_DAY ? '24 Hours' : '7 Days')
   }
 
+  console.log('chartData', chartData)
+
   return (
     <ChartContainer>
       {isLoading ? (

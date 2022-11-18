@@ -1,6 +1,6 @@
 import { Network } from '../models'
 
-export type Transactions = {
+export type TransactionsParam = {
   network?: Network
 } & (
   | {

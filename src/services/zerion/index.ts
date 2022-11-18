@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import { addressAssetsRequest } from './events'
 import { addressSocket } from './socket'
 
+export * from './types'
+
 export function useAddressAssetsRequest(address: string, currency = 'usd') {
   const requestBody = addressAssetsRequest(address, currency)
   useEffect(() => {

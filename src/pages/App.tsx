@@ -31,7 +31,7 @@ import { isAddressString, shortenAddress } from 'utils'
 
 import { RedirectDuplicateTokenIds } from './AddLiquidityV2/redirects'
 import Bridge from './Bridge'
-import Account from './Explore/account'
+import Account from './Explore/Account'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import ProAmmSwap from './SwapProAmm'

@@ -1,72 +1,95 @@
-import { useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import useGetUserTransactionHistory from 'services/debank/useGetDeBankUserTransactionHistory'
-import { useGetTransactions, useGetTransactionsStandard } from 'services/defiyield'
-import useGetNftNetWorth from 'services/zapper/hooks/useGetZapperNftNetWorth'
-import useGetNftUsersCollectionsTotals from 'services/zapper/hooks/useGetZapperNftUsersCollectionsTotals'
-import useGetTokensAndProtocolsEventStream from 'services/zapper/hooks/useGetZapperTokensAndProtocolsEventStream'
-import useGetUserDaoMembership from 'services/zapper/hooks/useGetZapperUserDaoMembership'
+import {
+  chainParams,
+  useGet24hReturn,
+  useGet24hReturnAllNetworks,
+  useGet24hReturnAllNetworksSync,
+} from 'services/defiyield'
+import { useGetBalancesEventStream } from 'services/zapper/hooks/useBalances'
 import { Network } from 'services/zapper/types/models'
-import { useGetZapperTransactions } from 'services/zapper/useGetData_test'
-import { useAddressAssetsRequest } from 'services/zerion'
 
-import Avatar from 'components/Avatar'
-import useENS from 'hooks/useENS'
+import useParsedQueryString from 'hooks/useParsedQueryString'
 
-import Apps from './components/apps'
+import Analytics from './Analytics'
+import NFTs from './NFTs'
+import Overview from './Overview'
+import TimeMachine from './TimeMachine'
+import TokenApprovals from './TokenApprovals'
+import TransactionsHistory from './TransactionHistory'
+import Header from './components/Header'
+import AccountTab from './components/Tab'
+import { PageWrapper, Wrapper } from './styleds'
+
+export enum AccountTabs {
+  OVER_VIEW = 'overview',
+  NFTS = 'nfts',
+  TRANSACTIONS = 'transactions',
+  ANALYTICS = 'analytics',
+  TOKEN_APPROVALS = 'token_approvals',
+  TIME_MACHINE = 'time_machine',
+}
 
 export default function Account(props: RouteComponentProps<{ address: string }>) {
   const {
     match: {
       params: { address },
     },
+    history,
   } = props
-  const { data: tokensAndProtocols, isSyncing, error } = useGetTokensAndProtocolsEventStream(address)
-  const { daoMemberships } = useGetUserDaoMembership(address)
-  const { nftNetWorth } = useGetNftNetWorth(address)
-  const { nftUsersCollectionsTotals } = useGetNftUsersCollectionsTotals(address, undefined)
-  const { data } = useGetUserTransactionHistory(address)
-  const { address: ENSAddress, name, loading } = useENS(address)
-  const trans = useGetTransactions(address)
-  const att = useAddressAssetsRequest(address, 'usd')
-  // console.log('user transaction history', data)
-  // console.log('daoMemberships', daoMemberships)
-  // console.log('nftNetWorth', nftNetWorth)
-  // console.log('nftUsersCollectionsTotals', nftUsersCollectionsTotals)
-  console.log('trans', trans)
-
-  const [type, setType] = useState('send')
-
-  const filterTransactions = useMemo(() => {
-    if (trans.transactions) {
-      return trans.transactions.data.filter((item: any) => item.tokenOperation === type)
+  const { tab } = useParsedQueryString()
+  const [activeTab, setActiveTab] = useState<AccountTabs>()
+  useEffect(() => {
+    if (tab === undefined) {
+      history.push({ search: '?tab=' + AccountTabs.OVER_VIEW })
     } else {
-      return {}
+      setActiveTab(tab as AccountTabs)
     }
-  }, [type, trans])
+  }, [history, tab])
 
-  const zapperTransactions = useGetZapperTransactions(address, Network.ETHEREUM_MAINNET)
-  console.log(
-    'zapperTransactions',
-    zapperTransactions.transactions?.map(item => item.account),
+  const balances = useGetBalancesEventStream({
+    addresses: [address],
+    networks: Object.keys(Network).map(key => Network[key as keyof typeof Network]),
+  })
+
+  // const { data: return24hAllNetwroks } = useGet24hReturnAllNetworks(
+  //   address,
+  //   Object.keys(chainParams)
+  //     .map(key => chainParams[key as unknown as number])
+  //     .filter(value => typeof value === 'number') as unknown as number[],
+  // )
+
+  // console.log('return24hAllNetwroks', return24hAllNetwroks)
+
+  // const { data: return24h } = useGet24hReturn(address, chainParams['ETHEREUM_MAINNET'])
+  // console.log('return24h', return24h)
+
+  const { data: return24hAllNetworks, isSyncing: is24hSync } = useGet24hReturnAllNetworksSync(
+    address,
+    Object.keys(chainParams)
+      .map(key => chainParams[key as unknown as number])
+      .filter(value => typeof value === 'number') as unknown as number[],
   )
 
+  console.log('return24hAllNetworks', return24hAllNetworks)
+
   return (
-    <div>
-      <Avatar address={address} />
-      <div>Account : {address}</div>
-      <div>ENS : {name}</div>
-      <div>ENS addres : {ENSAddress}</div>
-      <div>isSyncing : {isSyncing ? 'true' : 'false'}</div>
-      <Apps tokensAndProtocols={tokensAndProtocols} />
-      <p>transaction filter</p>
-      <button onClick={() => setType('send')}>send</button>
-      <button onClick={() => setType('receive')}>receive</button>
-      <button onClick={() => setType('exchange')}>exchange</button>
-      <div>{JSON.stringify(filterTransactions)}</div>
-      <p>loading : {trans.isLoading ? 'true ' : 'false'} </p>
-      <p>trans</p>
-      <div>{JSON.stringify(trans.transactions)}</div>
-    </div>
+    <Wrapper>
+      <PageWrapper>
+        <Header
+          data={balances.data}
+          return24hs={return24hAllNetworks}
+          isBalanceSyncing={balances.isSyncing}
+          isReturn24hSyncing={is24hSync}
+        />
+        <AccountTab activeTab={activeTab} />
+        {activeTab === AccountTabs.OVER_VIEW && <Overview data={balances.data} return24hs={return24hAllNetworks} />}
+        {activeTab === AccountTabs.NFTS && <NFTs />}
+        {activeTab === AccountTabs.TRANSACTIONS && <TransactionsHistory />}
+        {activeTab === AccountTabs.ANALYTICS && <Analytics data={balances.data} />}
+        {activeTab === AccountTabs.TOKEN_APPROVALS && <TokenApprovals />}
+        {activeTab === AccountTabs.TIME_MACHINE && <TimeMachine />}
+      </PageWrapper>
+    </Wrapper>
   )
 }
