@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import { Network } from 'services/zapper'
 import { chainsInfo } from 'services/zapper/constances'
-import { useGetNftUsersCollections } from 'services/zapper/hooks/useGetData'
+import { useGetNftUsersCollections, useGetNftUsersTokens } from 'services/zapper/hooks/useGetData'
 import styled, { css, useTheme } from 'styled-components/macro'
 
 import Modal from 'components/Modal'
@@ -22,7 +22,7 @@ const MenuFlyout = styled.div<{ showList: boolean; hasShadow?: boolean }>`
   display: flex;
   flex-direction: column;
   font-size: 14px;
-  top: 500px;
+  top: 55px;
   left: 0;
   right: 0;
   outline: none;
@@ -39,9 +39,15 @@ const MenuFlyout = styled.div<{ showList: boolean; hasShadow?: boolean }>`
         `};
 `
 
+const SearchWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`
+
 export default function NFTs() {
   const [search, setSearch] = useState('')
   const [network, setNetwork] = useState<keyof typeof Network>('ETHEREUM_MAINNET')
+  const [collections, setCollections] = useState<any[]>([])
   const [showResults, setShowResults] = useState(false)
   const refInput = useRef<HTMLInputElement>(null)
 
@@ -54,8 +60,10 @@ export default function NFTs() {
   // pass a handling helper to speed up implementation
   const onSearch = useCallback((value: any) => setQuery(value.trim()), [setQuery])
   const { address } = useParams<{ address: string }>()
-  const { data } = useGetNftUsersCollections({ address, network, search })
-  console.log('nft ', data)
+  const { data: nftUserCollectionsData } = useGetNftUsersCollections({ address, network, search })
+  const { data: nftUserTokensData } = useGetNftUsersTokens({ address, network, collections })
+  console.log('nftUserCollectionsData', nftUserCollectionsData)
+  console.log('nftuserTokensData', nftUserTokensData)
 
   return (
     <div>
@@ -88,7 +96,7 @@ export default function NFTs() {
           )
         })}
       </Flex>
-      <div>
+      <SearchWrapper>
         <Search
           searchValue={search}
           onSearch={onSearch}
@@ -97,28 +105,47 @@ export default function NFTs() {
           onFocus={() => {
             setShowResults(true)
           }}
-        />
-
-        <Modal
-          isOpen={showResults}
-          onDismiss={() => {
+          onBlur={e => {
+            const relate = e.relatedTarget as HTMLDivElement
+            console.log('relate ', relate)
+            if (relate && relate.classList.contains('no-blur')) {
+              return // press star / import icon
+            }
             setShowResults(false)
           }}
-        >
-          {showResults && (
-            <MenuFlyout showList={showResults} tabIndex={0} className="no-blur" hasShadow={true}>
-              <div>
-                {data?.nftUsersCollections.edges.map((item, index) => {
-                  return (
-                    <div key={index}>
-                      <img src={item.collection.logoImageUrl} alt="" height={20} />
-                    </div>
-                  )
-                })}
-              </div>
-            </MenuFlyout>
-          )}
-        </Modal>
+        />
+
+        {showResults && (
+          <MenuFlyout showList={showResults} tabIndex={0} className="no-blur" hasShadow={true}>
+            <div>list collecttion</div>
+            <div>
+              {nftUserCollectionsData?.nftUsersCollections.edges.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      setCollections([item.collection.address])
+                      setShowResults(false)
+                    }}
+                  >
+                    <img src={item.collection.logoImageUrl} alt="" height={20} />
+                  </div>
+                )
+              })}
+              {nftUserCollectionsData?.nftUsersCollections.edges.length === 0 && <div>No results</div>}
+            </div>
+          </MenuFlyout>
+        )}
+      </SearchWrapper>
+      <div>
+        {nftUserTokensData?.nftUsersTokens.edges.map((item, index) => {
+          return (
+            <div key={index}>
+              <img src={item.token.mediasV2[0].url} alt="" height={20} />
+              <div>{item.token.name}</div>
+            </div>
+          )
+        })}
       </div>
     </div>
   )

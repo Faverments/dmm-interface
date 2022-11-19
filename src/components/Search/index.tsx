@@ -59,10 +59,11 @@ interface SearchProps {
   allowClear?: boolean
   minWidth?: string
   style?: React.CSSProperties
-  onFocus?: () => void
+  onFocus?: (e: any) => void
+  onBlur?: (e: any) => void
 }
 
-export const Search = ({ searchValue, onSearch, placeholder, minWidth, style, onFocus }: SearchProps) => {
+export const Search = ({ searchValue, onSearch, placeholder, minWidth, style, onFocus, onBlur }: SearchProps) => {
   const theme = useTheme()
   return (
     <Container style={style}>
@@ -74,7 +75,8 @@ export const Search = ({ searchValue, onSearch, placeholder, minWidth, style, on
           onChange={e => {
             onSearch(e.target.value)
           }}
-          onFocus={onFocus}
+          onFocus={onFocus as any}
+          onBlur={onBlur as any}
         />
         {searchValue && (
           <ButtonEmpty onClick={() => onSearch('')} style={{ padding: '2px 4px', width: 'max-content' }}>

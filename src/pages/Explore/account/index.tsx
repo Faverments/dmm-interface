@@ -13,10 +13,12 @@ import useParsedQueryString from 'hooks/useParsedQueryString'
 
 import Analytics from './Analytics'
 import NFTs from './NFTs'
+import NftProfiler from './NftProfiler'
 import Overview from './Overview'
 import TimeMachine from './TimeMachine'
 import TokenApprovals from './TokenApprovals'
 import TransactionsHistory from './TransactionHistory'
+import WalletProfiler from './WalletProfiler'
 import Header from './components/Header'
 import AccountTab from './components/Tab'
 import { PageWrapper, Wrapper } from './styleds'
@@ -28,6 +30,8 @@ export enum AccountTabs {
   ANALYTICS = 'analytics',
   TOKEN_APPROVALS = 'token_approvals',
   TIME_MACHINE = 'time_machine',
+  WALLET_PROFILER = 'wallet_profiler',
+  NFT_PROFILER = 'nft_profiler',
 }
 
 export default function Account(props: RouteComponentProps<{ address: string }>) {
@@ -89,6 +93,8 @@ export default function Account(props: RouteComponentProps<{ address: string }>)
         {activeTab === AccountTabs.ANALYTICS && <Analytics data={balances.data} />}
         {activeTab === AccountTabs.TOKEN_APPROVALS && <TokenApprovals />}
         {activeTab === AccountTabs.TIME_MACHINE && <TimeMachine />}
+        {activeTab === AccountTabs.WALLET_PROFILER && <WalletProfiler />}
+        {activeTab === AccountTabs.NFT_PROFILER && <NftProfiler />}
       </PageWrapper>
     </Wrapper>
   )

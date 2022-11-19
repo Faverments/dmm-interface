@@ -8,6 +8,7 @@ import { Network, Transaction } from 'services/zapper/types/models/index'
 import styled, { useTheme } from 'styled-components/macro'
 
 import Pagination from 'components/Pagination'
+import Search from 'components/Search'
 import { useFuse } from 'hooks/useFuse'
 
 import FuseHighlight from '../../../../components/FuseHighlight/FuseHighlight'
@@ -83,15 +84,13 @@ export default function TransactionsHistory() {
     <Flex>
       <Flex flexDirection="column" style={{ gap: 18 }}>
         <div>
-          <input
-            name="search"
-            type="search"
-            placeholder="Search..."
-            autoComplete="off"
-            onKeyUp={onSearch}
-            onChange={onSearch} // handles "clear search" click
+          <Search
+            searchValue={query}
+            onSearch={onSearch}
+            placeholder="Search by name, symbol, address"
+            minWidth={'100'}
           />
-          <p>Results for &quot;{query}&quot;:</p>
+          {/* <p>Results for &quot;{query}&quot;:</p> */}
           {/* <ol>
             {hits.map((hit: any) => {
               return (

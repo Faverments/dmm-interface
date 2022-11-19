@@ -1,7 +1,8 @@
 import { format } from 'date-fns'
+import { rgba } from 'polished'
 import React, { useEffect, useMemo } from 'react'
 import { isMobile } from 'react-device-detect'
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import styled from 'styled-components'
 
 import { LiveDataTimeframeEnum } from 'hooks/useBasicChartData'
@@ -78,7 +79,8 @@ const CustomizedCursor = (props: any) => {
           fontSize={12}
           textAnchor={isTextAnchorStart ? 'start' : 'end'}
         >
-          {format(payload[0].payload.time, getHoverDateFormat(timeFrame))}
+          {/* {format(payload[0].payload.time, getHoverDateFormat(timeFrame))} */}
+          {payload[0].value}
         </text>
         <line x1={points[0].x} y1={0} x2={points[1].x} y2={points[1].y} stroke="#6C7284" width={2} />
       </>
@@ -178,8 +180,8 @@ const LineChart = ({
           data={formattedData}
           margin={{
             top: 5,
-            right: 0,
-            left: 0,
+            right: 20,
+            left: 20,
             bottom: 5,
           }}
           onMouseLeave={() => setHoverValue(null)}
@@ -196,18 +198,19 @@ const LineChart = ({
             fontSize="12px"
             axisLine={false}
             tickLine={false}
-            domain={[formattedData[0]?.time || 'auto', formattedData[formattedData.length - 1]?.time || 'auto']}
-            ticks={ticks}
+            // domain={[formattedData[0]?.time || 'auto', formattedData[formattedData.length - 1]?.time || 'auto']}
+            // // ticks={ticks}
             tick={{ fill: theme.subText, fontWeight: 400 }}
-            type="number"
+            // type="number"
             textAnchor="middle"
             tickFormatter={time => {
-              return typeof time === 'number' ? format(new Date(time), getAxisDateFormat(timeFrame)) : '0'
+              return format(new Date(Number(time)), 'MMM d')
             }}
             interval={0}
           />
           <YAxis
-            width={dataMin >= 0.1 ? 69 : 105}
+            // width={dataMin >= 0.1 ? 69 : 105}
+            // width={80}
             dataKey="value"
             fontSize="12px"
             tickLine={false}
@@ -233,7 +236,16 @@ const LineChart = ({
             )}
             cursor={<CustomizedCursor timeFrame={timeFrame} />}
           />
-          <Area type="monotone" dataKey="value" stroke={color} fill="url(#colorUv)" strokeWidth={2} />
+          <Area
+            type="monotone"
+            dataKey="value"
+            stroke={color}
+            // fill="url(#colorUv)"
+            fill="none"
+            strokeWidth={2}
+            filter={`drop-shadow(0px 6px 12px ${color})`}
+          />
+          <CartesianGrid stroke={rgba(theme.subText, 0.2)} strokeDasharray="5 5" />
         </AreaChartWrapper>
       ) : (
         <></>

@@ -29,7 +29,8 @@ export const useFuse = (list: any, options: any) => {
   const setQuery = useCallback(debounce(updateQuery, 100), [])
 
   // pass a handling helper to speed up implementation
-  const onSearch = useCallback((e: any) => setQuery(e.target.value.trim()), [setQuery])
+  // const onSearch = useCallback((e: any) => setQuery(e.target.value.trim()), [setQuery])
+  const onSearch = useCallback((value: any) => setQuery(value.trim()), [setQuery])
 
   // still returning `setQuery` for custom handler implementations
   return {

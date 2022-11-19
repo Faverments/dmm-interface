@@ -1,5 +1,9 @@
 import React from 'react'
 
 export default function TimeMachine() {
-  return <div>Time Machine</div>
+  return (
+    <div>
+      <h1>TimeMachine</h1>
+    </div>
+  )
 }

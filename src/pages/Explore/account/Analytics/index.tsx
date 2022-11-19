@@ -1,12 +1,14 @@
 import { chain } from 'lodash'
 import React, { useMemo, useState } from 'react'
-import { useGetDailyChartData } from 'services/coingeko'
+import { useGetDailyChartData } from 'services/coingecko'
 import { HistoryChainParams, HistoryPricesResponse, useGetHistoricalPrices } from 'services/nansenportfolio'
+import { useWalletBalances } from 'services/zapper/hooks/useBalances'
 import { Network, PresentedBalancePayload, TokenBreakdown } from 'services/zapper/types/models'
 
 import LineChart from 'components/LiveChart/LineChart'
 import MultipleLineChart from 'components/LiveChart/MultipleLineChart'
 import WeekLineChart from 'components/LiveChart/WeekLineChart'
+import LocalLoader from 'components/LocalLoader'
 import useTheme from 'hooks/useTheme'
 import { theme } from 'theme'
 
@@ -75,7 +77,14 @@ function formatChartOne(
   return result
 }
 
-function formatHistoyOfChain(history: HistoryPricesResponse) {
+function formatHistoyOfChain(
+  history: HistoryPricesResponse,
+  tokensParam: {
+    address: string
+    chain: HistoryChainParams
+    balance: number
+  }[],
+) {
   const listChain: string[] = ['TOTALS']
   const formatHistoryOfChain = Object.keys(history).map((dateKey, index) => {
     const listTokenOfDay = history[dateKey]
@@ -103,7 +112,7 @@ function formatHistoyOfChain(history: HistoryPricesResponse) {
     Object.keys(listTokenOfDay).map(key => {
       const address = key.split('-')[0]
       const chain = key.split('-')[1]
-      const value = listTokenOfDay[key]
+      const value = listTokenOfDay[key] * (tokensParam.filter(item => item.address === address)[0]?.balance || 1)
       obj[dateKey][chain.toUpperCase()] += value
       obj[dateKey]['TOTALS'] += value
     })
@@ -115,49 +124,35 @@ function formatHistoyOfChain(history: HistoryPricesResponse) {
 export default function Analytics({ data }: { data: PresentedBalancePayload[] }) {
   const [hoverValue, setHoverValue] = useState<number | null>(null)
 
-  const tokensParam = data.map(item => ({
-    address: (item.balance.wallet as TokenBreakdown).address,
-    network: formatNetwork(item.network),
-  }))
-  const { data: history, isLoading } = useGetHistoricalPrices({
-    tokens: [
-      {
-        address: '0x7b4328c127b85369d9f82ca0503b000d09cf9180',
-        chain: HistoryChainParams.ETHEREUM,
-      },
-      {
-        address: '0x8254e26e453eb5abd29b3c37ac9e8da32e5d3299',
-        chain: HistoryChainParams.ETHEREUM,
-      },
-      {
-        address: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
-        chain: HistoryChainParams.BSC,
-      },
-      {
-        address: '0x01a28952780e4b9baf812431e6f89f80a5470700',
-        chain: HistoryChainParams.POLYGON,
-      },
-      {
-        address: '0x92a9c92c215092720c731c96d4ff508c831a714f',
-        chain: HistoryChainParams.POLYGON,
-      },
-    ],
-  })
+  const wallet = useWalletBalances(data)
+
+  const tokensParam = useMemo(() => {
+    const allToken: TokenBreakdown[] = []
+    Object.values(wallet).forEach(item => {
+      const listTokenOnNetwork: TokenBreakdown[] = Object.values<any>(item.details)
+      allToken.push(...listTokenOnNetwork)
+    })
+
+    const tokens = allToken.map((item: TokenBreakdown) => ({
+      address: item.address,
+      chain: formatNetwork(item.network),
+      balance: item.context.balance,
+    }))
+    return tokens
+  }, [wallet])
+
+  const { data: history, isLoading } = useGetHistoricalPrices(
+    {
+      tokens: tokensParam.map(item => ({
+        address: item.address,
+        chain: item.chain,
+      })),
+    },
+    wallet,
+  )
   const chartOne = useMemo(() => {
     if (history) {
-      console.log('history', history)
-
-      // const ChartData: {
-      //   [key: string]: {
-      //     time: number
-      //     value: string
-      //   }[]
-      // } = {}
-      // listChain.forEach(chain => {
-      //   ChartData[chain] = []
-      // })
-      const chartData = formatChartOne(formatHistoyOfChain(history).formatHistoryOfChain.reverse())
-      console.log('chartData', chartData)
+      const chartData = formatChartOne(formatHistoyOfChain(history, tokensParam).formatHistoryOfChain.reverse())
 
       return chartData
     }
@@ -166,9 +161,11 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
     }
   }, [history])
 
+  console.log('chartOne', chartOne)
+
   const ChartMultiple = useMemo(() => {
     if (history) {
-      const { formatHistoryOfChain } = formatHistoyOfChain(history)
+      const { formatHistoryOfChain } = formatHistoyOfChain(history, tokensParam)
       return formatHistoryOfChain.reverse().map(item => {
         const key = Object.keys(item)[0]
         const value = item[key]
@@ -182,46 +179,56 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
     }
     return []
   }, [history])
-  console.log('ChartMultiple', ChartMultiple)
   const theme = useTheme()
 
   const { data: coin } = useGetDailyChartData('ethereum', 12)
   console.log('coin', coin)
   return (
     <div>
-      Analytics
       {isLoading ? (
-        <div>loading</div>
+        <LocalLoader />
       ) : (
         <>
-          <div>multiple line chart</div>
-          <MultipleLineChart
-            data={ChartMultiple}
-            color={theme.primary}
-            setHoverValue={setHoverValue}
-            showYAsis={true}
-            syncId="sync"
-          />
-          <div>total</div>
-          <div>
-            <WeekLineChart
-              data={chartOne.TOTALS}
+          <div
+            style={
+              {
+                // backgroundColor: theme.buttonBlack,
+              }
+            }
+          >
+            <div>MULTIPLE CHAIN</div>
+            <MultipleLineChart
+              data={ChartMultiple}
               color={theme.primary}
               setHoverValue={setHoverValue}
               showYAsis={true}
               syncId="sync"
+              unitYAsis="$"
+              // minHeight={0}
             />
           </div>
-          <div>polygon</div>
-          <div>
-            <WeekLineChart
-              data={chartOne.POLYGON}
-              color={theme.primary}
-              setHoverValue={setHoverValue}
-              showYAsis={true}
-              syncId="sync"
-            />
-          </div>
+
+          {Object.entries(chartOne).map(([key, value]) => (
+            <div
+              key={key}
+              style={
+                {
+                  // backgroundColor: theme.buttonBlack,
+                }
+              }
+            >
+              <div>{key}</div>
+              <WeekLineChart
+                data={value}
+                color={theme.primary}
+                setHoverValue={setHoverValue}
+                showYAsis={true}
+                syncId="sync"
+                unitYAsis="$"
+                // minHeight={0}
+              />
+            </div>
+          ))}
         </>
       )}
     </div>

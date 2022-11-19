@@ -166,7 +166,7 @@ const NftNetWorth = gql`
   }
 `
 
-const NftUsersTokens = gql`
+const nftUsersTokens = gql`
   query NftUsersTokens(
     $owners: [Address!]!
     $network: Network
@@ -193,7 +193,7 @@ const NftUsersTokens = gql`
             ens
             avatarURI
             avatar {
-              medias {
+              mediasV2 {
                 ... on Image {
                   url(input: { size: THUMBNAIL })
                 }
@@ -208,7 +208,7 @@ const NftUsersTokens = gql`
           rarityRank
           estimatedValueEth
           lastSaleEth
-          medias {
+          mediasV2 {
             ... on Image {
               url(input: { size: MEDIUM })
             }
@@ -300,7 +300,7 @@ export {
   UserConnections,
   UserSocialStats,
   NftNetWorth,
-  NftUsersTokens,
+  nftUsersTokens,
   nftUsersCollections,
   supportedTokenWithSiblings,
 }

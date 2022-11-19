@@ -91,7 +91,7 @@ export default function Wallet({
 
                     <Flex flexDirection="column">
                       <Text>{formattedNumLong(token.balanceUSD, true)}</Text>
-                      <Text>{formattedNumLong(token.context.balance, true)}</Text>
+                      <Text>{formattedNumLong(token.context.balance)}</Text>
                     </Flex>
                   </Flex>
                 )

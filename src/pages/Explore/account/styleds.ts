@@ -39,6 +39,7 @@ export const TabContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
+  padding-bottom: 12px;
 `
 
 export const TabItem = styled.div<{ active: boolean }>`

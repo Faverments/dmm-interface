@@ -1,11 +1,12 @@
 import { NANSEN_PORTFOLIO_API, NANSEN_PORTFOLIO_PASSCODE } from 'services/config'
+import { WalletDetails } from 'services/zapper/hooks/useBalances'
 import useSWR from 'swr'
 
 import { HistoryPricesResponse, TokensParam } from './types'
 
 export * from './types'
 
-export function useGetHistoricalPrices(tokens: TokensParam) {
+export function useGetHistoricalPrices(tokens: TokensParam, wallet: WalletDetails) {
   const fetcher = (url: string) =>
     fetch(url, {
       method: 'POST',
@@ -24,7 +25,7 @@ export function useGetHistoricalPrices(tokens: TokensParam) {
       body: JSON.stringify(tokens),
     }).then(r => r.json())
   const url = `${NANSEN_PORTFOLIO_API}/historical-price`
-  const { data, error } = useSWR<HistoryPricesResponse>(url, fetcher)
+  const { data, error } = useSWR<HistoryPricesResponse>(Object.keys(wallet).length >= 7 ? url : null, fetcher)
   return {
     data,
     isLoading: !error && !data,

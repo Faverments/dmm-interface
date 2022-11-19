@@ -160,7 +160,7 @@ interface WalletChain {
   details: EachBalance | Record<string, unknown>
 }
 
-interface WalletDetails {
+export interface WalletDetails {
   [key: string]: WalletChain
 }
 

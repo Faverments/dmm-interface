@@ -19,7 +19,7 @@ export interface FormattedCoinGeckoChartData {
 
 const initialCoinGeckoChartData = { prices: [], market_caps: [], total_volumes: [] }
 
-function formatCoinGeckoChartData(data: CoinGeckoChartData): FormattedCoinGeckoChartData {
+export function formatCoinGeckoChartData(data: CoinGeckoChartData): FormattedCoinGeckoChartData {
   return {
     prices: data.prices.map(item => ({ time: item[0] ?? 0, value: item[1].toString() ?? 0 })),
     marketCaps: data.market_caps.map(item => ({ time: item[0] ?? 0, value: item[1].toString() ?? 0 })),

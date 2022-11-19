@@ -39,6 +39,7 @@ const AccountTab = ({ activeTab }: { activeTab: AccountTabs | undefined }) => {
       >
         <Trans>NFTs</Trans>
       </TabItem>
+
       <TabItem
         active={activeTab === AccountTabs.TRANSACTIONS}
         onClick={() => {
@@ -50,17 +51,7 @@ const AccountTab = ({ activeTab }: { activeTab: AccountTabs | undefined }) => {
       >
         <Trans>Transactions</Trans>
       </TabItem>
-      <TabItem
-        active={activeTab === AccountTabs.ANALYTICS}
-        onClick={() => {
-          if (tab !== 'analytics') {
-            // mixpanelHandler(MIXPANEL_TYPE.DISCOVER_TRENDING_CLICKED)
-          }
-          history.push({ search: '?tab=' + AccountTabs.ANALYTICS })
-        }}
-      >
-        <Trans>Analytics</Trans>
-      </TabItem>
+
       <TabItem
         active={activeTab === AccountTabs.TOKEN_APPROVALS}
         onClick={() => {
@@ -72,6 +63,42 @@ const AccountTab = ({ activeTab }: { activeTab: AccountTabs | undefined }) => {
       >
         <Trans>Token Approvals</Trans>
       </TabItem>
+
+      <TabItem
+        active={activeTab === AccountTabs.ANALYTICS}
+        onClick={() => {
+          if (tab !== 'analytics') {
+            // mixpanelHandler(MIXPANEL_TYPE.DISCOVER_TRENDING_CLICKED)
+          }
+          history.push({ search: '?tab=' + AccountTabs.ANALYTICS })
+        }}
+      >
+        <Trans>Analytics</Trans>
+      </TabItem>
+
+      <TabItem
+        active={activeTab === AccountTabs.WALLET_PROFILER}
+        onClick={() => {
+          if (tab !== 'wallet_profiler') {
+            // mixpanelHandler(MIXPANEL_TYPE.DISCOVER_TRENDING_CLICKED)
+          }
+          history.push({ search: '?tab=' + AccountTabs.WALLET_PROFILER })
+        }}
+      >
+        <Trans>Wallet Profiler</Trans>
+      </TabItem>
+      <TabItem
+        active={activeTab === AccountTabs.NFT_PROFILER}
+        onClick={() => {
+          if (tab !== 'nft_profiler') {
+            // mixpanelHandler(MIXPANEL_TYPE.DISCOVER_TRENDING_CLICKED)
+          }
+          history.push({ search: '?tab=' + AccountTabs.NFT_PROFILER })
+        }}
+      >
+        <Trans>Nft Profiler</Trans>
+      </TabItem>
+
       <TabItem
         active={activeTab === AccountTabs.TIME_MACHINE}
         onClick={() => {

@@ -1,8 +1,10 @@
 import { format } from 'date-fns'
+import { rgba } from 'polished'
 import React, { useEffect, useMemo } from 'react'
 import { isMobile } from 'react-device-detect'
 import { Key } from 'react-feather'
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { useGetDailyChartData } from 'services/coingecko'
 import { HistoryChainParams } from 'services/nansenportfolio'
 import styled from 'styled-components'
 
@@ -201,6 +203,9 @@ const MultipleLineChart = ({
       }))
   }, [data])
 
+  const ethDailyChartData = useGetDailyChartData('ethereum', 12)
+  const btcDailyChartData = useGetDailyChartData('bitcoin', 12)
+
   return (
     <ResponsiveContainer minHeight={isMobile ? 300 : minHeight} height="100%">
       {data && data.length > 0 ? (
@@ -208,8 +213,8 @@ const MultipleLineChart = ({
           data={data}
           margin={{
             top: 5,
-            right: 0,
-            left: 0,
+            right: 20,
+            left: 20,
             bottom: 5,
           }}
           onMouseLeave={() => setHoverValue(null)}
@@ -226,37 +231,36 @@ const MultipleLineChart = ({
             fontSize="12px"
             axisLine={false}
             tickLine={false}
-            domain={[data[0]?.time || 'auto', data[data.length - 1]?.time || 'auto']}
-            ticks={ticks}
+            // domain={[data[0]?.time || 'auto', data[data.length - 1]?.time || 'auto']}
+            // ticks={ticks}
             tick={{ fill: theme.subText, fontWeight: 400 }}
-            type="number"
+            // type="number"
             textAnchor="middle"
             tickFormatter={time => {
-              return typeof time === 'number' ? format(new Date(time), getAxisDateFormat(timeFrame)) : '0'
+              return format(new Date(Number(time)), 'MMM d')
             }}
             interval={0}
           />
-          {/* <YAxis
-            width={dataMin >= 0.1 ? 69 : 105}
-            dataKey="value"
+          <YAxis
+            // width={dataMin >= 0.1 ? 69 : 105}
+            // width={80}
             fontSize="12px"
             tickLine={false}
             axisLine={false}
             tick={{ fill: theme.subText, fontWeight: 400 }}
-            tickFormatter={tick => toKInChart(tick, unitYAsis)}
-            ticks={[
-              dataMin,
-              dataMin + (1 * (dataMax - dataMin)) / 4,
-              dataMin + (2 * (dataMax - dataMin)) / 4,
-              dataMin + (3 * (dataMax - dataMin)) / 4,
-              dataMin + (4 * (dataMax - dataMin)) / 4,
-              dataMin + (5 * (dataMax - dataMin)) / 4,
-            ]}
+            // tickFormatter={tick => toKInChart(tick, unitYAsis)}
+            // ticks={[
+            //   dataMin,
+            //   dataMin + (1 * (dataMax - dataMin)) / 4,
+            //   dataMin + (2 * (dataMax - dataMin)) / 4,
+            //   dataMin + (3 * (dataMax - dataMin)) / 4,
+            //   dataMin + (4 * (dataMax - dataMin)) / 4,
+            //   dataMin + (5 * (dataMax - dataMin)) / 4,
+            // ]}
             orientation="right"
-            domain={[dataMin, (5 * (dataMax - dataMin)) / 4]}
+            // domain={[dataMin, (5 * (dataMax - dataMin)) / 4]}
             hide={!showYAsis}
-          /> */}
-          <YAxis />
+          />
           <Tooltip
             contentStyle={{ display: 'none' }}
             formatter={(tooltipValue: any, name: string, props: any) => (
@@ -273,8 +277,10 @@ const MultipleLineChart = ({
               // fill="url(#colorUv)"
               fill="none"
               strokeWidth={2}
+              filter={`drop-shadow(0px 6px 12px ${dataColor})`}
             />
           ))}
+          <CartesianGrid stroke={rgba(theme.subText, 0.2)} strokeDasharray="5 5" />
         </AreaChartWrapper>
       ) : (
         <></>
