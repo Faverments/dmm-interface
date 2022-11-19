@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import React, { CSSProperties, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Flex, Text, Box } from 'rebass'
 import { Trans } from '@lingui/macro'
@@ -6,7 +6,7 @@ import Divider from 'components/Divider'
 import ButtonWithOptions from 'pages/TrueSight/components/ButtonWithOptions'
 import AddressButton from 'pages/TrueSight/components/AddressButton'
 import CommunityButton, { StyledCommunityButton } from 'pages/TrueSight/components/CommunityButton'
-import { ExternalLink, theme } from 'theme'
+import { theme } from 'theme'
 import Tags from 'pages/DiscoverPro/components/Tags'
 import Chart from 'pages/DiscoverPro/components/Chart'
 import { TrueSightTokenData } from 'pages/TrueSight/hooks/useGetTrendingSoonData'
@@ -20,12 +20,16 @@ import { TableBodyItemSmall } from './TrendingSoonLayout'
 import { PredictedDetails } from 'pages/DiscoverPro/hooks/useGetTokenPredictedDetails'
 
 import dayjs from 'dayjs'
-import { ChartDisplaySettings } from 'constants/discoverPro'
+import { ChartDisplaySettings, PREDICTED_DETAILS_ITEM_PER_PAGE } from 'constants/discoverPro'
 import { rgba } from 'polished'
 import { AutoColumn } from 'components/Column'
 import useTheme from 'hooks/useTheme'
 import getFormattedNumLongDiscoverProTokenDetails from '../utils/getFormattedNumLongDiscoveredDetails'
-import { Award } from 'react-feather'
+import { Award, ExternalLink } from 'react-feather'
+import getFormattedNumLongPredictedDetails from '../utils/getFormattedNumLongPredictedDetails'
+import Pagination from 'components/Pagination'
+import HeatMapCalendar from 'components/HeatMapCalendar'
+import HeatMap from './HeatMap'
 
 const TrendingSoonTokenDetail = ({
   tokenData,
@@ -62,6 +66,27 @@ const TrendingSoonTokenDetail = ({
   // console.log(tokenData)
   const theme = useTheme()
   const formattedDetails = getFormattedNumLongDiscoverProTokenDetails(tokenData)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [activeDate, setActiveDate] = useState<string>('')
+  const predictedDetailsReservedFilter = useMemo(() => {
+    let res = predictedDetails.slice().reverse()
+    if (activeDate) {
+      res = res.filter(token => dayjs(token.predicted_date * 1000).format('YYYY-MM-DD') === activeDate)
+    }
+    const slide = res.slice(
+      (currentPage - 1) * PREDICTED_DETAILS_ITEM_PER_PAGE,
+      currentPage * PREDICTED_DETAILS_ITEM_PER_PAGE,
+    )
+    return {
+      total: res.length,
+      data: slide,
+    }
+  }, [predictedDetails, currentPage, activeDate])
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [activeDate])
+
   return (
     <Flex flexDirection="column" style={{ ...style, gap: '24px' }}>
       <LogoNameSwapContainer>
@@ -132,7 +157,7 @@ const TrendingSoonTokenDetail = ({
           <AutoColumn gap="16px">
             <>
               <LayoutWrapper>
-                <TableHeaderItem>Time</TableHeaderItem>
+                <TableHeaderItem>Time & Rank</TableHeaderItem>
                 <TableHeaderItem align="right">Trading Volume (24H)</TableHeaderItem>
                 <TableHeaderItem align="right">Market Cap</TableHeaderItem>
                 <TableHeaderItem align="right">Holders</TableHeaderItem>
@@ -260,6 +285,94 @@ const TrendingSoonTokenDetail = ({
           setChartDisplaySettings={setChartDisplaySettings}
         />
       </div>
+
+      <HeatMap
+        predictedDetails={predictedDetails}
+        isPredictedDetailsLoading={isPredictedDetailsLoading}
+        activeDate={activeDate}
+        setActiveDate={setActiveDate}
+      />
+      {/* <div style={{ minHeight: 528 }}> */}
+      <Flex flexDirection="row" style={{ gap: 30, minHeight: 528 }}>
+        <TableWrapper>
+          <AutoColumn gap="16px">
+            <>
+              <LayoutWrapper>
+                <TableHeaderItem>Time & Rank</TableHeaderItem>
+                <TableHeaderItem align="right">Trading Volume (24H)</TableHeaderItem>
+                <TableHeaderItem align="right">Market Cap</TableHeaderItem>
+                <TableHeaderItem align="right">Holders</TableHeaderItem>
+                <TableHeaderItem align="right">Price</TableHeaderItem>
+                {/* <TableHeaderItem align="right">Action</TableHeaderItem> */}
+              </LayoutWrapper>
+            </>
+            {predictedDetailsReservedFilter.data.map((predictedDetail: PredictedDetails, index) => {
+              const predictedDateDetail = dayjs(Number(predictedDetail.predicted_date) * 1000).format('h:m A - MMM D')
+              const formattedPredictedDetail = getFormattedNumLongPredictedDetails(tokenData, predictedDetail)
+              return (
+                <>
+                  <LayoutWrapper style={{ cursor: 'pointer' }}>
+                    <TableBodyItem>
+                      <RankWrapper disableMarginLeft={true}>
+                        <Award size={14} />
+                        {predictedDetail.rank}
+                      </RankWrapper>
+                      <span
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          width: '100%',
+                        }}
+                      >
+                        {predictedDateDetail}
+                      </span>
+                    </TableBodyItem>
+                    <TableBodyItem style={{ textAlign: 'left' }} align="right">
+                      <TableBodyItemDiff up={!formattedPredictedDetail.tradingVolumePercent.startsWith('-')}>
+                        {formattedPredictedDetail.tradingVolumePercent}
+                      </TableBodyItemDiff>
+                      <span>{formattedPredictedDetail.tradingVolume}</span>
+                    </TableBodyItem>
+                    <TableBodyItem align="right">
+                      <TableBodyItemDiff up={!formattedPredictedDetail.marketCapPercent.startsWith('-')}>
+                        {formattedPredictedDetail.marketCapPercent}
+                      </TableBodyItemDiff>
+                      <span>{formattedPredictedDetail.marketCap}</span>
+                    </TableBodyItem>
+                    <TableBodyItem align="right">
+                      <TableBodyItemDiff up={!formattedPredictedDetail.numberHoldersPercent.startsWith('-')}>
+                        {formattedPredictedDetail.numberHoldersPercent}
+                      </TableBodyItemDiff>
+                      <span>{formattedPredictedDetail.numberHolders}</span>
+                    </TableBodyItem>
+                    <TableBodyItem align="right">
+                      <TableBodyItemDiff up={!formattedPredictedDetail.pricePercent.startsWith('-')}>
+                        {formattedPredictedDetail.pricePercent}
+                      </TableBodyItemDiff>
+                      <span>{formattedPredictedDetail.price}</span>
+                    </TableBodyItem>
+                    {/* <TableBodyItem align="right">
+                      <ExternalLink size={20} />
+                    </TableBodyItem> */}
+                  </LayoutWrapper>
+                </>
+              )
+            })}
+            <Pagination
+              pageSize={PREDICTED_DETAILS_ITEM_PER_PAGE}
+              onPageChange={newPage => setCurrentPage(newPage)}
+              currentPage={currentPage}
+              totalCount={predictedDetailsReservedFilter.total ?? 1}
+              style={{
+                backgroundColor: 'transparent',
+                padding: '0px 16px',
+              }}
+            />
+          </AutoColumn>
+        </TableWrapper>
+      </Flex>
+      {/* </div> */}
     </Flex>
   )
 }
@@ -325,6 +438,14 @@ const LayoutWrapper = styled.div`
   border-bottom: 0.5px solid ${({ theme }) => (theme.darkMode ? rgba(theme.border, 0.2) : theme.border)};
   padding-bottom: 16px;
 `
+
+const LayoutWrapperHeadMapTable = styled.div`
+  display: grid;
+  grid-template-columns: 1.25fr 1.5fr 1fr 1fr 1fr 0.5fr;
+  border-bottom: 0.5px solid ${({ theme }) => (theme.darkMode ? rgba(theme.border, 0.2) : theme.border)};
+  padding-bottom: 16px;
+`
+
 const TableHeaderItem = styled.div<{ align?: string }>`
   font-size: 12px;
   font-weight: 500;
@@ -352,7 +473,7 @@ const TableBodyItemDiff = styled.div<{ up: boolean }>`
   width: fit-content;
 `
 
-const RankWrapper = styled.span`
+const RankWrapper = styled.span<{ disableMarginLeft?: boolean }>`
   color: ${({ theme }) => theme.text};
   font-size: 14px;
   background: ${({ theme }) => theme.buttonBlack};
@@ -360,7 +481,7 @@ const RankWrapper = styled.span`
   border-radius: 8px;
   display: flex;
   width: fit-content;
-  margin-left: 5px;
+  margin-left: ${({ disableMarginLeft }) => (disableMarginLeft ? '0px' : '5px')};
 `
 
 export default TrendingSoonTokenDetail

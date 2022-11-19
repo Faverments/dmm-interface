@@ -73,6 +73,8 @@ const BuyCrypto = lazy(() => import(/* webpackChunkName: 'true-sight-page' */ '.
 
 const Campaign = lazy(() => import(/* webpackChunkName: 'campaigns-page' */ './Campaign'))
 
+const TokenDetailsPage = lazy(() => import(/* webpackChunkName: 'campaigns-page' */ './DiscoverPro/TokenDetailsPage'))
+
 const AppWrapper = styled.div`
   display: flex;
   flex-flow: column;
@@ -258,6 +260,7 @@ export default function App() {
                     <Route exact path="/discover" component={TrueSight} />
                     <Route exact path="/buy-crypto" component={BuyCrypto} />
                     <Route exact path="/campaigns" component={Campaign} />
+                    <Route exact path="/token/:tokenId" component={TokenDetailsPage} />
 
                     <Route component={RedirectPathToSwapOnly} />
                   </Switch>

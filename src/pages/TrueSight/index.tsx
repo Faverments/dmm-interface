@@ -42,6 +42,8 @@ export enum TrueSightChartCategory {
 export enum TrueSightTimeframe {
   ONE_DAY = '1D',
   ONE_WEEK = '7D',
+  ONE_MONTH = '1M',
+  SIX_MONTHS = '6M',
 }
 
 export interface TrueSightFilter {

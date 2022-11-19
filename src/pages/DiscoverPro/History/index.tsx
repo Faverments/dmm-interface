@@ -82,7 +82,7 @@ const DateNavigateWarper = styled.div`
   margin-left: 16px;
 `
 
-const NavigateDateButton = styled.div<{ disabled?: boolean }>`
+export const NavigateDateButton = styled.div<{ disabled?: boolean }>`
   padding: 8px 12px;
   background: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.subText};

@@ -11,7 +11,7 @@ import useGetListPredictedDate from 'pages/DiscoverPro/hooks/useGetListPredicted
 import { TrueSightTimeframe } from 'pages/TrueSight/index'
 import { PredictedDate } from 'constants/discoverPro'
 import Loader from 'components/Loader'
-import CalendarPicker from 'components/Calendar'
+import CalendarPicker from 'components/CalendarPicker'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { ClickableText } from 'components/YieldPools/styleds'
 
@@ -55,7 +55,7 @@ export default function DateSelect({
   const listPredictedDate7d = useGetListPredictedDate(TrueSightTimeframe.ONE_WEEK)
 
   const [isShowingCalendar, setIsShowingCalendar] = React.useState(false)
-  const [ispicked, setIspicked] = React.useState(false)
+  const [isPicked, setIsPicked] = React.useState(false)
   console.log(isShowingCalendar)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -79,17 +79,9 @@ export default function DateSelect({
   // }, [listPredictedDate24h.data])
 
   useOnClickOutside(containerRef, () => setIsShowingCalendar(false))
-  console.log('ispicked', ispicked)
-
-  const setisPickedWapper = (ol: boolean) => {
-    setIspicked(ol)
+  const setIsPickedWapper = (date: dayjs.Dayjs, predictedDate: PredictedDate[], day: PredictedDate) => {
+    // setIsPicked(ol)
   }
-
-  useEffect(() => {
-    if (ispicked == true) {
-      setIsShowingCalendar(false)
-    }
-  })
 
   return (
     <DateSelectWrapper>
@@ -102,12 +94,11 @@ export default function DateSelect({
         <ClickableText>
           <ArrowLeft size={16} color={theme.primary} />
         </ClickableText>
-        <div ref={containerRef}>
+        <div ref={containerRef} style={{ position: 'relative', zIndex: 99 }}>
           <DatePicker
-            onClick={() => {
-              setIsShowingCalendar(true)
-              setIspicked(false)
-              console.log('click calendar')
+            onClick={e => {
+              e.stopPropagation()
+              setIsShowingCalendar(prev => !prev)
             }}
           >
             {activeTimeFrame === TrueSightTimeframe.ONE_DAY ? (
@@ -118,15 +109,7 @@ export default function DateSelect({
                   // setActivePredictedDate(listPredictedDate24h.data[0])
                   return (
                     <>
-                      <PaginationText
-                        onClick={() => {
-                          setIsShowingCalendar(true)
-                          setIspicked(false)
-                          console.log('click calendar')
-                        }}
-                      >
-                        {currentDate24h}
-                      </PaginationText>
+                      <PaginationText>{currentDate24h}</PaginationText>
                       <Calendar size={18} color={theme.subText}></Calendar>
                     </>
                   )
@@ -139,15 +122,7 @@ export default function DateSelect({
                 // setActivePredictedDate(listPredictedDate7d.data[0])
                 return (
                   <>
-                    <PaginationText
-                      onClick={() => {
-                        setIsShowingCalendar(true)
-                        setIspicked(false)
-                        console.log('click calendar')
-                      }}
-                    >
-                      {currentDate7d}
-                    </PaginationText>
+                    <PaginationText>{currentDate7d}</PaginationText>
                     <Calendar size={18} color={theme.subText}></Calendar>
                   </>
                 )
@@ -157,12 +132,7 @@ export default function DateSelect({
 
           {isShowingCalendar && (
             <CalendarPickerContainer>
-              <CalendarPicker
-                cancelPicker={true}
-                setIspicked={setisPickedWapper}
-                isPicked={ispicked}
-                data={{ currentDate24h, currentDate7d }}
-              />
+              <CalendarPicker cancelPicker={true} setIsPicked={setIsPickedWapper} isPicked={isPicked} />
             </CalendarPickerContainer>
           )}
         </div>
@@ -176,40 +146,16 @@ export default function DateSelect({
 
 const CalendarPickerContainer = styled(Flex)`
   position: absolute;
-  bottom: -4px;
-  right: 0;
-  border-radius: 4px;
-  flex-direction: column;
   background: ${({ theme }) => theme.tableHeader};
-  z-index: 9999;
-  width: 300px;
-  box-shadow: 0 0 0 1px ${({ theme }) => theme.bg4};
-  transform: translate(0, 100%);
-  /* min-width: max-content !important; */
-
-  & > * {
-    cursor: pointer;
-    padding: 12px;
-
-    &:hover {
-      background: ${({ theme }) => theme.background};
-    }
-  }
-
-  & div {
-    min-width: max-content !important;
-  }
-
-  .no-hover-effect {
-    cursor: default;
-    &:hover {
-      background: inherit;
-    }
-  }
-
-  .no-hover-effect-divider {
-    &:hover {
-      background: ${({ theme }) => theme.border};
-    }
-  }
+  filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.36));
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
+    0px 24px 32px rgba(0, 0, 0, 0.01);
+  border-radius: 8px;
+  padding: 16px;
+  width: fit-content;
+  transform: translate(-50%, 0);
+  gap: 16px;
+  color: ${({ theme }) => theme.subText};
+  display: flex;
+  flex-direction: column;
 `
