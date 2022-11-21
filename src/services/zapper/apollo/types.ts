@@ -42,7 +42,7 @@ interface UserCollection {
   }
 }
 
-interface CollectionUserCollection {
+export interface CollectionUserCollection {
   name: string
   address: string
   network: keyof typeof Network
@@ -58,7 +58,7 @@ export interface NftUsersTokens {
   }
 }
 
-interface EdgeUserToken {
+export interface EdgeUserToken {
   cursor: string
   balances: Balance[]
   token: Token

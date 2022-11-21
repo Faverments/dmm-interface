@@ -3,7 +3,7 @@ import Fuse from 'fuse.js'
 import { debounce } from 'lodash'
 import { useCallback, useMemo, useState } from 'react'
 
-export const useFuse = (list: any, options: any) => {
+export const useFuse = <Type>(list: any, options: any) => {
   // defining our query state in there directly
   const [query, updateQuery] = useState('')
 
@@ -15,7 +15,7 @@ export const useFuse = (list: any, options: any) => {
   const fuse = useMemo(() => new Fuse(list, fuseOptions), [list, fuseOptions])
 
   // memoize results whenever the query or options change
-  const hits = useMemo(
+  const hits: Type = useMemo(
     // if query is empty and `matchAllOnEmptyQuery` is `true` then return all list
     // NOTE: we remap the results to match the return structure of `fuse.search()`
     () =>

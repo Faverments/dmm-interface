@@ -6,7 +6,8 @@ import Apps from './Apps'
 import Chains from './Chains'
 import Wallet from './Wallet'
 
-export default function Overview({ data, return24hs }: { data: PresentedBalancePayload[]; return24hs: Return24h[] }) {
+// export default function Overview({ data, return24hs }: { data: PresentedBalancePayload[]; return24hs: Return24h[] }) {
+export default function Overview({ data }: { data: PresentedBalancePayload[] }) {
   const [network, setNetwork] = React.useState<Network | ALL_NETWORKS>('all-networks')
   return (
     <>

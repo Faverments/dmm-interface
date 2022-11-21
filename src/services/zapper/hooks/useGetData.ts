@@ -1,10 +1,10 @@
 import { ApolloError, gql } from '@apollo/client'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ZAPPER_WEB_API } from 'services/config'
 import { zapperClient } from 'services/zapper/apollo/client'
 import { nftUsersCollections, nftUsersTokens } from 'services/zapper/apollo/queries'
 
-import { NftUsersCollections, NftUsersTokens } from '../apollo/types'
+import { EdgeUserToken, NftUsersCollections, NftUsersTokens } from '../apollo/types'
 import { Network } from '../types/models'
 
 export function useGetNftUsersCollections({
@@ -68,8 +68,12 @@ export function useGetNftUsersTokens({
 }) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApolloError>()
-  const [data, setData] = useState<NftUsersTokens>()
+  const [data, setData] = useState<EdgeUserToken[]>([])
+  const fetchRef = useRef(0)
+
   useEffect(() => {
+    fetchRef.current = ++fetchRef.current
+    if (fetchRef.current === 2) return
     const variables: any = {
       owners: [address],
       network: network,
@@ -81,31 +85,33 @@ export function useGetNftUsersTokens({
       variables.after = after
     }
     const fetcher = async () => {
-      setError(undefined)
-      setIsLoading(true)
-      console.log('query', nftUsersTokens)
-      // const result = await zapperClient.query<NftUsersTokens>({
-      //   query: nftUsersTokens,
-      //   variables: variables,
-      // })
-      const result: any = await fetch(`${ZAPPER_WEB_API}/graphql`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: nftUsersTokens.loc?.source.body,
-          variables: variables,
-        }),
-      }).then(res => res.json())
-      console.log('result', result)
-      setData(result.data)
-      setIsLoading(false)
-      if (result.error) {
-        setError(result.error)
+      try {
+        setError(undefined)
+        setIsLoading(true)
+        // const result = await zapperClient.query<NftUsersTokens>({
+        //   query: nftUsersTokens,
+        //   variables: variables,
+        // })
+        const result: {
+          data: NftUsersTokens
+        } = await fetch(`${ZAPPER_WEB_API}/graphql`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: nftUsersTokens.loc?.source.body,
+            variables: variables,
+          }),
+        }).then(res => res.json())
+        console.log('result', result)
+        setData(pre => [...pre, ...result.data.nftUsersTokens.edges])
+        setIsLoading(false)
+      } catch (error) {
+        setError(error)
       }
     }
     fetcher()
   }, [address, network, minEstimatedValueUsd, first, after, JSON.stringify(collections)])
-  return useMemo(() => ({ isLoading, data, error }), [isLoading, error, data])
+  return useMemo(() => ({ isLoading, data, error, setData }), [isLoading, error, data])
 }

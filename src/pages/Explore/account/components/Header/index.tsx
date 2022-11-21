@@ -38,21 +38,21 @@ const PercentStyled = styled.div<{ active: boolean }>`
 
 export default function Header({
   data,
-  return24hs,
+  // return24hs,
   isBalanceSyncing,
-  isReturn24hSyncing,
-}: {
+}: // isReturn24hSyncing,
+{
   data: PresentedBalancePayload[]
-  return24hs: Return24h[]
+  // return24hs: Return24h[]
   isBalanceSyncing: boolean
-  isReturn24hSyncing: boolean
+  // isReturn24hSyncing: boolean
 }) {
   const theme = useTheme()
   const { address } = useParams<{ address: string }>()
   const { ENSName, loading } = useENSName(address)
   const details = useTotalsBalances(data, 'all-networks')
-  const allChain24hReturn = return24hs.reduce((acc, cur) => acc + (cur[address] ? cur[address].totalUSD : 0), 0)
-  const percent = (allChain24hReturn / details.total) * 100
+  // const allChain24hReturn = return24hs.reduce((acc, cur) => acc + (cur[address] ? cur[address].totalUSD : 0), 0)
+  // const percent = (allChain24hReturn / details.total) * 100
   return (
     <Flex justifyContent="space-between" width="100%">
       <Flex style={{ gap: 20 }} width="100%">
@@ -68,35 +68,36 @@ export default function Header({
                 getShortenAddress(address)
               )}
             </Text>
-            <Text fontSize={18} color={theme.subText}>
+            {/* <Text fontSize={18} color={theme.subText}>
               Past 24h Hours
-            </Text>
+            </Text> */}
           </Flex>
           <Flex justifyContent="space-between" alignItems="flex-end" style={{ gap: 25 }}>
             <Text fontSize={38} fontWeight={700} color={theme.text} minWidth={200}>
               {details.total === 0 ? <Skeleton baseColor={theme.background} /> : formattedNumLong(details.total, true)}
             </Text>
-            <PercentStyled active={allChain24hReturn > 0}>
-              {/* {isReturn24hSyncing ? (
+
+            {/* <PercentStyled active={allChain24hReturn > 0}> */}
+            {/* {isReturn24hSyncing ? (
                 <Flex>
                   {/* {formattedNumLong(allChain24hReturn, true)} */}
-              {/* {allChain24hReturn < 0 && <div style={{ color: theme.subText, fontSize: 20 }}>-</div>}
+            {/* {allChain24hReturn < 0 && <div style={{ color: theme.subText, fontSize: 20 }}>-</div>}
                   <AnimatingNumber value={Math.abs(allChain24hReturn)} symbol={'$'} fontSize={20} />
                 </Flex> */}
-              {/* ) : ( */}
-              <Text fontSize={20} color={theme.subText}>
+            {/* ) : ( */}
+            {/* <Text fontSize={20} color={theme.subText}>
                 {formattedNumLong(allChain24hReturn)} $
-              </Text>
-              {/* )} */}
+              </Text> */}
+            {/* )} */}
 
-              <Text fontSize={20} fontWeight={400} color={allChain24hReturn > 0 ? theme.primary : theme.red}>
+            {/* <Text fontSize={20} fontWeight={400} color={allChain24hReturn > 0 ? theme.primary : theme.red}>
                 {isNaN(percent) ? '0.00%' : `(${formattedNumLong(percent)}%)`}
-              </Text>
-              {
+              </Text> */}
+            {/* {
                 isBalanceSyncing || isReturn24hSyncing ? <Spinner /> : <CheckCircle size={18} color={theme.green1} />
                 // <RefreshCcw size={18} />
-              }
-            </PercentStyled>
+              } */}
+            {/* </PercentStyled> */}
           </Flex>
           <Flex>
             <Text fontSize={20} color={theme.subText}>
