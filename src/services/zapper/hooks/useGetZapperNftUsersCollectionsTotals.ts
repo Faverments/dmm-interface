@@ -27,6 +27,15 @@ const query = gql`
   }
 `
 
+interface ZapperNftUsersCollectionsTotals {
+  nftUsersCollections: {
+    totals: {
+      count: string
+      balanceUSD: string
+    }
+  }
+}
+
 async function execQuery(address: string, network: string | undefined) {
   const variables: any = {
     owners: [address],
@@ -47,7 +56,7 @@ async function execQuery(address: string, network: string | undefined) {
 export default function useGetNftUsersCollectionsTotals(address: string, network: string | undefined) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApolloError>()
-  const [nftUsersCollectionsTotals, setNftUserCollectionTotals] = useState<any>([])
+  const [nftUsersCollectionsTotals, setNftUserCollectionTotals] = useState<ZapperNftUsersCollectionsTotals>()
   useMemo(async () => {
     setError(undefined)
     setIsLoading(true)
@@ -56,6 +65,7 @@ export default function useGetNftUsersCollectionsTotals(address: string, network
     if (result.error) {
       setError(result.error)
     }
-  }, [address])
+    setIsLoading(false)
+  }, [address, network])
   return { nftUsersCollectionsTotals, isLoading, error }
 }

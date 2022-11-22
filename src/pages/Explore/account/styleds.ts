@@ -45,7 +45,7 @@ export const PageWrapper = styled.div`
 `};
 `
 export const TabContainer = styled.div`
-  padding-top: 20px;
+  /* padding-top: 20px; */
   display: flex;
   align-items: center;
   gap: 24px;
@@ -61,7 +61,7 @@ export const TabItem = styled.div<{ active: boolean }>`
   display: flex;
   align-items: center;
   gap: 4px;
-  padding-bottom: 8px;
+  padding: 16px;
   cursor: pointer;
   &:hover {
     color: ${({ theme }) => lighten(0.1, theme.primary)};
@@ -111,7 +111,7 @@ export const SideWrapper = styled.div`
   padding: 16px;
   background: ${({ theme }) => rgba(theme.buttonBlack, 0.2)};
   flex-basis: 100%;
-  /* border: ${({ theme }) => `1px solid ${rgba(theme.border, 0.1)}`}; */
+  border: ${({ theme }) => `1px solid ${rgba(theme.border, 0.1)}`};
 `
 export const SideTitle = styled.div`
   font-size: 18px;

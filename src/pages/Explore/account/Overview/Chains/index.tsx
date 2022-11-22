@@ -12,10 +12,10 @@ import { formattedNumLong } from 'utils'
 
 const ChainBalanceStyled = styled.div<{ active: boolean }>`
   background: ${({ theme, active }) => (active ? theme.primary : theme.buttonBlack)};
-  border-radius: 999px;
+  border-radius: 8px;
   padding: 10px 20px;
   cursor: pointer;
-  border: 1px solid ${({ theme }) => rgba(theme.border, 0.1)};
+  border: 1px solid ${({ theme, active }) => rgba(theme.border, 0.3)};
   &:hover {
     border: 1px solid ${({ theme }) => theme.primary};
   }
@@ -30,8 +30,8 @@ const Wrapper = styled.div`
 
 const ChainsLayout = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 8px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 16px;
   @media screen and (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -59,9 +59,9 @@ export default function Chains({
               setNetwork('all-networks')
             }}
           >
-            <Flex alignItems="center" style={{ gap: 8 }} justifyContent="space-between">
+            <Flex flexDirection="column" style={{ gap: 16 }}>
               <Flex alignItems="center" style={{ gap: 8 }}>
-                <Kyber size={24} color={theme.border} />
+                <Kyber size={40} color={theme.border} />
 
                 <Text
                   fontSize={16}
@@ -97,10 +97,9 @@ export default function Chains({
                 onClick={() => setNetwork(key as Network)}
                 active={active}
               >
-                {/* <Flex alignItems="center" justifyContent="space-between"> */}
-                <Flex alignItems="center" style={{ gap: 8 }} justifyContent="space-between">
+                <Flex flexDirection="column" style={{ gap: 16 }}>
                   <Flex alignItems="center" style={{ gap: 8 }}>
-                    <img src={chainsInfo[key as keyof typeof chainsInfo].logo} alt="" height={24} />
+                    <img src={chainsInfo[key as keyof typeof chainsInfo].logo} alt="" height={40} />
 
                     <Text fontSize={16} fontWeight={500} color={active ? theme.textReverse : theme.text}>
                       {chainsInfo[key as keyof typeof chainsInfo].name}{' '}

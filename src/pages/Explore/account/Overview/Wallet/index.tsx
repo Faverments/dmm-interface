@@ -13,6 +13,8 @@ import Pagination from 'components/Pagination'
 import useTheme from 'hooks/useTheme'
 import { formattedNumLong } from 'utils'
 
+import { LayoutWrapper, TableBodyItemWrapper, TableHeaderItem, TableWrapper } from '../styleds'
+
 export default function Wallet({
   data,
   network,
@@ -139,7 +141,7 @@ export default function Wallet({
 
   return (
     <TableWrapper>
-      <Flex flexDirection={'column'} style={{ gap: 16 }}>
+      <Flex flexDirection={'column'} style={{ gap: 24 }}>
         <Flex alignItems={'center'} style={{ gap: 16 }}>
           <WalletIcon size={32} />
           <Text fontSize={20} fontWeight={500}>
@@ -167,32 +169,3 @@ export default function Wallet({
     </TableWrapper>
   )
 }
-
-const TableWrapper = styled.div`
-  border-radius: 8px;
-  padding: 16px;
-  background: ${({ theme }) => rgba(theme.buttonBlack, 0.3)};
-  flex-basis: 100%;
-  border: ${({ theme }) => `1px solid ${rgba(theme.border, 0.1)}`};
-`
-
-const LayoutWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  border-bottom: 0.5px solid ${({ theme }) => (theme.darkMode ? rgba(theme.border, 0.2) : theme.border)};
-  padding-bottom: 16px;
-`
-
-const TableHeaderItem = styled.div<{ align?: string }>`
-  font-size: 12px;
-  font-weight: 500;
-  color: ${({ theme }) => theme.subText};
-  text-align: ${({ align }) => align ?? 'left'};
-  text-transform: uppercase;
-`
-
-const TableBodyItemWrapper = styled.div<{ align?: string }>`
-  font-size: 14px;
-  font-weight: 400;
-  color: ${({ theme }) => rgba(theme.text, 0.85)};
-`

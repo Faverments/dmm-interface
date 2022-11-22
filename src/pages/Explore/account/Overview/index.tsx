@@ -12,6 +12,7 @@ import AppHolding from './AppHoldings'
 import Apps from './Apps'
 import Chains from './Chains'
 import DaoMemberShip from './DaoMemberships'
+import Nfts from './Nfts'
 import Portfolio from './Portfolio'
 import Wallet from './Wallet'
 
@@ -34,6 +35,7 @@ export default function Overview({ data }: { data: PresentedBalancePayload[] }) 
       </Wrapper>
       <Flex flexDirection={'column'} style={{ gap: 20 }} height="fit-content">
         <Portfolio />
+        <Nfts network={network} />
         <DaoMemberShip />
         <AppHolding data={data} network={network} />
       </Flex>
