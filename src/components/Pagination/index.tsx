@@ -16,6 +16,7 @@ export default function Pagination({
   pageSize,
   style = {},
   haveBg = true,
+  forceMobileMode,
 }: {
   onPageChange: (newPage: number) => void
   totalCount: number
@@ -24,8 +25,9 @@ export default function Pagination({
   pageSize: number
   style?: CSSProperties
   haveBg?: boolean
+  forceMobileMode?: boolean
 }) {
-  const upToExtraSmall = useMedia('(max-width: 576px)')
+  const upToExtraSmall = useMedia('(max-width: 576px)') || forceMobileMode
 
   const paginationRange = usePagination({
     currentPage,

@@ -18,7 +18,7 @@ export interface NftUsersCollections {
   nftUsersCollections: { edges: EdgeUserCollection[] }
 }
 
-interface EdgeUserCollection {
+export interface EdgeUserCollection {
   cursor: string
   balances: BalanceCollection[]
   collection: CollectionUserCollection

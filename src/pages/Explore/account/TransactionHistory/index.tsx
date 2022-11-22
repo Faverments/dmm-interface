@@ -18,7 +18,7 @@ import { useFuse } from 'hooks/useFuse'
 import { useProAmmAllRoutes } from 'hooks/useProAmmAllRoutes'
 
 import FuseHighlight from '../../../../components/FuseHighlight/FuseHighlight'
-import { ChainWrapper } from '../styleds'
+import { ChainWrapper, TableWrapper } from '../styleds'
 
 export default function TransactionsHistory() {
   const listChainAvailable = [
@@ -270,13 +270,6 @@ export default function TransactionsHistory() {
     </Flex>
   )
 }
-
-const TableWrapper = styled.div`
-  border-radius: 8px;
-  padding: 16px;
-  background: ${({ theme }) => rgba(theme.buttonBlack, 0.2)};
-  flex-basis: 100%;
-`
 
 const LayoutWrapper = styled.div`
   display: grid;

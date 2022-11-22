@@ -12,8 +12,18 @@ export const Wrapper = styled.div`
   z-index: 1;
   background-color: transparent;
   background-position: top;
-  /* min-height: calc(100vh - 146px); */
-  min-height: 100vh;
+`
+
+export const BackgroundOverlay = styled.div<{ isDark: boolean }>`
+  width: 100%;
+  height: 100%;
+  background: ${({ isDark }) => (isDark ? rgba('#000', 0.2) : rgba('#fff', 0.5))};
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+`
+
+export const LeftSideWrapper = styled.div`
+  padding: 16px 16px;
 `
 
 export const PageWrapper = styled.div`
@@ -24,7 +34,7 @@ export const PageWrapper = styled.div`
   padding: 24px 36px;
   gap: 24px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1320px;
 
   ${({ theme }) => theme.mediaWidth.upToLarge`
     height: unset;
@@ -39,21 +49,25 @@ export const TabContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
-  padding-bottom: 12px;
+  overflow-x: scroll;
+  border-bottom: ${({ theme }) => `1px solid ${rgba(theme.border, 0.2)}`};
 `
 
 export const TabItem = styled.div<{ active: boolean }>`
+  white-space: nowrap;
   font-size: 20px;
   line-height: 24px;
   font-weight: 500;
   display: flex;
   align-items: center;
   gap: 4px;
+  padding-bottom: 8px;
   cursor: pointer;
   &:hover {
     color: ${({ theme }) => lighten(0.1, theme.primary)};
   }
-  color: ${({ theme, active }) => (active ? theme.primary : theme.subText)};
+  color: ${({ theme, active }) => (active ? theme.primary : rgba(theme.text, 0.9))};
+  border-bottom: ${({ theme, active }) => (active ? `2px solid ${theme.primary}` : 'none')};
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     font-size: 16px;
@@ -69,4 +83,59 @@ export const ChainWrapper = styled.div<{ active: boolean }>`
   border-radius: 999px;
   padding: 10px 20px;
   cursor: pointer;
+  cursor: pointer;
+  border: 1px solid ${({ theme }) => theme.buttonBlack};
+  &:hover {
+    border: 1px solid ${({ theme }) => theme.primary};
+  }
+`
+
+export const ScrollToTopWrapperIcon = styled.div<{ show: boolean }>`
+  display: ${({ show }) => (show ? 'flex' : 'none')};
+  justify-content: center;
+  align-items: center;
+  color: ${({ theme }) => theme.primary};
+  background-color: ${({ theme }) => rgba(theme.primary, 0.1)};
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  &:hover {
+    cursor: pointer;
+    // enlarge icon
+    transform: scale(1.2);
+  }
+`
+
+export const SideWrapper = styled.div`
+  border-radius: 25px;
+  padding: 16px;
+  background: ${({ theme }) => rgba(theme.buttonBlack, 0.2)};
+  flex-basis: 100%;
+  /* border: ${({ theme }) => `1px solid ${rgba(theme.border, 0.1)}`}; */
+`
+export const SideTitle = styled.div`
+  font-size: 18px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.text};
+  padding-bottom: 16px;
+`
+
+export const ItemWrapper = styled.div`
+  border-bottom: 0.5px solid ${({ theme }) => (theme.darkMode ? rgba(theme.border, 0.2) : theme.border)};
+  padding-bottom: 16px;
+`
+export const ItemLayout = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+export const OverflowPagination = styled.div`
+  overflow-x: scroll;
+`
+export const TableWrapper = styled.div`
+  border-radius: 8px;
+  padding: 16px;
+  background: ${({ theme }) => rgba(theme.buttonBlack, 0.3)};
+  flex-basis: 100%;
 `

@@ -13,6 +13,7 @@ import {
   PieChart,
   Share2,
   Triangle,
+  User,
   UserPlus,
 } from 'react-feather'
 import { NavLink } from 'react-router-dom'
@@ -257,6 +258,11 @@ export default function Menu() {
         <NavMenuItem to="/referral" onClick={toggle}>
           <UserPlus size={14} />
           <Trans>Referral</Trans>
+        </NavMenuItem>
+
+        <NavMenuItem to="/dashboard" onClick={toggle}>
+          <User size={14} />
+          <Trans>DashBoard</Trans>
         </NavMenuItem>
 
         {!above1321 && (

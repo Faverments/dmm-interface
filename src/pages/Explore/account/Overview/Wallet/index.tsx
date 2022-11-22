@@ -1,9 +1,16 @@
+import { rgba } from 'polished'
 import React, { useEffect, useMemo } from 'react'
 import { Flex, Text } from 'rebass'
+import { chainsInfo } from 'services/zapper/constances'
 import { useWalletBalances } from 'services/zapper/hooks/useBalances'
 import { ALL_NETWORKS, PresentedBalancePayload, TokenBreakdown } from 'services/zapper/types/models'
 import { Network } from 'services/zapper/types/models/index'
+import styled from 'styled-components/macro'
 
+import { AutoColumn } from 'components/Column'
+import WalletIcon from 'components/Icons/Wallet'
+import Pagination from 'components/Pagination'
+import useTheme from 'hooks/useTheme'
 import { formattedNumLong } from 'utils'
 
 export default function Wallet({
@@ -15,7 +22,26 @@ export default function Wallet({
   network: Network | ALL_NETWORKS
   setNetwork: React.Dispatch<React.SetStateAction<Network | ALL_NETWORKS>>
 }) {
+  const [page, setPage] = React.useState(1)
+  useEffect(() => {
+    setPage(1)
+  }, [network])
+
   const wallet = useWalletBalances(data)
+
+  const walletPaginate = useMemo(() => {
+    if (network === 'all-networks') {
+      return {
+        size: 0,
+        list: [],
+      }
+    }
+    const res = [...Object.values<any>(wallet[network].details)].sort((a, b) => b.balance - a.balance)
+    return {
+      size: res.length,
+      list: res.slice((page - 1) * 10, page * 10),
+    }
+  }, [wallet, network, page])
 
   const totalsWalletBalances = Object.values(wallet).reduce((acc, cur) => acc + cur.totals, 0)
 
@@ -26,79 +52,147 @@ export default function Wallet({
       allToken.push(...listTokenOnNetwork)
     })
 
-    console.log('allToken', allToken)
-    return allToken
-  }, [wallet])
+    return {
+      size: allToken.length,
+      list: allToken.sort((a, b) => b.balanceUSD - a.balanceUSD).slice((page - 1) * 10, page * 10),
+    }
+  }, [wallet, page])
 
-  console.log('wallet', wallet)
+  const theme = useTheme()
+
+  function TableHeader() {
+    return (
+      <LayoutWrapper>
+        <TableHeaderItem>Asset</TableHeaderItem>
+        <TableHeaderItem>Price</TableHeaderItem>
+        <TableHeaderItem>Balance</TableHeaderItem>
+        <TableHeaderItem>Value</TableHeaderItem>
+      </LayoutWrapper>
+    )
+  }
+
+  function Token({ token, index }: { token: TokenBreakdown; index: number }) {
+    const networkInfo = chainsInfo[token.network as keyof typeof chainsInfo]
+    return (
+      <LayoutWrapper>
+        <TableBodyItemWrapper>
+          <Flex alignItems="center" style={{ gap: 8 }}>
+            <img
+              src={token.displayProps.images[0]}
+              width={40}
+              height={40}
+              style={{ borderRadius: '50%' }}
+              alt={token.context.symbol}
+            />
+            <Flex flexDirection="column" style={{ gap: 4 }}>
+              <Text color={theme.text} fontSize={16} fontWeight={400}>
+                {token.context.symbol}
+              </Text>
+              <Flex
+                alignItems="flex-end"
+                style={{ gap: 8, borderRadius: 4, background: theme.background, padding: '2px 8px' }}
+              >
+                <img src={networkInfo.logo} alt="" height={16} />
+                <Text fontSize={16} fontWeight={300} color={theme.subText}>
+                  {networkInfo.name}
+                </Text>
+              </Flex>
+            </Flex>
+          </Flex>
+        </TableBodyItemWrapper>
+      </LayoutWrapper>
+    )
+  }
 
   if (network === 'all-networks') {
     return (
-      <div>
-        {Object.keys(wallet).length > 0 && (
-          <>
-            <div>
+      <TableWrapper>
+        <Flex flexDirection={'column'} style={{ gap: 24 }}>
+          <Flex alignItems={'center'} style={{ gap: 16 }}>
+            <WalletIcon size={24} />
+            <Text fontSize={20} fontWeight={500}>
               {' '}
-              balances on {network} wallet: {formattedNumLong(totalsWalletBalances, true)}
-            </div>
-            <div>
-              {AllToken.sort((a, b) => b.balanceUSD - a.balanceUSD).map((token, index) => {
-                return (
-                  <Flex justifyContent="space-between" key={index}>
-                    <Flex>
-                      <img src={token.displayProps.images[0]} height={24} />
-                      <Flex flexDirection="column">
-                        <Text> {token.displayProps.label}</Text>
-                        <Text> {formattedNumLong(token.context.price, true)}</Text>
-                      </Flex>
-                    </Flex>
+              Wallet : {formattedNumLong(totalsWalletBalances, true)}
+            </Text>
+          </Flex>
 
-                    <Flex flexDirection="column">
-                      <Text>{formattedNumLong(token.balanceUSD, true)}</Text>
-                      <Text>{formattedNumLong(token.context.balance)}</Text>
-                    </Flex>
-                  </Flex>
-                )
+          <AutoColumn gap="16px">
+            <TableHeader />
+            {Object.keys(wallet).length > 0 &&
+              AllToken.list.map((token, index) => {
+                return <Token token={token} index={index} key={index} />
               })}
-            </div>
-          </>
-        )}
-      </div>
+            <Pagination
+              pageSize={10}
+              onPageChange={newPage => setPage(newPage)}
+              currentPage={page}
+              totalCount={AllToken.size || 1}
+              style={{
+                backgroundColor: 'transparent',
+              }}
+            />
+          </AutoColumn>
+        </Flex>
+      </TableWrapper>
     )
   }
 
   return (
-    <div>
-      {Object.keys(wallet).length > 0 && (
-        <>
-          <div>
+    <TableWrapper>
+      <Flex flexDirection={'column'} style={{ gap: 16 }}>
+        <Flex alignItems={'center'} style={{ gap: 16 }}>
+          <WalletIcon size={32} />
+          <Text fontSize={20} fontWeight={500}>
             {' '}
-            balances on {network} wallet: {formattedNumLong(wallet[network].totals, true)}
-          </div>
-          <div>
-            {Object.values<any>(wallet[network].details)
-              .sort((a: TokenBreakdown, b: TokenBreakdown) => b.balanceUSD - a.balanceUSD)
-              .map((token: TokenBreakdown, index) => {
-                return (
-                  <Flex justifyContent="space-between" key={index}>
-                    <Flex>
-                      <img src={token.displayProps.images[0]} height={24} />
-                      <Flex flexDirection="column">
-                        <Text> {token.displayProps.label}</Text>
-                        <Text> {formattedNumLong(token.context.price, true)}</Text>
-                      </Flex>
-                    </Flex>
+            Wallet : {formattedNumLong(wallet[network].totals, true)}
+          </Text>
+        </Flex>
 
-                    <Flex flexDirection="column">
-                      <Text>{formattedNumLong(token.balanceUSD, true)}</Text>
-                      <Text>{formattedNumLong(token.context.balance)}</Text>
-                    </Flex>
-                  </Flex>
-                )
-              })}
-          </div>
-        </>
-      )}
-    </div>
+        <AutoColumn gap="16px">
+          <TableHeader />
+          {walletPaginate.list.map((token: TokenBreakdown, index) => {
+            return <Token token={token} index={index} key={index} />
+          })}
+          <Pagination
+            pageSize={10}
+            onPageChange={newPage => setPage(newPage)}
+            currentPage={page}
+            totalCount={walletPaginate.size || 1}
+            style={{
+              backgroundColor: 'transparent',
+            }}
+          />
+        </AutoColumn>
+      </Flex>
+    </TableWrapper>
   )
 }
+
+const TableWrapper = styled.div`
+  border-radius: 8px;
+  padding: 16px;
+  background: ${({ theme }) => rgba(theme.buttonBlack, 0.3)};
+  flex-basis: 100%;
+  border: ${({ theme }) => `1px solid ${rgba(theme.border, 0.1)}`};
+`
+
+const LayoutWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  border-bottom: 0.5px solid ${({ theme }) => (theme.darkMode ? rgba(theme.border, 0.2) : theme.border)};
+  padding-bottom: 16px;
+`
+
+const TableHeaderItem = styled.div<{ align?: string }>`
+  font-size: 12px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.subText};
+  text-align: ${({ align }) => align ?? 'left'};
+  text-transform: uppercase;
+`
+
+const TableBodyItemWrapper = styled.div<{ align?: string }>`
+  font-size: 14px;
+  font-weight: 400;
+  color: ${({ theme }) => rgba(theme.text, 0.85)};
+`

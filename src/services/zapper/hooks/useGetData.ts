@@ -4,7 +4,7 @@ import { ZAPPER_WEB_API } from 'services/config'
 import { zapperClient } from 'services/zapper/apollo/client'
 import { nftUsersCollections, nftUsersTokens } from 'services/zapper/apollo/queries'
 
-import { EdgeUserToken, NftUsersCollections, NftUsersTokens } from '../apollo/types'
+import { EdgeUserCollection, EdgeUserToken, NftUsersCollections, NftUsersTokens } from '../apollo/types'
 import { Network } from '../types/models'
 
 export function useGetNftUsersCollections({
@@ -24,8 +24,12 @@ export function useGetNftUsersCollections({
 }) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApolloError>()
-  const [data, setData] = useState<NftUsersCollections>()
+  const [data, setData] = useState<EdgeUserCollection[]>([])
+  const fetchRef = useRef(0)
+
   useEffect(() => {
+    fetchRef.current = ++fetchRef.current
+    if (fetchRef.current === 2) return
     const fetcher = async () => {
       setError(undefined)
       setIsLoading(true)
@@ -40,7 +44,7 @@ export function useGetNftUsersCollections({
           search,
         },
       })
-      setData(result.data)
+      setData(pre => [...pre, ...result.data.nftUsersCollections.edges])
       setIsLoading(false)
       if (result.error) {
         setError(result.error)
@@ -48,7 +52,7 @@ export function useGetNftUsersCollections({
     }
     fetcher()
   }, [address, network, minCollectionValueUsd, first, JSON.stringify(collections), search])
-  return useMemo(() => ({ isLoading, data, error }), [isLoading, error, data])
+  return useMemo(() => ({ isLoading, data, error, setData }), [isLoading, error, data])
 }
 
 export function useGetNftUsersTokens({
@@ -104,7 +108,6 @@ export function useGetNftUsersTokens({
             variables: variables,
           }),
         }).then(res => res.json())
-        console.log('result', result)
         setData(pre => [...pre, ...result.data.nftUsersTokens.edges])
         setIsLoading(false)
       } catch (error) {

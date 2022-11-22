@@ -1,6 +1,5 @@
 import { rgba } from 'polished'
 import React, { useEffect, useState } from 'react'
-import { ArrowUp } from 'react-feather'
 import { RouteComponentProps } from 'react-router-dom'
 import {
   chainParams,
@@ -23,6 +22,7 @@ import TokenApprovals from './TokenApprovals'
 import TransactionsHistory from './TransactionHistory'
 import WalletProfiler from './WalletProfiler'
 import Header from './components/Header'
+import ScrollTopButton from './components/ScrollTopButton'
 import AccountTab from './components/Tab'
 import { PageWrapper, Wrapper } from './styleds'
 
@@ -78,23 +78,6 @@ export default function Account(props: RouteComponentProps<{ address: string }>)
   //     .filter(value => typeof value === 'number') as unknown as number[],
   // )
 
-  const [show, setShow] = useState(false)
-
-  useEffect(() => {
-    const handleShow = () => {
-      const scrollTop = window.scrollY
-      if (scrollTop > 300) {
-        setShow(true)
-      } else {
-        setShow(false)
-      }
-    }
-
-    window.addEventListener('scroll', handleShow)
-
-    return () => window.removeEventListener('scroll', handleShow)
-  }, [])
-
   return (
     <Wrapper
       style={{
@@ -122,41 +105,8 @@ export default function Account(props: RouteComponentProps<{ address: string }>)
         {activeTab === AccountTabs.TIME_MACHINE && <TimeMachine />}
         {activeTab === AccountTabs.WALLET_PROFILER && <WalletProfiler />}
         {activeTab === AccountTabs.NFT_PROFILER && <NftProfiler />}
-        {}
+        <ScrollTopButton />
       </PageWrapper>
-      <div
-        style={{
-          position: 'fixed',
-          bottom: 20,
-          right: 20,
-        }}
-        onClick={() => {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-          })
-        }}
-      >
-        <ScrollToTopWrapperIcon show={show}>
-          <ArrowUp size={24} />
-        </ScrollToTopWrapperIcon>
-      </div>
     </Wrapper>
   )
 }
-
-const ScrollToTopWrapperIcon = styled.div<{ show: boolean }>`
-  display: ${({ show }) => (show ? 'flex' : 'none')};
-  justify-content: center;
-  align-items: center;
-  color: ${({ theme }) => theme.primary};
-  background-color: ${({ theme }) => rgba(theme.primary, 0.1)};
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  &:hover {
-    cursor: pointer;
-    // enlarge icon
-    transform: scale(1.2);
-  }
-`

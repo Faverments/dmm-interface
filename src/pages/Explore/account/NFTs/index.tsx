@@ -10,6 +10,7 @@ import { chainsInfo } from 'services/zapper/constances'
 import { useGetNftUsersCollections, useGetNftUsersTokens } from 'services/zapper/hooks/useGetData'
 import styled, { css, useTheme } from 'styled-components/macro'
 
+import LocalLoader from 'components/LocalLoader'
 import Modal from 'components/Modal'
 import Search, { Input } from 'components/Search'
 
@@ -67,8 +68,16 @@ export default function NFTs() {
   // pass a handling helper to speed up implementation
   const onSearch = useCallback((value: any) => setQuery(value.trim()), [setQuery])
   const { address } = useParams<{ address: string }>()
-  const { data: nftUserCollectionsData } = useGetNftUsersCollections({ address, network, search })
-  const { data: nftUserTokensData, setData } = useGetNftUsersTokens({
+  const {
+    data: nftUserCollectionsData,
+    setData: setCollectionsData,
+    isLoading: isCollectionsLoading,
+  } = useGetNftUsersCollections({ address, network, search })
+  const {
+    data: nftUserTokensData,
+    setData: setTokensData,
+    isLoading: isTokensLoading,
+  } = useGetNftUsersTokens({
     address,
     network,
     collections: collectionsAddress,
@@ -83,7 +92,12 @@ export default function NFTs() {
     if (lastChild) {
       observer = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) {
-          setAfter(nftUserTokensData[nftUserTokensData.length - 1].cursor)
+          if (activeViewType === 'single') {
+            setAfter(nftUserTokensData[nftUserTokensData.length - 1].cursor)
+          }
+          if (activeViewType === 'collection') {
+            setAfter(nftUserCollectionsData[nftUserCollectionsData.length - 1].cursor)
+          }
           console.log('fetch')
           observer.unobserve(lastChild as Element)
         }
@@ -95,7 +109,7 @@ export default function NFTs() {
         observer.unobserve(lastChild as Element)
       }
     }
-  }, [nftUserTokensData])
+  }, [nftUserTokensData, activeViewType])
 
   return (
     <Flex flexDirection="column" style={{ gap: 20 }}>
@@ -111,7 +125,12 @@ export default function NFTs() {
                   // maxWidth: 230,
                 }
               }
-              onClick={() => setNetwork(item)}
+              onClick={() => {
+                setCollectionsData([])
+                setTokensData([])
+                setAfter('')
+                setNetwork(item)
+              }}
               active={active}
             >
               <Flex alignItems="center" style={{ gap: 8 }} justifyContent="space-between">
@@ -159,16 +178,17 @@ export default function NFTs() {
                     }
                   }
                 >
-                  {nftUserCollectionsData?.nftUsersCollections.edges.map((item, index) => {
+                  {nftUserCollectionsData.map((item, index) => {
                     return (
                       <SearchListWrapper
                         key={index}
                         alignItems="center"
                         onClick={() => {
-                          setCollectionsAddress([item.collection.address])
-                          setCollections([item.collection])
+                          setCollectionsAddress(pre => [...pre, item.collection.address])
+                          setCollections(pre => [...pre, item.collection])
                           setShowResults(false)
-                          setData([])
+                          setAfter('')
+                          setTokensData([])
                         }}
                       >
                         <img
@@ -186,7 +206,7 @@ export default function NFTs() {
                       </SearchListWrapper>
                     )
                   })}
-                  {nftUserCollectionsData?.nftUsersCollections.edges.length === 0 && (
+                  {nftUserCollectionsData.length === 0 && (
                     <Flex justifyContent="center" alignItems="center">
                       <Text color={theme.subText} fontSize={16} fontWeight={500}>
                         No Result
@@ -208,7 +228,8 @@ export default function NFTs() {
               onClick={() => {
                 setCollections(pre => pre.filter(collection => collection.address !== item.address) || [item])
                 setCollectionsAddress(pre => pre.filter(address => address !== item.address) || [item.address])
-                setData([])
+                setAfter('')
+                // setData([])
               }}
             >
               <img
@@ -233,14 +254,29 @@ export default function NFTs() {
           nftUserTokensData.map((item, index) => {
             return (
               <div key={index}>
-                <img src={item.token.mediasV2[0].url} alt="" height={20} />
+                <img
+                  src={item.token.mediasV2[0].url}
+                  alt=""
+                  height={160}
+                  style={{
+                    objectFit: 'cover',
+                  }}
+                />
                 <div>{item.token.name}</div>
               </div>
             )
           })}
+        {activeViewType === 'collection' &&
+          nftUserCollectionsData.map((item, index) => {
+            return (
+              <div key={index}>
+                <img src={item.collection.logoImageUrl} alt="" height={20} />
+                <div>{item.collection.name}</div>
+              </div>
+            )
+          })}
       </div>
-
-      {activeViewType === 'collection' && <></>}
+      {isTokensLoading && <LocalLoader />}
     </Flex>
   )
 }

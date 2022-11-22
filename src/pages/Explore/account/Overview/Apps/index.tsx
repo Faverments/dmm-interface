@@ -2,8 +2,7 @@ import React from 'react'
 import { Flex, Text } from 'rebass'
 import { chainsInfo } from 'services/zapper/constances'
 import { useAppBalances } from 'services/zapper/hooks/useBalances'
-import { ALL_NETWORKS, PresentedBalancePayload } from 'services/zapper/types/models'
-import { Network } from 'services/zapper/types/models/index'
+import { ALL_NETWORKS, Network, PresentedBalancePayload } from 'services/zapper/types/models/index'
 import styled from 'styled-components/macro'
 
 import DefaultIcon from 'assets/images/default-icon.png'
@@ -14,8 +13,7 @@ const AppSubDetailsStyled = styled.div`
 `
 
 export default function Apps({ data, network }: { data: PresentedBalancePayload[]; network: Network | ALL_NETWORKS }) {
-  const apps = useAppBalances(data)
-  console.log('apps : ', apps)
+  const apps = useAppBalances(data, network)
   return (
     <div>
       {Object.values(apps)

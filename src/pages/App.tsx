@@ -31,6 +31,7 @@ import { isAddressString, shortenAddress } from 'utils'
 
 import { RedirectDuplicateTokenIds } from './AddLiquidityV2/redirects'
 import Bridge from './Bridge'
+import DashBoard from './DashBoard'
 import Account from './Explore/Account'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
@@ -267,6 +268,7 @@ export default function App() {
                     <Route exact path={AppPaths.BRIDGE} component={Bridge} />
 
                     <Route exact path="/account/:address" component={Account} />
+                    <Route exact path="/dashboard" component={DashBoard} />
 
                     <Route component={RedirectPathToSwapOnly} />
                   </Switch>

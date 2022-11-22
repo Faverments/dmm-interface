@@ -32,19 +32,37 @@ async function execQuery(address: string) {
   return result
 }
 
+export interface UserDaoMembership {
+  id: string
+  img: string
+  name: string
+  slug: string
+  share: number
+  percentileShare: number
+  governanceBaseToken: {
+    symbol: string
+  } | null
+}
+
 export default function useGetUserDaoMembership(address: string) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApolloError>()
-  const [daoMemberships, setDaoMemberships] = useState<any>([])
+  const [daoMemberships, setDaoMemberships] = useState<UserDaoMembership[]>([])
   useMemo(async () => {
     setError(undefined)
     setIsLoading(true)
     const result = await execQuery(address)
-    setDaoMemberships(result.data)
+    setDaoMemberships(result.data.user.daoMemberships)
     setIsLoading(false)
     if (result.error) {
       setError(result.error)
     }
   }, [address])
-  return { daoMemberships, isLoading, error }
+  return useMemo(() => {
+    return {
+      isLoading,
+      error,
+      daoMemberships,
+    }
+  }, [isLoading, error, daoMemberships])
 }

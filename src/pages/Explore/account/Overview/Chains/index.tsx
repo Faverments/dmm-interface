@@ -1,3 +1,4 @@
+import { rgba } from 'polished'
 import { Flex, Text } from 'rebass'
 import { ALL_NETWORKS, Network, PresentedBalancePayload } from 'services/zapper'
 import { chainsInfo } from 'services/zapper/constances'
@@ -14,12 +15,26 @@ const ChainBalanceStyled = styled.div<{ active: boolean }>`
   border-radius: 999px;
   padding: 10px 20px;
   cursor: pointer;
+  border: 1px solid ${({ theme }) => rgba(theme.border, 0.1)};
+  &:hover {
+    border: 1px solid ${({ theme }) => theme.primary};
+  }
 `
 
-const BalanceStyled = styled.div`
-  background: ${({ theme }) => theme.tabActive};
-  border-radius: 20px;
-  padding: 6px 8px;
+const Wrapper = styled.div`
+  background: ${({ theme }) => rgba(theme.buttonBlack, 0.3)};
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid ${({ theme }) => rgba(theme.border, 0.1)};
+`
+
+const ChainsLayout = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 8px;
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `
 
 export default function Chains({
@@ -35,30 +50,35 @@ export default function Chains({
   const totalsChainBalances = Object.values(chainsBalances).reduce((acc, cur) => acc + cur.total, 0)
   const theme = useTheme()
   return (
-    <BalanceStyled>
-      <Flex flexWrap="wrap" style={{ gap: 16 }}>
-        <ChainBalanceStyled
-          active={network === 'all-networks'}
-          onClick={() => {
-            setNetwork('all-networks')
-          }}
-        >
-          <Flex alignItems="center" style={{ gap: 8 }} justifyContent="space-between">
-            <Flex alignItems="center" style={{ gap: 8 }}>
-              <Kyber size={24} color={theme.border} />
+    <Wrapper>
+      <ChainsLayout>
+        <div>
+          <ChainBalanceStyled
+            active={network === 'all-networks'}
+            onClick={() => {
+              setNetwork('all-networks')
+            }}
+          >
+            <Flex alignItems="center" style={{ gap: 8 }} justifyContent="space-between">
+              <Flex alignItems="center" style={{ gap: 8 }}>
+                <Kyber size={24} color={theme.border} />
 
-              <Text fontSize={16} fontWeight={500} color={network === 'all-networks' ? theme.textReverse : theme.text}>
-                All Networks
+                <Text
+                  fontSize={16}
+                  fontWeight={500}
+                  color={network === 'all-networks' ? theme.textReverse : theme.text}
+                >
+                  All Chains
+                </Text>
+              </Flex>
+
+              <Text fontSize={16} fontWeight={400} color={network === 'all-networks' ? theme.textReverse : theme.text}>
+                {' '}
+                {formattedNumLong(totalsChainBalances, true)}
               </Text>
             </Flex>
-
-            <Text fontSize={16} fontWeight={400} color={network === 'all-networks' ? theme.textReverse : theme.text}>
-              {' '}
-              {formattedNumLong(totalsChainBalances, true)}
-            </Text>
-          </Flex>
-        </ChainBalanceStyled>
-
+          </ChainBalanceStyled>
+        </div>
         {Object.keys(chainsBalances).map(key => {
           const chainData = chainsBalances[key as keyof typeof chainsBalances]
           const active = key === network
@@ -66,35 +86,36 @@ export default function Chains({
           if (chainData.total === 0) return null
 
           return (
-            <ChainBalanceStyled
-              key={key}
-              style={
-                {
-                  // flexBasis: '100%',
-                  // maxWidth: 230,
+            <div key={key}>
+              <ChainBalanceStyled
+                style={
+                  {
+                    // flexBasis: '100%',
+                    // maxWidth: 230,
+                  }
                 }
-              }
-              onClick={() => setNetwork(key as Network)}
-              active={active}
-            >
-              {/* <Flex alignItems="center" justifyContent="space-between"> */}
-              <Flex alignItems="center" style={{ gap: 8 }} justifyContent="space-between">
-                <Flex alignItems="center" style={{ gap: 8 }}>
-                  <img src={chainsInfo[key as keyof typeof chainsInfo].logo} alt="" height={24} />
+                onClick={() => setNetwork(key as Network)}
+                active={active}
+              >
+                {/* <Flex alignItems="center" justifyContent="space-between"> */}
+                <Flex alignItems="center" style={{ gap: 8 }} justifyContent="space-between">
+                  <Flex alignItems="center" style={{ gap: 8 }}>
+                    <img src={chainsInfo[key as keyof typeof chainsInfo].logo} alt="" height={24} />
 
-                  <Text fontSize={16} fontWeight={500} color={active ? theme.textReverse : theme.text}>
-                    {chainsInfo[key as keyof typeof chainsInfo].name}{' '}
+                    <Text fontSize={16} fontWeight={500} color={active ? theme.textReverse : theme.text}>
+                      {chainsInfo[key as keyof typeof chainsInfo].name}{' '}
+                    </Text>
+                  </Flex>
+                  <Text fontSize={16} fontWeight={400} color={active ? theme.textReverse : theme.text}>
+                    {' '}
+                    {formattedNumLong(chainData.total, true)}
                   </Text>
                 </Flex>
-                <Text fontSize={16} fontWeight={400} color={active ? theme.textReverse : theme.text}>
-                  {' '}
-                  {formattedNumLong(chainData.total, true)}
-                </Text>
-              </Flex>
-            </ChainBalanceStyled>
+              </ChainBalanceStyled>
+            </div>
           )
         })}
-      </Flex>
-    </BalanceStyled>
+      </ChainsLayout>
+    </Wrapper>
   )
 }

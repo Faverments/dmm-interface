@@ -199,7 +199,7 @@ interface AppDetails {
   [key: string]: App
 }
 
-export function useAppBalances(data: PresentedBalancePayload[]) {
+export function useAppBalances(data: PresentedBalancePayload[], network: Network | ALL_NETWORKS) {
   return useMemo(() => {
     const Apps: AppDetails = {}
 
@@ -214,10 +214,16 @@ export function useAppBalances(data: PresentedBalancePayload[]) {
           balances.totals.forEach(partial => {
             obj.totals += partial.balanceUSD
           })
-          Apps[balances.appId] = obj
+          if (network === 'all-networks') {
+            Apps[balances.appId] = obj
+          } else {
+            if (balances.network === network) {
+              Apps[balances.appId] = obj
+            }
+          }
         }
       })
     }
     return Apps
-  }, [data])
+  }, [data, network])
 }

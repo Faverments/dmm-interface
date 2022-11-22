@@ -23,14 +23,14 @@ export default function Avatar({ address }: { address: string }) {
     document.getElementById('avatar')!.replaceChildren(icon)
     document
       .getElementById('avatar')!
-      .firstElementChild?.setAttribute('style', 'border-radius: 25%; width: 100%; height: 100%;')
+      .firstElementChild?.setAttribute('style', 'border-radius: 12px; width: 100%; height: 100%;')
   }, [address, error])
 
   useEffect(() => {
     if (avartarUrl) {
       const img = document.createElement('img')
       img.src = avartarUrl
-      img.setAttribute('style', 'border-radius: 25% ; width: 120px; height: 120px')
+      img.setAttribute('style', 'border-radius: 12px ; width: 120px; height: 120px')
       img.onerror = ({ currentTarget }: any) => {
         currentTarget.onerror = null // prevents looping
         setError(true)
@@ -44,7 +44,7 @@ export default function Avatar({ address }: { address: string }) {
       <div
         id="avatar"
         style={{
-          borderRadius: '25%',
+          borderRadius: '12px',
           width: '120px',
           height: '120px',
         }}

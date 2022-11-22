@@ -25,6 +25,7 @@ import { getFullDisplayBalance } from 'utils/formatBalance'
 import getShortenAddress from 'utils/getShortenAddress'
 
 import FuseHighlight from '../../../../components/FuseHighlight/FuseHighlight'
+import { TableWrapper } from '../styleds'
 import NetworkSelect from './NetworkSelect'
 
 export default function TokenApprovals() {
@@ -206,13 +207,6 @@ export default function TokenApprovals() {
     </Flex>
   )
 }
-
-const TableWrapper = styled.div`
-  border-radius: 8px;
-  padding: 16px;
-  background: ${({ theme }) => rgba(theme.buttonBlack, 0.2)};
-  flex-basis: 100%;
-`
 
 const LayoutWrapper = styled.div`
   display: grid;

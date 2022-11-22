@@ -154,6 +154,7 @@ const DiscoverWrapper = styled.span`
 `
 
 const CampaignWrapper = styled.span``
+const DashboardWrapper = styled.span``
 
 const AboutWrapper = styled.span`
   @media (max-width: 1440px) {
@@ -538,6 +539,12 @@ export default function Header() {
               </Dropdown>
             </HoverDropdown>
           </AboutWrapper>
+
+          <DashboardWrapper>
+            <StyledNavLink id={`dashboard`} to={'/dashboard'} isActive={match => Boolean(match)}>
+              <Trans>DashBoard</Trans>
+            </StyledNavLink>
+          </DashboardWrapper>
         </HeaderLinks>
       </HeaderRow>
       <HeaderControls>

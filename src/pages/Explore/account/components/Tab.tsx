@@ -76,7 +76,7 @@ const AccountTab = ({ activeTab }: { activeTab: AccountTabs | undefined }) => {
         <Trans>Analytics</Trans>
       </TabItem>
 
-      <TabItem
+      {/* <TabItem
         active={activeTab === AccountTabs.WALLET_PROFILER}
         onClick={() => {
           if (tab !== 'wallet_profiler') {
@@ -109,7 +109,7 @@ const AccountTab = ({ activeTab }: { activeTab: AccountTabs | undefined }) => {
         }}
       >
         <Trans>Time Machine</Trans>
-      </TabItem>
+      </TabItem> */}
     </TabContainer>
   )
 }
