@@ -39,7 +39,6 @@ export default function Nfts({ network }: { network: Network | ALL_NETWORKS }) {
     first: 6,
   })
 
-  console.log('datanft', data)
   const history = useHistory()
 
   const theme = useTheme()

@@ -20,7 +20,7 @@ export default function DaoMemberShip() {
   }, [address])
   const daoSortAvaliable = useMemo(() => {
     const res = [...daoMemberships].sort((a, b) => b.percentileShare - a.percentileShare)
-    return res.slice((page - 1) * 8, page * 8)
+    return res.slice((page - 1) * 6, page * 6)
   }, [daoMemberships, page])
 
   const theme = useTheme()
@@ -63,7 +63,7 @@ export default function DaoMemberShip() {
         ))}
         <OverflowPagination>
           <Pagination
-            pageSize={8}
+            pageSize={6}
             onPageChange={newPage => setPage(newPage)}
             currentPage={page}
             totalCount={daoMemberships.length || 1}
