@@ -1,4 +1,3 @@
-import { active } from 'd3'
 import { lighten, rgba } from 'polished'
 import styled from 'styled-components/macro'
 

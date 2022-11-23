@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import useGetUserDaoMembership from 'services/zapper/hooks/useGetZapperUserDaoMembership'
@@ -7,7 +7,6 @@ import { useTheme } from 'styled-components/macro'
 import { AutoColumn } from 'components/Column'
 import Pagination from 'components/Pagination'
 import { formattedNumLong, toKInChart } from 'utils'
-import { formatDollarAmount } from 'utils/numbers'
 
 import { ItemLayout, ItemWrapper, OverflowPagination, SideTitle, SideWrapper } from '../../styleds'
 

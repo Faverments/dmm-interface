@@ -1,5 +1,4 @@
 /* eslint-disable no-use-before-define */
-import { Address } from './address'
 import { DefaultDataProps, MetadataItem, WithMetaType } from './display'
 import { Network } from './network'
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from './position'

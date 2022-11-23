@@ -1,9 +1,8 @@
 import { Trans } from '@lingui/macro'
-import React from 'react'
 import { useHistory } from 'react-router'
 import { useMedia } from 'react-use'
 
-import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
+import useMixpanel from 'hooks/useMixpanel'
 import useParsedQueryString from 'hooks/useParsedQueryString'
 import { TabContainer, TabItem } from 'pages/Explore/Account/styleds'
 

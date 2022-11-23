@@ -384,6 +384,14 @@ msgstr ""
 msgid "All Chains"
 msgstr ""
 
+#: src/pages/Explore/Account/TokenApprovals/NetworkSelect.tsx
+msgid "All NetWorks"
+msgstr ""
+
+#: src/pages/Explore/Account/TokenApprovals/NetworkSelect.tsx
+msgid "All Networks"
+msgstr ""
+
 #: src/components/PoolsCurrencyInputPanel/index.tsx
 msgid "All Tokens"
 msgstr ""
@@ -422,6 +430,7 @@ msgid "An update is available for the token list \"{0}\" ({1} to {2})."
 msgstr ""
 
 #: src/components/Header/index.tsx
+#: src/pages/Explore/Account/components/Tab.tsx
 msgid "Analytics"
 msgstr ""
 
@@ -883,6 +892,7 @@ msgstr ""
 #: src/pages/Bridge/SwapForm.tsx
 #: src/pages/Campaign/index.tsx
 #: src/pages/CreatePool/index.tsx
+#: src/pages/DashBoard/index.tsx
 #: src/pages/IncreaseLiquidity/index.tsx
 #: src/pages/RemoveLiquidity/TokenPair.tsx
 #: src/pages/RemoveLiquidity/ZapOut.tsx
@@ -1063,6 +1073,11 @@ msgstr ""
 
 #: src/components/Settings/index.tsx
 msgid "Dark Mode"
+msgstr ""
+
+#: src/components/Header/index.tsx
+#: src/components/Menu/index.tsx
+msgid "DashBoard"
 msgstr ""
 
 #: src/components/YieldPools/ElasticFarmGroup/buttons.tsx
@@ -1436,6 +1451,14 @@ msgstr ""
 #: src/components/SearchModal/CurrencyList.tsx
 #~ msgid "Expanded results from inactive Token Lists"
 #~ msgstr ""
+
+#: src/components/SearchExplore/index.tsx
+msgid "Explore Account"
+msgstr ""
+
+#: src/components/SearchExplore/index.tsx
+msgid "Explore any wallet by searching for its address or ENS domain below"
+msgstr ""
 
 #: src/pages/ProAmmPools/index.tsx
 msgid "FEES (24H)"
@@ -2468,6 +2491,10 @@ msgstr ""
 msgid "My liquidity"
 msgstr ""
 
+#: src/pages/Explore/Account/components/Tab.tsx
+msgid "NFTs"
+msgstr ""
+
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
@@ -2684,6 +2711,10 @@ msgstr ""
 #: src/components/swap/SwapModalHeader.tsx
 #: src/components/swapv2/SwapModalHeader.tsx
 msgid "Output is estimated. You will receive at least"
+msgstr ""
+
+#: src/pages/Explore/Account/components/Tab.tsx
+msgid "Overview"
 msgstr ""
 
 #: src/pages/About/AboutKyberSwap.tsx
@@ -3134,8 +3165,8 @@ msgid "Seamless liquidity."
 msgstr ""
 
 #: src/components/SearchExplore/index.tsx
-msgid "Search and Explore"
-msgstr ""
+#~ msgid "Search and Explore"
+#~ msgstr ""
 
 #: 
 #~ msgid "Search by address"
@@ -3168,6 +3199,10 @@ msgstr ""
 
 #: src/pages/ProAmmPool/index.tsx
 msgid "Search by token or pool address"
+msgstr ""
+
+#: src/components/SearchExplore/index.tsx
+msgid "Search by wallet address or ENS domain"
 msgstr ""
 
 #: src/components/swapv2/LiquiditySourcesPanel/SearchBar.tsx
@@ -3805,6 +3840,10 @@ msgstr ""
 msgid "Token Amount"
 msgstr ""
 
+#: src/pages/Explore/Account/components/Tab.tsx
+msgid "Token Approvals"
+msgstr ""
+
 #: src/components/swapv2/MobileTokenInfo.tsx
 #: src/components/swapv2/SwapSettingsPanel/index.tsx
 #: src/components/TransactionSettings/index.tsx
@@ -3970,6 +4009,10 @@ msgstr ""
 #: src/components/swapv2/SwapSettingsPanel/SlippageSetting.tsx
 #: src/components/TransactionSettings/index.tsx
 msgid "Transaction will revert if there is an adverse rate change that is higher than this %"
+msgstr ""
+
+#: src/pages/Explore/Account/components/Tab.tsx
+msgid "Transactions"
 msgstr ""
 
 #: src/pages/Bridge/ComfirmBridgeModal.tsx
@@ -4496,6 +4539,10 @@ msgstr ""
 msgid "You can repeat these instructions anytime by clicking on the \"View\" button under Preferences."
 msgstr ""
 
+#: src/components/SearchExplore/index.tsx
+msgid "You can search and select <0> Any EVM Wallet</0>"
+msgstr ""
+
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "You can search and select <0>any token</0> on KyberSwap"
 msgstr ""
@@ -4887,6 +4934,7 @@ msgstr ""
 #: src/components/swapv2/TokenInfo.tsx
 #: src/components/swapv2/TokenInfoV2/SingleTokenInfo.tsx
 #: src/pages/Bridge/PoolInfo.tsx
+#: src/pages/Explore/Account/TokenApprovals/NetworkSelect.tsx
 #: src/pages/TrueSight/components/FilterBar/NetworkSelect.tsx
 msgid "{0}"
 msgstr ""

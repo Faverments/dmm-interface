@@ -1,12 +1,9 @@
 import { rgba } from 'polished'
-import React from 'react'
 import { Flex, Text } from 'rebass'
-import { chainsInfo } from 'services/zapper/constances'
 import { useAppBalances } from 'services/zapper/hooks/useBalances'
 import { ALL_NETWORKS, Network, PresentedBalancePayload } from 'services/zapper/types/models/index'
 import styled from 'styled-components/macro'
 
-import DefaultIcon from 'assets/images/default-icon.png'
 import { AutoColumn } from 'components/Column'
 import { formattedNumLong } from 'utils'
 

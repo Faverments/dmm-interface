@@ -1,6 +1,5 @@
 import React from 'react'
 import { Flex } from 'rebass'
-import { Return24h } from 'services/defiyield'
 import { ALL_NETWORKS, Network, PresentedBalancePayload } from 'services/zapper'
 import styled from 'styled-components/macro'
 

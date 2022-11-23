@@ -1,16 +1,13 @@
-import { chain } from 'lodash'
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useGetDailyChartData } from 'services/coingecko'
 import { HistoryChainParams, HistoryPricesResponse, useGetHistoricalPrices } from 'services/nansenportfolio'
 import { useWalletBalances } from 'services/zapper/hooks/useBalances'
 import { Network, PresentedBalancePayload, TokenBreakdown } from 'services/zapper/types/models'
 
-import LineChart from 'components/LiveChart/LineChart'
 import MultipleLineChart from 'components/LiveChart/MultipleLineChart'
 import WeekLineChart from 'components/LiveChart/WeekLineChart'
 import LocalLoader from 'components/LocalLoader'
 import useTheme from 'hooks/useTheme'
-import { theme } from 'theme'
 
 function formatNetwork(network: Network | string) {
   switch (network) {

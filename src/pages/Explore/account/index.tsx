@@ -1,15 +1,7 @@
-import { rgba } from 'polished'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import {
-  chainParams,
-  useGet24hReturn,
-  useGet24hReturnAllNetworks,
-  useGet24hReturnAllNetworksSync,
-} from 'services/defiyield'
 import { useGetBalancesEventStream } from 'services/zapper/hooks/useBalances'
 import { Network } from 'services/zapper/types/models'
-import styled from 'styled-components/macro'
 
 import useParsedQueryString from 'hooks/useParsedQueryString'
 

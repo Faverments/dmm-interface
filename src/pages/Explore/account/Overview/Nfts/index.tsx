@@ -1,14 +1,9 @@
 import { rgba } from 'polished'
-import React, { useEffect } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import { useHistory, useParams } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import { ALL_NETWORKS, Network } from 'services/zapper'
-import {
-  useGetNftUsersCollectionsNormal,
-  useGetNftUsersTokens,
-  useGetNftUsersTokensNormal,
-} from 'services/zapper/hooks/useGetData'
+import { useGetNftUsersCollectionsNormal } from 'services/zapper/hooks/useGetData'
 import useGetNftUsersCollectionsTotals from 'services/zapper/hooks/useGetZapperNftUsersCollectionsTotals'
 import styled from 'styled-components/macro'
 

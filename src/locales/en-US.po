@@ -354,6 +354,14 @@ msgstr "All"
 msgid "All Chains"
 msgstr "All Chains"
 
+#: src/pages/Explore/Account/TokenApprovals/NetworkSelect.tsx
+msgid "All NetWorks"
+msgstr "All NetWorks"
+
+#: src/pages/Explore/Account/TokenApprovals/NetworkSelect.tsx
+msgid "All Networks"
+msgstr "All Networks"
+
 #: src/components/PoolsCurrencyInputPanel/index.tsx
 msgid "All Tokens"
 msgstr "All Tokens"
@@ -384,6 +392,7 @@ msgid "An update is available for the token list \"{0}\" ({1} to {2})."
 msgstr "An update is available for the token list \"{0}\" ({1} to {2})."
 
 #: src/components/Header/index.tsx
+#: src/pages/Explore/Account/components/Tab.tsx
 msgid "Analytics"
 msgstr "Analytics"
 
@@ -836,6 +845,7 @@ msgstr "Confirm this transaction in your wallet"
 #: src/pages/Bridge/SwapForm.tsx
 #: src/pages/Campaign/index.tsx
 #: src/pages/CreatePool/index.tsx
+#: src/pages/DashBoard/index.tsx
 #: src/pages/IncreaseLiquidity/index.tsx
 #: src/pages/RemoveLiquidity/TokenPair.tsx
 #: src/pages/RemoveLiquidity/ZapOut.tsx
@@ -1012,6 +1022,11 @@ msgstr "DEXs"
 #: src/components/Settings/index.tsx
 msgid "Dark Mode"
 msgstr "Dark Mode"
+
+#: src/components/Header/index.tsx
+#: src/components/Menu/index.tsx
+msgid "DashBoard"
+msgstr "DashBoard"
 
 #: src/components/YieldPools/ElasticFarmGroup/buttons.tsx
 msgid "Deposit"
@@ -1375,6 +1390,14 @@ msgstr "Estimated return from trading fees if you participate in the pool"
 #: src/components/SearchModal/CurrencyList.tsx
 #~ msgid "Expanded results from inactive Token Lists"
 #~ msgstr "Expanded results from inactive Token Lists"
+
+#: src/components/SearchExplore/index.tsx
+msgid "Explore Account"
+msgstr "Explore Account"
+
+#: src/components/SearchExplore/index.tsx
+msgid "Explore any wallet by searching for its address or ENS domain below"
+msgstr "Explore any wallet by searching for its address or ENS domain below"
 
 #: src/pages/ProAmmPools/index.tsx
 msgid "FEES (24H)"
@@ -2362,6 +2385,10 @@ msgstr "My Total Rewards"
 msgid "My liquidity"
 msgstr "My liquidity"
 
+#: src/pages/Explore/Account/components/Tab.tsx
+msgid "NFTs"
+msgstr "NFTs"
+
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/index.tsx
 #: src/pages/TrueSight/components/TrendingLayout/TrendingTokenItemMobileOnly.tsx
@@ -2571,6 +2598,10 @@ msgstr "Output is estimated. If the price changes by more than {0}% your transac
 #: src/components/swapv2/SwapModalHeader.tsx
 msgid "Output is estimated. You will receive at least"
 msgstr "Output is estimated. You will receive at least"
+
+#: src/pages/Explore/Account/components/Tab.tsx
+msgid "Overview"
+msgstr "Overview"
 
 #: src/pages/About/AboutKyberSwap.tsx
 msgid "PREVENT SNIPING ATTACKS"
@@ -2981,8 +3012,8 @@ msgid "Seamless liquidity."
 msgstr "Seamless liquidity."
 
 #: src/components/SearchExplore/index.tsx
-msgid "Search and Explore"
-msgstr "Search and Explore"
+#~ msgid "Search and Explore"
+#~ msgstr "Search and Explore"
 
 #: 
 #~ msgid "Search by address"
@@ -3016,6 +3047,10 @@ msgstr "Search by token name, token symbol or address"
 #: src/pages/ProAmmPool/index.tsx
 msgid "Search by token or pool address"
 msgstr "Search by token or pool address"
+
+#: src/components/SearchExplore/index.tsx
+msgid "Search by wallet address or ENS domain"
+msgstr "Search by wallet address or ENS domain"
 
 #: src/components/swapv2/LiquiditySourcesPanel/SearchBar.tsx
 msgid "Search for a liquidity source"
@@ -3630,6 +3665,10 @@ msgstr "Token"
 msgid "Token Amount"
 msgstr "Token Amount"
 
+#: src/pages/Explore/Account/components/Tab.tsx
+msgid "Token Approvals"
+msgstr "Token Approvals"
+
 #: src/components/swapv2/MobileTokenInfo.tsx
 #: src/components/swapv2/SwapSettingsPanel/index.tsx
 #: src/components/TransactionSettings/index.tsx
@@ -3784,6 +3823,10 @@ msgstr "Transaction will revert if it is pending for longer than the indicated t
 #: src/components/TransactionSettings/index.tsx
 msgid "Transaction will revert if there is an adverse rate change that is higher than this %"
 msgstr "Transaction will revert if there is an adverse rate change that is higher than this %"
+
+#: src/pages/Explore/Account/components/Tab.tsx
+msgid "Transactions"
+msgstr "Transactions"
 
 #: src/pages/Bridge/ComfirmBridgeModal.tsx
 msgid "Transfer"
@@ -4285,6 +4328,10 @@ msgstr "You can remove your liquidity here. When you remove liquidity (even part
 msgid "You can repeat these instructions anytime by clicking on the \"View\" button under Preferences."
 msgstr "You can repeat these instructions anytime by clicking on the \"View\" button under Preferences."
 
+#: src/components/SearchExplore/index.tsx
+msgid "You can search and select <0> Any EVM Wallet</0>"
+msgstr "You can search and select <0> Any EVM Wallet</0>"
+
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "You can search and select <0>any token</0> on KyberSwap"
 msgstr "You can search and select <0>any token</0> on KyberSwap"
@@ -4662,6 +4709,7 @@ msgstr "your wallet"
 #: src/components/swapv2/TokenInfo.tsx
 #: src/components/swapv2/TokenInfoV2/SingleTokenInfo.tsx
 #: src/pages/Bridge/PoolInfo.tsx
+#: src/pages/Explore/Account/TokenApprovals/NetworkSelect.tsx
 #: src/pages/TrueSight/components/FilterBar/NetworkSelect.tsx
 msgid "{0}"
 msgstr "{0}"

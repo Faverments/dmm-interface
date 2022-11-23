@@ -7,7 +7,6 @@ import { ALL_NETWORKS, Network, PresentedBalancePayload } from 'services/zapper/
 import { AutoColumn } from 'components/Column'
 import Pagination from 'components/Pagination'
 import useTheme from 'hooks/useTheme'
-import { formattedNumLong, toKInChart } from 'utils'
 import { formatDollarAmount } from 'utils/numbers'
 
 import { ItemLayout, ItemWrapper, OverflowPagination, SideTitle, SideWrapper } from '../../styleds'

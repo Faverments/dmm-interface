@@ -1,4 +1,4 @@
-import { ApolloError, gql } from '@apollo/client'
+import { ApolloError } from '@apollo/client'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ZAPPER_WEB_API } from 'services/config'
 import { zapperClient } from 'services/zapper/apollo/client'

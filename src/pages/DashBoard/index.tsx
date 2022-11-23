@@ -1,11 +1,10 @@
 import { Trans } from '@lingui/macro'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Flex } from 'rebass'
 
 import { ButtonLight } from 'components/Button'
 import { useActiveWeb3React } from 'hooks'
-import Account from 'pages/Explore/Account'
 import { useToggleSearchExploreModal, useWalletModalToggle } from 'state/application/hooks'
 
 export default function DashBoard(props: RouteComponentProps<{ address: string }>) {

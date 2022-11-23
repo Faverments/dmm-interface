@@ -1,6 +1,5 @@
 // components/FuseHighlight.jsx
 import React from 'react'
-import { Text } from 'rebass'
 
 import useTheme from 'hooks/useTheme'
 

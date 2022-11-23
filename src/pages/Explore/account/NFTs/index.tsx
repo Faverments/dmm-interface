@@ -1,9 +1,7 @@
-import { rgba } from 'polished'
 import React, { useState } from 'react'
 import { Flex, Text } from 'rebass'
 import { Network } from 'services/zapper'
 import { chainsInfo } from 'services/zapper/constances'
-import styled, { css } from 'styled-components/macro'
 
 import useTheme from 'hooks/useTheme'
 

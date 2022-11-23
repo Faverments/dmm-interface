@@ -1,4 +1,3 @@
-import Axios from 'axios'
 import useSWR from 'swr'
 
 import { ZAPPER_WEB_API } from '../../config'
