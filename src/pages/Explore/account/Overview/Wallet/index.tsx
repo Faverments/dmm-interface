@@ -1,9 +1,11 @@
+import { rgba } from 'polished'
 import React, { useEffect, useMemo } from 'react'
 import { Flex, Text } from 'rebass'
 import { chainsInfo } from 'services/zapper/constances'
 import { useWalletBalances } from 'services/zapper/hooks/useBalances'
 import { ALL_NETWORKS, PresentedBalancePayload, TokenBreakdown } from 'services/zapper/types/models'
 import { Network } from 'services/zapper/types/models/index'
+import styled from 'styled-components/macro'
 
 import { AutoColumn } from 'components/Column'
 import WalletIcon from 'components/Icons/Wallet'
@@ -99,6 +101,20 @@ export default function Wallet({
               </Flex>
             </Flex>
           </Flex>
+        </TableBodyItemWrapper>
+        <TableBodyItemWrapper>
+          <Flex alignItems={'center'}>{formattedNumLong(token.context.price, true)}</Flex>
+        </TableBodyItemWrapper>
+        <TableBodyItemWrapper>
+          <Flex>
+            {formattedNumLong(token.context.balance)}
+            <Text color={theme.primary} fontSize={14} fontWeight={300} style={{ marginLeft: 8 }}>
+              {token.context.symbol}
+            </Text>
+          </Flex>
+        </TableBodyItemWrapper>
+        <TableBodyItemWrapper>
+          <Flex alignItems={'center'}>{formattedNumLong(token.balanceUSD, true)}</Flex>
         </TableBodyItemWrapper>
       </LayoutWrapper>
     )

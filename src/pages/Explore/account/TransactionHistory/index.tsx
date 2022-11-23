@@ -1,3 +1,4 @@
+import ReactBlockies from '@vukhaihoan/react-blockies'
 import dayjs from 'dayjs'
 import { rgba } from 'polished'
 import { useEffect, useMemo, useState } from 'react'
@@ -10,11 +11,15 @@ import { useGetTransactions } from 'services/zapper/hooks/useTransactions'
 import { Network, Transaction } from 'services/zapper/types/models/index'
 import styled, { useTheme } from 'styled-components/macro'
 
+import DefaultIcon from 'assets/images/default-icon.png'
+import ETH from 'assets/images/ethereum-logo.png'
 import { AutoColumn } from 'components/Column'
 import LocalLoader from 'components/LocalLoader'
 import Pagination from 'components/Pagination'
 import Search from 'components/Search'
 import { useFuse } from 'hooks/useFuse'
+import { formattedNumLong } from 'utils'
+import getShortenAddress from 'utils/getShortenAddress'
 
 import FuseHighlight from '../../../../components/FuseHighlight/FuseHighlight'
 import { ChainWrapper, TableWrapper } from '../styleds'
@@ -39,19 +44,19 @@ export default function TransactionsHistory() {
     address,
   })
 
-  useEffect(() => {
-    setCurrentPage(1)
-  }, [address, network])
-
   const AllTransactions = useMemo(() => {
     return transactions?.data || []
   }, [transactions])
 
   const { hits, query, onSearch } = useFuse<any>(AllTransactions, {
-    keys: ['name', 'symbol', 'address'],
+    keys: ['name', 'symbol', 'address', 'from'],
     includeMatches: true,
     matchAllOnEmptyQuery: true,
   })
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [address, network, query])
 
   const { listTimeStamp, transactionsPaginated, hitsPaginated } = useMemo<{
     listTimeStamp: any[]
@@ -93,6 +98,8 @@ export default function TransactionsHistory() {
     onSearch(value)
     setSearch(value)
   }
+
+  console.log('transactionsPaginated', transactionsPaginated)
 
   return (
     <Flex flexDirection="column" style={{ gap: 18 }}>
@@ -208,7 +215,7 @@ export default function TransactionsHistory() {
                         })
                         .map((transaction, index) => {
                           const hit = hitsPaginated[index]
-                          const { direction, timeStamp, network } = hit.item
+                          const { direction, timeStamp, network, subTransactions, symbol, from, gasPrice } = hit.item
                           const networkInfo = chainsInfo[network as keyof typeof chainsInfo]
                           return (
                             <LayoutWrapper key={hit.refIndex}>
@@ -246,6 +253,79 @@ export default function TransactionsHistory() {
                                   </Flex>
                                 </Flex>
                               </TableBodyItem>
+                              <TableBodyItem>
+                                <Flex alignItems="center">
+                                  <img
+                                    src={`https://storage.googleapis.com/zapper-fi-assets/tokens/${network}/${subTransactions[0].address}.png`}
+                                    alt={symbol}
+                                    onError={e => {
+                                      e.currentTarget.onerror = null
+                                      e.currentTarget.src = DefaultIcon
+                                    }}
+                                    height={32}
+                                    width={32}
+                                    style={{ borderRadius: '50%' }}
+                                  />
+                                  <Flex flexDirection="column" style={{ marginLeft: 12 }}>
+                                    <Flex>
+                                      <Text color={theme.subText} fontSize={16} fontWeight={300}>
+                                        {direction === 'exchange' ? <></> : direction === 'outgoing' ? '-' : '+'}
+                                        {formattedNumLong(Number(subTransactions[0].amount))}
+                                      </Text>
+                                    </Flex>
+                                    <Text
+                                      color={theme.text}
+                                      fontSize={18}
+                                      fontWeight={500}
+                                      style={{
+                                        maxWidth: 120,
+                                        textOverflow: 'ellipsis',
+                                        overflow: 'hidden',
+                                      }}
+                                    >
+                                      <FuseHighlight hit={hit} attribute="symbol" />
+                                    </Text>
+                                  </Flex>
+                                </Flex>
+                              </TableBodyItem>
+                              <TableBodyItem>
+                                <Flex alignItems="center" style={{ gap: 12 }}>
+                                  <ReactBlockies
+                                    seed={from}
+                                    size={10}
+                                    scale={4}
+                                    style={{
+                                      borderRadius: 8,
+                                    }}
+                                  />
+                                  <Flex flexDirection="column" style={{ gap: 6 }}>
+                                    <Text>
+                                      {direction === 'exchange' ? '' : direction === 'outgoing' ? 'To' : 'From'}
+                                    </Text>
+                                    <Text
+                                      style={{
+                                        gap: 8,
+                                        borderRadius: 4,
+                                        background: theme.background,
+                                        padding: '2px 8px',
+                                      }}
+                                    >
+                                      {getShortenAddress(from)}
+                                    </Text>
+                                  </Flex>
+                                </Flex>
+                              </TableBodyItem>
+                              <TableBodyItem>
+                                <Flex flexDirection="column" style={{ gap: 8 }}>
+                                  <Text color={theme.subText} fontSize={13}>
+                                    Gas Fee
+                                  </Text>
+                                  <Flex style={{ gap: 4 }}>
+                                    <img src={ETH} alt="ETH" height={16} width={16} />
+                                    <Text fontSize={13}>${gasPrice}</Text>
+                                  </Flex>
+                                </Flex>
+                              </TableBodyItem>
                             </LayoutWrapper>
                           )
                         })}
@@ -272,7 +352,7 @@ export default function TransactionsHistory() {
 
 const LayoutWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
   border-bottom: 0.5px solid ${({ theme }) => (theme.darkMode ? rgba(theme.border, 0.2) : theme.border)};
   padding-bottom: 16px;
 `

@@ -27,5 +27,10 @@ export const TableHeaderItem = styled.div<{ align?: string }>`
 export const TableBodyItemWrapper = styled.div<{ align?: string }>`
   font-size: 14px;
   font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: ${({ align }) => (align === 'right' ? 'flex-end' : 'flex-start')};
+  gap: 8px;
   color: ${({ theme }) => rgba(theme.text, 0.85)};
 `

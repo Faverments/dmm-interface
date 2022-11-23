@@ -57,8 +57,6 @@ export default function Account(props: RouteComponentProps<{ address: string }>)
     }
   }, [account, address])
 
-  console.log('isOwnerWallet', isOwnerWallet)
-
   const [activeTab, setActiveTab] = useState<AccountTabs>()
   useEffect(() => {
     if (tab === undefined) {
