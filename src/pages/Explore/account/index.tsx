@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { useGetBalancesEventStream } from 'services/zapper/hooks/useBalances'
 import { Network } from 'services/zapper/types/models'
 
+import { useActiveWeb3React } from 'hooks'
 import useParsedQueryString from 'hooks/useParsedQueryString'
 
 import Analytics from './Analytics'
@@ -37,6 +38,27 @@ export default function Account(props: RouteComponentProps<{ address: string }>)
     history,
   } = props
   const { tab } = useParsedQueryString()
+  const [isOwnerWallet, setIsOwnerWallet] = useState(false)
+  const { account } = useActiveWeb3React()
+  useEffect(() => {
+    if (account && account.toLowerCase() !== address.toLowerCase()) {
+      return
+    }
+
+    if (account && account.toLowerCase() === address.toLowerCase()) {
+      setIsOwnerWallet(true)
+    } else {
+      setIsOwnerWallet(pre => {
+        if (pre) {
+          history.push(`/dashboard`)
+        }
+        return false
+      })
+    }
+  }, [account, address])
+
+  console.log('isOwnerWallet', isOwnerWallet)
+
   const [activeTab, setActiveTab] = useState<AccountTabs>()
   useEffect(() => {
     if (tab === undefined) {
@@ -71,11 +93,7 @@ export default function Account(props: RouteComponentProps<{ address: string }>)
   // )
 
   return (
-    <Wrapper
-      style={{
-        position: 'relative',
-      }}
-    >
+    <Wrapper>
       <PageWrapper>
         <Header
           data={balances.data}
