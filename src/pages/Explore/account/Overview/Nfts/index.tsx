@@ -88,7 +88,15 @@ export default function Nfts({ network }: { network: Network | ALL_NETWORKS }) {
                   <img src={logoImageUrl} alt={name} />
                 </LogoImageWrapper>
               </BannerImageWrapper>
-              <Text color={theme.text} fontWeight={400}>
+              <Text
+                color={theme.text}
+                fontWeight={400}
+                style={{
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
+                  maxWidth: '120px',
+                }}
+              >
                 {name}
               </Text>
               <Flex justifyContent="space-between">
@@ -157,5 +165,9 @@ const LogoImageWrapper = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    &:hover {
+      transform: rotate(360deg);
+      transition-duration: 0.5s;
+    }
   }
 `

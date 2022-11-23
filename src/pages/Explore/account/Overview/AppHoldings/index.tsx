@@ -59,7 +59,13 @@ export default function AppHolding({
                     </Text>
                     <Flex
                       alignItems="flex-end"
-                      style={{ gap: 8, borderRadius: 4, background: theme.background, padding: '2px 8px' }}
+                      style={{
+                        gap: 8,
+                        borderRadius: 4,
+                        background: theme.background,
+                        padding: '2px 8px',
+                        width: 'fit-content',
+                      }}
                     >
                       <img src={networkInfo.logo} alt="" height={16} />
                       <Text fontSize={14} fontWeight={300} color={theme.subText}>

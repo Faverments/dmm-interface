@@ -18,6 +18,15 @@ const ChainBalanceStyled = styled.div<{ active: boolean }>`
   border: 1px solid ${({ theme, active }) => rgba(theme.border, 0.3)};
   &:hover {
     border: 1px solid ${({ theme }) => theme.primary};
+
+    img {
+      transform: rotate(360deg);
+      transition-duration: 1s;
+    }
+    #kid {
+      transform: rotate(360deg);
+      transition-duration: 1s;
+    }
   }
 `
 
@@ -61,8 +70,9 @@ export default function Chains({
           >
             <Flex flexDirection="column" style={{ gap: 16 }}>
               <Flex alignItems="center" style={{ gap: 8 }}>
-                <Kyber size={40} color={theme.border} />
-
+                <Flex id="kid" justifyContent="center" alignItems="colum">
+                  <Kyber size={40} color={theme.border} />
+                </Flex>
                 <Text
                   fontSize={16}
                   fontWeight={500}

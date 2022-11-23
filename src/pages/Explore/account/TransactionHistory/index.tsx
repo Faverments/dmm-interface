@@ -97,7 +97,7 @@ export default function TransactionsHistory() {
 
   return (
     <Flex flexDirection="column" style={{ gap: 18 }}>
-      <Flex>
+      <Flex style={{ gap: 8 }} flexWrap="wrap">
         {listChainAvailable.map((item, index) => {
           const active = item === network
           return (

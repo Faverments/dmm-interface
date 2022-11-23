@@ -34,7 +34,7 @@ export default function Overview({ data }: { data: PresentedBalancePayload[] }) 
         </BackgroundOverlay>
       </Wrapper>
       <Flex flexDirection={'column'} style={{ gap: 20 }} height="fit-content">
-        <Portfolio />
+        <Portfolio data={data} />
         <Nfts network={network} />
         <DaoMemberShip />
         <AppHolding data={data} network={network} />

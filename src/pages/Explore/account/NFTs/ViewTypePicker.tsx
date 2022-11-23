@@ -24,7 +24,7 @@ const ViewTypePicker = ({
   setActiveViewType,
 }: {
   activeViewType: 'single' | 'collection'
-  setActiveViewType: (timeframe: 'single' | 'collection') => void
+  setActiveViewType: (mode: 'single' | 'collection') => void
 }) => {
   const theme = useTheme()
 

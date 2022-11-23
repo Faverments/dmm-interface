@@ -14,6 +14,7 @@ export function useGetNftUsersCollections({
   first = 24,
   collections = [],
   search = '',
+  after = '',
 }: {
   address: string
   network: keyof typeof Network
@@ -21,6 +22,7 @@ export function useGetNftUsersCollections({
   first?: number
   collections?: string[]
   search?: string
+  after?: string
 }) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApolloError>()
@@ -30,19 +32,23 @@ export function useGetNftUsersCollections({
   useEffect(() => {
     fetchRef.current = ++fetchRef.current
     if (fetchRef.current === 2) return
+    const variables: any = {
+      owners: [address],
+      network: network,
+      minCollectionValueUsd,
+      first,
+      collections,
+      search,
+    }
+    if (after) {
+      variables['after'] = after
+    }
     const fetcher = async () => {
       setError(undefined)
       setIsLoading(true)
       const result = await zapperClient.query<NftUsersCollections>({
         query: nftUsersCollections,
-        variables: {
-          owners: [address],
-          network: network,
-          minCollectionValueUsd,
-          first,
-          collections,
-          search,
-        },
+        variables: variables,
       })
       setData(pre => [...pre, ...result.data.nftUsersCollections.edges])
       setIsLoading(false)
@@ -51,7 +57,7 @@ export function useGetNftUsersCollections({
       }
     }
     fetcher()
-  }, [address, network, minCollectionValueUsd, first, JSON.stringify(collections), search])
+  }, [address, network, minCollectionValueUsd, first, JSON.stringify(collections), search, after])
   return useMemo(() => ({ isLoading, data, error, setData }), [isLoading, error, data])
 }
 
@@ -62,6 +68,7 @@ export function useGetNftUsersCollectionsNormal({
   first = 24,
   collections = [],
   search = '',
+  after = '',
 }: {
   address: string
   network: keyof typeof Network
@@ -69,24 +76,29 @@ export function useGetNftUsersCollectionsNormal({
   first?: number
   collections?: string[]
   search?: string
+  after?: string
 }) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApolloError>()
   const [data, setData] = useState<EdgeUserCollection[]>([])
   useEffect(() => {
+    const variables: any = {
+      owners: [address],
+      network: network,
+      minCollectionValueUsd,
+      first,
+      collections,
+      search,
+    }
+    if (after) {
+      variables['after'] = after
+    }
     const fetcher = async () => {
       setError(undefined)
       setIsLoading(true)
       const result = await zapperClient.query<NftUsersCollections>({
         query: nftUsersCollections,
-        variables: {
-          owners: [address],
-          network: network,
-          minCollectionValueUsd,
-          first,
-          collections,
-          search,
-        },
+        variables: variables,
       })
       setData(result.data.nftUsersCollections.edges)
       setIsLoading(false)
@@ -95,7 +107,7 @@ export function useGetNftUsersCollectionsNormal({
       }
     }
     fetcher()
-  }, [address, network, minCollectionValueUsd, first, JSON.stringify(collections), search])
+  }, [address, network, minCollectionValueUsd, first, JSON.stringify(collections), search, after])
   return useMemo(() => ({ isLoading, data, error }), [isLoading, error, data])
 }
 

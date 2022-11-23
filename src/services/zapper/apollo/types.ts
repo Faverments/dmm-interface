@@ -92,7 +92,7 @@ interface Token {
   collection: CollectionUserToken
 }
 
-interface CollectionUserToken {
+export interface CollectionUserToken {
   address: string
   name: string
   network: string

@@ -27,7 +27,7 @@ export default function DaoMemberShip() {
   return (
     <SideWrapper>
       <AutoColumn gap="8px">
-        <SideTitle>Dao MemberShips</SideTitle>
+        {daoSortAvaliable.length > 0 && <SideTitle>Dao MemberShips</SideTitle>}
         {daoSortAvaliable.map((daoMembership, index) => (
           <ItemWrapper key={index}>
             <ItemLayout>

@@ -83,7 +83,6 @@ export const ChainWrapper = styled.div<{ active: boolean }>`
   border-radius: 999px;
   padding: 10px 20px;
   cursor: pointer;
-  cursor: pointer;
   border: 1px solid ${({ theme }) => theme.buttonBlack};
   &:hover {
     border: 1px solid ${({ theme }) => theme.primary};
