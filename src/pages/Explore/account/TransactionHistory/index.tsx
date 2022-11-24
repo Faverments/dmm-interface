@@ -13,6 +13,7 @@ import styled, { useTheme } from 'styled-components/macro'
 
 import DefaultIcon from 'assets/images/default-icon.png'
 import ETH from 'assets/images/ethereum-logo.png'
+import { ButtonLight } from 'components/Button'
 import { AutoColumn } from 'components/Column'
 import LocalLoader from 'components/LocalLoader'
 import Pagination from 'components/Pagination'
@@ -139,8 +140,9 @@ export default function TransactionsHistory() {
           placeholder="Search by name, symbol, address"
           minWidth={'350px'}
         />
-        <CSVLink data={AllTransactions} filename="transactions.csv">
-          Download CSV
+
+        <CSVLink data={AllTransactions} filename={`${address}_transactions.csv`}>
+          <ButtonLight> Download CSV</ButtonLight>
         </CSVLink>
       </Flex>
 

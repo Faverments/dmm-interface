@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
+import { Flex, Text } from 'rebass'
 import { useGetBalancesEventStream } from 'services/zapper/hooks/useBalances'
 import { Network } from 'services/zapper/types/models'
 
+import KNCG from 'assets/images/knc-graphic.png'
+import { ButtonPrimary } from 'components/Button'
 import { useActiveWeb3React } from 'hooks'
 import useParsedQueryString from 'hooks/useParsedQueryString'
+import useTheme from 'hooks/useTheme'
+import { isAddress } from 'utils'
 
 import Analytics from './Analytics'
 import NFTs from './NFTs'
@@ -89,6 +94,48 @@ export default function Account(props: RouteComponentProps<{ address: string }>)
   //     .map(key => chainParams[key as unknown as number])
   //     .filter(value => typeof value === 'number') as unknown as number[],
   // )
+
+  const theme = useTheme()
+
+  if (!address || isAddress(address) === false) {
+    return (
+      <Wrapper>
+        <PageWrapper>
+          <Flex justifyContent="center">
+            <Flex style={{ gap: 64, padding: '80px 12px' }}>
+              <img src={KNCG} height={358} alt="knc" />
+              <Flex
+                flexDirection="column"
+                // alignItems="center"
+                // justifyContent="center"
+                width="100%"
+                height="100%"
+                style={{
+                  gap: '32px',
+                  padding: '16px 0px',
+                }}
+              >
+                <Text color={theme.primary} fontSize={80} fontWeight={700}>
+                  Oops! Page Not Found.
+                </Text>
+                <Text fontSize={['20px', '40px']} fontWeight="300">
+                  Please Enter a Valid Address
+                </Text>
+                <ButtonPrimary
+                  onClick={() => history.push('/dashboard')}
+                  style={{
+                    maxWidth: '300px',
+                  }}
+                >
+                  Back to DashBoard
+                </ButtonPrimary>
+              </Flex>
+            </Flex>
+          </Flex>
+        </PageWrapper>
+      </Wrapper>
+    )
+  }
 
   return (
     <Wrapper>

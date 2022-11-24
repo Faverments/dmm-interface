@@ -3,8 +3,9 @@ import { Trans } from '@lingui/macro'
 import { useWeb3React } from '@web3-react/core'
 import React, { useCallback } from 'react'
 import { isMobile } from 'react-device-detect'
-import { FileText } from 'react-feather'
+import { FileText, User } from 'react-feather'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { useLocalStorage } from 'react-use'
 import { Flex, Text } from 'rebass'
 import styled from 'styled-components'
@@ -359,6 +360,15 @@ export default function AccountDetails({
               <FileText size={16} />
               <Text marginLeft="4px" fontSize="14px">
                 <Trans>View Transactions</Trans> ↗
+              </Text>
+            </Flex>
+          </ExternalLink>
+
+          <ExternalLink href={`/account/${account}`}>
+            <Flex alignItems="center">
+              <User size={16} />
+              <Text marginLeft="4px" fontSize="14px">
+                <Trans>DashBoard</Trans> ↗
               </Text>
             </Flex>
           </ExternalLink>

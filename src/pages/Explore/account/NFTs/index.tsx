@@ -9,12 +9,14 @@ import { ChainWrapper } from '../styleds'
 import CollectionView from './CollectionView'
 import SingleView from './SingleView'
 
-function ListChain({
+export function ListChain({
   network,
   setNetwork,
+  onNetworkChange,
 }: {
   network: keyof typeof Network
   setNetwork: React.Dispatch<React.SetStateAction<keyof typeof Network>>
+  onNetworkChange: (network: keyof typeof Network) => void
 }) {
   const listChainAvailable: (keyof typeof Network)[] = ['ETHEREUM_MAINNET', 'ARBITRUM_MAINNET', 'OPTIMISM_MAINNET']
   const theme = useTheme()
@@ -33,6 +35,7 @@ function ListChain({
             }
             onClick={() => {
               setNetwork(item)
+              onNetworkChange(item)
             }}
             active={active}
           >
@@ -53,16 +56,14 @@ function ListChain({
 }
 
 export default function Nfts() {
-  const [network, setNetwork] = useState<keyof typeof Network>('ETHEREUM_MAINNET')
   const [activeViewType, setActiveViewType] = useState<'single' | 'collection'>('single')
 
   return (
     <Flex flexDirection="column" style={{ gap: 20 }}>
-      <ListChain network={network} setNetwork={setNetwork} />
       {activeViewType === 'single' ? (
-        <SingleView activeViewType={activeViewType} setActiveViewType={setActiveViewType} network={network} />
+        <SingleView activeViewType={activeViewType} setActiveViewType={setActiveViewType} />
       ) : (
-        <CollectionView activeViewType={activeViewType} setActiveViewType={setActiveViewType} network={network} />
+        <CollectionView activeViewType={activeViewType} setActiveViewType={setActiveViewType} />
       )}
     </Flex>
   )

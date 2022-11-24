@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { InView } from 'react-intersection-observer'
 import { useParams } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
@@ -13,19 +13,19 @@ import { formattedNumLong } from 'utils'
 
 import SearchNftCollections from './SearchNftCollections'
 import ViewTypePicker from './ViewTypePicker'
+import { ListChain } from './index'
 import { BannerImageWrapper, ItemWrapper, LayoutWrapper, LogoImageWrapper, Wrapper } from './styleds'
 
 export default function SingleView({
   activeViewType,
   setActiveViewType,
-  network,
 }: {
   activeViewType: 'single' | 'collection'
   setActiveViewType: (mode: 'single' | 'collection') => void
-  network: keyof typeof Network
 }) {
+  const [network, setNetwork] = useState<keyof typeof Network>('ETHEREUM_MAINNET')
   const { address } = useParams<{ address: string }>()
-  const [after, setAfter] = React.useState<string | undefined>(undefined)
+  const [after, setAfter] = useState<string | undefined>(undefined)
 
   const { data, isLoading } = useGetNftUsersTokens({
     address,
@@ -47,6 +47,13 @@ export default function SingleView({
 
   return (
     <>
+      <ListChain
+        network={network}
+        setNetwork={setNetwork}
+        onNetworkChange={i => {
+          console.log(i)
+        }}
+      />
       <Flex justifyContent="space-between">
         <ViewTypePicker activeViewType={activeViewType} setActiveViewType={setActiveViewType} />
         <SearchNftCollections SearchList={searchList} OnSearchItemClick={onSearchItemClick} />
