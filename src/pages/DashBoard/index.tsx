@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import styled, { useTheme } from 'styled-components/macro'
 
-import { ButtonLight, ButtonPrimary } from 'components/Button'
+import { ButtonPrimary } from 'components/Button'
 import { Arbitrum, Aurora, Avalanche, Binance, Cronos, Ethereum, Fantom, OptimismLogo, Polygon } from 'components/Icons'
 import { useActiveWeb3React } from 'hooks'
 import { PageWrapper, Wrapper } from 'pages/Explore/Account/styleds'

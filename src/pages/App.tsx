@@ -32,7 +32,6 @@ import { isAddressString, shortenAddress } from 'utils'
 import { RedirectDuplicateTokenIds } from './AddLiquidityV2/redirects'
 import Bridge from './Bridge'
 import DashBoard from './DashBoard'
-import Account from './Explore/Account'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import ProAmmSwap from './SwapProAmm'
@@ -77,6 +76,8 @@ const TrueSight = lazy(() => import(/* webpackChunkName: 'true-sight-page' */ '.
 const BuyCrypto = lazy(() => import(/* webpackChunkName: 'true-sight-page' */ './BuyCrypto'))
 
 const Campaign = lazy(() => import(/* webpackChunkName: 'campaigns-page' */ './Campaign'))
+
+const Account = lazy(() => import(/* webpackChunkName: 'account-page' */ './Explore/Account'))
 
 const AppWrapper = styled.div`
   display: flex;

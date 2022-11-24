@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 
 import { ZAPPER_WEB_API } from '../../config'
-import { ALL_NETWORKS, AppPayload, EachBalance, Network, PresentedBalancePayload } from '../types/models'
+import { ALL_NETWORKS, EachBalance, Network, PresentedBalancePayload } from '../types/models'
 import { BalancesGet } from '../types/parameters'
 
 // export interface MessageEvent {

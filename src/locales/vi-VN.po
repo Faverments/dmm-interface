@@ -886,7 +886,6 @@ msgstr "Chấp thuận giao dịch này trong ví của bạn"
 #: src/pages/Bridge/SwapForm.tsx
 #: src/pages/Campaign/index.tsx
 #: src/pages/CreatePool/index.tsx
-#: src/pages/DashBoard/index.tsx
 #: src/pages/IncreaseLiquidity/index.tsx
 #: src/pages/RemoveLiquidity/TokenPair.tsx
 #: src/pages/RemoveLiquidity/ZapOut.tsx
@@ -947,6 +946,10 @@ msgstr ""
 #: src/constants/messages.ts
 msgid "Contract not found! Please reload and try again."
 msgstr "Không tìm thấy contract! Vui lòng tải lại trang và thử lại."
+
+#: src/pages/DashBoard/index.tsx
+msgid "Control your digital assets with a full suite of innovative tools."
+msgstr ""
 
 #: src/components/NavigationTabs/index.tsx
 msgid "Converts your liquidity position on Sushiswap into underlying tokens at the current rate. Tokens are deposited into the basic AMP=1 pool on the KyberSwap and you will be given DMM-LP tokens representing your new pool share. If rates are different between the two platforms, some tokens may be refunded to your address."
@@ -2264,6 +2267,10 @@ msgstr "Quản lý"
 #: src/components/SearchModal/CurrencySearch.tsx
 #~ msgid "Manage Token Lists"
 #~ msgstr "Quản lý danh sách Token"
+
+#: src/pages/DashBoard/index.tsx
+msgid "Manage Your DeFi<0>DeFi</0>Life"
+msgstr ""
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Manage your pools."

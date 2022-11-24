@@ -892,7 +892,6 @@ msgstr ""
 #: src/pages/Bridge/SwapForm.tsx
 #: src/pages/Campaign/index.tsx
 #: src/pages/CreatePool/index.tsx
-#: src/pages/DashBoard/index.tsx
 #: src/pages/IncreaseLiquidity/index.tsx
 #: src/pages/RemoveLiquidity/TokenPair.tsx
 #: src/pages/RemoveLiquidity/ZapOut.tsx
@@ -952,6 +951,10 @@ msgstr ""
 
 #: src/constants/messages.ts
 msgid "Contract not found! Please reload and try again."
+msgstr ""
+
+#: src/pages/DashBoard/index.tsx
+msgid "Control your digital assets with a full suite of innovative tools."
 msgstr ""
 
 #: src/components/NavigationTabs/index.tsx
@@ -2301,6 +2304,10 @@ msgstr ""
 #: src/components/SearchModal/CurrencySearch.tsx
 #~ msgid "Manage Token Lists"
 #~ msgstr ""
+
+#: src/pages/DashBoard/index.tsx
+msgid "Manage Your DeFi<0>DeFi</0>Life"
+msgstr ""
 
 #: 
 #~ msgid "Manage this pool."

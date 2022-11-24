@@ -2,14 +2,7 @@ import { rgba } from 'polished'
 import { Flex, Text } from 'rebass'
 import { chainsInfo } from 'services/zapper/constances'
 import { useAppBalances } from 'services/zapper/hooks/useBalances'
-import {
-  ALL_NETWORKS,
-  Network,
-  NonFungibleTokenBreakdown,
-  PositionBreakdown,
-  PresentedBalancePayload,
-  TokenBreakdown,
-} from 'services/zapper/types/models/index'
+import { ALL_NETWORKS, Network, PresentedBalancePayload, TokenBreakdown } from 'services/zapper/types/models/index'
 import styled from 'styled-components/macro'
 
 import { AutoColumn } from 'components/Column'

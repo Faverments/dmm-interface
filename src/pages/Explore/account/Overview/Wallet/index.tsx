@@ -1,11 +1,9 @@
-import { rgba } from 'polished'
 import React, { useEffect, useMemo } from 'react'
 import { Flex, Text } from 'rebass'
 import { chainsInfo } from 'services/zapper/constances'
 import { useWalletBalances } from 'services/zapper/hooks/useBalances'
 import { ALL_NETWORKS, PresentedBalancePayload, TokenBreakdown } from 'services/zapper/types/models'
 import { Network } from 'services/zapper/types/models/index'
-import styled from 'styled-components/macro'
 
 import { AutoColumn } from 'components/Column'
 import WalletIcon from 'components/Icons/Wallet'
