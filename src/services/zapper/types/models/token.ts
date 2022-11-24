@@ -46,6 +46,7 @@ export type NonFungibleTokenBreakdown = {
     collectionImages: Array<string>
     balanceDisplayMode: string
   }
+  key: string
 }
 
 export type TokenBreakdown = {
@@ -73,6 +74,7 @@ export type TokenBreakdown = {
     info: Array<{ label: DisplayItem; value: DisplayItem }>
     balanceDisplayMode: string
   }
+  key: string
 }
 
 export type PositionBreakdown = {
@@ -93,6 +95,7 @@ export type PositionBreakdown = {
     info: Array<{ label: DisplayItem; value: DisplayItem }>
     balanceDisplayMode: string
   }
+  key: string
 }
 
 export interface AbstractToken {

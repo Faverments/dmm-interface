@@ -48,6 +48,15 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
             return true
           })
 
+          const status = Object.entries(item.details.balance).map(([keyStatus, value]) => {
+            const listKey = Object.keys(value)
+            const listStatus = listKey.map(item => ({
+              key: item,
+              status: keyStatus,
+            }))
+            return listStatus
+          })
+
           return (
             <TableWrapper key={index}>
               <Flex flexDirection={'column'} style={{ gap: 24 }}>
@@ -91,8 +100,12 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
                         {isTokensContainDetail && <TableHeaderItem>Detail</TableHeaderItem>}
                       </LayoutWrapper>
                       {tokens.map((token, index) => {
-                        const { context, displayProps } = token as unknown as TokenBreakdown
+                        const { context, displayProps, key } = token as unknown as TokenBreakdown
                         const networkInfo = chainsInfo[token.network as keyof typeof chainsInfo]
+                        const displayStatus = status.filter(subStatus => {
+                          return subStatus.filter(item => item.key === key).length !== 0
+                        })
+
                         return (
                           <LayoutWrapper key={index} colum={isTokensContainDetail ? 5 : 4}>
                             <TableBodyItemWrapper>
@@ -123,9 +136,23 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
                                 </div>
 
                                 <Flex flexDirection="column" style={{ gap: 4 }}>
-                                  <Text color={theme.text} fontSize={16} fontWeight={400}>
-                                    {displayProps.label}
-                                  </Text>
+                                  <Flex alignItems="center" style={{ gap: 16 }}>
+                                    <Text color={theme.text} fontSize={16} fontWeight={400}>
+                                      {displayProps.label}
+                                    </Text>
+                                    <Text
+                                      style={{
+                                        padding: '4px 8px',
+                                        color: theme.primary,
+                                        backgroundColor: rgba(theme.primary, 0.2),
+                                        borderRadius: 16,
+                                      }}
+                                    >
+                                      {displayStatus.length > 0 &&
+                                        displayStatus[0].length > 0 &&
+                                        displayStatus[0][0].status}
+                                    </Text>
+                                  </Flex>
                                   <Flex
                                     alignItems="center"
                                     style={{
@@ -169,7 +196,13 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
 
                   {positions.length > 0 &&
                     positions.map((item, index) => {
-                      const { displayProps } = item
+                      const { displayProps, key } = item
+
+                      const displayPositionStatus = status.filter(subStatus => {
+                        return subStatus.filter(item => item.key === key).length !== 0
+                      })
+
+                      console.log('displayPro', displayPositionStatus)
 
                       // let isTokensContainDetailBreakdown = false
                       // breakdownList.forEach(token => {
