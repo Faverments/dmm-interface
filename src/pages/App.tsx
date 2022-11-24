@@ -77,7 +77,7 @@ const BuyCrypto = lazy(() => import(/* webpackChunkName: 'true-sight-page' */ '.
 
 const Campaign = lazy(() => import(/* webpackChunkName: 'campaigns-page' */ './Campaign'))
 
-const Account = lazy(() => import(/* webpackChunkName: 'account-page' */ 'pages/Explore/Account'))
+const Account = lazy(() => import(/* webpackChunkName: 'account-page' */ './Explore/Account/index'))
 
 const AppWrapper = styled.div`
   display: flex;
