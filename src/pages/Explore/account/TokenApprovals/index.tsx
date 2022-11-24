@@ -20,6 +20,7 @@ import Search from 'components/Search'
 import { NETWORKS_INFO_CONFIG } from 'constants/networks'
 import { useFuse } from 'hooks/useFuse'
 import useTheme from 'hooks/useTheme'
+import { useRevoke } from 'pages/Explore/hooks/userevoke'
 import { formattedNumLong } from 'utils'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import getShortenAddress from 'utils/getShortenAddress'
@@ -64,6 +65,8 @@ export default function TokenApprovals() {
     onSearch(value)
     setSearch(value)
   }
+
+  const { update } = useRevoke()
 
   return (
     <Flex
@@ -185,7 +188,12 @@ export default function TokenApprovals() {
                         </a>
                       </TableBodyItem>
                       <TableBodyItem>
-                        <ZapOffWrapper size={16} />
+                        <ZapOffWrapper
+                          size={16}
+                          onClick={() => {
+                            update(hit.item, '0')
+                          }}
+                        />
                       </TableBodyItem>
                     </LayoutWrapper>
                   )
