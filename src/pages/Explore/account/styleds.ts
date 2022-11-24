@@ -106,7 +106,7 @@ export const ScrollToTopWrapperIcon = styled.div<{ show: boolean }>`
 `
 
 export const SideWrapper = styled.div`
-  border-radius: 25px;
+  border-radius: 16px;
   padding: 16px;
   background: ${({ theme }) => rgba(theme.buttonBlack, 0.2)};
   flex-basis: 100%;

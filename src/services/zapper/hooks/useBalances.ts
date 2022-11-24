@@ -184,7 +184,7 @@ export function useWalletBalances(data: PresentedBalancePayload[]) {
 
 interface App {
   totals: number
-  details: AppPayload
+  details: PresentedBalancePayload
 }
 
 interface AppDetails {
@@ -201,7 +201,7 @@ export function useAppBalances(data: PresentedBalancePayload[], network: Network
         if (balances.appId !== 'tokens') {
           const obj: App = {
             totals: 0,
-            details: balances.app as AppPayload,
+            details: balances,
           }
           balances.totals.forEach(partial => {
             obj.totals += partial.balanceUSD

@@ -5,6 +5,7 @@ import { Flex, Text } from 'rebass'
 import { Network } from 'services/zapper'
 import { useGetNftUsersTokens } from 'services/zapper/hooks/useGetData'
 
+import DefaultIcon from 'assets/images/default-icon.png'
 import ETH from 'assets/images/ethereum-logo.png'
 import LocalLoader from 'components/LocalLoader'
 import useTheme from 'hooks/useTheme'
@@ -65,15 +66,22 @@ export default function SingleView({
               <ItemWrapper key={index}>
                 <BannerImageWrapper>
                   <img
-                    src={mediasV2[0].url}
+                    src={mediasV2[0].url || logoImageUrl || DefaultIcon}
                     alt={name}
                     onError={(e: any) => {
                       e.target.onerror = null
-                      e.target.src = logoImageUrl
+                      e.target.src = logoImageUrl || DefaultIcon
                     }}
                   />
                   <LogoImageWrapper>
-                    <img src={logoImageUrl} alt={collectionName} />
+                    <img
+                      src={logoImageUrl || DefaultIcon}
+                      alt={collectionName}
+                      onError={(e: any) => {
+                        e.target.onerror = null
+                        e.target.src = DefaultIcon
+                      }}
+                    />
                   </LogoImageWrapper>
                 </BannerImageWrapper>
                 <Flex flexDirection="column" style={{ gap: 16 }}>

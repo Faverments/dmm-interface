@@ -42,7 +42,8 @@ export type PresentedBalancePayload = {
   addresses: string[]
   balance: BalancePayload
   totals: TotalsPayload
-  app?: AppPayload
+  // app?: AppPayload
+  app: AppPayload
 }
 
 //  POSITION BALANCES

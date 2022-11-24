@@ -91,8 +91,14 @@ export default function Wallet({
                 {token.context.symbol}
               </Text>
               <Flex
-                alignItems="flex-end"
-                style={{ gap: 8, borderRadius: 4, background: theme.background, padding: '2px 8px' }}
+                alignItems="center"
+                style={{
+                  gap: 8,
+                  borderRadius: 4,
+                  background: theme.background,
+                  padding: '2px 8px',
+                  width: 'fit-content',
+                }}
               >
                 <img src={networkInfo.logo} alt="" height={16} />
                 <Text fontSize={16} fontWeight={300} color={theme.subText}>

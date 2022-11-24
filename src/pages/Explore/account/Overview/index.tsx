@@ -36,7 +36,9 @@ export default function Overview({ data }: { data: PresentedBalancePayload[] }) 
         <Portfolio data={data} />
         <Nfts network={network} />
         <DaoMemberShip />
-        <AppHolding data={data} network={network} />
+        <AppHoldingsWrapper>
+          <AppHolding data={data} network={network} />
+        </AppHoldingsWrapper>
       </Flex>
     </LayoutWrapper>
   )
@@ -62,5 +64,12 @@ const LayoutWrapper = styled.div`
     display: flex;
     flex-direction: column-reverse;
     gap: 20px;
+  }
+`
+
+const AppHoldingsWrapper = styled.div`
+  @media only screen and (min-width: 1100px) {
+    position: sticky;
+    top: 16px;
   }
 `

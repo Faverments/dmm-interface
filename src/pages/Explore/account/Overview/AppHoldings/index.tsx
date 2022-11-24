@@ -1,4 +1,5 @@
 import React from 'react'
+import { useMedia } from 'react-use'
 import { Flex, Text } from 'rebass'
 import { chainsInfo } from 'services/zapper/constances'
 import { useAppBalances } from 'services/zapper/hooks/useBalances'
@@ -24,19 +25,24 @@ export default function AppHolding({
     setPage(1)
   }, [network])
 
+  const isMobile = useMedia('(max-width: 780px)')
+
   const appPaginate = React.useMemo(() => {
-    return Object.values(apps)
-      .sort((a, b) => b.totals - a.totals)
-      .slice((page - 1) * 6, page * 6)
-  }, [apps, page])
+    if (isMobile) {
+      return Object.values(apps)
+        .sort((a, b) => b.totals - a.totals)
+        .slice((page - 1) * 6, page * 6)
+    }
+    return Object.values(apps).sort((a, b) => b.totals - a.totals)
+  }, [apps, page, isMobile])
   const theme = useTheme()
   return (
     <SideWrapper>
       <AutoColumn gap="8px">
         {appPaginate.length > 0 && <SideTitle>Protocol Holdings</SideTitle>}
         {appPaginate.map((app, index) => {
-          const AppMain = app.details
-          const AppSubDetails = app.details.data.sort((a, b) => b.balanceUSD - a.balanceUSD)
+          const AppMain = app.details.app
+          const AppSubDetails = app.details.app.data.sort((a, b) => b.balanceUSD - a.balanceUSD)
           const networkInfo = chainsInfo[AppMain.network as keyof typeof chainsInfo]
           return (
             <ItemWrapper key={index}>
@@ -87,20 +93,22 @@ export default function AppHolding({
             </ItemWrapper>
           )
         })}
-        <OverflowPagination>
-          <Pagination
-            pageSize={6}
-            onPageChange={newPage => setPage(newPage)}
-            currentPage={page}
-            totalCount={Object.keys(apps).length || 1}
-            style={{
-              backgroundColor: 'transparent',
-              paddingLeft: 0,
-              paddingRight: 0,
-            }}
-            forceMobileMode={true}
-          />
-        </OverflowPagination>
+        {isMobile && (
+          <OverflowPagination>
+            <Pagination
+              pageSize={6}
+              onPageChange={newPage => setPage(newPage)}
+              currentPage={page}
+              totalCount={Object.keys(apps).length || 1}
+              style={{
+                backgroundColor: 'transparent',
+                paddingLeft: 0,
+                paddingRight: 0,
+              }}
+              forceMobileMode={true}
+            />
+          </OverflowPagination>
+        )}
       </AutoColumn>
     </SideWrapper>
   )
