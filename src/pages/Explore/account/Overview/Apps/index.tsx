@@ -24,7 +24,6 @@ const AppSubDetailsStyled = styled.div`
 
 export default function Apps({ data, network }: { data: PresentedBalancePayload[]; network: Network | ALL_NETWORKS }) {
   const apps = useAppBalances(data, network)
-  console.log('apps', apps)
   const theme = useTheme()
   return (
     <>
@@ -201,8 +200,6 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
                       const displayPositionStatus = status.filter(subStatus => {
                         return subStatus.filter(item => item.key === key).length !== 0
                       })
-
-                      console.log('displayPro', displayPositionStatus)
 
                       // let isTokensContainDetailBreakdown = false
                       // breakdownList.forEach(token => {

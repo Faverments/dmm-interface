@@ -111,6 +111,24 @@ export function useTotalsBalances(data: PresentedBalancePayload[], selectedChain
   }, [data])
 }
 
+export function useTotalsWalletBalances(data: PresentedBalancePayload[], selectedChain: Network | ALL_NETWORKS) {
+  return useMemo(() => {
+    console.log('data', data)
+    const tokens = { total: 0 }
+    if (data.length === 0) {
+    } else {
+      data.forEach(balances => {
+        if (balances.appId === 'tokens') {
+          balances.totals.forEach(partial => {
+            tokens.total += partial.balanceUSD
+          })
+        }
+      })
+    }
+    return tokens
+  }, [data])
+}
+
 export function useChainBalances(data: PresentedBalancePayload[]) {
   return useMemo(() => {
     const tokens = {

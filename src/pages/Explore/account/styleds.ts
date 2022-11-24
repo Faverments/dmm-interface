@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
   background-color: transparent;
   background-position: top;
   position: 'relative';
+  min-height: 100vh;
 `
 
 export const BackgroundOverlay = styled.div<{ isDark: boolean }>`
