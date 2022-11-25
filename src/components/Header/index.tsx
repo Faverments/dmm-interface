@@ -84,6 +84,10 @@ const HeaderControls = styled.div`
     border-radius: 12px 12px 0 0;
     background-color: ${({ theme }) => theme.background};
   `};
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    padding: 1rem 4px;
+  `}
 `
 
 const HeaderElement = styled.div`
@@ -94,6 +98,10 @@ const HeaderElement = styled.div`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     align-items: center;
   `};
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+   gap: 4px;
+  `}
 `
 
 const HeaderElementWrap = styled.div`

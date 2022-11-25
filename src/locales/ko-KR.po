@@ -679,6 +679,10 @@ msgstr ""
 #~ msgid "Change"
 #~ msgstr "변경"
 
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "Change Network to {0}"
+msgstr ""
+
 #: src/components/AccountDetails/index.tsx
 msgid "Change Wallet"
 msgstr ""
@@ -1067,6 +1071,7 @@ msgstr ""
 msgid "Dark Mode"
 msgstr "다크 모드"
 
+#: src/components/AccountDetails/index.tsx
 #: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "DashBoard"
@@ -1461,6 +1466,11 @@ msgstr ""
 
 #: src/pages/Bridge/utils.ts
 msgid "Failed"
+msgstr ""
+
+#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "Failed to Revoke"
 msgstr ""
 
 #: src/hooks/useActiveNetwork.ts
@@ -1875,6 +1885,18 @@ msgstr ""
 #: src/hooks/useActiveNetwork.ts
 #: src/hooks/useActiveNetwork.ts
 msgid "In order to use KyberSwap on {0}, you must change the network in your wallet."
+msgstr ""
+
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "In order to use Revode on Account : {address}, you must connect to this wallet."
+msgstr ""
+
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "In order to use Revode on {0}, please confirm in wallet to switch chain to {1}."
+msgstr ""
+
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "In order to use Revode token  {0}, you must confirm in wallet to revoke this token."
 msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
@@ -2519,6 +2541,10 @@ msgstr ""
 msgid "No vesting schedule!"
 msgstr "베스팅 일정이 존재하지 않습니다!"
 
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "No wallet connected"
+msgstr ""
+
 #: src/components/TransactionSettings/AdvanceModeModal.tsx
 #: src/pages/TrueSight/components/UnsubscribeModal.tsx
 msgid "No, go back"
@@ -2689,6 +2715,10 @@ msgstr ""
 #: src/components/WrongNetworkModal/index.tsx
 msgid "Please connect to the appropriate network."
 msgstr "올바른 네트워크에 연결하십시오."
+
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "Please connect your wallet to revoke this token"
+msgstr ""
 
 #: src/pages/CreateReferral/index.tsx
 #: src/pages/CreateReferral/index.tsx

@@ -72,6 +72,10 @@ const StyledMenu = styled.div`
   position: relative;
   border: none;
   text-align: left;
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    margin-left: 0;
+  `};
 `
 
 const MenuFlyoutBrowserStyle = css`

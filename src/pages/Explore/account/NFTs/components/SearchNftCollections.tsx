@@ -1,10 +1,11 @@
-import { debounce } from 'lodash'
-import React, { useCallback, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Flex, Text } from 'rebass'
 import { CollectionUserCollection, CollectionUserToken } from 'services/zapper/apollo/types'
 import styled, { css, useTheme } from 'styled-components/macro'
 
+import FuseHighlight from 'components/FuseHighlight/FuseHighlight'
 import Search from 'components/Search'
+import { useFuse } from 'hooks/useFuse'
 
 export default function SearchNftCollections({
   activeView,
@@ -15,12 +16,10 @@ export default function SearchNftCollections({
   SearchList: CollectionUserCollection[] | CollectionUserToken[]
   OnSearchItemClick: (item: CollectionUserCollection | CollectionUserToken) => void
 }) {
-  const [search, setSearch] = useState('')
   const [showResults, setShowResults] = useState(false)
 
-  const setQuery = useCallback(debounce(setSearch, 100), [])
-  const onSearch = useCallback((value: any) => setQuery(value.trim()), [setQuery])
-  const theme = useTheme()
+  // const setQuery = useCallback(debounce(setSearch, 100), [])
+  // const onSearch = useCallback((value: any) => setQuery(value.trim()), [setQuery])
 
   const filteredList = useMemo(() => {
     if (activeView === 'single') {
@@ -32,11 +31,31 @@ export default function SearchNftCollections({
     return SearchList
   }, [SearchList, activeView])
 
+  const [search, setSearch] = useState('')
+
+  const { hits, query, onSearch } = useFuse<
+    {
+      refIndex: number
+      item: CollectionUserCollection | CollectionUserToken
+    }[]
+  >(filteredList, {
+    keys: ['name', 'address'],
+    includeMatches: true,
+    matchAllOnEmptyQuery: true,
+  })
+
+  const onSearchQuery = (value: any) => {
+    onSearch(value)
+    setSearch(value)
+  }
+
+  const theme = useTheme()
+
   return (
     <SearchWrapper>
       <Search
         searchValue={search}
-        onSearch={onSearch}
+        onSearch={onSearchQuery}
         placeholder="Filter by Collection"
         onFocus={() => {
           setShowResults(true)
@@ -53,10 +72,11 @@ export default function SearchNftCollections({
       {showResults && (
         <MenuFlyout showList={showResults} tabIndex={0} className="no-blur" hasShadow={true}>
           <SearchListScroll>
-            {filteredList.map((item, index) => {
+            {hits.map((hit, index) => {
+              const { item, refIndex } = hit
               return (
                 <SearchListWrapper
-                  key={index}
+                  key={refIndex}
                   onClick={() => {
                     setShowResults(false)
                     OnSearchItemClick(item)
@@ -72,7 +92,7 @@ export default function SearchNftCollections({
                   />
 
                   <Text color={theme.subText} fontSize={16} fontWeight={500}>
-                    {item.name}
+                    <FuseHighlight hit={hit} attribute="name" />
                   </Text>
                 </SearchListWrapper>
               )

@@ -1,5 +1,6 @@
 import { createIcon } from '@vukhaihoan/blockies'
 import React, { useEffect, useMemo } from 'react'
+import { useMedia } from 'react-use'
 import { useGetUserAvatar } from 'services/zapper/hooks/useUserAvatar'
 
 export default function Avatar({ address }: { address: string }) {
@@ -9,6 +10,9 @@ export default function Avatar({ address }: { address: string }) {
     return null
   }, [user])
   const [error, setError] = React.useState(false)
+
+  const above576 = useMedia('(min-width: 576px)')
+
   useEffect(() => {
     const icon = createIcon({
       // All options are optional
@@ -30,7 +34,12 @@ export default function Avatar({ address }: { address: string }) {
     if (avartarUrl) {
       const img = document.createElement('img')
       img.src = avartarUrl
-      img.setAttribute('style', 'border-radius: 12px ; width: 120px; height: 120px')
+      img.setAttribute(
+        'style',
+        above576
+          ? 'border-radius: 12px ; width: 120px; height: 120px'
+          : 'border-radius: 12px ; width: 100px; height: 100px',
+      )
       img.onerror = ({ currentTarget }: any) => {
         currentTarget.onerror = null // prevents looping
         setError(true)
@@ -45,8 +54,8 @@ export default function Avatar({ address }: { address: string }) {
         id="avatar"
         style={{
           borderRadius: '12px',
-          width: '120px',
-          height: '120px',
+          width: above576 ? '120px' : '100px',
+          height: above576 ? '120px' : '100px',
         }}
       ></div>
     </div>

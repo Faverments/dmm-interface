@@ -66,6 +66,11 @@ const HoverUpdater = ({
   return null
 }
 
+const CustomTooltip = (prop: any) => {
+  console.log('proptip', prop)
+  return <div>$</div>
+}
+
 const CustomizedCursor = (props: any) => {
   const { payload, points, width } = props
   const isTextAnchorStart = width - points[0].x > 100
@@ -189,7 +194,7 @@ const LineChart = ({
           margin={{
             top: 5,
             right: 0,
-            left: 0,
+            left: 20,
             bottom: 5,
           }}
           onMouseLeave={() => setHoverValue(null)}
@@ -243,6 +248,8 @@ const LineChart = ({
               <HoverUpdater payload={props.payload} setHoverValue={setHoverValue} />
             )}
             cursor={<CustomizedCursor />}
+            // content={<CustomTooltip />}
+            wrapperStyle={{ zIndex: 1000 }}
           />
           <Area
             type="monotone"

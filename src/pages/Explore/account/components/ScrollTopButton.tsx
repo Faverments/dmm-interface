@@ -30,6 +30,7 @@ export default function ScrollTopButton() {
         position: 'fixed',
         bottom: above768 ? 20 : 144,
         right: 16,
+        zIndex: 9999,
       }}
       onClick={() => {
         window.scrollTo({

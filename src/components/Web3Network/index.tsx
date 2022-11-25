@@ -47,6 +47,10 @@ const NetworkCard = styled(Card)`
     flex-shrink: 1;
     min-width: auto;
   `};
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    margin-right: 0.5rem;
+  `};
 `
 
 const NetworkLabel = styled.div`

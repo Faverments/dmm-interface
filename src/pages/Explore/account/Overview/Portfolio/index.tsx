@@ -69,7 +69,6 @@ export default function Portfolio({ data }: { data: PresentedBalancePayload[] })
       list: res.slice((page - 1) * 6, page * 6),
     }
   }, [apps, wallet, nftUsersCollectionsTotals, page])
-  console.log('portfolioList', portfolioList)
   const theme = useTheme()
   return (
     <SideWrapper>

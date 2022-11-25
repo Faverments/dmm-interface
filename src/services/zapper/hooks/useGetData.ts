@@ -208,7 +208,6 @@ export function useGetNftUsersTokensNormal({
     const fetcher = async () => {
       setError(undefined)
       setIsLoading(true)
-      console.log('query', nftUsersTokens)
       // const result = await zapperClient.query<NftUsersTokens>({
       //   query: nftUsersTokens,
       //   variables: variables,
@@ -291,8 +290,6 @@ export function useGetNftUsersTokensSwrInfinite({
   const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(getKey, fetcher)
 
   const PAGE_SIZE = first
-
-  console.log('data', data)
 
   const issues = data ? [].concat(...data) : []
   const isLoadingInitialData = !data && !error

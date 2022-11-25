@@ -1,6 +1,6 @@
 import { rgba } from 'polished'
 import { useMemo, useState } from 'react'
-import { Flex, Text } from 'rebass'
+import { Flex } from 'rebass'
 import { useGetDailyChartData } from 'services/coingecko'
 import { HistoryChainParams, HistoryPricesResponse, useGetHistoricalPrices } from 'services/nansenportfolio'
 import { useWalletBalances } from 'services/zapper/hooks/useBalances'
@@ -238,7 +238,7 @@ const WrapperChartContainer = styled.div`
 `
 
 const WrapperChartItem = styled.div`
-  padding: 16px;
+  padding: 16px 0px;
 `
 
 const StyledTitle = styled.div`

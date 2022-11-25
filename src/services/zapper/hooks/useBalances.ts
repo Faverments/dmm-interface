@@ -95,7 +95,6 @@ export function useGetBalancesEventStream({ addresses, networks, bundled }: Bala
 
 export function useTotalsBalances(data: PresentedBalancePayload[], selectedChain: Network | ALL_NETWORKS) {
   return useMemo(() => {
-    console.log('data', data)
     const tokens = { total: 0 }
     if (data.length === 0) {
     } else {
@@ -113,7 +112,6 @@ export function useTotalsBalances(data: PresentedBalancePayload[], selectedChain
 
 export function useTotalsWalletBalances(data: PresentedBalancePayload[], selectedChain: Network | ALL_NETWORKS) {
   return useMemo(() => {
-    console.log('data', data)
     const tokens = { total: 0 }
     if (data.length === 0) {
     } else {

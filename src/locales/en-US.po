@@ -671,6 +671,10 @@ msgstr "Chains"
 #~ msgid "Change"
 #~ msgstr "Change"
 
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "Change Network to {0}"
+msgstr "Change Network to {0}"
+
 #: src/components/AccountDetails/index.tsx
 msgid "Change Wallet"
 msgstr "Change Wallet"
@@ -1026,6 +1030,7 @@ msgstr "DEXs"
 msgid "Dark Mode"
 msgstr "Dark Mode"
 
+#: src/components/AccountDetails/index.tsx
 #: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "DashBoard"
@@ -1421,6 +1426,11 @@ msgstr "FOR TRADERS"
 #: src/pages/Bridge/utils.ts
 msgid "Failed"
 msgstr "Failed"
+
+#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "Failed to Revoke"
+msgstr "Failed to Revoke"
 
 #: src/hooks/useActiveNetwork.ts
 #: src/hooks/useActiveNetwork.ts
@@ -1835,6 +1845,18 @@ msgstr "Imported"
 #: src/hooks/useActiveNetwork.ts
 msgid "In order to use KyberSwap on {0}, you must change the network in your wallet."
 msgstr "In order to use KyberSwap on {0}, you must change the network in your wallet."
+
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "In order to use Revode on Account : {address}, you must connect to this wallet."
+msgstr "In order to use Revode on Account : {address}, you must connect to this wallet."
+
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "In order to use Revode on {0}, please confirm in wallet to switch chain to {1}."
+msgstr "In order to use Revode on {0}, please confirm in wallet to switch chain to {1}."
+
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "In order to use Revode token  {0}, you must confirm in wallet to revoke this token."
+msgstr "In order to use Revode token  {0}, you must confirm in wallet to revoke this token."
 
 #: src/components/Badge/RangeBadge.tsx
 #: src/state/farms/elastic/hooks.ts
@@ -2478,6 +2500,10 @@ msgstr "No token found. Try turn off truesight."
 msgid "No vesting schedule!"
 msgstr "No vesting schedule!"
 
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "No wallet connected"
+msgstr "No wallet connected"
+
 #: src/components/TransactionSettings/AdvanceModeModal.tsx
 #: src/pages/TrueSight/components/UnsubscribeModal.tsx
 msgid "No, go back"
@@ -2644,6 +2670,10 @@ msgstr "Please check the <0>Active Farms</0> or come back later."
 #: src/components/WrongNetworkModal/index.tsx
 msgid "Please connect to the appropriate network."
 msgstr "Please connect to the appropriate network."
+
+#: src/pages/Explore/hooks/userevoke.ts
+msgid "Please connect your wallet to revoke this token"
+msgstr "Please connect your wallet to revoke this token"
 
 #: src/pages/CreateReferral/index.tsx
 #: src/pages/CreateReferral/index.tsx

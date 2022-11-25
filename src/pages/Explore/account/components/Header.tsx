@@ -1,6 +1,7 @@
 import { rgba } from 'polished'
 import Skeleton from 'react-loading-skeleton'
 import { useParams } from 'react-router-dom'
+import { useMedia } from 'react-use'
 import { Flex, Text } from 'rebass'
 import { useTotalsBalances } from 'services/zapper/hooks/useBalances'
 import useGetNftUsersCollectionsTotals from 'services/zapper/hooks/useGetZapperNftUsersCollectionsTotals'
@@ -51,6 +52,8 @@ export default function Header({
 
   const { nftUsersCollectionsTotals, isLoading: isNftsTotalsLoading } = useGetNftUsersCollectionsTotals(address)
 
+  const above576 = useMedia('(min-width: 576px)')
+
   return (
     <Wrapper color={stringToColor(address)}>
       <Flex justifyContent="space-between" width="100%">
@@ -58,7 +61,7 @@ export default function Header({
           <Avatar address={address} />
           <Flex flexDirection="column" style={{ gap: 5 }} width="100%">
             <Flex justifyContent="space-between" width="100%">
-              <Text fontSize={26} color={theme.text}>
+              <Text fontSize={above576 ? 26 : 20} color={theme.text}>
                 {loading ? (
                   <Skeleton baseColor={theme.background} width={300} />
                 ) : ENSName ? (
@@ -72,7 +75,7 @@ export default function Header({
             </Text> */}
             </Flex>
             <Flex justifyContent="space-between" alignItems="flex-end" style={{ gap: 25 }}>
-              <Text fontSize={38} fontWeight={700} color={theme.text} minWidth={200}>
+              <Text fontSize={above576 ? 38 : 32} fontWeight={700} color={theme.text} minWidth={200}>
                 {details.total === 0 && isBalanceSyncing ? (
                   <Skeleton baseColor={theme.background} />
                 ) : (
@@ -109,7 +112,7 @@ export default function Header({
               {/* </PercentStyled> */}
             </Flex>
             <Flex>
-              <Text fontSize={20} color={theme.subText}>
+              <Text fontSize={above576 ? 20 : 16} color={theme.subText}>
                 {getShortenAddress(address)}
               </Text>
 

@@ -3,7 +3,6 @@ import { rgba } from 'polished'
 import React, { useEffect, useMemo } from 'react'
 import { isMobile } from 'react-device-detect'
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { useGetDailyChartData } from 'services/coingecko'
 import { HistoryChainParams } from 'services/nansenportfolio'
 import styled from 'styled-components'
 
@@ -76,7 +75,6 @@ function capitalizeFirstLetter(string: string) {
 const CustomizedCursor = (props: any) => {
   const { payload, points, width } = props
   const isTextAnchorStart = width - points[0].x > 100
-  console.log('payload', payload)
   if (payload) {
     return (
       <>
@@ -183,6 +181,11 @@ export function getColor(chain: HistoryChainParams) {
   }
 }
 
+const CustomTooltip = (prop: any) => {
+  console.log('proptip', prop)
+  return <div>$</div>
+}
+
 const MultipleLineChart = ({
   data,
   setHoverValue,
@@ -231,9 +234,6 @@ const MultipleLineChart = ({
       }))
   }, [data])
 
-  const ethDailyChartData = useGetDailyChartData('ethereum', 12)
-  const btcDailyChartData = useGetDailyChartData('bitcoin', 12)
-
   return (
     <ResponsiveContainer minHeight={isMobile ? 300 : minHeight} height="100%">
       {data && data.length > 0 ? (
@@ -242,7 +242,7 @@ const MultipleLineChart = ({
           margin={{
             top: 5,
             right: 0,
-            left: 0,
+            left: 20,
             bottom: 5,
           }}
           onMouseLeave={() => setHoverValue(null)}
@@ -295,6 +295,8 @@ const MultipleLineChart = ({
               <HoverUpdater payload={props.payload} setHoverValue={setHoverValue} />
             )}
             cursor={<CustomizedCursor />}
+            // content={<CustomTooltip />}
+            wrapperStyle={{ zIndex: 1000 }}
           />
           {listLine.map(({ dataKey, dataColor }, index) => (
             <Area
