@@ -12,9 +12,13 @@ export default function FilterCollections({
   collections: CollectionUserToken[] | CollectionUserCollection[]
   onFilterCollectionClick: (collection: CollectionUserToken | CollectionUserCollection, index: number) => void
 }) {
+  const filteredList = (collections as any).filter((item: any, index: number, seft: any) => {
+    return seft.findIndex((i: any) => i.address === item.address) === index
+  })
+
   return (
     <Flex flexWrap={'wrap'} justifyContent="flex-end" alignItems="center" style={{ gap: 20 }}>
-      {collections.map((item, index: number) => {
+      {filteredList.map((item: any, index: number) => {
         return (
           <CollectionItemWrapper
             key={index}

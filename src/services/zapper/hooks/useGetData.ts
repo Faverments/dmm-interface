@@ -1,5 +1,4 @@
 import { ApolloError } from '@apollo/client'
-import { ConsoleApiName } from '@datadog/browser-core'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ZAPPER_WEB_API } from 'services/config'
 import { zapperClient } from 'services/zapper/apollo/client'

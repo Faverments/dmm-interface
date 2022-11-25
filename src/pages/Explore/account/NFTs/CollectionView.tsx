@@ -1,16 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { InView } from 'react-intersection-observer'
 import { useParams } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import { Network } from 'services/zapper'
 import { CollectionUserCollection } from 'services/zapper/apollo/types'
-import { useGetNftUsersCollections, useGetNftUsersCollectionsSwrInfinite } from 'services/zapper/hooks/useGetData'
+import { useGetNftUsersCollectionsSwrInfinite } from 'services/zapper/hooks/useGetData'
 
 import ETH from 'assets/images/ethereum-logo.png'
 import LocalLoader from 'components/LocalLoader'
 import useTheme from 'hooks/useTheme'
 import { formattedNumLong, toKInChart } from 'utils'
 
+import NotFound from '../components/NotFound'
 import FilterCollections from './components/FilterCollections'
 import { ListChain } from './components/ListChain'
 import SearchNftCollections from './components/SearchNftCollections'
@@ -72,12 +73,17 @@ export default function CollectionView({
       />
       <Flex justifyContent="space-between">
         <ViewTypePicker activeViewType={activeViewType} setActiveViewType={setActiveViewType} />
-        <SearchNftCollections SearchList={searchList} OnSearchItemClick={onSearchItemClick} />
+        <SearchNftCollections
+          SearchList={searchList}
+          OnSearchItemClick={onSearchItemClick}
+          activeView={activeViewType}
+        />
       </Flex>
 
       <FilterCollections collections={collections} onFilterCollectionClick={onFilterCollectionClick} />
 
       <Wrapper>
+        {infiniteData.length === 0 && !isLoadingMore && <NotFound text={'Nothing to see here!'} />}
         <LayoutWrapper>
           {infiniteData.map((item, index) => {
             const {

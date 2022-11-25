@@ -26,13 +26,14 @@ import { getFullDisplayBalance } from 'utils/formatBalance'
 import getShortenAddress from 'utils/getShortenAddress'
 
 import FuseHighlight from '../../../../components/FuseHighlight/FuseHighlight'
+import NotFound from '../components/NotFound'
 import { TableWrapper } from '../styleds'
 import NetworkSelect from './NetworkSelect'
 
 export default function TokenApprovals() {
   const { address } = useParams<{ address: string }>()
   const [network, setNetwork] = React.useState<Network | ALL_NETWORKS>('all-networks')
-  const { data, isLoading } = useGetTokenApprovals(
+  const { data, isLoading, error } = useGetTokenApprovals(
     address,
     chainsInfo[network as Network] ? chainsInfo[network as Network].chainId : 'all-networks',
   )
@@ -77,10 +78,10 @@ export default function TokenApprovals() {
     >
       <Flex justifyContent="space-between" alignItems="center">
         <Text color={theme.subText} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          {isLoading ? (
+          {isLoading || error ? (
             <Skeleton width={100} baseColor={theme.background} />
           ) : (
-            data!.atRisk['usd'] && `Total Allowance : ${formattedNumLong(data!.atRisk['usd'], true)}`
+            data!.atRisk?.usd && `Total Allowance : ${formattedNumLong(data!.atRisk['usd'], true)}`
           )}
         </Text>
         <Flex style={{ gap: 12 }}>
@@ -105,6 +106,8 @@ export default function TokenApprovals() {
             </LayoutWrapper>
             {isLoading ? (
               <LocalLoader />
+            ) : hitsPaginated.length === 0 ? (
+              <NotFound text="No Token Approve found" />
             ) : (
               <>
                 {hitsPaginated.map(hit => {

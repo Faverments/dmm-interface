@@ -1,5 +1,5 @@
 import { debounce } from 'lodash'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Flex, Text } from 'rebass'
 import { CollectionUserCollection, CollectionUserToken } from 'services/zapper/apollo/types'
 import styled, { css, useTheme } from 'styled-components/macro'
@@ -7,9 +7,11 @@ import styled, { css, useTheme } from 'styled-components/macro'
 import Search from 'components/Search'
 
 export default function SearchNftCollections({
+  activeView,
   SearchList,
   OnSearchItemClick,
 }: {
+  activeView: 'single' | 'collection'
   SearchList: CollectionUserCollection[] | CollectionUserToken[]
   OnSearchItemClick: (item: CollectionUserCollection | CollectionUserToken) => void
 }) {
@@ -19,6 +21,16 @@ export default function SearchNftCollections({
   const setQuery = useCallback(debounce(setSearch, 100), [])
   const onSearch = useCallback((value: any) => setQuery(value.trim()), [setQuery])
   const theme = useTheme()
+
+  const filteredList = useMemo(() => {
+    if (activeView === 'single') {
+      const res = (SearchList as CollectionUserToken[]).filter((item, index, seft) => {
+        return seft.findIndex(i => i.address === item.address) === index
+      })
+      return res
+    }
+    return SearchList
+  }, [SearchList, activeView])
 
   return (
     <SearchWrapper>
@@ -42,7 +54,7 @@ export default function SearchNftCollections({
       {showResults && (
         <MenuFlyout showList={showResults} tabIndex={0} className="no-blur" hasShadow={true}>
           <SearchListScroll>
-            {SearchList.map((item, index) => {
+            {filteredList.map((item, index) => {
               return (
                 <SearchListWrapper
                   key={index}

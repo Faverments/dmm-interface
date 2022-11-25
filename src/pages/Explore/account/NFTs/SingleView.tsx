@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { InView } from 'react-intersection-observer'
 import { useParams } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import { Network } from 'services/zapper'
-import { CollectionUserCollection, CollectionUserToken } from 'services/zapper/apollo/types'
-import { useGetNftUsersTokens, useGetNftUsersTokensSwrInfinite } from 'services/zapper/hooks/useGetData'
+import { CollectionUserToken } from 'services/zapper/apollo/types'
+import { useGetNftUsersTokensSwrInfinite } from 'services/zapper/hooks/useGetData'
 
 import DefaultIcon from 'assets/images/default-icon.png'
 import ETH from 'assets/images/ethereum-logo.png'
@@ -12,6 +12,7 @@ import LocalLoader from 'components/LocalLoader'
 import useTheme from 'hooks/useTheme'
 import { formattedNumLong } from 'utils'
 
+import NotFound from '../components/NotFound'
 import FilterCollections from './components/FilterCollections'
 import { ListChain } from './components/ListChain'
 import SearchNftCollections from './components/SearchNftCollections'
@@ -72,12 +73,17 @@ export default function SingleView({
       />
       <Flex justifyContent="space-between">
         <ViewTypePicker activeViewType={activeViewType} setActiveViewType={setActiveViewType} />
-        <SearchNftCollections SearchList={searchList} OnSearchItemClick={onSearchItemClick} />
+        <SearchNftCollections
+          SearchList={searchList}
+          OnSearchItemClick={onSearchItemClick}
+          activeView={activeViewType}
+        />
       </Flex>
 
       <FilterCollections collections={collections} onFilterCollectionClick={onFilterCollectionClick} />
 
       <Wrapper>
+        {infiniteData.length === 0 && !isLoadingMore && <NotFound text={'Nothing to see here!'} />}
         <LayoutWrapper>
           {infiniteData.map((item, index) => {
             const {
