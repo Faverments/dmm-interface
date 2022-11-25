@@ -7,6 +7,7 @@ import { useGetNftUsersCollectionsNormal } from 'services/zapper/hooks/useGetDat
 import useGetNftUsersCollectionsTotals from 'services/zapper/hooks/useGetZapperNftUsersCollectionsTotals'
 import styled from 'styled-components/macro'
 
+import DefaultIcon from 'assets/images/default-icon.png'
 import ETH from 'assets/images/ethereum-logo.png'
 import { ButtonLight } from 'components/Button'
 import { AutoColumn } from 'components/Column'
@@ -86,9 +87,23 @@ export default function Nfts({ network }: { network: Network | ALL_NETWORKS }) {
           return (
             <ItemWrapper key={index}>
               <BannerImageWrapper>
-                <img src={bannerImageUrl ? bannerImageUrl : logoImageUrl} alt={name} />
+                <img
+                  src={bannerImageUrl ? bannerImageUrl : logoImageUrl || DefaultIcon}
+                  alt={name}
+                  onError={(e: any) => {
+                    e.target.onerror = null
+                    e.target.src = DefaultIcon
+                  }}
+                />
                 <LogoImageWrapper>
-                  <img src={logoImageUrl} alt={name} />
+                  <img
+                    src={logoImageUrl || DefaultIcon}
+                    alt={name}
+                    onError={(e: any) => {
+                      e.target.onerror = null
+                      e.target.src = DefaultIcon
+                    }}
+                  />
                 </LogoImageWrapper>
               </BannerImageWrapper>
               <Text

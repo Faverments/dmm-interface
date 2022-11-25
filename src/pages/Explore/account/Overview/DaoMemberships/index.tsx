@@ -4,6 +4,7 @@ import { Flex, Text } from 'rebass'
 import useGetUserDaoMembership from 'services/zapper/hooks/useGetZapperUserDaoMembership'
 import { useTheme } from 'styled-components/macro'
 
+import DefaultIcon from 'assets/images/default-icon.png'
 import { AutoColumn } from 'components/Column'
 import Pagination from 'components/Pagination'
 import { formattedNumLong, toKInChart } from 'utils'
@@ -46,6 +47,10 @@ export default function DaoMemberShip() {
                     alt={daoMembership.name}
                     style={{
                       borderRadius: '50%',
+                    }}
+                    onError={(e: any) => {
+                      e.target.onerror = null
+                      e.target.src = DefaultIcon
                     }}
                   />
                   <Text color={theme.subText} fontSize={18} fontWeight={400}>

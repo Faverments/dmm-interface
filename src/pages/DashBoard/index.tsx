@@ -126,7 +126,8 @@ export default function DashBoard(props: RouteComponentProps<{ address: string }
                 }}
                 color={theme.subText}
                 onClick={() => {
-                  history.push('/account/0xd874387ebb001a6b0bea98072f8de05f8965e51e')
+                  // history.push('/account/0xd874387ebb001a6b0bea98072f8de05f8965e51e')
+                  history.push('/account/0xa7888f85bd76deef3bd03d4dbcf57765a49883b3')
                 }}
               >
                 Open With Demo Address
@@ -187,5 +188,8 @@ const Input = styled.input`
   }
   &:hover {
     border: 1px solid ${({ theme }) => theme.primary};
+  }
+  @media screen and (max-width: 568px) {
+    width: 100%;
   }
 `
