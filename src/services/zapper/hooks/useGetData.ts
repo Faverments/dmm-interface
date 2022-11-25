@@ -1,8 +1,10 @@
 import { ApolloError } from '@apollo/client'
+import { ConsoleApiName } from '@datadog/browser-core'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ZAPPER_WEB_API } from 'services/config'
 import { zapperClient } from 'services/zapper/apollo/client'
 import { nftUsersCollections, nftUsersTokens } from 'services/zapper/apollo/queries'
+import useSWRInfinite from 'swr/infinite'
 
 import { EdgeUserCollection, EdgeUserToken, NftUsersCollections, NftUsersTokens } from '../apollo/types'
 import { Network } from '../types/models'
@@ -231,4 +233,154 @@ export function useGetNftUsersTokensNormal({
     fetcher()
   }, [address, network, minEstimatedValueUsd, first, after, JSON.stringify(collections)])
   return useMemo(() => ({ isLoading, data, error }), [isLoading, error, data])
+}
+
+export function useGetNftUsersTokensSwrInfinite({
+  address,
+  network,
+  minEstimatedValueUsd = 0,
+  first = 24,
+  after = '',
+  collections = [],
+}: {
+  address: string
+  network: keyof typeof Network
+  minEstimatedValueUsd?: number
+  first?: number
+  after?: string
+  collections?: string[]
+}) {
+  const variables: any = {
+    owners: [address],
+    network: network,
+    minEstimatedValueUsd,
+    first,
+    collections,
+  }
+  // if (after) {
+  //   variables.after = after
+  // }
+
+  const body = {
+    query: nftUsersTokens.loc?.source.body,
+    variables: variables,
+  }
+
+  const fetcher = async (stringBody: any) => {
+    return await fetch(`${ZAPPER_WEB_API}/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: stringBody,
+    })
+      .then(res => res.json())
+      .then(result => result.data.nftUsersTokens.edges)
+  }
+
+  const getKey = (pageIndex: number, previousPageData: any) => {
+    if (previousPageData && !previousPageData.length) return null // reached the end
+
+    // first page, we don't have `previousPageData`
+    if (pageIndex === 0) return JSON.stringify(body)
+
+    // add the cursor to the API endpoint
+    body.variables.after = previousPageData[previousPageData.length - 1].cursor
+    return JSON.stringify(body)
+  }
+
+  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(getKey, fetcher)
+
+  const PAGE_SIZE = first
+
+  console.log('data', data)
+
+  const issues = data ? [].concat(...data) : []
+  const isLoadingInitialData = !data && !error
+  const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined')
+  const isEmpty = data?.[0]?.length === 0
+  const isReachingEnd = isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE)
+  const isRefreshing = isValidating && data && data.length === size
+  return {
+    data: issues as EdgeUserToken[],
+    size,
+    setSize,
+    isLoadingMore,
+    isReachingEnd,
+    isRefreshing,
+  }
+}
+
+export function useGetNftUsersCollectionsSwrInfinite({
+  address,
+  network,
+  minCollectionValueUsd = 0,
+  first = 24,
+  collections = [],
+  search = '',
+  after = '',
+}: {
+  address: string
+  network: keyof typeof Network
+  minCollectionValueUsd?: number
+  first?: number
+  collections?: string[]
+  search?: string
+  after?: string
+}) {
+  const variables: any = {
+    owners: [address],
+    network: network,
+    minCollectionValueUsd,
+    first,
+    collections,
+    search,
+  }
+
+  const body = {
+    query: nftUsersCollections.loc?.source.body,
+    variables: variables,
+  }
+
+  const fetcher = async (stringBody: any) => {
+    return await fetch(`${ZAPPER_WEB_API}/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: stringBody,
+    })
+      .then(res => res.json())
+      .then(result => result.data.nftUsersCollections.edges)
+  }
+
+  const getKey = (pageIndex: number, previousPageData: any) => {
+    if (previousPageData && !previousPageData.length) return null // reached the end
+
+    // first page, we don't have `previousPageData`
+    if (pageIndex === 0) return JSON.stringify(body)
+
+    // add the cursor to the API endpoint
+    body.variables.after = previousPageData[previousPageData.length - 1].cursor
+    return JSON.stringify(body)
+  }
+
+  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(getKey, fetcher)
+
+  const PAGE_SIZE = first
+
+  const issues = data ? [].concat(...data) : []
+  const isLoadingInitialData = !data && !error
+  const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined')
+  const isEmpty = data?.[0]?.length === 0
+  const isReachingEnd = isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE)
+  const isRefreshing = isValidating && data && data.length === size
+  return {
+    data: issues as EdgeUserCollection[],
+    size,
+    setSize,
+    isLoadingMore,
+    isReachingEnd,
+    isRefreshing,
+  }
 }

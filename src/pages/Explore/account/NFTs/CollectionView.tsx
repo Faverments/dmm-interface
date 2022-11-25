@@ -1,18 +1,20 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { InView } from 'react-intersection-observer'
 import { useParams } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import { Network } from 'services/zapper'
-import { useGetNftUsersCollections } from 'services/zapper/hooks/useGetData'
+import { CollectionUserCollection } from 'services/zapper/apollo/types'
+import { useGetNftUsersCollections, useGetNftUsersCollectionsSwrInfinite } from 'services/zapper/hooks/useGetData'
 
 import ETH from 'assets/images/ethereum-logo.png'
 import LocalLoader from 'components/LocalLoader'
 import useTheme from 'hooks/useTheme'
 import { formattedNumLong, toKInChart } from 'utils'
 
-import SearchNftCollections from './SearchNftCollections'
-import ViewTypePicker from './ViewTypePicker'
-import { ListChain } from './index'
+import FilterCollections from './components/FilterCollections'
+import { ListChain } from './components/ListChain'
+import SearchNftCollections from './components/SearchNftCollections'
+import ViewTypePicker from './components/ViewTypePicker'
 import { BannerImageWrapper, ItemWrapper, LayoutWrapper, LogoImageWrapper, Wrapper } from './styleds'
 
 export default function CollectionView({
@@ -24,23 +26,40 @@ export default function CollectionView({
 }) {
   const [network, setNetwork] = useState<keyof typeof Network>('ETHEREUM_MAINNET')
   const { address } = useParams<{ address: string }>()
-  const [after, setAfter] = useState<string | undefined>(undefined)
-
-  const { data, isLoading } = useGetNftUsersCollections({
-    address,
-    network,
-    after,
-  })
-
-  const searchList = useMemo(() => {
-    return data.map(item => item.collection)
-  }, [data])
+  const [collectionsAddress, setCollectionsAddress] = useState<string[]>([])
+  const [collections, setCollections] = useState<CollectionUserCollection[]>([])
+  const [searchList, setSearchList] = useState<CollectionUserCollection[]>([])
 
   const onSearchItemClick = (item: any) => {
-    console.log('item ', item)
+    item as CollectionUserCollection
+    setCollectionsAddress(pre => [...pre, item.address])
+    setCollections(pre => [...pre, item])
+  }
+
+  const onFilterCollectionClick = (item: any, index: number) => {
+    function set(item: CollectionUserCollection) {
+      setCollections(pre => pre.filter(collection => collection.address !== item.address) || [item])
+      setCollectionsAddress(pre => pre.filter(address => address !== item.address) || [item.address])
+    }
+    set(item)
   }
 
   const theme = useTheme()
+
+  const t = useGetNftUsersCollectionsSwrInfinite({
+    address,
+    network,
+    collections: collectionsAddress,
+  })
+
+  const { data: infiniteData, size, setSize, isLoadingMore, isReachingEnd } = t
+
+  useEffect(() => {
+    if (collectionsAddress.length === 0) {
+      const res = infiniteData.map(item => item.collection)
+      setSearchList(res)
+    }
+  }, [infiniteData, collectionsAddress])
 
   return (
     <>
@@ -55,9 +74,12 @@ export default function CollectionView({
         <ViewTypePicker activeViewType={activeViewType} setActiveViewType={setActiveViewType} />
         <SearchNftCollections SearchList={searchList} OnSearchItemClick={onSearchItemClick} />
       </Flex>
+
+      <FilterCollections collections={collections} onFilterCollectionClick={onFilterCollectionClick} />
+
       <Wrapper>
         <LayoutWrapper>
-          {data.map((item, index) => {
+          {infiniteData.map((item, index) => {
             const {
               collection: { bannerImageUrl, logoImageUrl, name, floorPriceEth },
               balances,
@@ -104,16 +126,16 @@ export default function CollectionView({
             )
           })}
         </LayoutWrapper>
-        {data.length > 0 && (
+        {infiniteData.length > 0 && (
           <InView
             onChange={inView => {
-              if (inView) {
-                setAfter(data[data.length - 1].cursor)
+              if (inView && !isReachingEnd) {
+                setSize(size + 1)
               }
             }}
           />
         )}
-        {isLoading && <LocalLoader />}
+        {isLoadingMore && <LocalLoader />}
       </Wrapper>
     </>
   )
