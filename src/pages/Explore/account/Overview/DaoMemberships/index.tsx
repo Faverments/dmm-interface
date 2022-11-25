@@ -12,7 +12,7 @@ import { ItemLayout, ItemWrapper, OverflowPagination, SideTitle, SideWrapper } f
 
 export default function DaoMemberShip() {
   const { address } = useParams<{ address: string }>()
-  const { daoMemberships } = useGetUserDaoMembership(address)
+  const { daoMemberships, isLoading } = useGetUserDaoMembership(address)
   const [page, setPage] = React.useState(1)
   useEffect(() => {
     setPage(1)
@@ -26,40 +26,48 @@ export default function DaoMemberShip() {
   return (
     <SideWrapper>
       <AutoColumn gap="8px">
-        {daoSortAvaliable.length > 0 && <SideTitle>Dao MemberShips</SideTitle>}
-        {daoSortAvaliable.map((daoMembership, index) => (
-          <ItemWrapper key={index}>
-            <ItemLayout>
-              <Flex style={{ gap: 8 }} alignItems="center">
-                <img
-                  src={daoMembership.img}
-                  width={40}
-                  height={40}
-                  alt={daoMembership.name}
+        <SideTitle>Dao MemberShips</SideTitle>
+        {daoSortAvaliable.length === 0 && !isLoading && (
+          <Flex justifyContent={'center'} alignItems="center">
+            <Text fontSize={18} color={theme.subText} fontWeight={500}>
+              No Result
+            </Text>
+          </Flex>
+        )}
+        {!isLoading &&
+          daoSortAvaliable.map((daoMembership, index) => (
+            <ItemWrapper key={index}>
+              <ItemLayout>
+                <Flex style={{ gap: 8 }} alignItems="center">
+                  <img
+                    src={daoMembership.img}
+                    width={40}
+                    height={40}
+                    alt={daoMembership.name}
+                    style={{
+                      borderRadius: '50%',
+                    }}
+                  />
+                  <Text color={theme.subText} fontSize={18} fontWeight={400}>
+                    {daoMembership.name}
+                  </Text>
+                </Flex>
+                <Flex
+                  flexDirection="column"
+                  alignItems="flex-end"
                   style={{
-                    borderRadius: '50%',
+                    gap: 8,
                   }}
-                />
-                <Text color={theme.subText} fontSize={18} fontWeight={400}>
-                  {daoMembership.name}
-                </Text>
-              </Flex>
-              <Flex
-                flexDirection="column"
-                alignItems="flex-end"
-                style={{
-                  gap: 8,
-                }}
-              >
-                <Text color={theme.text}>
-                  {toKInChart(String(daoMembership.share))}{' '}
-                  {daoMembership.governanceBaseToken ? daoMembership.governanceBaseToken.symbol : 'NFT'}
-                </Text>
-                <Text color={theme.subText}>{formattedNumLong(daoMembership.percentileShare)}%</Text>
-              </Flex>
-            </ItemLayout>
-          </ItemWrapper>
-        ))}
+                >
+                  <Text color={theme.text}>
+                    {toKInChart(String(daoMembership.share))}{' '}
+                    {daoMembership.governanceBaseToken ? daoMembership.governanceBaseToken.symbol : 'NFT'}
+                  </Text>
+                  <Text color={theme.subText}>{formattedNumLong(daoMembership.percentileShare)}%</Text>
+                </Flex>
+              </ItemLayout>
+            </ItemWrapper>
+          ))}
         <OverflowPagination>
           <Pagination
             pageSize={6}

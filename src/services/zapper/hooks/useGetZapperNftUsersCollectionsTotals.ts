@@ -53,7 +53,7 @@ async function execQuery(address: string, network: string | undefined) {
   return result
 }
 
-export default function useGetNftUsersCollectionsTotals(address: string, network: string | undefined) {
+export default function useGetNftUsersCollectionsTotals(address: string, network?: string) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApolloError>()
   const [nftUsersCollectionsTotals, setNftUserCollectionTotals] = useState<ZapperNftUsersCollectionsTotals>()

@@ -138,6 +138,13 @@ export default function Wallet({
 
           <AutoColumn gap="16px">
             <TableHeader />
+            {AllToken.list.length === 0 && (
+              <Flex justifyContent={'center'} alignItems={'center'} style={{ height: 200 }}>
+                <Text fontSize={20} fontWeight={500} color={theme.subText}>
+                  No data
+                </Text>
+              </Flex>
+            )}
             {Object.keys(wallet).length > 0 &&
               AllToken.list.map((token, index) => {
                 return <Token token={token} index={index} key={index} />
@@ -170,6 +177,13 @@ export default function Wallet({
 
         <AutoColumn gap="16px">
           <TableHeader />
+          {walletPaginate.list.length === 0 && (
+            <Flex justifyContent={'center'} alignItems={'center'} style={{ height: 200 }}>
+              <Text fontSize={20} fontWeight={500} color={theme.subText}>
+                No data
+              </Text>
+            </Flex>
+          )}
           {walletPaginate.list.map((token: TokenBreakdown, index) => {
             return <Token token={token} index={index} key={index} />
           })}

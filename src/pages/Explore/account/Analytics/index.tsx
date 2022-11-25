@@ -1,8 +1,10 @@
+import { rgba } from 'polished'
 import { useMemo, useState } from 'react'
 import { useGetDailyChartData } from 'services/coingecko'
 import { HistoryChainParams, HistoryPricesResponse, useGetHistoricalPrices } from 'services/nansenportfolio'
 import { useWalletBalances } from 'services/zapper/hooks/useBalances'
 import { Network, PresentedBalancePayload, TokenBreakdown } from 'services/zapper/types/models'
+import styled from 'styled-components'
 
 import MultipleLineChart from 'components/LiveChart/MultipleLineChart'
 import WeekLineChart from 'components/LiveChart/WeekLineChart'
@@ -158,8 +160,6 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
     }
   }, [history])
 
-  console.log('chartOne', chartOne)
-
   const ChartMultiple = useMemo(() => {
     if (history) {
       const { formatHistoryOfChain } = formatHistoyOfChain(history, tokensParam)
@@ -178,8 +178,8 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
   }, [history])
   const theme = useTheme()
 
-  const { data: coin } = useGetDailyChartData('ethereum', 12)
-  console.log('coin', coin)
+  const { data: eth } = useGetDailyChartData('ethereum', 12)
+  const { data: btc } = useGetDailyChartData('bitcoin', 12)
   return (
     <div>
       {isLoading ? (
@@ -231,3 +231,7 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
     </div>
   )
 }
+
+const WrapperChart = styled.div`
+  border: 1 solid ${({ theme }) => rgba(theme.border, 0.2)};
+`

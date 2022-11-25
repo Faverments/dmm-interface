@@ -9,6 +9,7 @@ import styled from 'styled-components'
 
 import { LiveDataTimeframeEnum } from 'hooks/useBasicChartData'
 import useTheme from 'hooks/useTheme'
+import { toKInChartNoWrap } from 'utils'
 
 const AreaChartWrapper = styled(AreaChart)`
   svg {
@@ -211,7 +212,7 @@ const MultipleLineChart = ({
           data={data}
           margin={{
             top: 5,
-            right: 20,
+            right: 25,
             left: 20,
             bottom: 5,
           }}
@@ -246,7 +247,7 @@ const MultipleLineChart = ({
             tickLine={false}
             axisLine={false}
             tick={{ fill: theme.subText, fontWeight: 400 }}
-            // tickFormatter={tick => toKInChart(tick, unitYAsis)}
+            tickFormatter={tick => toKInChartNoWrap(tick, unitYAsis)}
             // ticks={[
             //   dataMin,
             //   dataMin + (1 * (dataMax - dataMin)) / 4,

@@ -3,6 +3,7 @@ import Skeleton from 'react-loading-skeleton'
 import { useParams } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import { useTotalsBalances } from 'services/zapper/hooks/useBalances'
+import useGetNftUsersCollectionsTotals from 'services/zapper/hooks/useGetZapperNftUsersCollectionsTotals'
 import { PresentedBalancePayload } from 'services/zapper/types/models'
 import styled from 'styled-components/macro'
 
@@ -47,6 +48,9 @@ export default function Header({
   const details = useTotalsBalances(data, 'all-networks')
   // const allChain24hReturn = return24hs.reduce((acc, cur) => acc + (cur[address] ? cur[address].totalUSD : 0), 0)
   // const percent = (allChain24hReturn / details.total) * 100
+
+  const { nftUsersCollectionsTotals, isLoading: isNftsTotalsLoading } = useGetNftUsersCollectionsTotals(address)
+
   return (
     <Wrapper color={stringToColor(address)}>
       <Flex justifyContent="space-between" width="100%">
@@ -69,10 +73,16 @@ export default function Header({
             </Flex>
             <Flex justifyContent="space-between" alignItems="flex-end" style={{ gap: 25 }}>
               <Text fontSize={38} fontWeight={700} color={theme.text} minWidth={200}>
-                {details.total === 0 ? (
+                {details.total === 0 && isBalanceSyncing ? (
                   <Skeleton baseColor={theme.background} />
                 ) : (
-                  formattedNumLong(details.total, true)
+                  formattedNumLong(
+                    details.total +
+                      (nftUsersCollectionsTotals
+                        ? Number(nftUsersCollectionsTotals.nftUsersCollections.totals.balanceUSD)
+                        : 0),
+                    true,
+                  )
                 )}
               </Text>
 

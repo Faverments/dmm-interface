@@ -32,24 +32,31 @@ export default function Portfolio({ data }: { data: PresentedBalancePayload[] })
 
   const portfolioList = useMemo(() => {
     const nftTotals = Number(nftUsersCollectionsTotals?.nftUsersCollections.totals.balanceUSD || 0)
-    const appBalances = Object.values(apps).reduce((acc, cur) => acc + cur.totals, 0)
+    const appBalances = Object.values(apps).reduce(
+      (acc, cur) => (acc < 0 ? 0 : acc) + (cur.totals < 0 ? 0 : cur.totals),
+      0,
+    )
     const totals = wallet + nftTotals + appBalances
+    const walletPercent = (wallet / totals) * 100
+    const nftPercent = (nftTotals / totals) * 100
     const res = [
       {
         title: 'Wallet',
         value: wallet,
-        percent: (wallet / totals) * 100,
+        percent: isNaN(walletPercent) ? 0 : walletPercent,
       },
       {
         title: 'NFTs',
         value: nftTotals || 0,
-        percent: (nftTotals / totals) * 100,
+        percent: isNaN(nftPercent) ? 0 : nftPercent,
       },
-      ...Object.entries(apps).map(([key, value], index) => ({
-        title: key,
-        value: value.totals,
-        percent: (value.totals / totals) * 100,
-      })),
+      ...Object.entries(apps).map(([key, value], index) => {
+        return {
+          title: key,
+          value: value.totals,
+          percent: value.totals < 0 ? 0 : (value.totals / totals) * 100,
+        }
+      }),
     ]
       .sort((a, b) => b.value - a.value)
       .map((item, index) => ({

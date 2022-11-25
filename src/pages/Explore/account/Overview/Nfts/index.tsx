@@ -68,6 +68,14 @@ export default function Nfts({ network }: { network: Network | ALL_NETWORKS }) {
         </SideTitle>
       </AutoColumn>
 
+      {data.length === 0 && !isNftTokensLoading && (
+        <Flex justifyContent={'center'} alignItems="center">
+          <Text fontSize={18} color={theme.subText} fontWeight={500}>
+            No Result
+          </Text>
+        </Flex>
+      )}
+
       <LayoutWrapper>
         {data.map((item, index) => {
           const {

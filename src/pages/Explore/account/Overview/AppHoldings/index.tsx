@@ -39,7 +39,14 @@ export default function AppHolding({
   return (
     <SideWrapper>
       <AutoColumn gap="8px">
-        {appPaginate.length > 0 && <SideTitle>Protocol Holdings</SideTitle>}
+        <SideTitle>Protocol Holdings</SideTitle>
+        {appPaginate.length === 0 && (
+          <Flex justifyContent={'center'} alignItems="center">
+            <Text fontSize={18} color={theme.subText} fontWeight={500}>
+              No Result
+            </Text>
+          </Flex>
+        )}
         {appPaginate.map((app, index) => {
           const AppMain = app.details.app
           const AppSubDetails = app.details.app.data.sort((a, b) => b.balanceUSD - a.balanceUSD)
