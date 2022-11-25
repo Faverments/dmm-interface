@@ -9,7 +9,7 @@ import styled from 'styled-components'
 
 import { LiveDataTimeframeEnum } from 'hooks/useBasicChartData'
 import useTheme from 'hooks/useTheme'
-import { toKInChartNoWrap } from 'utils'
+import { toKInChart, toKInChartNoWrap } from 'utils'
 
 const AreaChartWrapper = styled(AreaChart)`
   svg {
@@ -68,9 +68,15 @@ const HoverUpdater = ({
   return null
 }
 
+function capitalizeFirstLetter(string: string) {
+  string = string.toLowerCase()
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 const CustomizedCursor = (props: any) => {
-  const { payload, points, timeFrame, width } = props
+  const { payload, points, width } = props
   const isTextAnchorStart = width - points[0].x > 100
+  console.log('payload', payload)
   if (payload) {
     return (
       <>
@@ -81,8 +87,25 @@ const CustomizedCursor = (props: any) => {
           fontSize={12}
           textAnchor={isTextAnchorStart ? 'start' : 'end'}
         >
-          {format(payload[0].payload.time, getHoverDateFormat(timeFrame))}
+          {format(payload[0].payload.time, 'MMM d')}
         </text>
+        {Object.entries(payload[0].payload)
+          .sort(([keyA, a], [keyB, b]) => Number(b) - Number(a))
+          .map(([key, value], index) => {
+            if (key === 'time' || key === 'TOTALS') return null
+            return (
+              <text
+                key={key}
+                x={points[0].x + (isTextAnchorStart ? 5 : -5)}
+                y={12 * index} // TOTALS is first element so not need to add 12
+                fill="#6C7284"
+                fontSize={12}
+                textAnchor={isTextAnchorStart ? 'start' : 'end'}
+              >
+                {capitalizeFirstLetter(key)}: {toKInChart(value as any, '$')}
+              </text>
+            )
+          })}
         <line x1={points[0].x} y1={0} x2={points[1].x} y2={points[1].y} stroke="#6C7284" width={2} />
       </>
     )
@@ -135,22 +158,28 @@ interface LineChartProps {
   syncId?: string
 }
 
-function getColor(chain: HistoryChainParams) {
+export function getColor(chain: HistoryChainParams) {
   switch (chain) {
     case HistoryChainParams.ETHEREUM:
-      return '#3C68E7'
+      return '#627eeb'
     case HistoryChainParams.BSC:
-      return '#F0B90B'
+      return '#f3ba2f'
     case HistoryChainParams.POLYGON:
       return '#7B5AF0'
     case HistoryChainParams.FANTOM:
-      return '#F86A6A'
+      return '#1969ff'
     case HistoryChainParams.AVAX:
-      return '#60BD68'
+      return '#e84142'
     case HistoryChainParams.OPTIMISM:
-      return '#FF8C00'
+      return '#ff0420'
+    case HistoryChainParams.CRONOS:
+      return '#1969ff'
+    case HistoryChainParams.ARBITRUM:
+      return '#28a0f0'
+    case HistoryChainParams.AURORA:
+      return '#71d34b'
     default:
-      return '#3C68E7'
+      return undefined
   }
 }
 
@@ -198,7 +227,7 @@ const MultipleLineChart = ({
       .filter(key => key !== 'time' && key !== 'TOTALS')
       .map(key => ({
         dataKey: key,
-        dataColor: getColor(key as HistoryChainParams),
+        dataColor: getColor(key as HistoryChainParams) || theme.primary,
       }))
   }, [data])
 
@@ -212,8 +241,8 @@ const MultipleLineChart = ({
           data={data}
           margin={{
             top: 5,
-            right: 25,
-            left: 20,
+            right: 0,
+            left: 0,
             bottom: 5,
           }}
           onMouseLeave={() => setHoverValue(null)}
@@ -265,7 +294,7 @@ const MultipleLineChart = ({
             formatter={(tooltipValue: any, name: string, props: any) => (
               <HoverUpdater payload={props.payload} setHoverValue={setHoverValue} />
             )}
-            cursor={<CustomizedCursor timeFrame={timeFrame} />}
+            cursor={<CustomizedCursor />}
           />
           {listLine.map(({ dataKey, dataColor }, index) => (
             <Area

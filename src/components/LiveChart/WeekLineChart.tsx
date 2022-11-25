@@ -7,7 +7,7 @@ import styled from 'styled-components'
 
 import { LiveDataTimeframeEnum } from 'hooks/useBasicChartData'
 import useTheme from 'hooks/useTheme'
-import { toKInChartNoWrap } from 'utils'
+import { toKInChart, toKInChartNoWrap } from 'utils'
 
 const AreaChartWrapper = styled(AreaChart)`
   svg {
@@ -67,7 +67,7 @@ const HoverUpdater = ({
 }
 
 const CustomizedCursor = (props: any) => {
-  const { payload, points, timeFrame, width } = props
+  const { payload, points, width } = props
   const isTextAnchorStart = width - points[0].x > 100
   if (payload) {
     return (
@@ -79,8 +79,16 @@ const CustomizedCursor = (props: any) => {
           fontSize={12}
           textAnchor={isTextAnchorStart ? 'start' : 'end'}
         >
-          {/* {format(payload[0].payload.time, getHoverDateFormat(timeFrame))} */}
-          {payload[0].value}
+          {format(payload[0].payload.time, 'MMM d')}
+        </text>
+        <text
+          x={points[0].x + (isTextAnchorStart ? 5 : -5)}
+          y={24}
+          fill="#6C7284"
+          fontSize={12}
+          textAnchor={isTextAnchorStart ? 'start' : 'end'}
+        >
+          {toKInChart(payload[0].value, '$')}
         </text>
         <line x1={points[0].x} y1={0} x2={points[1].x} y2={points[1].y} stroke="#6C7284" width={2} />
       </>
@@ -180,8 +188,8 @@ const LineChart = ({
           data={formattedData}
           margin={{
             top: 5,
-            right: 25,
-            left: 20,
+            right: 0,
+            left: 0,
             bottom: 5,
           }}
           onMouseLeave={() => setHoverValue(null)}
@@ -234,7 +242,7 @@ const LineChart = ({
             formatter={(tooltipValue: any, name: string, props: any) => (
               <HoverUpdater payload={props.payload} setHoverValue={setHoverValue} />
             )}
-            cursor={<CustomizedCursor timeFrame={timeFrame} />}
+            cursor={<CustomizedCursor />}
           />
           <Area
             type="monotone"

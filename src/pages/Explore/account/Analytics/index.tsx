@@ -1,12 +1,13 @@
 import { rgba } from 'polished'
 import { useMemo, useState } from 'react'
+import { Flex, Text } from 'rebass'
 import { useGetDailyChartData } from 'services/coingecko'
 import { HistoryChainParams, HistoryPricesResponse, useGetHistoricalPrices } from 'services/nansenportfolio'
 import { useWalletBalances } from 'services/zapper/hooks/useBalances'
 import { Network, PresentedBalancePayload, TokenBreakdown } from 'services/zapper/types/models'
 import styled from 'styled-components'
 
-import MultipleLineChart from 'components/LiveChart/MultipleLineChart'
+import MultipleLineChart, { getColor } from 'components/LiveChart/MultipleLineChart'
 import WeekLineChart from 'components/LiveChart/WeekLineChart'
 import LocalLoader from 'components/LocalLoader'
 import useTheme from 'hooks/useTheme'
@@ -120,6 +121,11 @@ function formatHistoyOfChain(
   return { formatHistoryOfChain, listChain }
 }
 
+function capitalizeFirstLetter(string: string) {
+  string = string.toLowerCase()
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 export default function Analytics({ data }: { data: PresentedBalancePayload[] }) {
   const [hoverValue, setHoverValue] = useState<number | null>(null)
 
@@ -185,38 +191,12 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
       {isLoading ? (
         <LocalLoader />
       ) : (
-        <>
-          <div
-            style={
-              {
-                // backgroundColor: theme.buttonBlack,
-              }
-            }
-          >
-            <div>MULTIPLE CHAIN</div>
-            <MultipleLineChart
-              data={ChartMultiple}
-              color={theme.primary}
-              setHoverValue={setHoverValue}
-              showYAsis={true}
-              syncId="sync"
-              unitYAsis="$"
-              // minHeight={0}
-            />
-          </div>
-
-          {Object.entries(chartOne).map(([key, value]) => (
-            <div
-              key={key}
-              style={
-                {
-                  // backgroundColor: theme.buttonBlack,
-                }
-              }
-            >
-              <div>{key}</div>
-              <WeekLineChart
-                data={value}
+        <Flex flexDirection="column" style={{ gap: 32 }}>
+          <WrapperChartContainer>
+            <StyledTitle>Multiple NetWork</StyledTitle>
+            <WrapperChartItem>
+              <MultipleLineChart
+                data={ChartMultiple}
                 color={theme.primary}
                 setHoverValue={setHoverValue}
                 showYAsis={true}
@@ -224,14 +204,59 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
                 unitYAsis="$"
                 // minHeight={0}
               />
-            </div>
-          ))}
-        </>
+            </WrapperChartItem>
+          </WrapperChartContainer>
+          <WeekLineChartListLayout>
+            {Object.entries(chartOne).map(([key, value]) => (
+              <WrapperChartContainer key={key}>
+                <StyledTitle>{capitalizeFirstLetter(key)}</StyledTitle>
+                <WrapperChartItem>
+                  <WeekLineChart
+                    data={value}
+                    color={getColor(key as any) || theme.primary}
+                    setHoverValue={setHoverValue}
+                    showYAsis={true}
+                    syncId="sync"
+                    unitYAsis="$"
+                    // minHeight={0}
+                  />
+                </WrapperChartItem>
+              </WrapperChartContainer>
+            ))}
+          </WeekLineChartListLayout>
+        </Flex>
       )}
     </div>
   )
 }
 
-const WrapperChart = styled.div`
-  border: 1 solid ${({ theme }) => rgba(theme.border, 0.2)};
+const WrapperChartContainer = styled.div`
+  border: 1px solid ${({ theme }) => rgba(theme.border, 0.3)};
+  border-radius: 16px;
+  min-height: 0px;
+  min-width: 0px;
+`
+
+const WrapperChartItem = styled.div`
+  padding: 16px;
+`
+
+const StyledTitle = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.text};
+  border-bottom: 1px solid ${({ theme }) => rgba(theme.border, 0.3)};
+  padding: 16px;
+`
+
+const WeekLineChartListLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  min-height: 0px;
+  min-width: 0px;
+  @media screen and (max-width: 888px) {
+    display: flex;
+    flex-direction: column;
+  }
 `

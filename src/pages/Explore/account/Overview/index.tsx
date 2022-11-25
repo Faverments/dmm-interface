@@ -32,13 +32,12 @@ export default function Overview({ data }: { data: PresentedBalancePayload[] }) 
           </LeftSideWrapper>
         </BackgroundOverlay>
       </Wrapper>
+
       <Flex flexDirection={'column'} style={{ gap: 20 }} height="fit-content">
         <Portfolio data={data} />
         <Nfts network={network} />
         <DaoMemberShip />
-        <AppHoldingsWrapper>
-          <AppHolding data={data} network={network} />
-        </AppHoldingsWrapper>
+        <AppHolding data={data} network={network} />
       </Flex>
     </LayoutWrapper>
   )
@@ -64,12 +63,5 @@ const LayoutWrapper = styled.div`
     display: flex;
     flex-direction: column-reverse;
     gap: 20px;
-  }
-`
-
-const AppHoldingsWrapper = styled.div`
-  @media only screen and (min-width: 1100px) {
-    position: sticky;
-    top: 16px;
   }
 `
