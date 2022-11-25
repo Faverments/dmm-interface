@@ -3,6 +3,7 @@ import ReactBlockies from '@vukhaihoan/react-blockies'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Search } from 'react-feather'
 import { Link } from 'react-router-dom'
+import { useMedia } from 'react-use'
 import { Flex, Text } from 'rebass'
 import useGetZapperSearchResults from 'services/zapper/hooks/useGetZapperSearchResults'
 import styled, { useTheme } from 'styled-components'
@@ -103,6 +104,8 @@ export default function SearchExplore() {
 
   const theme = useTheme()
 
+  const above768 = useMedia('(min-width: 768px)')
+
   return (
     <StyledSearchButton onClick={() => toggleSearchExploreModal()}>
       <Search size={20} />
@@ -168,7 +171,7 @@ export default function SearchExplore() {
                         </Text>
                         <Flex>
                           <Text fontSize={16} color={theme.subText}>
-                            {item.address}
+                            {above768 ? item.address : getShortenAddress(item.address)}
                           </Text>
 
                           {/* <CenterDiv>

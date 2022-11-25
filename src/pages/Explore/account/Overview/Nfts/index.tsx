@@ -131,6 +131,12 @@ const LayoutWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
+  @media screen and (max-width: 1008px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 568px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `
 const ItemWrapper = styled.div`
   display: flex;

@@ -12,7 +12,7 @@ import { formattedNumLong } from 'utils'
 const ChainBalanceStyled = styled.div<{ active: boolean }>`
   background: ${({ theme, active }) => (active ? theme.primary : theme.buttonBlack)};
   border-radius: 8px;
-  padding: 10px 20px;
+  padding: 10px 16px;
   cursor: pointer;
   border: 1px solid ${({ theme, active }) => rgba(theme.border, 0.3)};
   &:hover {
@@ -34,6 +34,10 @@ const Wrapper = styled.div`
   border-radius: 8px;
   padding: 16px;
   border: 1px solid ${({ theme }) => rgba(theme.border, 0.1)};
+  @media screen and (max-width: 768px) {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
 `
 
 const ChainsLayout = styled.div`

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
+import { useMedia } from 'react-use'
 import { Flex, Text } from 'rebass'
 import { chainsInfo } from 'services/zapper/constances'
 import { useWalletBalances } from 'services/zapper/hooks/useBalances'
@@ -71,6 +72,8 @@ export default function Wallet({
     )
   }
 
+  const above768 = useMedia('(min-width: 768px)')
+
   function Token({ token, index }: { token: TokenBreakdown; index: number }) {
     const networkInfo = chainsInfo[token.network as keyof typeof chainsInfo]
     return (
@@ -99,9 +102,11 @@ export default function Wallet({
                 }}
               >
                 <img src={networkInfo.logo} alt="" height={16} />
-                <Text fontSize={16} fontWeight={300} color={theme.subText}>
-                  {networkInfo.name}
-                </Text>
+                {above768 && (
+                  <Text fontSize={16} fontWeight={300} color={theme.subText}>
+                    {networkInfo.name}
+                  </Text>
+                )}
               </Flex>
             </Flex>
           </Flex>
@@ -112,9 +117,11 @@ export default function Wallet({
         <TableBodyItemWrapper>
           <Flex>
             {formattedNumLong(token.context.balance)}
-            <Text color={theme.primary} fontSize={14} fontWeight={300} style={{ marginLeft: 8 }}>
-              {token.context.symbol}
-            </Text>
+            {above768 && (
+              <Text color={theme.primary} fontSize={14} fontWeight={300} style={{ marginLeft: 8 }}>
+                {token.context.symbol}
+              </Text>
+            )}
           </Flex>
         </TableBodyItemWrapper>
         <TableBodyItemWrapper>

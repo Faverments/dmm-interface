@@ -14,6 +14,7 @@ export const LayoutWrapper = styled.div`
   grid-template-columns: 1.5fr 1fr 1fr 1fr;
   border-bottom: 0.5px solid ${({ theme }) => (theme.darkMode ? rgba(theme.border, 0.2) : theme.border)};
   padding-bottom: 16px;
+  min-width: 0;
 `
 
 export const TableHeaderItem = styled.div<{ align?: string }>`
@@ -33,4 +34,7 @@ export const TableBodyItemWrapper = styled.div<{ align?: string }>`
   align-items: ${({ align }) => (align === 'right' ? 'flex-end' : 'flex-start')};
   gap: 8px;
   color: ${({ theme }) => rgba(theme.text, 0.85)};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 `

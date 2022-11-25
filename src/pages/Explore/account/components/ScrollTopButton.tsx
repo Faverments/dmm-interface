@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ArrowUp } from 'react-feather'
+import { useMedia } from 'react-use'
 
 import { ScrollToTopWrapperIcon } from '../styleds'
 
@@ -20,12 +21,15 @@ export default function ScrollTopButton() {
 
     return () => window.removeEventListener('scroll', handleShow)
   }, [])
+
+  const above768 = useMedia('(min-width: 768px)')
+
   return (
     <div
       style={{
         position: 'fixed',
-        bottom: 20,
-        right: 20,
+        bottom: above768 ? 20 : 144,
+        right: 16,
       }}
       onClick={() => {
         window.scrollTo({
@@ -35,7 +39,7 @@ export default function ScrollTopButton() {
       }}
     >
       <ScrollToTopWrapperIcon show={show}>
-        <ArrowUp size={24} />
+        <ArrowUp size={32} />
       </ScrollToTopWrapperIcon>
     </div>
   )

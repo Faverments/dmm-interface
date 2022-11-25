@@ -60,7 +60,7 @@ const LayoutWrapper = styled.div`
   display: grid;
   grid-template-columns: 2fr 0.8fr;
   grid-gap: 20px;
-  @media screen and (max-width: 780px) {
+  @media screen and (max-width: 1008px) {
     display: flex;
     flex-direction: column-reverse;
     gap: 20px;

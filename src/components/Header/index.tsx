@@ -154,7 +154,11 @@ const DiscoverWrapper = styled.span`
 `
 
 const CampaignWrapper = styled.span``
-const DashboardWrapper = styled.span``
+const DashboardWrapper = styled.span`
+  @media (max-width: 1440px) {
+    display: none;
+  }
+`
 
 const AboutWrapper = styled.span`
   @media (max-width: 1440px) {

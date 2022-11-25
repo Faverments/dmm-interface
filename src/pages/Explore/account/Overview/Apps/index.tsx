@@ -1,10 +1,12 @@
 import { rgba } from 'polished'
+import { useMedia } from 'react-use'
 import { Flex, Text } from 'rebass'
 import { chainsInfo } from 'services/zapper/constances'
 import { useAppBalances } from 'services/zapper/hooks/useBalances'
 import { ALL_NETWORKS, Network, PresentedBalancePayload, TokenBreakdown } from 'services/zapper/types/models/index'
 import styled from 'styled-components/macro'
 
+import DefaultIcon from 'assets/images/default-icon.png'
 import { AutoColumn } from 'components/Column'
 import useTheme from 'hooks/useTheme'
 import { formattedNumLong } from 'utils'
@@ -18,6 +20,7 @@ const AppSubDetailsStyled = styled.div`
 export default function Apps({ data, network }: { data: PresentedBalancePayload[]; network: Network | ALL_NETWORKS }) {
   const apps = useAppBalances(data, network)
   const theme = useTheme()
+  const above768 = useMedia('(min-width: 768px)')
   return (
     <>
       {Object.values(apps)
@@ -76,9 +79,11 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
                     }}
                   >
                     <img src={networkInfoMain.logo} alt="" height={28} />
-                    <Text fontSize={14} fontWeight={300} color={theme.subText}>
-                      {networkInfoMain.name}
-                    </Text>
+                    {above768 && (
+                      <Text fontSize={14} fontWeight={300} color={theme.subText}>
+                        {networkInfoMain.name}
+                      </Text>
+                    )}
                   </Flex>
                 </Flex>
                 <AutoColumn gap="48px">
@@ -113,6 +118,10 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
                                     height={40}
                                     style={{ borderRadius: '50%' }}
                                     alt={displayProps.label}
+                                    onError={(e: any) => {
+                                      e.target.onerror = null
+                                      e.target.src = DefaultIcon
+                                    }}
                                   />
                                   <img
                                     src={AppMain.displayProps.images[0]}
@@ -156,9 +165,11 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
                                     }}
                                   >
                                     <img src={networkInfo.logo} alt="" height={16} />
-                                    <Text fontSize={16} fontWeight={300} color={theme.subText}>
-                                      {networkInfo.name}
-                                    </Text>
+                                    {above768 && (
+                                      <Text fontSize={14} fontWeight={300} color={theme.subText}>
+                                        {networkInfoMain.name}
+                                      </Text>
+                                    )}
                                   </Flex>
                                 </Flex>
                               </Flex>
@@ -169,9 +180,12 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
                             <TableBodyItemWrapper>
                               <Flex>
                                 {formattedNumLong(context.balance)}
-                                <Text color={theme.primary} fontSize={14} fontWeight={300} style={{ marginLeft: 8 }}>
-                                  {displayProps.label}
-                                </Text>
+
+                                {above768 && (
+                                  <Text color={theme.primary} fontSize={14} fontWeight={300} style={{ marginLeft: 8 }}>
+                                    {displayProps.label}
+                                  </Text>
+                                )}
                               </Flex>
                             </TableBodyItemWrapper>
                             <TableBodyItemWrapper>
@@ -237,6 +251,10 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
                                               height={40}
                                               style={{ borderRadius: '50%' }}
                                               alt={displayProps.label}
+                                              onError={(e: any) => {
+                                                e.target.onerror = null
+                                                e.target.src = DefaultIcon
+                                              }}
                                             />
                                             <img
                                               src={AppMain.displayProps.images[0]}
@@ -266,9 +284,11 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
                                               }}
                                             >
                                               <img src={networkInfo.logo} alt="" height={16} />
-                                              <Text fontSize={16} fontWeight={300} color={theme.subText}>
-                                                {networkInfo.name}
-                                              </Text>
+                                              {above768 && (
+                                                <Text fontSize={14} fontWeight={300} color={theme.subText}>
+                                                  {networkInfoMain.name}
+                                                </Text>
+                                              )}
                                             </Flex>
                                           </Flex>
                                         </Flex>
@@ -279,14 +299,17 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
                                       <TableBodyItemWrapper>
                                         <Flex>
                                           {formattedNumLong(context.balance)}
-                                          <Text
-                                            color={theme.primary}
-                                            fontSize={14}
-                                            fontWeight={300}
-                                            style={{ marginLeft: 8 }}
-                                          >
-                                            {displayProps.label}
-                                          </Text>
+
+                                          {above768 && (
+                                            <Text
+                                              color={theme.primary}
+                                              fontSize={14}
+                                              fontWeight={300}
+                                              style={{ marginLeft: 8 }}
+                                            >
+                                              {displayProps.label}
+                                            </Text>
+                                          )}
                                         </Flex>
                                       </TableBodyItemWrapper>
                                       <TableBodyItemWrapper>
@@ -330,6 +353,7 @@ const SecondaryLayoutWrapper = styled.div<{ colum: number }>`
   }};
   border-bottom: 0.5px solid ${({ theme }) => (theme.darkMode ? rgba(theme.border, 0.2) : theme.border)};
   padding-bottom: 16px;
+  min-width: 0;
 `
 
 const PostionWrapper = styled.div`

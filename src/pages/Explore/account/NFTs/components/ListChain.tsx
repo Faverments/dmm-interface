@@ -18,7 +18,7 @@ export function ListChain({
   const listChainAvailable: (keyof typeof Network)[] = ['ETHEREUM_MAINNET', 'ARBITRUM_MAINNET', 'OPTIMISM_MAINNET']
   const theme = useTheme()
   return (
-    <Flex style={{ gap: 8 }}>
+    <Flex style={{ gap: 8 }} flexWrap="wrap">
       {listChainAvailable.map((item, index) => {
         const active = item === network
         return (

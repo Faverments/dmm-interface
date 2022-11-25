@@ -127,4 +127,7 @@ export default function Header({
 const Wrapper = styled.div<{ color: string }>`
   padding: 16px 32px;
   border-radius: 8px;
+  @media screen and (max-width: 578px) {
+    padding: 16px 0px;
+  }
 `

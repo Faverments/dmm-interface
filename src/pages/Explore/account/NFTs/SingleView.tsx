@@ -17,7 +17,7 @@ import FilterCollections from './components/FilterCollections'
 import { ListChain } from './components/ListChain'
 import SearchNftCollections from './components/SearchNftCollections'
 import ViewTypePicker from './components/ViewTypePicker'
-import { BannerImageWrapper, ItemWrapper, LayoutWrapper, LogoImageWrapper, Wrapper } from './styleds'
+import { BannerImageWrapper, FilterBarWrapper, ItemWrapper, LayoutWrapper, LogoImageWrapper, Wrapper } from './styleds'
 
 export default function SingleView({
   activeViewType,
@@ -71,14 +71,14 @@ export default function SingleView({
           console.log(i)
         }}
       />
-      <Flex justifyContent="space-between">
+      <FilterBarWrapper>
         <ViewTypePicker activeViewType={activeViewType} setActiveViewType={setActiveViewType} />
         <SearchNftCollections
           SearchList={searchList}
           OnSearchItemClick={onSearchItemClick}
           activeView={activeViewType}
         />
-      </Flex>
+      </FilterBarWrapper>
 
       <FilterCollections collections={collections} onFilterCollectionClick={onFilterCollectionClick} />
 
@@ -117,15 +117,7 @@ export default function SingleView({
                   </LogoImageWrapper>
                 </BannerImageWrapper>
                 <Flex flexDirection="column" style={{ gap: 16 }}>
-                  <Text
-                    color={theme.text}
-                    fontWeight={400}
-                    style={{
-                      textOverflow: 'ellipsis',
-                      overflow: 'hidden',
-                      maxWidth: '180px',
-                    }}
-                  >
+                  <Text color={theme.text} fontWeight={400}>
                     {name}
                   </Text>
                   <Flex flexDirection="column" style={{ gap: 4 }}>

@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { ZapOff } from 'react-feather'
 import Skeleton from 'react-loading-skeleton'
 import { useParams } from 'react-router-dom'
+import { useMedia } from 'react-use'
 import { Flex, Text } from 'rebass'
 import { TokenApproval, useGetTokenApprovals } from 'services/krystal'
 import { ALL_NETWORKS, Network } from 'services/zapper'
@@ -58,7 +59,7 @@ export default function TokenApprovals() {
 
   const sortedHits = hits.sort((a, b) => Number(b.item.lastUpdateTimestamp) - Number(a.item.lastUpdateTimestamp))
 
-  const hitsPaginated = sortedHits.slice((currentPage - 1) * 20, currentPage * 20)
+  const hitsPaginated = sortedHits.slice((currentPage - 1) * 10, currentPage * 10)
 
   const theme = useTheme()
 
@@ -69,6 +70,8 @@ export default function TokenApprovals() {
 
   const { update } = useRevoke()
 
+  const above768 = useMedia('(min-width: 768px)')
+
   return (
     <Flex
       flexDirection="column"
@@ -76,40 +79,48 @@ export default function TokenApprovals() {
         gap: 20,
       }}
     >
-      <Flex justifyContent="space-between" alignItems="center">
-        <Text color={theme.subText} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <FilterBarWrapper>
+        <Text
+          color={theme.subText}
+          fontSize={16}
+          fontWeight={300}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            background: theme.background,
+            borderRadius: 4,
+            padding: '8px 12px',
+            width: 'fit-content',
+          }}
+        >
           {isLoading || error ? (
             <Skeleton width={100} baseColor={theme.background} />
           ) : (
             data!.atRisk?.usd && `Total Allowance : ${formattedNumLong(data!.atRisk['usd'], true)}`
           )}
         </Text>
-        <Flex style={{ gap: 12 }}>
+        <Flex justifyContent="space-between" style={{ gap: 8, width: above768 ? undefined : '100%' }}>
           <NetworkSelect network={network} setNetwork={setNetwork} />
-          <div>
-            <Search searchValue={search} onSearch={onSearchQuery} placeholder="Search by name, symbol, address" />
-            {/* <p>Results for &quot;{query}&quot;:</p> */}
-          </div>
-        </Flex>
-      </Flex>
 
-      <Flex flexDirection="row" style={{ gap: 30, minHeight: 528 }}>
-        <TableWrapper>
-          <AutoColumn gap="16px">
-            <LayoutWrapper>
-              <TableHeaderItem>Asset</TableHeaderItem>
-              <TableHeaderItem>Approved Amount</TableHeaderItem>
-              <TableHeaderItem>Approved Spender</TableHeaderItem>
-              <TableHeaderItem>Last Updated</TableHeaderItem>
-              <TableHeaderItem>Txn Hash</TableHeaderItem>
-              <TableHeaderItem>Revoke</TableHeaderItem>
-            </LayoutWrapper>
-            {isLoading ? (
-              <LocalLoader />
-            ) : hitsPaginated.length === 0 ? (
-              <NotFound text="No Token Approve found" />
-            ) : (
-              <>
+          <Search searchValue={search} onSearch={onSearchQuery} placeholder="Search by name, symbol, address" />
+        </Flex>
+      </FilterBarWrapper>
+
+      <Flex style={{ gap: 0 }} flexDirection="column">
+        <ScrollWrapper>
+          <Flex flexDirection="row" style={{ gap: 30, minWidth: 768 }}>
+            <TableWrapper>
+              <AutoColumn gap="16px">
+                <LayoutWrapper>
+                  <TableHeaderItem>Asset</TableHeaderItem>
+                  <TableHeaderItem>Approved Amount</TableHeaderItem>
+                  <TableHeaderItem>Approved Spender</TableHeaderItem>
+                  <TableHeaderItem>Last Updated</TableHeaderItem>
+                  <TableHeaderItem>Txn Hash</TableHeaderItem>
+                  <TableHeaderItem>Revoke</TableHeaderItem>
+                </LayoutWrapper>
+
                 {hitsPaginated.map(hit => {
                   const {
                     logo,
@@ -190,7 +201,11 @@ export default function TokenApprovals() {
                           {lastUpdateTxHash.slice(0, 8) + '...' + lastUpdateTxHash.slice(58, 65)}
                         </a>
                       </TableBodyItem>
-                      <TableBodyItem>
+                      <TableBodyItem
+                        style={{
+                          alignItems: above768 ? undefined : 'center',
+                        }}
+                      >
                         <ZapOffWrapper
                           size={16}
                           onClick={() => {
@@ -201,19 +216,20 @@ export default function TokenApprovals() {
                     </LayoutWrapper>
                   )
                 })}
-                <Pagination
-                  pageSize={20}
-                  onPageChange={newPage => setCurrentPage(newPage)}
-                  currentPage={currentPage}
-                  totalCount={hits.length ?? 1}
-                  style={{
-                    backgroundColor: 'transparent',
-                  }}
-                />
-              </>
-            )}
-          </AutoColumn>
-        </TableWrapper>
+              </AutoColumn>
+            </TableWrapper>
+          </Flex>
+        </ScrollWrapper>
+        {isLoading ? <LocalLoader /> : hitsPaginated.length === 0 && <NotFound text="No Token Approve found" />}
+        <Pagination
+          pageSize={10}
+          onPageChange={newPage => setCurrentPage(newPage)}
+          currentPage={currentPage}
+          totalCount={hits.length ?? 1}
+          style={{
+            backgroundColor: 'transparent',
+          }}
+        />
       </Flex>
     </Flex>
   )
@@ -224,6 +240,8 @@ const LayoutWrapper = styled.div`
   grid-template-columns: 1.5fr 1.5fr 1fr 1fr 1fr 0.5fr;
   border-bottom: 0.5px solid ${({ theme }) => (theme.darkMode ? rgba(theme.border, 0.2) : theme.border)};
   padding-bottom: 16px;
+  min-height: 0;
+  min-width: 0;
 `
 
 const TableHeaderItem = styled.div<{ align?: string }>`
@@ -243,6 +261,10 @@ const TableBodyItem = styled.div<{ align?: string }>`
   align-items: ${({ align }) => (align === 'right' ? 'flex-end' : 'flex-start')};
   gap: 8px;
   color: ${({ theme }) => rgba(theme.text, 0.85)};
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const ZapOffWrapper = styled(ZapOff)`
@@ -251,5 +273,18 @@ const ZapOffWrapper = styled(ZapOff)`
     color: ${({ theme }) => theme.primary};
     background-color: ${({ theme }) => rgba(theme.primary, 0.1)};
     border-radius: 50%;
+  }
+`
+
+const ScrollWrapper = styled.div`
+  overflow-x: scroll;
+`
+
+const FilterBarWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    gap: 16px;
   }
 `

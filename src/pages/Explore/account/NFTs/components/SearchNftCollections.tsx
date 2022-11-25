@@ -38,7 +38,6 @@ export default function SearchNftCollections({
         searchValue={search}
         onSearch={onSearch}
         placeholder="Filter by Collection"
-        minWidth={'300px'}
         onFocus={() => {
           setShowResults(true)
         }}
@@ -87,7 +86,7 @@ export default function SearchNftCollections({
 
 const SearchWrapper = styled.div`
   position: relative;
-  min-width: 400px;
+  min-width: 300px;
 `
 
 const Z_INDEX = 999

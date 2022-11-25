@@ -25,6 +25,9 @@ export const BackgroundOverlay = styled.div<{ isDark: boolean }>`
 
 export const LeftSideWrapper = styled.div`
   padding: 16px 16px;
+  @media screen and (max-width: 768px) {
+    padding: 32px 0px;
+  }
 `
 
 export const PageWrapper = styled.div`
@@ -94,11 +97,11 @@ export const ScrollToTopWrapperIcon = styled.div<{ show: boolean }>`
   display: ${({ show }) => (show ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
-  color: ${({ theme }) => theme.primary};
-  background-color: ${({ theme }) => rgba(theme.primary, 0.1)};
+  color: ${({ theme }) => theme.tabBackgound};
+  background-color: ${({ theme }) => theme.primary};
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   &:hover {
     cursor: pointer;
     // enlarge icon

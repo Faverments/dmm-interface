@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { CSVLink } from 'react-csv'
 import { ArrowDown, ArrowUp, Repeat, Search as SearchIcon, X } from 'react-feather'
 import { useParams } from 'react-router-dom'
+import { useMedia } from 'react-use'
 import { Flex, Text } from 'rebass'
 import { chainsInfo } from 'services/zapper/constances'
 import { useGetTransactions } from 'services/zapper/hooks/useTransactions'
@@ -100,40 +101,42 @@ export default function TransactionsHistory() {
     setSearch(value)
   }
 
-  console.log('transactionsPaginated', transactionsPaginated)
+  const above768 = useMedia('(min-width: 768px)')
 
   return (
     <Flex flexDirection="column" style={{ gap: 18 }}>
-      <Flex style={{ gap: 8 }} flexWrap="wrap">
-        {listChainAvailable.map((item, index) => {
-          const active = item === network
-          return (
-            <ChainWrapper
-              key={index}
-              style={
-                {
-                  // flexBasis: '100%',
-                  // maxWidth: 230,
+      <ScrollWrapper>
+        <Flex style={{ gap: 8 }}>
+          {listChainAvailable.map((item, index) => {
+            const active = item === network
+            return (
+              <ChainWrapper
+                key={index}
+                style={
+                  {
+                    // flexBasis: '100%',
+                    // maxWidth: 230,
+                  }
                 }
-              }
-              onClick={() => setNetwork(item as Network)}
-              active={active}
-            >
-              <Flex alignItems="center" style={{ gap: 8 }} justifyContent="space-between">
-                <Flex alignItems="center" style={{ gap: 8 }}>
-                  <img src={chainsInfo[item as keyof typeof chainsInfo].logo} alt="" height={24} />
+                onClick={() => setNetwork(item as Network)}
+                active={active}
+              >
+                <Flex alignItems="center" style={{ gap: 8 }} justifyContent="space-between">
+                  <Flex alignItems="center" style={{ gap: 8 }}>
+                    <img src={chainsInfo[item as keyof typeof chainsInfo].logo} alt="" height={24} />
 
-                  <Text fontSize={16} fontWeight={500} color={active ? theme.textReverse : theme.text}>
-                    {chainsInfo[item as keyof typeof chainsInfo].name}{' '}
-                  </Text>
+                    <Text fontSize={16} fontWeight={500} color={active ? theme.textReverse : theme.text}>
+                      {chainsInfo[item as keyof typeof chainsInfo].name}{' '}
+                    </Text>
+                  </Flex>
                 </Flex>
-              </Flex>
-            </ChainWrapper>
-          )
-        })}
-      </Flex>
+              </ChainWrapper>
+            )
+          })}
+        </Flex>
+      </ScrollWrapper>
 
-      <Flex justifyContent="space-between" alignItems="center">
+      <FilterBarWrapper>
         <Search
           searchValue={search}
           onSearch={onSearchQuery}
@@ -144,7 +147,7 @@ export default function TransactionsHistory() {
         <CSVLink data={AllTransactions} filename={`${address}_transactions.csv`}>
           <ButtonLight> Download CSV</ButtonLight>
         </CSVLink>
-      </Flex>
+      </FilterBarWrapper>
 
       {isLoading ? (
         <LocalLoader />
@@ -248,9 +251,11 @@ export default function TransactionsHistory() {
                                   <Flex alignItems="flex-end" height="100%" style={{ marginLeft: 12 }}>
                                     <Flex alignItems="flex-end" style={{ gap: 8 }}>
                                       <img src={networkInfo.logo} alt="" height={16} />
-                                      <Text fontSize={16} fontWeight={300} color={theme.subText}>
-                                        {networkInfo.name}
-                                      </Text>
+                                      {above768 && (
+                                        <Text fontSize={16} fontWeight={300} color={theme.subText}>
+                                          {networkInfo.name}
+                                        </Text>
+                                      )}
                                     </Flex>
                                   </Flex>
                                 </Flex>
@@ -352,11 +357,19 @@ export default function TransactionsHistory() {
   )
 }
 
+const ScrollWrapper = styled.div`
+  overflow-x: scroll;
+`
+
 const LayoutWrapper = styled.div`
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr 1fr;
   border-bottom: 0.5px solid ${({ theme }) => (theme.darkMode ? rgba(theme.border, 0.2) : theme.border)};
   padding-bottom: 16px;
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1.5fr 1fr;
+    gap: 8px;
+  }
 `
 
 const TableHeaderItem = styled.div<{ align?: string }>`
@@ -365,6 +378,8 @@ const TableHeaderItem = styled.div<{ align?: string }>`
   color: ${({ theme }) => theme.subText};
   text-align: ${({ align }) => align ?? 'left'};
   text-transform: uppercase;
+  min-height: 0;
+  min-width: 0;
 `
 
 const TableBodyItem = styled.div<{ align?: string }>`
@@ -376,6 +391,10 @@ const TableBodyItem = styled.div<{ align?: string }>`
   align-items: ${({ align }) => (align === 'right' ? 'flex-end' : 'flex-start')};
   gap: 8px;
   color: ${({ theme }) => rgba(theme.text, 0.85)};
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const DirectionIcon = styled.div`
@@ -387,4 +406,15 @@ const DirectionIcon = styled.div`
   border-radius: 50%;
   width: 30px;
   height: 30px;
+`
+
+const FilterBarWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    gap: 8px;
+    align-items: flex-end;
+  }
 `
