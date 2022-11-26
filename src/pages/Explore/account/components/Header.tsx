@@ -6,7 +6,7 @@ import { Flex, Text } from 'rebass'
 import { useTotalsBalances } from 'services/zapper/hooks/useBalances'
 import useGetNftUsersCollectionsTotals from 'services/zapper/hooks/useGetZapperNftUsersCollectionsTotals'
 import { PresentedBalancePayload } from 'services/zapper/types/models'
-import styled from 'styled-components/macro'
+import styled, { keyframes } from 'styled-components/macro'
 
 import Avatar from 'components/Avatar'
 import Copy from 'components/Copy'
@@ -32,17 +32,57 @@ const PercentStyled = styled.div<{ active: boolean }>`
   border-radius: 12px;
 `
 
+const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`
+
+const Spinner = styled.div`
+  animation: ${rotate360} 1s cubic-bezier(0.83, 0, 0.17, 1) infinite;
+  transform: translateZ(0);
+
+  border-top: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-left: 2px solid ${({ theme }) => theme.green1};
+  background: transparent;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  /* position: relative;
+
+  left: -3px;
+  top: -3px; */
+`
+
+const Circle = styled.div`
+  transform: translateZ(0);
+  border: 2px solid ${({ theme }) => theme.green1};
+  background: transparent;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  /* position: relative;
+
+  left: -3px;
+  top: -3px; */
+`
+
 export default function Header({
-  data,
-  // return24hs,
-  isBalanceSyncing,
-}: // isReturn24hSyncing,
-{
-  data: PresentedBalancePayload[]
-  // return24hs: Return24h[]
-  isBalanceSyncing: boolean
-  // isReturn24hSyncing: boolean
+  balances,
+}: {
+  balances: {
+    isSyncing: boolean
+    data: PresentedBalancePayload[]
+    currentMessageData: PresentedBalancePayload | undefined
+    error: Error | undefined
+  }
 }) {
+  const { data, isSyncing, error } = balances
   const theme = useTheme()
   const { address } = useParams<{ address: string }>()
   const { ENSName, loading } = useENSName(address)
@@ -58,7 +98,22 @@ export default function Header({
     <Wrapper color={stringToColor(address)}>
       <Flex justifyContent="space-between" width="100%">
         <Flex style={{ gap: 20 }} width="100%">
-          <Avatar address={address} />
+          <div
+            style={{
+              position: 'relative',
+            }}
+          >
+            <Avatar address={address} />
+            <div
+              style={{
+                position: 'absolute',
+                top: -16,
+                right: -16,
+              }}
+            >
+              {isSyncing ? <Spinner /> : <Circle />}
+            </div>
+          </div>
           <Flex flexDirection="column" style={{ gap: 5 }} width="100%">
             <Flex justifyContent="space-between" width="100%">
               <Text fontSize={above576 ? 26 : 20} color={theme.text}>
@@ -74,9 +129,9 @@ export default function Header({
               Past 24h Hours
             </Text> */}
             </Flex>
-            <Flex justifyContent="space-between" alignItems="flex-end" style={{ gap: 25 }}>
+            <Flex alignItems="center" style={{ gap: 10 }}>
               <Text fontSize={above576 ? 38 : 32} fontWeight={700} color={theme.text} minWidth={200}>
-                {details.total === 0 && isBalanceSyncing ? (
+                {details.total === 0 && isSyncing ? (
                   <Skeleton baseColor={theme.background} />
                 ) : (
                   formattedNumLong(

@@ -1,4 +1,8 @@
+import { t } from '@lingui/macro'
+import { Console } from 'console'
 import React, { useEffect, useMemo, useRef } from 'react'
+
+import { NotificationType, useNotify } from 'state/application/hooks'
 
 import { ZAPPER_WEB_API } from '../../config'
 import { ALL_NETWORKS, EachBalance, Network, PresentedBalancePayload } from '../types/models'
@@ -34,6 +38,7 @@ export function useGetBalancesEventStream({ addresses, networks, bundled }: Bala
   // const [tokens, setTokens] = React.useState<ListProtocolsMessageEvent>([])
   const [data, setData] = React.useState<PresentedBalancePayload[]>([])
   const [currentMessageData, setCurrentMessageData] = React.useState<PresentedBalancePayload>()
+  const notify = useNotify()
   const fetchRef = useRef(0)
 
   useEffect(() => {
@@ -43,7 +48,9 @@ export function useGetBalancesEventStream({ addresses, networks, bundled }: Bala
 
     setData([])
     setCurrentMessageData(undefined)
-    console.log('run address' + addresses)
+    setIsSyncing(true)
+
+    let eventSource: EventSource
 
     try {
       // const url = `https://web.zapper.fi/v2/balances?addresses[0]=${addresses[0]}&networks[0]=ethereum&networks[1]=polygon&networks[2]=optimism&networks[3]=gnosis&networks[4]=binance-smart-chain&networks[5]=fantom&networks[6]=avalanche&networks[7]=arbitrum&networks[8]=celo&networks[9]=harmony&networks[10]=moonriver&networks[11]=bitcoin&networks[12]=cronos&networks[13]=aurora&networks[14]=evmos&nonNilOnly=true&useNewBalancesFormat=true&useNftService=true`
@@ -55,11 +62,10 @@ export function useGetBalancesEventStream({ addresses, networks, bundled }: Bala
         url += `networks[${index}]=${network}&`
       })
       url += `nonNilOnly=true&useNewBalancesFormat=true&useNftService=true`
-      const eventSource = new EventSource(url)
+      eventSource = new EventSource(url)
 
       eventSource.addEventListener('balance', function (e) {
         console.log('EVENT : balance')
-        setIsSyncing(true)
         const jsonData = JSON.parse(e.data)
         // if (jsonData.appId === 'tokens') {
         //   setTokens((preState: any) => {
@@ -80,13 +86,28 @@ export function useGetBalancesEventStream({ addresses, networks, bundled }: Bala
         setIsSyncing(false)
         eventSource.close()
       })
-      console.log('useGetBalancesEventStream')
+
+      eventSource.onerror = function (e) {
+        console.log(' Receive EVENT : error')
+        console.log(e)
+        setIsSyncing(false)
+        // setData([])
+        setError(new Error('Error fetching balances'))
+        notify({
+          title: t`Error while fetching balances`,
+          summary: t`This is likely you make too many requests. Please try again later.`,
+          type: NotificationType.ERROR,
+        })
+        eventSource.close()
+      }
     } catch (error) {
+      console.log('Catch EVENT : error')
       console.log(error)
       setError(error)
     }
-    // }, [addresses, networks])
-    // }, [addresses])
+    return () => {
+      eventSource.close()
+    }
   }, [JSON.stringify(addresses), JSON.stringify(networks)])
 
   // return { data: { protocols, tokens }, isSyncing, error }

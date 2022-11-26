@@ -149,12 +149,7 @@ export default function Account(props: RouteComponentProps<{ address: string }>)
   return (
     <Wrapper>
       <PageWrapper>
-        <Header
-          data={balances.data}
-          // return24hs={return24hAllNetworks}
-          isBalanceSyncing={balances.isSyncing}
-          // isReturn24hSyncing={is24hSync}
-        />
+        <Header balances={balances} />
         <AccountTab activeTab={activeTab} />
         {activeTab === AccountTabs.OVER_VIEW && (
           <Overview
