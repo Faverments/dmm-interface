@@ -19,7 +19,7 @@ export default function DashBoard(props: RouteComponentProps<{ address: string }
   const toggleSearchExploreModal = useToggleSearchExploreModal()
   useEffect(() => {
     if (account) {
-      history.replace(`/account/${account.toLowerCase()}`)
+      history.replace(`/account/${account.toLowerCase()}?tab=overview`)
     }
   }, [account, history])
 

@@ -74,7 +74,7 @@ export default function Account(props: RouteComponentProps<{ address: string }>)
   const [activeTab, setActiveTab] = useState<AccountTabs>()
   useEffect(() => {
     if (tab === undefined) {
-      history.push({ search: '?tab=' + AccountTabs.OVER_VIEW })
+      history.replace({ search: '?tab=' + AccountTabs.OVER_VIEW })
     } else {
       setActiveTab(tab as AccountTabs)
     }

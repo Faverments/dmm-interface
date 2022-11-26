@@ -363,7 +363,7 @@ export default function AccountDetails({
             </Flex>
           </ExternalLink>
 
-          <ExternalLink href={`/account/${account?.toLowerCase()}`}>
+          <ExternalLink href={`/account/${account?.toLowerCase()}?tab=overview`}>
             <Flex alignItems="center">
               <User size={16} />
               <Text marginLeft="4px" fontSize="14px">

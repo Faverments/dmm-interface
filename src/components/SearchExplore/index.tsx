@@ -149,7 +149,7 @@ export default function SearchExplore() {
                 <NoResult />
               ) : userResult.length > 0 ? (
                 userResult.map(item => (
-                  <StyledLink to={`/account/${item.address}`} key={item.address}>
+                  <StyledLink to={`/account/${item.address}?tab=overview`} key={item.address}>
                     <Flex style={{ gap: 10 }}>
                       {item.imageUrl ? (
                         <div>
