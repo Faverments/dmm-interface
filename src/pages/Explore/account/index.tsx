@@ -35,6 +35,10 @@ export enum AccountTabs {
   NFT_PROFILER = 'nft_profiler',
 }
 
+function containsUppercase(str: string) {
+  return Boolean(str.match(/[A-Z]/))
+}
+
 export default function Account(props: RouteComponentProps<{ address: string }>) {
   const {
     match: {
@@ -42,10 +46,15 @@ export default function Account(props: RouteComponentProps<{ address: string }>)
     },
     history,
   } = props
+
   const { tab } = useParsedQueryString()
   const [isOwnerWallet, setIsOwnerWallet] = useState(false)
   const { account } = useActiveWeb3React()
   useEffect(() => {
+    if (address && containsUppercase(address)) {
+      history.replace(`/account/${address.toLowerCase()}`)
+    }
+
     if (account && account.toLowerCase() !== address.toLowerCase()) {
       return
     }
