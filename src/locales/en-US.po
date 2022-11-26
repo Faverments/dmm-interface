@@ -1365,6 +1365,10 @@ msgstr "Error connecting."
 msgid "Error connecting. Try refreshing the page."
 msgstr "Error connecting. Try refreshing the page."
 
+#: src/services/zapper/hooks/useBalances.ts
+msgid "Error while fetching balances"
+msgstr "Error while fetching balances"
+
 #: src/components/swapv2/AdvancedSwapDetails.tsx
 #: src/pages/Bridge/ComfirmBridgeModal.tsx
 msgid "Estimated Processing Time"
@@ -3627,6 +3631,10 @@ msgstr "This campaign does not have a leaderboard yet."
 #: src/components/YieldPools/ElasticFarmGroup/Row.tsx
 msgid "This farm is currently under maintenance. You can deposit your liquidity into the new farms instead. Your withdrawals are not affected."
 msgstr "This farm is currently under maintenance. You can deposit your liquidity into the new farms instead. Your withdrawals are not affected."
+
+#: src/services/zapper/hooks/useBalances.ts
+msgid "This is likely you make too many requests. Please try again later."
+msgstr "This is likely you make too many requests. Please try again later."
 
 #: src/components/YieldPools/FairLaunchPools.tsx
 msgid "This pool require {0} LP Tokens. Get the LP Tokens <0>here ↗</0>"

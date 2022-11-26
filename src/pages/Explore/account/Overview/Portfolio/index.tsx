@@ -51,10 +51,11 @@ export default function Portfolio({ data }: { data: PresentedBalancePayload[] })
         percent: isNaN(nftPercent) ? 0 : nftPercent,
       },
       ...Object.entries(apps).map(([key, value], index) => {
+        const appPercent = (value.totals / totals) * 100
         return {
           title: key,
           value: value.totals,
-          percent: value.totals < 0 ? 0 : (value.totals / totals) * 100,
+          percent: value.totals < 0 ? 0 : isNaN(appPercent) ? 0 : appPercent,
         }
       }),
     ]
@@ -100,7 +101,13 @@ export default function Portfolio({ data }: { data: PresentedBalancePayload[] })
                   <Text color={theme.subText} fontSize={14}>
                     {formatDollarAmount(value)}
                   </Text>
-                  <Text color={theme.primary} fontSize={12}>
+                  <Text
+                    color={theme.primary}
+                    fontSize={12}
+                    style={{
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
                     {' '}
                     ( {percent.toFixed(2) === '0.00' ? '<0.01' : percent.toFixed(2)}% )
                   </Text>

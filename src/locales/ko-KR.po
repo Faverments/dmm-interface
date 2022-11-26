@@ -1406,6 +1406,10 @@ msgstr "연결하는 동안 오류가 발생했습니다."
 msgid "Error connecting. Try refreshing the page."
 msgstr "연결하는 동안 오류가 발생했습니다. 페이지를 새로고침해 보세요."
 
+#: src/services/zapper/hooks/useBalances.ts
+msgid "Error while fetching balances"
+msgstr ""
+
 #: src/components/swapv2/AdvancedSwapDetails.tsx
 #: src/pages/Bridge/ComfirmBridgeModal.tsx
 msgid "Estimated Processing Time"
@@ -3675,6 +3679,10 @@ msgstr ""
 #: src/components/YieldPools/ElasticFarmGroup/Row.tsx
 #: src/components/YieldPools/ElasticFarmGroup/Row.tsx
 msgid "This farm is currently under maintenance. You can deposit your liquidity into the new farms instead. Your withdrawals are not affected."
+msgstr ""
+
+#: src/services/zapper/hooks/useBalances.ts
+msgid "This is likely you make too many requests. Please try again later."
 msgstr ""
 
 #: src/components/YieldPools/FairLaunchPools.tsx
