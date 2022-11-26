@@ -131,6 +131,7 @@ export default function Apps({ data, network }: { data: PresentedBalancePayload[
                                       top: -5,
                                       left: -5,
                                       borderRadius: '50%',
+                                      zIndex: 2,
                                     }}
                                     alt={AppMain.displayProps.appName}
                                   />

@@ -1,6 +1,5 @@
 import { t } from '@lingui/macro'
-import { Console } from 'console'
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo } from 'react'
 
 import { NotificationType, useNotify } from 'state/application/hooks'
 
@@ -39,12 +38,12 @@ export function useGetBalancesEventStream({ addresses, networks, bundled }: Bala
   const [data, setData] = React.useState<PresentedBalancePayload[]>([])
   const [currentMessageData, setCurrentMessageData] = React.useState<PresentedBalancePayload>()
   const notify = useNotify()
-  const fetchRef = useRef(0)
+  // const fetchRef = useRef(0)
 
   useEffect(() => {
     // prevent useEffect from running on double render
-    fetchRef.current = ++fetchRef.current
-    if (fetchRef.current === 2) return
+    // fetchRef.current = ++fetchRef.current
+    // if (fetchRef.current === 2) return
 
     setData([])
     setCurrentMessageData(undefined)
