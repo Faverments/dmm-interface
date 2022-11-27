@@ -2254,8 +2254,12 @@ msgstr "Manage"
 #~ msgstr "Manage Token Lists"
 
 #: src/pages/DashBoard/index.tsx
-msgid "Manage Your DeFi<0>DeFi</0>Life"
-msgstr "Manage Your DeFi<0>DeFi</0>Life"
+#~ msgid "Manage Your DeFi<0>DeFi</0>Life"
+#~ msgstr "Manage Your DeFi<0>DeFi</0>Life"
+
+#: src/pages/DashBoard/index.tsx
+msgid "Manage Your<0>DeFi</0>Life"
+msgstr "Manage Your<0>DeFi</0>Life"
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Manage your pools."

@@ -2295,7 +2295,11 @@ msgstr "관리"
 #~ msgstr "토큰 목록 관리"
 
 #: src/pages/DashBoard/index.tsx
-msgid "Manage Your DeFi<0>DeFi</0>Life"
+#~ msgid "Manage Your DeFi<0>DeFi</0>Life"
+#~ msgstr ""
+
+#: src/pages/DashBoard/index.tsx
+msgid "Manage Your<0>DeFi</0>Life"
 msgstr ""
 
 #: src/pages/PoolFinder/index.tsx

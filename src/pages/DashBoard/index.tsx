@@ -4,7 +4,7 @@ import { ExternalLink } from 'react-feather'
 import { RouteComponentProps } from 'react-router-dom'
 import { useMedia } from 'react-use'
 import { Flex, Text } from 'rebass'
-import styled, { css, useTheme } from 'styled-components/macro'
+import styled, { useTheme } from 'styled-components/macro'
 
 import DashBoard1 from 'assets/images/dashboard_1.png'
 import DashBoartMb from 'assets/images/dashboard_mobile_1.png'
