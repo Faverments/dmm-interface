@@ -5,6 +5,7 @@ import { useCallback } from 'react'
 import { isMobile } from 'react-device-detect'
 import { FileText, User } from 'react-feather'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { useLocalStorage } from 'react-use'
 import { Flex, Text } from 'rebass'
 import styled from 'styled-components'
@@ -182,6 +183,21 @@ const WalletAction = styled(ButtonSecondary)`
 
 const MainWalletAction = styled(WalletAction)`
   color: ${({ theme }) => theme.primary};
+`
+
+const StyledText = styled(Text)`
+  font-size: 14px;
+  font-weight: 500;
+`
+
+const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 4px;
+  &:hover ${StyledText} {
+    text-decoration: underline;
+  }
 `
 
 function renderTransactions(transactions: string[]) {
@@ -363,23 +379,28 @@ export default function AccountDetails({
             </Flex>
           </ExternalLink>
 
-          <ExternalLink href={`/account/${account?.toLowerCase()}?tab=overview`}>
-            <Flex alignItems="center">
-              <User size={16} />
-              <Text marginLeft="4px" fontSize="14px">
-                <Trans>DashBoard</Trans> ↗
-              </Text>
-            </Flex>
-          </ExternalLink>
+          <Flex flexDirection={'column'} style={{ gap: 8 }}>
+            <ExternalLink href={`${PROMM_ANALYTICS_URL[chainId as ChainId]}/account/${account}`}>
+              <Flex alignItems="center">
+                <Wallet size={16} />
+                <Text fontSize="14px" marginLeft="4px">
+                  <Trans>Analyze Wallet</Trans> ↗
+                </Text>
+              </Flex>
+            </ExternalLink>
 
-          <ExternalLink href={`${PROMM_ANALYTICS_URL[chainId as ChainId]}/account/${account}`}>
-            <Flex alignItems="center">
-              <Wallet size={16} />
-              <Text fontSize="14px" marginLeft="4px">
-                <Trans>Analyze Wallet</Trans> ↗
-              </Text>
-            </Flex>
-          </ExternalLink>
+            <StyledLink
+              to={`/account/${account?.toLowerCase()}?tab=overview`}
+              onClick={() => {
+                toggleWalletModal()
+              }}
+            >
+              <User size={16} />
+              <StyledText>
+                <Trans>DashBoard</Trans> ↗
+              </StyledText>
+            </StyledLink>
+          </Flex>
         </Flex>
 
         <Flex justifyContent="space-between" marginTop="24px" paddingX="20px" sx={{ gap: '1rem' }}>

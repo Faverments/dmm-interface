@@ -89,13 +89,18 @@ export function useGet24hReturnAllNetworksSync(addresses: string, chains: number
 
     const fetcher = async () => {
       try {
-        const f = (url: string) =>
-          fetch(url)
-            .then(r => r.json())
-            .then(r => {
-              setData(prev => [...prev, r])
-              return r
-            })
+        const f = async (url: string) => {
+          try {
+            const response = await fetch(url)
+            if (response.ok) {
+              const json = await response.json()
+              setData(prev => [...prev, json])
+              // return json
+            }
+          } catch (error) {
+            console.error(error)
+          }
+        }
         for (const url of urls) {
           f(url)
         }

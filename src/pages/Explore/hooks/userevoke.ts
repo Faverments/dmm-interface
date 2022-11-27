@@ -38,7 +38,7 @@ export const useRevoke = () => {
       return
     }
 
-    if (address !== account) {
+    if (address.toLowerCase() !== account.toLowerCase()) {
       notify({
         title: t`Failed to Revoke`,
         type: NotificationType.ERROR,

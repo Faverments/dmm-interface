@@ -118,7 +118,7 @@ export default function Header({
             <Flex justifyContent="space-between" width="100%">
               <Text fontSize={above576 ? 26 : 20} color={theme.text}>
                 {loading ? (
-                  <Skeleton baseColor={theme.background} width={300} />
+                  <Skeleton baseColor={theme.background} width={200} />
                 ) : ENSName ? (
                   ENSName
                 ) : (

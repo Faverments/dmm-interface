@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
+import { useMedia } from 'react-use'
 import { Flex, Text } from 'rebass'
 import { useGetBalancesEventStream } from 'services/zapper/hooks/useBalances'
 import { Network } from 'services/zapper/types/models'
@@ -104,6 +105,17 @@ export default function Account(props: RouteComponentProps<{ address: string }>)
   //     .filter(value => typeof value === 'number') as unknown as number[],
   // )
 
+  const below1200 = useMedia('(max-width: 1200px)')
+
+  useEffect(() => {
+    if (below1200) {
+      window.scrollTo({
+        top: 0,
+        // behavior: 'smooth',
+      })
+    }
+  }, [address])
+
   const theme = useTheme()
 
   if (!address || isAddress(address) === false) {
@@ -111,7 +123,7 @@ export default function Account(props: RouteComponentProps<{ address: string }>)
       <Wrapper>
         <PageWrapper>
           <Flex justifyContent="center">
-            <Flex style={{ gap: 64, padding: '80px 12px' }}>
+            <Flex style={{ gap: 64, padding: '64px 12px' }}>
               <img src={KNCG} height={358} alt="knc" />
               <Flex
                 flexDirection="column"
