@@ -63,11 +63,13 @@ export default function getFormattedNumLongDiscoverProTokenDetails(
       predicted_details.market_cap,
       predicted_details.number_holders,
     ),
-    last_predicted: getPredictedDetailsFormat(
-      last_predicted.price,
-      last_predicted.trading_volume,
-      last_predicted.market_cap,
-      last_predicted.number_holders,
-    ),
+    last_predicted:
+      last_predicted &&
+      getPredictedDetailsFormat(
+        last_predicted.price,
+        last_predicted.trading_volume,
+        last_predicted.market_cap,
+        last_predicted.number_holders,
+      ),
   }
 }

@@ -62,7 +62,9 @@ const TrendingSoonTokenDetail = ({
 }) => {
   const now = dayjs().format('h:m A - MMM D')
   const predictedDate = dayjs(Number(tokenData.predicted_date) * 1000).format('h:m A - MMM D')
-  const lastPredictedDate = dayjs(Number(tokenData.last_predicted.predicted_date) * 1000).format('h:m A - MMM D')
+  const haveLastPredictedDate = tokenData.last_predicted !== null
+  const lastPredictedDate =
+    haveLastPredictedDate && dayjs(Number(tokenData.last_predicted.predicted_date) * 1000).format('h:m A - MMM D')
   // console.log(tokenData)
   const theme = useTheme()
   const formattedDetails = getFormattedNumLongDiscoverProTokenDetails(tokenData)
@@ -222,46 +224,48 @@ const TrendingSoonTokenDetail = ({
               </LayoutWrapper>
             </>
             <>
-              <LayoutWrapper>
-                <TableBodyItem>
-                  <span
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}
-                  >
-                    Last Predicted{' '}
-                    <RankWrapper>
-                      <Award size={14} />
-                      {tokenData.last_predicted.rank}
-                    </RankWrapper>
-                  </span>
-                  <span style={{ fontStyle: 'italic', color: theme.subText, fontSize: 12 }}>
-                    ( {lastPredictedDate} )
-                  </span>
-                </TableBodyItem>
-                <TableBodyItem style={{ textAlign: 'left' }} align="right">
-                  <TableBodyItemDiff up={!formattedDetails.last_predicted.tradingVolumePercent.startsWith('-')}>
-                    {formattedDetails.last_predicted.tradingVolumePercent}
-                  </TableBodyItemDiff>
-                  <span>{formattedDetails.last_predicted.tradingVolume}</span>
-                </TableBodyItem>
-                <TableBodyItem align="right">
-                  <TableBodyItemDiff up={!formattedDetails.last_predicted.marketCapPercent.startsWith('-')}>
-                    {formattedDetails.last_predicted.marketCapPercent}
-                  </TableBodyItemDiff>
-                  <span>{formattedDetails.last_predicted.marketCap}</span>
-                </TableBodyItem>
-                <TableBodyItem align="right">
-                  <TableBodyItemDiff up={!formattedDetails.last_predicted.numberHoldersPercent.startsWith('-')}>
-                    {formattedDetails.last_predicted.numberHoldersPercent}
-                  </TableBodyItemDiff>
-                  <span>{formattedDetails.last_predicted.numberHolders}</span>
-                </TableBodyItem>
-                <TableBodyItem align="right">
-                  <TableBodyItemDiff up={!formattedDetails.last_predicted.pricePercent.startsWith('-')}>
-                    {formattedDetails.last_predicted.pricePercent}
-                  </TableBodyItemDiff>
-                  <span>{formattedDetails.last_predicted.price}</span>
-                </TableBodyItem>
-              </LayoutWrapper>
+              {haveLastPredictedDate && (
+                <LayoutWrapper>
+                  <TableBodyItem>
+                    <span
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}
+                    >
+                      Last Predicted{' '}
+                      <RankWrapper>
+                        <Award size={14} />
+                        {tokenData.last_predicted.rank}
+                      </RankWrapper>
+                    </span>
+                    <span style={{ fontStyle: 'italic', color: theme.subText, fontSize: 12 }}>
+                      ( {lastPredictedDate} )
+                    </span>
+                  </TableBodyItem>
+                  <TableBodyItem style={{ textAlign: 'left' }} align="right">
+                    <TableBodyItemDiff up={!formattedDetails.last_predicted.tradingVolumePercent.startsWith('-')}>
+                      {formattedDetails.last_predicted.tradingVolumePercent}
+                    </TableBodyItemDiff>
+                    <span>{formattedDetails.last_predicted.tradingVolume}</span>
+                  </TableBodyItem>
+                  <TableBodyItem align="right">
+                    <TableBodyItemDiff up={!formattedDetails.last_predicted.marketCapPercent.startsWith('-')}>
+                      {formattedDetails.last_predicted.marketCapPercent}
+                    </TableBodyItemDiff>
+                    <span>{formattedDetails.last_predicted.marketCap}</span>
+                  </TableBodyItem>
+                  <TableBodyItem align="right">
+                    <TableBodyItemDiff up={!formattedDetails.last_predicted.numberHoldersPercent.startsWith('-')}>
+                      {formattedDetails.last_predicted.numberHoldersPercent}
+                    </TableBodyItemDiff>
+                    <span>{formattedDetails.last_predicted.numberHolders}</span>
+                  </TableBodyItem>
+                  <TableBodyItem align="right">
+                    <TableBodyItemDiff up={!formattedDetails.last_predicted.pricePercent.startsWith('-')}>
+                      {formattedDetails.last_predicted.pricePercent}
+                    </TableBodyItemDiff>
+                    <span>{formattedDetails.last_predicted.price}</span>
+                  </TableBodyItem>
+                </LayoutWrapper>
+              )}
             </>
           </AutoColumn>
         </TableWrapper>
