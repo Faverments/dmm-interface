@@ -2,9 +2,12 @@ import { Trans } from '@lingui/macro'
 import { useEffect } from 'react'
 import { ExternalLink } from 'react-feather'
 import { RouteComponentProps } from 'react-router-dom'
+import { useMedia } from 'react-use'
 import { Flex, Text } from 'rebass'
-import styled, { useTheme } from 'styled-components/macro'
+import styled, { css, useTheme } from 'styled-components/macro'
 
+import DashBoard1 from 'assets/images/dashboard_1.png'
+import DashBoartMb from 'assets/images/dashboard_mobile_1.png'
 import { ButtonPrimary } from 'components/Button'
 import { Arbitrum, Aurora, Avalanche, Binance, Cronos, Ethereum, Fantom, OptimismLogo, Polygon } from 'components/Icons'
 import { useActiveWeb3React } from 'hooks'
@@ -27,6 +30,8 @@ export default function DashBoard(props: RouteComponentProps<{ address: string }
 
   const isDarkMode = useIsDarkMode()
 
+  const above768px = useMedia('(min-width: 768px)')
+
   return (
     <>
       {!account && (
@@ -39,7 +44,7 @@ export default function DashBoard(props: RouteComponentProps<{ address: string }
               width="100%"
               height="100%"
               style={{
-                padding: '160px 12px',
+                padding: '80px 12px',
               }}
             >
               <Text
@@ -50,7 +55,7 @@ export default function DashBoard(props: RouteComponentProps<{ address: string }
                 fontWeight="300"
               >
                 <Trans>
-                  Manage Your DeFi
+                  Manage Your
                   <Text fontWeight="500" color={theme.primary} as="span">
                     DeFi
                   </Text>
@@ -66,7 +71,8 @@ export default function DashBoard(props: RouteComponentProps<{ address: string }
                 lineHeight={1.5}
               >
                 <Trans>Control your digital assets with a full suite of innovative tools.</Trans>
-                <div>Invest confidently, supported by our auditing experts.</div>
+                <div>Track your entire crypto portfolio across every wallet you own.</div>
+                <div>Explore and discover any wallet</div>
               </Text>
 
               <SupportChain>
@@ -138,6 +144,7 @@ export default function DashBoard(props: RouteComponentProps<{ address: string }
                   }}
                 />
               </Text>
+              {above768px ? <StyledImg src={DashBoard1} /> : <StyledImg src={DashBoartMb} />}
             </Flex>
           </PageWrapper>
         </Wrapper>
@@ -192,4 +199,12 @@ const Input = styled.input`
   @media screen and (max-width: 568px) {
     width: 100%;
   }
+`
+
+const StyledImg = styled.img`
+  margin-top: 64px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 32px;
 `
