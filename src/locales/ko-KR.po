@@ -1151,6 +1151,7 @@ msgid "Disable Metamask in C98"
 msgstr ""
 
 #: src/pages/Bridge/Disclaimer.tsx
+#: src/pages/Explore/Account/Analytics/Disclaimer.tsx
 msgid "Disclaimer"
 msgstr ""
 
@@ -1774,6 +1775,7 @@ msgid "How to win"
 msgstr ""
 
 #: src/pages/Bridge/Disclaimer.tsx
+#: src/pages/Explore/Account/Analytics/Disclaimer.tsx
 msgid "I Understand"
 msgstr ""
 
@@ -3685,6 +3687,10 @@ msgstr ""
 msgid "This farm is currently under maintenance. You can deposit your liquidity into the new farms instead. Your withdrawals are not affected."
 msgstr ""
 
+#: src/pages/Explore/Account/Analytics/Disclaimer.tsx
+msgid "This feature use input token address from Zapper but endpoint to get analytic data is Nansen Portfolio. So there is a chance that the data is not correct."
+msgstr ""
+
 #: src/services/zapper/hooks/useBalances.ts
 msgid "This is likely you make too many requests. Please try again later."
 msgstr ""
@@ -4787,6 +4793,10 @@ msgstr "그렇지 않으면 거래가 거절될것입니다."
 #: src/components/PoolPriceBar/index.tsx
 msgid "per"
 msgstr "당"
+
+#: src/pages/Explore/Account/Analytics/Disclaimer.tsx
+msgid "please understand that this is an experimental feature."
+msgstr ""
 
 #: src/pages/AddLiquidity/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx

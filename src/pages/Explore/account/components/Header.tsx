@@ -5,12 +5,12 @@ import { useMedia } from 'react-use'
 import { Flex, Text } from 'rebass'
 import { useTotalsBalances } from 'services/zapper/hooks/useBalances'
 import useGetNftUsersCollectionsTotals from 'services/zapper/hooks/useGetZapperNftUsersCollectionsTotals'
+import { useGetUserAvatar } from 'services/zapper/hooks/useUserAvatar'
 import { PresentedBalancePayload } from 'services/zapper/types/models'
 import styled, { keyframes } from 'styled-components/macro'
 
 import Avatar from 'components/Avatar'
 import Copy from 'components/Copy'
-import useENSName from 'hooks/useENSName'
 import useTheme from 'hooks/useTheme'
 import { formattedNumLong } from 'utils'
 import getShortenAddress from 'utils/getShortenAddress'
@@ -85,7 +85,7 @@ export default function Header({
   const { data, isSyncing, error } = balances
   const theme = useTheme()
   const { address } = useParams<{ address: string }>()
-  const { ENSName, loading } = useENSName(address)
+  // const { ENSName, loading } = useENSName(address)
   const details = useTotalsBalances(data, 'all-networks')
   // const allChain24hReturn = return24hs.reduce((acc, cur) => acc + (cur[address] ? cur[address].totalUSD : 0), 0)
   // const percent = (allChain24hReturn / details.total) * 100
@@ -93,6 +93,8 @@ export default function Header({
   const { nftUsersCollectionsTotals, isLoading: isNftsTotalsLoading } = useGetNftUsersCollectionsTotals(address)
 
   const above576 = useMedia('(min-width: 576px)')
+
+  const { data: user, isLoading } = useGetUserAvatar(address)
 
   return (
     <Wrapper color={stringToColor(address)}>
@@ -103,7 +105,7 @@ export default function Header({
               position: 'relative',
             }}
           >
-            <Avatar address={address} />
+            <Avatar user={user} isLoading={isLoading} address={address} />
             <div
               style={{
                 position: 'absolute',
@@ -117,10 +119,10 @@ export default function Header({
           <Flex flexDirection="column" style={{ gap: 5 }} width="100%">
             <Flex justifyContent="space-between" width="100%">
               <Text fontSize={above576 ? 26 : 20} color={theme.text}>
-                {loading ? (
+                {isLoading ? (
                   <Skeleton baseColor={theme.background} width={200} />
-                ) : ENSName ? (
-                  ENSName
+                ) : user?.user.ens ? (
+                  user?.user.ens
                 ) : (
                   getShortenAddress(address)
                 )}

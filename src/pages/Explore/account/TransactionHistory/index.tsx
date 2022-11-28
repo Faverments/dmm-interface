@@ -51,7 +51,7 @@ export default function TransactionsHistory() {
   }, [transactions])
 
   const { hits, query, onSearch } = useFuse<any>(AllTransactions, {
-    keys: ['name', 'symbol', 'address', 'from'],
+    keys: ['name', 'subTransactions.symbol', 'address', 'from'],
     includeMatches: true,
     matchAllOnEmptyQuery: true,
   })
@@ -218,8 +218,15 @@ export default function TransactionsHistory() {
                           const date2 = dayjs(Number(timeStamp) * 1000)
                           return date1.isSame(date2, 'day')
                         })
-                        .map((transaction, index) => {
-                          const hit = hitsPaginated[index]
+                        .sort((a, b) => {
+                          return Number(b.timeStamp) - Number(a.timeStamp)
+                        })
+                        .map((transaction, index, arr) => {
+                          console.log('arr', arr)
+                          const hit = hitsPaginated.find(item => item.item.timeStamp === transaction.timeStamp) as {
+                            refIndex: number
+                            item: Transaction
+                          }
                           const { direction, timeStamp, network, subTransactions, symbol, from, gasPrice } = hit.item
                           const networkInfo = chainsInfo[network as keyof typeof chainsInfo]
                           return (
@@ -260,68 +267,173 @@ export default function TransactionsHistory() {
                                   </Flex>
                                 </Flex>
                               </TableBodyItem>
-                              <TableBodyItem>
-                                <Flex alignItems="center">
-                                  <img
-                                    src={`https://storage.googleapis.com/zapper-fi-assets/tokens/${network}/${subTransactions[0].address}.png`}
-                                    alt={symbol}
-                                    onError={e => {
-                                      e.currentTarget.onerror = null
-                                      e.currentTarget.src = DefaultIcon
-                                    }}
-                                    height={32}
-                                    width={32}
-                                    style={{ borderRadius: '50%' }}
-                                  />
-                                  <Flex flexDirection="column" style={{ marginLeft: 12 }}>
-                                    <Flex>
-                                      <Text color={theme.subText} fontSize={16} fontWeight={300}>
-                                        {direction === 'exchange' ? <></> : direction === 'outgoing' ? '-' : '+'}
-                                        {formattedNumLong(Number(subTransactions[0].amount))}
-                                      </Text>
+
+                              {(direction === 'outgoing' || direction === 'incoming') && (
+                                <>
+                                  {' '}
+                                  <TableBodyItem>
+                                    <Flex alignItems="center">
+                                      <img
+                                        src={`https://storage.googleapis.com/zapper-fi-assets/tokens/${network}/${subTransactions[0].address}.png`}
+                                        alt={symbol}
+                                        onError={e => {
+                                          e.currentTarget.onerror = null
+                                          e.currentTarget.src = DefaultIcon
+                                        }}
+                                        height={32}
+                                        width={32}
+                                        style={{ borderRadius: '50%' }}
+                                      />
+                                      <Flex flexDirection="column" style={{ marginLeft: 12 }}>
+                                        <Flex>
+                                          <Text color={theme.subText} fontSize={16} fontWeight={300}>
+                                            {direction === 'outgoing' ? '-' : '+'}
+                                            {formattedNumLong(Number(subTransactions[0].amount))}
+                                          </Text>
+                                        </Flex>
+                                        <Text
+                                          color={theme.text}
+                                          fontSize={18}
+                                          fontWeight={500}
+                                          style={{
+                                            maxWidth: 120,
+                                            textOverflow: 'ellipsis',
+                                            overflow: 'hidden',
+                                          }}
+                                        >
+                                          <FuseHighlight hit={hit} attribute="subTransactions.symbol" />
+                                          {/* {subTransactions[0].symbol} */}
+                                        </Text>
+                                      </Flex>
                                     </Flex>
-                                    <Text
-                                      color={theme.text}
-                                      fontSize={18}
-                                      fontWeight={500}
-                                      style={{
-                                        maxWidth: 120,
-                                        textOverflow: 'ellipsis',
-                                        overflow: 'hidden',
-                                      }}
-                                    >
-                                      <FuseHighlight hit={hit} attribute="symbol" />
-                                    </Text>
-                                  </Flex>
-                                </Flex>
-                              </TableBodyItem>
-                              <TableBodyItem>
-                                <Flex alignItems="center" style={{ gap: 12 }}>
-                                  <ReactBlockies
-                                    seed={from}
-                                    size={10}
-                                    scale={4}
-                                    style={{
-                                      borderRadius: 8,
-                                    }}
-                                  />
-                                  <Flex flexDirection="column" style={{ gap: 6 }}>
-                                    <Text>
-                                      {direction === 'exchange' ? '' : direction === 'outgoing' ? 'To' : 'From'}
-                                    </Text>
-                                    <Text
-                                      style={{
-                                        gap: 8,
-                                        borderRadius: 4,
-                                        background: theme.background,
-                                        padding: '2px 8px',
-                                      }}
-                                    >
-                                      {getShortenAddress(from)}
-                                    </Text>
-                                  </Flex>
-                                </Flex>
-                              </TableBodyItem>
+                                  </TableBodyItem>
+                                  <TableBodyItem>
+                                    <Flex alignItems="center" style={{ gap: 12 }}>
+                                      <ReactBlockies
+                                        seed={from}
+                                        size={10}
+                                        scale={4}
+                                        style={{
+                                          borderRadius: 8,
+                                        }}
+                                      />
+                                      <Flex flexDirection="column" style={{ gap: 6 }}>
+                                        <Text>{direction === 'outgoing' ? 'To' : 'From'}</Text>
+                                        <Text
+                                          style={{
+                                            gap: 8,
+                                            borderRadius: 4,
+                                            background: theme.background,
+                                            padding: '2px 8px',
+                                          }}
+                                        >
+                                          {getShortenAddress(from)}
+                                        </Text>
+                                      </Flex>
+                                    </Flex>
+                                  </TableBodyItem>
+                                </>
+                              )}
+
+                              {direction === 'exchange' && (
+                                <>
+                                  {subTransactions
+                                    .filter(item => item.type === 'outgoing')
+                                    .map((item, index) => {
+                                      const { address, amount, symbol, type } = item
+                                      return (
+                                        <TableBodyItem key={index} style={{ gap: 4 }}>
+                                          <Text>From</Text>
+                                          <Flex alignItems="center">
+                                            <img
+                                              src={`https://storage.googleapis.com/zapper-fi-assets/tokens/${network}/${address}.png`}
+                                              alt={symbol}
+                                              onError={e => {
+                                                e.currentTarget.onerror = null
+                                                e.currentTarget.src = DefaultIcon
+                                              }}
+                                              height={32}
+                                              width={32}
+                                              style={{ borderRadius: '50%' }}
+                                            />
+                                            <Flex flexDirection="column" style={{ marginLeft: 12 }}>
+                                              <Flex>
+                                                <Text color={theme.subText} fontSize={16} fontWeight={300}>
+                                                  -{formattedNumLong(Number(amount))}
+                                                </Text>
+                                              </Flex>
+                                              <Text
+                                                color={theme.text}
+                                                fontSize={18}
+                                                fontWeight={500}
+                                                style={{
+                                                  maxWidth: 120,
+                                                  textOverflow: 'ellipsis',
+                                                  overflow: 'hidden',
+                                                }}
+                                              >
+                                                <FuseHighlight
+                                                  hit={hit}
+                                                  attribute="subTransactions.symbol"
+                                                  attributeArrayIndex={subTransactions.findIndex(i => i.type === type)}
+                                                />
+                                                {/* {subTransactions[0].symbol} */}
+                                              </Text>
+                                            </Flex>
+                                          </Flex>
+                                        </TableBodyItem>
+                                      )
+                                    })}
+                                  {subTransactions
+                                    .filter(item => item.type === 'incoming')
+                                    .map((item, index) => {
+                                      const { address, amount, symbol, type } = item
+                                      return (
+                                        <TableBodyItem key={index} style={{ gap: 4 }}>
+                                          <Text>To</Text>
+                                          <Flex alignItems="center">
+                                            <img
+                                              src={`https://storage.googleapis.com/zapper-fi-assets/tokens/${network}/${address}.png`}
+                                              alt={symbol}
+                                              onError={e => {
+                                                e.currentTarget.onerror = null
+                                                e.currentTarget.src = DefaultIcon
+                                              }}
+                                              height={32}
+                                              width={32}
+                                              style={{ borderRadius: '50%' }}
+                                            />
+                                            <Flex flexDirection="column" style={{ marginLeft: 12 }}>
+                                              <Flex>
+                                                <Text color={theme.subText} fontSize={16} fontWeight={300}>
+                                                  +{formattedNumLong(Number(amount))}
+                                                </Text>
+                                              </Flex>
+                                              <Text
+                                                color={theme.text}
+                                                fontSize={18}
+                                                fontWeight={500}
+                                                style={{
+                                                  maxWidth: 120,
+                                                  textOverflow: 'ellipsis',
+                                                  overflow: 'hidden',
+                                                }}
+                                              >
+                                                <FuseHighlight
+                                                  hit={hit}
+                                                  attribute="subTransactions.symbol"
+                                                  attributeArrayIndex={subTransactions.findIndex(i => i.type === type)}
+                                                />
+                                                {/* {subTransactions[0].symbol} */}
+                                              </Text>
+                                            </Flex>
+                                          </Flex>
+                                        </TableBodyItem>
+                                      )
+                                    })}
+                                </>
+                              )}
+
                               <TableBodyItem>
                                 <Flex flexDirection="column" style={{ gap: 8 }}>
                                   <Text color={theme.subText} fontSize={13}>

@@ -10,7 +10,7 @@ export enum HistoryChainParams {
   // MOONBEAM = 'MOONBEAM',
   CRONOS = 'CRONOS',
   AURORA = 'AURORA',
-  SOLANA = 'SOLANA',
+  // SOLANA = 'SOLANA',
 }
 
 export interface TokensParam {

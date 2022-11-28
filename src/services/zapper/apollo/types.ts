@@ -2,6 +2,8 @@ import { Network } from '../types/models'
 
 export interface UserAvatarResponse {
   user: {
+    address: string
+    ens: string
     avatarURI: string | null
     avatar: {
       tokenId: string

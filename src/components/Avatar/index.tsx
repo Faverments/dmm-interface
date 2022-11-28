@@ -1,10 +1,17 @@
 import { createIcon } from '@vukhaihoan/blockies'
 import React, { useEffect, useMemo } from 'react'
 import { useMedia } from 'react-use'
-import { useGetUserAvatar } from 'services/zapper/hooks/useUserAvatar'
+import { UserAvatarResponse } from 'services/zapper/apollo/types'
 
-export default function Avatar({ address }: { address: string }) {
-  const { data: user, isLoading } = useGetUserAvatar(address)
+export default function Avatar({
+  user,
+  isLoading,
+  address,
+}: {
+  isLoading: boolean
+  user: UserAvatarResponse | undefined
+  address: string
+}) {
   const avartarUrl = useMemo(() => {
     if (user) return user.user.avatarURI
     return null

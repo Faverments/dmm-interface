@@ -3,10 +3,12 @@ import { useMemo, useState } from 'react'
 import { Flex } from 'rebass'
 import { useGetDailyChartData } from 'services/coingecko'
 import { HistoryChainParams, HistoryPricesResponse, useGetHistoricalPrices } from 'services/nansenportfolio'
+import { nanSenPortfolioChainsInfo } from 'services/nansenportfolio/constances'
 import { useWalletBalances } from 'services/zapper/hooks/useBalances'
 import { Network, PresentedBalancePayload, TokenBreakdown } from 'services/zapper/types/models'
 import styled from 'styled-components'
 
+import { Kyber } from 'components/Icons'
 import MultipleLineChart, { getColor } from 'components/LiveChart/MultipleLineChart'
 import WeekLineChart from 'components/LiveChart/WeekLineChart'
 import LocalLoader from 'components/LocalLoader'
@@ -198,7 +200,10 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
           <Disclaimer />
           <Flex flexDirection="column" style={{ gap: 32 }}>
             <WrapperChartContainer>
-              <StyledTitle>Multiple NetWork</StyledTitle>
+              <StyledTitle>
+                <Kyber size={40} color={theme.border} />
+                <div>Multiple Network</div>
+              </StyledTitle>
               <WrapperChartItem>
                 <MultipleLineChart
                   data={ChartMultiple}
@@ -212,22 +217,46 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
               </WrapperChartItem>
             </WrapperChartContainer>
             <WeekLineChartListLayout>
-              {Object.entries(chartOne).map(([key, value]) => (
-                <WrapperChartContainer key={key}>
-                  <StyledTitle>{capitalizeFirstLetter(key)}</StyledTitle>
-                  <WrapperChartItem>
-                    <WeekLineChart
-                      data={value}
-                      color={getColor(key as any) || theme.primary}
-                      setHoverValue={setHoverValue}
-                      showYAsis={true}
-                      syncId="sync"
-                      unitYAsis="$"
-                      // minHeight={0}
-                    />
-                  </WrapperChartItem>
-                </WrapperChartContainer>
-              ))}
+              {Object.entries(chartOne).map(([key, value]) => {
+                const chainInfo =
+                  key !== 'TOTALS'
+                    ? nanSenPortfolioChainsInfo[key as unknown as HistoryChainParams]
+                    : {
+                        name: 'Total',
+                        chainId: null,
+                        logo: '',
+                      }
+
+                return (
+                  <WrapperChartContainer key={key}>
+                    {key !== 'TOTALS' && (
+                      <StyledTitle>
+                        <img src={chainInfo.logo} alt={chainInfo.name} height={40} />
+                        <div>{chainInfo.name}</div>
+                      </StyledTitle>
+                    )}
+
+                    {key === 'TOTALS' && (
+                      <StyledTitle>
+                        <Kyber size={40} color={theme.primary} />
+                        <div>{chainInfo.name}</div>
+                      </StyledTitle>
+                    )}
+
+                    <WrapperChartItem>
+                      <WeekLineChart
+                        data={value}
+                        color={getColor(key as any) || theme.primary}
+                        setHoverValue={setHoverValue}
+                        showYAsis={true}
+                        syncId="sync"
+                        unitYAsis="$"
+                        // minHeight={0}
+                      />
+                    </WrapperChartItem>
+                  </WrapperChartContainer>
+                )
+              })}
             </WeekLineChartListLayout>
           </Flex>
         </>
@@ -253,6 +282,9 @@ const StyledTitle = styled.div`
   color: ${({ theme }) => theme.text};
   border-bottom: 1px solid ${({ theme }) => rgba(theme.border, 0.3)};
   padding: 16px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
 `
 
 const WeekLineChartListLayout = styled.div`
