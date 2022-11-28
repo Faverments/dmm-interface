@@ -12,6 +12,8 @@ import WeekLineChart from 'components/LiveChart/WeekLineChart'
 import LocalLoader from 'components/LocalLoader'
 import useTheme from 'hooks/useTheme'
 
+import Disclaimer from './Disclaimer'
+
 function formatNetwork(network: Network | string) {
   switch (network) {
     case Network.ETHEREUM_MAINNET:
@@ -191,40 +193,44 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
       {isLoading ? (
         <LocalLoader />
       ) : (
-        <Flex flexDirection="column" style={{ gap: 32 }}>
-          <WrapperChartContainer>
-            <StyledTitle>Multiple NetWork</StyledTitle>
-            <WrapperChartItem>
-              <MultipleLineChart
-                data={ChartMultiple}
-                color={theme.primary}
-                setHoverValue={setHoverValue}
-                showYAsis={true}
-                syncId="sync"
-                unitYAsis="$"
-                // minHeight={0}
-              />
-            </WrapperChartItem>
-          </WrapperChartContainer>
-          <WeekLineChartListLayout>
-            {Object.entries(chartOne).map(([key, value]) => (
-              <WrapperChartContainer key={key}>
-                <StyledTitle>{capitalizeFirstLetter(key)}</StyledTitle>
-                <WrapperChartItem>
-                  <WeekLineChart
-                    data={value}
-                    color={getColor(key as any) || theme.primary}
-                    setHoverValue={setHoverValue}
-                    showYAsis={true}
-                    syncId="sync"
-                    unitYAsis="$"
-                    // minHeight={0}
-                  />
-                </WrapperChartItem>
-              </WrapperChartContainer>
-            ))}
-          </WeekLineChartListLayout>
-        </Flex>
+        <>
+          {' '}
+          <Disclaimer />
+          <Flex flexDirection="column" style={{ gap: 32 }}>
+            <WrapperChartContainer>
+              <StyledTitle>Multiple NetWork</StyledTitle>
+              <WrapperChartItem>
+                <MultipleLineChart
+                  data={ChartMultiple}
+                  color={theme.primary}
+                  setHoverValue={setHoverValue}
+                  showYAsis={true}
+                  syncId="sync"
+                  unitYAsis="$"
+                  // minHeight={0}
+                />
+              </WrapperChartItem>
+            </WrapperChartContainer>
+            <WeekLineChartListLayout>
+              {Object.entries(chartOne).map(([key, value]) => (
+                <WrapperChartContainer key={key}>
+                  <StyledTitle>{capitalizeFirstLetter(key)}</StyledTitle>
+                  <WrapperChartItem>
+                    <WeekLineChart
+                      data={value}
+                      color={getColor(key as any) || theme.primary}
+                      setHoverValue={setHoverValue}
+                      showYAsis={true}
+                      syncId="sync"
+                      unitYAsis="$"
+                      // minHeight={0}
+                    />
+                  </WrapperChartItem>
+                </WrapperChartContainer>
+              ))}
+            </WeekLineChartListLayout>
+          </Flex>
+        </>
       )}
     </div>
   )
