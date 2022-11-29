@@ -1,5 +1,6 @@
 import { rgba } from 'polished'
 import { useMemo, useState } from 'react'
+import { Command } from 'react-feather'
 import { Flex } from 'rebass'
 import { useGetDailyChartData } from 'services/coingecko'
 import { HistoryChainParams, HistoryPricesResponse, useGetHistoricalPrices } from 'services/nansenportfolio'
@@ -8,6 +9,7 @@ import { useWalletBalances } from 'services/zapper/hooks/useBalances'
 import { Network, PresentedBalancePayload, TokenBreakdown } from 'services/zapper/types/models'
 import styled from 'styled-components'
 
+import AllNetwork from 'assets/images/all-networks.png'
 import { Kyber } from 'components/Icons'
 import MultipleLineChart, { getColor } from 'components/LiveChart/MultipleLineChart'
 import WeekLineChart from 'components/LiveChart/WeekLineChart'
@@ -201,7 +203,9 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
           <Flex flexDirection="column" style={{ gap: 32 }}>
             <WrapperChartContainer>
               <StyledTitle>
-                <Kyber size={40} color={theme.border} />
+                {/* <Kyber size={40} color={theme.border} /> */}
+                <img src={AllNetwork} alt="" height={40} />
+
                 <div>Multiple Network</div>
               </StyledTitle>
               <WrapperChartItem>
@@ -238,7 +242,17 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
 
                     {key === 'TOTALS' && (
                       <StyledTitle>
-                        <Kyber size={40} color={theme.primary} />
+                        <div
+                          style={{
+                            backgroundColor: theme.primary,
+                            borderRadius: 8,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <Command size={40} />
+                        </div>
                         <div>{chainInfo.name}</div>
                       </StyledTitle>
                     )}

@@ -1,30 +1,19 @@
-import { ChainId } from '@kyberswap/ks-sdk-core'
-import { Trans } from '@lingui/macro'
 import { darken } from 'polished'
 import { useState } from 'react'
-import { Repeat } from 'react-feather'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { Flex, Text } from 'rebass'
+import { Flex } from 'rebass'
 import styled, { css, keyframes } from 'styled-components'
 
-import { ReactComponent as MasterCard } from 'assets/buy-crypto/master-card.svg'
 import { ReactComponent as Visa } from 'assets/buy-crypto/visa.svg'
-import MultichainLogoDark from 'assets/images/multichain_black.png'
-import MultichainLogoLight from 'assets/images/multichain_white.png'
+import Faverments from 'assets/images/faverments.png'
 import { ReactComponent as BridgeIcon } from 'assets/svg/bridge_icon.svg'
-import { ReactComponent as Dollar } from 'assets/svg/dollar.svg'
 import { ReactComponent as DropdownSVG } from 'assets/svg/down.svg'
-import DiscoverIcon from 'components/Icons/DiscoverIcon'
-import Menu, { NewLabel } from 'components/Menu'
 import SearchExplore from 'components/SearchExplore'
 import Settings from 'components/Settings'
-import { TutorialIds, TutorialNumbers } from 'components/Tutorial/TutorialSwap/constant'
 import Web3Network from 'components/Web3Network'
-import { AGGREGATOR_ANALYTICS_URL, PROMM_ANALYTICS_URL } from 'constants/index'
 import { useActiveWeb3React } from 'hooks'
-import useMixpanel, { MIXPANEL_TYPE } from 'hooks/useMixpanel'
+import useMixpanel from 'hooks/useMixpanel'
 import { useWindowSize } from 'hooks/useWindowSize'
-import { AppPaths } from 'pages/App'
 import { useTutorialSwapGuide } from 'state/tutorial/hooks'
 import { useIsDarkMode } from 'state/user/hooks'
 import { ExternalLink } from 'theme/components'
@@ -180,6 +169,7 @@ const Title = styled(Link)`
   pointer-events: auto;
   justify-self: flex-start;
   margin-right: 12px;
+  text-decoration: none;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     justify-self: center;
   `};
@@ -232,6 +222,13 @@ const StyledNavLink = styled(NavLink).attrs({
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 8px 6px;
   `}
+`
+
+const StyledTitle = styled.div`
+  text-decoration: none;
+  color: ${({ theme }) => theme.text};
+  font-size: 18px;
+  font-weight: 700;
 `
 
 const StyledNavExternalLink = styled(ExternalLink).attrs({
@@ -366,12 +363,16 @@ export default function Header() {
   return (
     <HeaderFrame>
       <HeaderRow>
-        <Title to="/swap">
+        <Title to="/dashboard">
           <UniIcon>
-            <IconImage src={isDark ? '/logo-dark.svg' : '/logo.svg'} alt="logo" />
+            {/* <IconImage src={isDark ? '/logo-dark.svg' : '/logo.svg'} alt="logo" /> */}
+            <Flex style={{ gap: 8 }} alignItems={'center'}>
+              <img src={Faverments} alt="logo" height={40} />
+              <StyledTitle>FaverMents</StyledTitle>
+            </Flex>
           </UniIcon>
         </Title>
-        <HeaderLinks>
+        {/* <HeaderLinks>
           <HoverDropdown
             forceShowDropdown={isShowTutorial && step === TutorialNumbers.STEP_BRIDGE}
             active={pathname.includes('/swap') || pathname === '/buy-crypto'}
@@ -557,7 +558,7 @@ export default function Header() {
               <Trans>DashBoard</Trans>
             </StyledNavLink>
           </DashboardWrapper>
-        </HeaderLinks>
+        </HeaderLinks> */}
       </HeaderRow>
       <HeaderControls>
         <HeaderElement>
@@ -571,7 +572,7 @@ export default function Header() {
         </HeaderElement>
         <HeaderElementWrap>
           <Settings />
-          <Menu />
+          {/* <Menu /> */}
         </HeaderElementWrap>
       </HeaderControls>
     </HeaderFrame>

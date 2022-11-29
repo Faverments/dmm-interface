@@ -3,7 +3,6 @@ import { datadogRum } from '@datadog/browser-rum'
 import { ChainId } from '@kyberswap/ks-sdk-core'
 import { Trans } from '@lingui/macro'
 import * as Sentry from '@sentry/react'
-import { Popover, Sidetab } from '@typeform/embed-react'
 import { Suspense, lazy, useEffect } from 'react'
 import { isMobile } from 'react-device-detect'
 import { AlertTriangle } from 'react-feather'
@@ -144,7 +143,7 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      {width && width >= 768 ? (
+      {/* {width && width >= 768 ? (
         <Sidetab
           id={feedbackId}
           width={800} // todo revert when event end
@@ -158,7 +157,7 @@ export default function App() {
           id={feedbackId}
           customIcon={isDarkTheme ? 'https://i.imgur.com/iTOOKnr.png' : 'https://i.imgur.com/aPCpnGg.png'}
         />
-      )}
+      )} */}
       {(BLACKLIST_WALLETS.includes(isAddressString(account)) ||
         BLACKLIST_WALLETS.includes(account?.toLowerCase() || '')) && (
         <Modal

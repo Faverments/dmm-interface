@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import React, { CSSProperties, useRef, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+import { Command } from 'react-feather'
 import { Flex, Image, Text } from 'rebass'
 import { ALL_NETWORKS, Network } from 'services/zapper'
 import { chainsInfo } from 'services/zapper/constances'
@@ -97,7 +98,7 @@ const NetworkSelect = ({
         {network !== 'all-networks' ? (
           <Image minHeight={20} minWidth={20} height={20} width={20} src={chainsInfo[network as Network].logo} />
         ) : (
-          <Kyber size={24} color={theme.border} />
+          <Command size={24} color={theme.border} />
         )}
         <Text
           color={network ? theme.subText : theme.border}
@@ -139,7 +140,7 @@ const NetworkSelect = ({
               setNetwork('all-networks')
             }}
           >
-            <Kyber size={18} color={theme.border} />
+            <Command size={18} color={theme.border} />
             <Text color={theme.subText} fontSize="15px">
               <Trans>All NetWorks</Trans>
             </Text>

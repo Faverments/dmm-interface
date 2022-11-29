@@ -5,6 +5,7 @@ import { chainsInfo } from 'services/zapper/constances'
 import { useChainBalances } from 'services/zapper/hooks/useBalances'
 import styled from 'styled-components/macro'
 
+import AllNetwork from 'assets/images/all-networks.png'
 import { Kyber } from 'components/Icons'
 import useTheme from 'hooks/useTheme'
 import { formattedNumLong } from 'utils'
@@ -80,7 +81,8 @@ export default function Chains({
             <Flex flexDirection="column" style={{ gap: 16 }}>
               <Flex alignItems="center" style={{ gap: 8 }}>
                 <Flex id="kid" justifyContent="center" alignItems="colum">
-                  <Kyber size={40} color={theme.border} />
+                  {/* <Kyber size={40} color={theme.border} /> */}
+                  <img src={AllNetwork} alt="" height={40} />
                 </Flex>
                 <Text
                   fontSize={16}
