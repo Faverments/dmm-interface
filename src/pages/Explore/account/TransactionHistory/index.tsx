@@ -13,7 +13,6 @@ import { Network, Transaction } from 'services/zapper/types/models/index'
 import styled, { useTheme } from 'styled-components/macro'
 
 import DefaultIcon from 'assets/images/default-icon.png'
-import ETH from 'assets/images/ethereum-logo.png'
 import { ButtonLight } from 'components/Button'
 import { AutoColumn } from 'components/Column'
 import LocalLoader from 'components/LocalLoader'
@@ -145,7 +144,7 @@ export default function TransactionsHistory() {
         />
 
         <CSVLink data={AllTransactions} filename={`${address}_transactions.csv`}>
-          <ButtonLight> Download CSV</ButtonLight>
+          <ButtonLight>Download CSV</ButtonLight>
         </CSVLink>
       </FilterBarWrapper>
 
@@ -341,6 +340,9 @@ export default function TransactionsHistory() {
                                     .filter(item => item.type === 'outgoing')
                                     .map((item, index) => {
                                       const { address, amount, symbol, type } = item
+                                      console.log('fromsub', subTransactions)
+                                      const indexAttribute = subTransactions.findIndex(item => item.type === 'outgoing')
+                                      console.log('indexAttribute from ', indexAttribute)
                                       return (
                                         <TableBodyItem key={index} style={{ gap: 4 }}>
                                           <Text>From</Text>
@@ -375,7 +377,8 @@ export default function TransactionsHistory() {
                                                 <FuseHighlight
                                                   hit={hit}
                                                   attribute="subTransactions.symbol"
-                                                  attributeArrayIndex={subTransactions.findIndex(i => i.type === type)}
+                                                  attributeArrayIndex={indexAttribute}
+                                                  value={subTransactions[indexAttribute].symbol}
                                                 />
                                                 {/* {subTransactions[0].symbol} */}
                                               </Text>
@@ -388,6 +391,8 @@ export default function TransactionsHistory() {
                                     .filter(item => item.type === 'incoming')
                                     .map((item, index) => {
                                       const { address, amount, symbol, type } = item
+                                      const indexAttribute = subTransactions.findIndex(item => item.type === 'incoming')
+                                      console.log('indexAttribute to', indexAttribute)
                                       return (
                                         <TableBodyItem key={index} style={{ gap: 4 }}>
                                           <Text>To</Text>
@@ -422,7 +427,8 @@ export default function TransactionsHistory() {
                                                 <FuseHighlight
                                                   hit={hit}
                                                   attribute="subTransactions.symbol"
-                                                  attributeArrayIndex={subTransactions.findIndex(i => i.type === type)}
+                                                  attributeArrayIndex={indexAttribute}
+                                                  value={subTransactions[indexAttribute].symbol}
                                                 />
                                                 {/* {subTransactions[0].symbol} */}
                                               </Text>
@@ -440,7 +446,7 @@ export default function TransactionsHistory() {
                                     Gas Fee
                                   </Text>
                                   <Flex style={{ gap: 4 }}>
-                                    <img src={ETH} alt="ETH" height={16} width={16} />
+                                    <img src={networkInfo.logo} alt="" height={16} />
                                     <Text fontSize={13}>${gasPrice}</Text>
                                   </Flex>
                                 </Flex>

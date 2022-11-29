@@ -38,6 +38,9 @@ const Wrapper = styled.div`
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
   }
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    padding: 8px;
+  `}
 `
 
 const ChainsLayout = styled.div`
@@ -47,6 +50,9 @@ const ChainsLayout = styled.div`
   @media screen and (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
   }
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    grid-gap : 8px;
+  `}
 `
 
 export default function Chains({

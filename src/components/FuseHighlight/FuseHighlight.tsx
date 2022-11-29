@@ -24,13 +24,26 @@ const FuseHighlight = ({
   attribute,
   style,
   attributeArrayIndex = 0,
+  value,
 }: {
   hit: any
   attribute: string
   style?: React.CSSProperties
   attributeArrayIndex?: number
+  value?: string
 }) => {
-  const matches = typeof hit.item === 'string' ? hit.matches?.[0] : hit.matches?.find((m: any) => m.key === attribute)
+  const matches =
+    typeof hit.item === 'string'
+      ? hit.matches?.[0]
+      : hit.matches
+          ?.filter((m: any) => {
+            if (value) {
+              return m.value === value
+            } else {
+              return true
+            }
+          })
+          .find((m: any) => m.key === attribute)
   const fallback = typeof hit.item === 'string' ? hit.item : resolveAttribute(hit.item, attribute, attributeArrayIndex)
   // Recursively builds JSX output adding `<mark>` tags around matches
   const Highlight = (value: any, indices = [], i = 1): any => {
