@@ -192,12 +192,12 @@ export default function Analytics({ data }: { data: PresentedBalancePayload[] })
   const { data: btc } = useGetDailyChartData('bitcoin', 12)
   return (
     <div>
+      <Disclaimer />
       {isLoading ? (
         <LocalLoader />
       ) : (
         <>
           {' '}
-          <Disclaimer />
           <Flex flexDirection="column" style={{ gap: 32 }}>
             <WrapperChartContainer>
               <StyledTitle>

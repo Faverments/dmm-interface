@@ -19,8 +19,7 @@ const fromFloat = (floatString: string, decimals: number): string => {
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 export const useRevoke = () => {
-  const { address } = useParams<{ address: string }>()
-  const { chainId, account, library } = useActiveWeb3React()
+  const { chainId, library } = useActiveWeb3React()
   const { changeNetwork } = useActiveNetwork()
   const signer = library?.getSigner()
   const notify = useNotify()
@@ -29,23 +28,6 @@ export const useRevoke = () => {
   const update = async (token: TokenApproval, newAmount: string) => {
     if (!token || !signer) return
 
-    if (!account) {
-      notify({
-        title: t`No wallet connected`,
-        type: NotificationType.ERROR,
-        summary: t`Please connect your wallet to revoke this token`,
-      })
-      return
-    }
-
-    if (address.toLowerCase() !== account.toLowerCase()) {
-      notify({
-        title: t`Failed to Revoke`,
-        type: NotificationType.ERROR,
-        summary: t`In order to use Revode on Account : ${address}, you must connect to this wallet.`,
-      })
-      return
-    }
     if (chainId !== token.chainId) {
       notify({
         title: t`Change Network to ${token.chainId}`,
@@ -53,7 +35,6 @@ export const useRevoke = () => {
         summary: t`In order to use Revode on ${token.chainId}, please confirm in wallet to switch chain to ${token.chainId}.`,
       })
       await changeNetwork(token.chainId)
-      return
     }
     try {
       const bnNew = BigNumber.from(fromFloat(newAmount, token.decimals))

@@ -1,4 +1,5 @@
 import { ChainId } from '@kyberswap/ks-sdk-core'
+import { t } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { BigNumber } from 'ethers'
 import { rgba } from 'polished'
@@ -19,9 +20,11 @@ import LocalLoader from 'components/LocalLoader'
 import Pagination from 'components/Pagination'
 import Search from 'components/Search'
 import { NETWORKS_INFO_CONFIG } from 'constants/networks'
+import { useActiveWeb3React } from 'hooks'
 import { useFuse } from 'hooks/useFuse'
 import useTheme from 'hooks/useTheme'
 import { useRevoke } from 'pages/Explore/hooks/userevoke'
+import { NotificationType, useNotify } from 'state/application/hooks'
 import { formattedNumLong } from 'utils'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import getShortenAddress from 'utils/getShortenAddress'
@@ -30,8 +33,11 @@ import FuseHighlight from '../../../../components/FuseHighlight/FuseHighlight'
 import NotFound from '../components/NotFound'
 import { TableWrapper } from '../styleds'
 import NetworkSelect from './NetworkSelect'
+import RevokeModal from './RevokeModal'
 
 export default function TokenApprovals() {
+  const { account } = useActiveWeb3React()
+
   const { address } = useParams<{ address: string }>()
   const [network, setNetwork] = React.useState<Network | ALL_NETWORKS>('all-networks')
   const { data, isLoading, error } = useGetTokenApprovals(
@@ -68,170 +74,198 @@ export default function TokenApprovals() {
     setSearch(value)
   }
 
-  const { update } = useRevoke()
+  const [isOpen, setIsOpen] = useState(false)
+  const [tokenSelected, setTokenSelected] = useState<TokenApproval>()
 
   const above768 = useMedia('(min-width: 768px)')
 
+  const notify = useNotify()
+
+  const handleRevokeClicked = (hit: { refIndex: number; item: TokenApproval }) => {
+    if (!account) {
+      notify({
+        title: t`No wallet connected`,
+        type: NotificationType.ERROR,
+        summary: t`Please connect your wallet to revoke this token`,
+      })
+      return
+    }
+
+    if (address.toLowerCase() !== account.toLowerCase()) {
+      notify({
+        title: t`Failed to Revoke`,
+        type: NotificationType.ERROR,
+        summary: t`In order to use Revode on Account : ${address}, you must connect to this wallet.`,
+      })
+      return
+    }
+    setTokenSelected(hit.item)
+    setIsOpen(true)
+  }
+
   return (
-    <Flex
-      flexDirection="column"
-      style={{
-        gap: 20,
-      }}
-    >
-      <FilterBarWrapper>
-        <Text
-          color={theme.subText}
-          fontSize={16}
-          fontWeight={300}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 10,
-            background: theme.background,
-            borderRadius: 4,
-            padding: '8px 12px',
-            width: 'fit-content',
-          }}
-        >
-          {isLoading || error ? (
-            <Skeleton width={100} baseColor={theme.background} />
-          ) : (
-            data!.atRisk?.usd && `Total Allowance : ${formattedNumLong(data!.atRisk['usd'], true)}`
-          )}
-        </Text>
-        <Flex justifyContent="space-between" style={{ gap: 8, width: above768 ? undefined : '100%' }}>
-          <NetworkSelect network={network} setNetwork={setNetwork} />
+    <>
+      <RevokeModal isOpen={isOpen} setIsOpen={setIsOpen} tokenSelected={tokenSelected} />
+      <Flex
+        flexDirection="column"
+        style={{
+          gap: 20,
+        }}
+      >
+        <FilterBarWrapper>
+          <Text
+            color={theme.subText}
+            fontSize={16}
+            fontWeight={300}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              background: theme.background,
+              borderRadius: 4,
+              padding: '8px 12px',
+              width: 'fit-content',
+            }}
+          >
+            {isLoading || error ? (
+              <Skeleton width={100} baseColor={theme.background} />
+            ) : (
+              data!.atRisk?.usd && `Total Allowance : ${formattedNumLong(data!.atRisk['usd'], true)}`
+            )}
+          </Text>
+          <Flex justifyContent="space-between" style={{ gap: 8, width: above768 ? undefined : '100%' }}>
+            <NetworkSelect network={network} setNetwork={setNetwork} />
 
-          <Search searchValue={search} onSearch={onSearchQuery} placeholder="Search by name, symbol, address" />
-        </Flex>
-      </FilterBarWrapper>
+            <Search searchValue={search} onSearch={onSearchQuery} placeholder="Search by name, symbol, address" />
+          </Flex>
+        </FilterBarWrapper>
 
-      <Flex style={{ gap: 0 }} flexDirection="column">
-        <ScrollWrapper>
-          <Flex flexDirection="row" style={{ gap: 30, minWidth: 768 }}>
-            <TableWrapper>
-              <AutoColumn gap="16px">
-                <LayoutWrapper>
-                  <TableHeaderItem>Asset</TableHeaderItem>
-                  <TableHeaderItem>Approved Amount</TableHeaderItem>
-                  <TableHeaderItem>Approved Spender</TableHeaderItem>
-                  <TableHeaderItem>Last Updated</TableHeaderItem>
-                  <TableHeaderItem>Txn Hash</TableHeaderItem>
-                  <TableHeaderItem>Revoke</TableHeaderItem>
-                </LayoutWrapper>
+        <Flex style={{ gap: 0 }} flexDirection="column">
+          <ScrollWrapper>
+            <Flex flexDirection="row" style={{ gap: 30, minWidth: 768 }}>
+              <TableWrapper>
+                <AutoColumn gap="16px">
+                  <LayoutWrapper>
+                    <TableHeaderItem>Asset</TableHeaderItem>
+                    <TableHeaderItem>Approved Amount</TableHeaderItem>
+                    <TableHeaderItem>Approved Spender</TableHeaderItem>
+                    <TableHeaderItem>Last Updated</TableHeaderItem>
+                    <TableHeaderItem>Txn Hash</TableHeaderItem>
+                    <TableHeaderItem>Revoke</TableHeaderItem>
+                  </LayoutWrapper>
 
-                {hitsPaginated.map(hit => {
-                  const {
-                    logo,
-                    chainId,
-                    name,
-                    amount,
-                    symbol,
-                    spenderAddress,
-                    spenderName,
-                    lastUpdateTimestamp,
-                    lastUpdateTxHash,
-                  } = hit.item
-                  const network = NETWORKS_INFO_CONFIG[chainId as ChainId]
-                  return (
-                    <LayoutWrapper key={hit.refIndex}>
-                      <TableBodyItem>
-                        <Flex alignItems="center">
-                          <div
-                            style={{
-                              position: 'relative',
-                            }}
-                          >
-                            <img
-                              src={logo ? logo : DefaultIcon}
-                              width={25}
-                              height={25}
-                              alt={name}
+                  {hitsPaginated.map(hit => {
+                    const {
+                      logo,
+                      chainId,
+                      name,
+                      amount,
+                      symbol,
+                      spenderAddress,
+                      spenderName,
+                      lastUpdateTimestamp,
+                      lastUpdateTxHash,
+                    } = hit.item
+                    const network = NETWORKS_INFO_CONFIG[chainId as ChainId]
+                    return (
+                      <LayoutWrapper key={hit.refIndex}>
+                        <TableBodyItem>
+                          <Flex alignItems="center">
+                            <div
                               style={{
-                                borderRadius: '50%',
+                                position: 'relative',
                               }}
-                            />
-                            <img
-                              src={network.icon}
-                              width={16}
-                              style={{
-                                position: 'absolute',
-                                right: -5,
-                                bottom: -5,
-                                borderRadius: '50%',
-                              }}
-                              alt={network.name}
-                            />
-                          </div>
-                          <Flex flexDirection="column" style={{ marginLeft: 12 }}>
-                            <Text color={theme.subText} fontSize={16} fontWeight={300}>
-                              <FuseHighlight hit={hit} attribute="name" />
-                            </Text>
-                            <Text color={theme.text} fontSize={18} fontWeight={500}>
-                              <FuseHighlight hit={hit} attribute="symbol" />
+                            >
+                              <img
+                                src={logo ? logo : DefaultIcon}
+                                width={25}
+                                height={25}
+                                alt={name}
+                                style={{
+                                  borderRadius: '50%',
+                                }}
+                              />
+                              <img
+                                src={network.icon}
+                                width={16}
+                                style={{
+                                  position: 'absolute',
+                                  right: -5,
+                                  bottom: -5,
+                                  borderRadius: '50%',
+                                }}
+                                alt={network.name}
+                              />
+                            </div>
+                            <Flex flexDirection="column" style={{ marginLeft: 12 }}>
+                              <Text color={theme.subText} fontSize={16} fontWeight={300}>
+                                <FuseHighlight hit={hit} attribute="name" />
+                              </Text>
+                              <Text color={theme.text} fontSize={18} fontWeight={500}>
+                                <FuseHighlight hit={hit} attribute="symbol" />
+                              </Text>
+                            </Flex>
+                          </Flex>
+                        </TableBodyItem>
+                        <TableBodyItem>
+                          <Flex>
+                            {Number(amount) > 100000000000000000000000000
+                              ? 'unlimited'
+                              : getFullDisplayBalance(BigNumber.from(amount))}
+                            <Text color={theme.primary} fontSize={14} fontWeight={300} style={{ marginLeft: 8 }}>
+                              {symbol}
                             </Text>
                           </Flex>
-                        </Flex>
-                      </TableBodyItem>
-                      <TableBodyItem>
-                        <Flex>
-                          {Number(amount) > 100000000000000000000000000
-                            ? 'unlimited'
-                            : getFullDisplayBalance(BigNumber.from(amount))}
-                          <Text color={theme.primary} fontSize={14} fontWeight={300} style={{ marginLeft: 8 }}>
-                            {symbol}
-                          </Text>
-                        </Flex>
-                      </TableBodyItem>
-                      <TableBodyItem>
-                        <a
-                          target="_blank"
-                          href={`${network.etherscanUrl}\\address\\${spenderAddress}`}
-                          rel="noreferrer"
-                        >
-                          {spenderName ? spenderName : getShortenAddress(spenderAddress)}
-                        </a>
-                      </TableBodyItem>
-                      <TableBodyItem>
-                        {dayjs.unix(Number(lastUpdateTimestamp)).format('YYYY-MM-DD HH:mm:ss')}
-                      </TableBodyItem>
-                      <TableBodyItem>
-                        <a target="_blank" href={`${network.etherscanUrl}\\tx\\${lastUpdateTxHash}`} rel="noreferrer">
-                          {lastUpdateTxHash.slice(0, 8) + '...' + lastUpdateTxHash.slice(58, 65)}
-                        </a>
-                      </TableBodyItem>
-                      <TableBodyItem
-                        style={{
-                          alignItems: above768 ? undefined : 'center',
-                        }}
-                      >
-                        <ZapOffWrapper
-                          size={16}
-                          onClick={() => {
-                            update(hit.item, '0')
+                        </TableBodyItem>
+                        <TableBodyItem>
+                          <a
+                            target="_blank"
+                            href={`${network.etherscanUrl}\\address\\${spenderAddress}`}
+                            rel="noreferrer"
+                          >
+                            {spenderName ? spenderName : getShortenAddress(spenderAddress)}
+                          </a>
+                        </TableBodyItem>
+                        <TableBodyItem>
+                          {dayjs.unix(Number(lastUpdateTimestamp)).format('YYYY-MM-DD HH:mm:ss')}
+                        </TableBodyItem>
+                        <TableBodyItem>
+                          <a target="_blank" href={`${network.etherscanUrl}\\tx\\${lastUpdateTxHash}`} rel="noreferrer">
+                            {lastUpdateTxHash.slice(0, 8) + '...' + lastUpdateTxHash.slice(58, 65)}
+                          </a>
+                        </TableBodyItem>
+                        <TableBodyItem
+                          style={{
+                            alignItems: above768 ? undefined : 'center',
                           }}
-                        />
-                      </TableBodyItem>
-                    </LayoutWrapper>
-                  )
-                })}
-              </AutoColumn>
-            </TableWrapper>
-          </Flex>
-        </ScrollWrapper>
-        {isLoading ? <LocalLoader /> : hitsPaginated.length === 0 && <NotFound text="No Token Approve found" />}
-        <Pagination
-          pageSize={10}
-          onPageChange={newPage => setCurrentPage(newPage)}
-          currentPage={currentPage}
-          totalCount={hits.length ?? 1}
-          style={{
-            backgroundColor: 'transparent',
-          }}
-        />
+                        >
+                          <ZapOffWrapper
+                            size={16}
+                            onClick={() => {
+                              handleRevokeClicked(hit)
+                            }}
+                          />
+                        </TableBodyItem>
+                      </LayoutWrapper>
+                    )
+                  })}
+                </AutoColumn>
+              </TableWrapper>
+            </Flex>
+          </ScrollWrapper>
+          {isLoading ? <LocalLoader /> : hitsPaginated.length === 0 && <NotFound text="No Token Approve found" />}
+          <Pagination
+            pageSize={10}
+            onPageChange={newPage => setCurrentPage(newPage)}
+            currentPage={currentPage}
+            totalCount={hits.length ?? 1}
+            style={{
+              backgroundColor: 'transparent',
+            }}
+          />
+        </Flex>
       </Flex>
-    </Flex>
+    </>
   )
 }
 
