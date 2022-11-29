@@ -6,7 +6,6 @@ import { useChainBalances } from 'services/zapper/hooks/useBalances'
 import styled from 'styled-components/macro'
 
 import AllNetwork from 'assets/images/all-networks.png'
-import { Kyber } from 'components/Icons'
 import useTheme from 'hooks/useTheme'
 import { formattedNumLong } from 'utils'
 

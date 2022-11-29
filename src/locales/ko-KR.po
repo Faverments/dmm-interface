@@ -215,8 +215,8 @@ msgstr ""
 #~ msgstr ""
 
 #: src/components/Header/index.tsx
-msgid "About"
-msgstr "About"
+#~ msgid "About"
+#~ msgstr "About"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/components/swapv2/SwapModalHeader.tsx
@@ -348,8 +348,8 @@ msgid "After harvesting, your rewards will unlock linearly over the indicated ti
 msgstr ""
 
 #: src/components/Header/index.tsx
-msgid "Aggregator"
-msgstr ""
+#~ msgid "Aggregator"
+#~ msgstr ""
 
 #: src/components/SearchModal/CurrencySearch.tsx
 #: src/pages/Pools/index.tsx
@@ -399,7 +399,6 @@ msgstr ""
 msgid "An update is available for the token list \"{0}\" ({1} to {2})."
 msgstr "토큰 목록 \"{0}\"({1}에서 {2}까지)에 대한 업데이트가 있습니다."
 
-#: src/components/Header/index.tsx
 #: src/pages/Explore/Account/components/Tab.tsx
 msgid "Analytics"
 msgstr "애널리틱스"
@@ -600,7 +599,6 @@ msgstr ""
 msgid "Brave wallet can only be used in Brave Browser. Download it"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/pages/Bridge/index.tsx
 msgid "Bridge"
 msgstr ""
@@ -613,7 +611,6 @@ msgstr ""
 msgid "Bug Bounty"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/pages/BuyCrypto/index.tsx
 #: src/pages/BuyCrypto/index.tsx
 msgid "Buy Crypto"
@@ -652,7 +649,6 @@ msgstr ""
 msgid "Calculating best route"
 msgstr "최적 경로 계산"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Campaign/CampaignListAndSearch.tsx
 #: src/pages/Campaign/index.tsx
@@ -1073,7 +1069,6 @@ msgid "Dark Mode"
 msgstr "다크 모드"
 
 #: src/components/AccountDetails/index.tsx
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "DashBoard"
 msgstr ""
@@ -1164,7 +1159,6 @@ msgstr ""
 msgid "Disconnect"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Discover"
 msgstr ""
@@ -1272,8 +1266,8 @@ msgstr ""
 #~ msgstr "새로운 보상을 획득할 때마다 새로운 베스팅 일정(기간은 풀에 따라 다름)이 생성됩니다. 여러 베스팅 일정을 동시에 진행 될 수 있습니다. 잠금 해제된 보상은 기한 없이 언제든지 청구할 수 있습니다."
 
 #: src/components/Header/index.tsx
-msgid "Earn"
-msgstr ""
+#~ msgid "Earn"
+#~ msgstr ""
 
 #: src/pages/About/AboutKyberSwap.tsx
 msgid "Earn More with Concentrated Liquidity"
@@ -1517,8 +1511,8 @@ msgid "Farming Pools"
 msgstr ""
 
 #: src/components/Header/index.tsx
-msgid "Farms"
-msgstr ""
+#~ msgid "Farms"
+#~ msgstr ""
 
 #: src/components/YieldPools/ElasticFarmSummary/SummaryContent.tsx
 msgid "Farms using this mechanism rely on the <0>total time</0> your liquidity position is <1>active</1> (i.e. in range) in the pool."
@@ -2051,8 +2045,8 @@ msgid "Invalid recipient"
 msgstr "잘못된 수신자"
 
 #: src/components/Header/index.tsx
-msgid "KNC"
-msgstr ""
+#~ msgid "KNC"
+#~ msgstr ""
 
 #: 
 #~ msgid "KNC allows token holders to play a critical role in building a wide base of stakeholders and capturing value created by products like KyberSwap on Kyber Network. KNC holders stake and vote to receive trading fees from protocols like KyberSwap. As more trades are executed on KyberSwap, more rewards are generated for KNC holders."
@@ -2107,8 +2101,8 @@ msgid "KyberDAO is a community platform that allows KNC token holders to partici
 msgstr ""
 
 #: src/components/Header/index.tsx
-msgid "KyberSwap"
-msgstr ""
+#~ msgid "KyberSwap"
+#~ msgstr ""
 
 #: src/components/Settings/index.tsx
 msgid "KyberSwap Guide"
@@ -2192,7 +2186,6 @@ msgstr "더 보기"
 msgid "Let’s get started"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/components/PoolList/ItemCard/index.tsx
 #: src/components/SearchModal/bridge/CurrencySearchBridge.tsx
 msgid "Liquidity"
@@ -2426,7 +2419,6 @@ msgstr ""
 msgid "My Deposit"
 msgstr "내 예치금"
 
-#: src/components/Header/index.tsx
 #: src/pages/Pool/index.tsx
 msgid "My Pools"
 msgstr "내 풀"
@@ -2493,7 +2485,6 @@ msgstr ""
 msgid "Network"
 msgstr "네트워크"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Farm/index.tsx
 msgid "New"
@@ -2794,7 +2785,6 @@ msgstr ""
 msgid "Pooled {0}"
 msgstr "풀링된 {0}"
 
-#: src/components/Header/index.tsx
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
 msgid "Pools"
@@ -3489,8 +3479,6 @@ msgstr "공급"
 msgid "Supply Anyway"
 msgstr "공급합니다. "
 
-#: src/components/Header/index.tsx
-#: src/components/Header/index.tsx
 #: src/components/NavigationTabs/index.tsx
 #: src/components/PoolList/ItemCard/index.tsx
 #: src/pages/Pools/index.tsx

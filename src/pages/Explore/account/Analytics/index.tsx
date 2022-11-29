@@ -10,7 +10,6 @@ import { Network, PresentedBalancePayload, TokenBreakdown } from 'services/zappe
 import styled from 'styled-components'
 
 import AllNetwork from 'assets/images/all-networks.png'
-import { Kyber } from 'components/Icons'
 import MultipleLineChart, { getColor } from 'components/LiveChart/MultipleLineChart'
 import WeekLineChart from 'components/LiveChart/WeekLineChart'
 import LocalLoader from 'components/LocalLoader'

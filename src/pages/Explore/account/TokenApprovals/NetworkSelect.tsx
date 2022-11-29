@@ -8,7 +8,6 @@ import { chainsInfo } from 'services/zapper/constances'
 import styled from 'styled-components'
 
 import { ReactComponent as ChevronDown } from 'assets/svg/down.svg'
-import Kyber from 'components/Icons/Kyber'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useTheme from 'hooks/useTheme'
 

@@ -229,8 +229,8 @@ msgstr ""
 #~ msgstr ""
 
 #: src/components/Header/index.tsx
-msgid "About"
-msgstr ""
+#~ msgid "About"
+#~ msgstr ""
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/components/swapv2/SwapModalHeader.tsx
@@ -370,8 +370,8 @@ msgid "After harvesting, your rewards will unlock linearly over the indicated ti
 msgstr ""
 
 #: src/components/Header/index.tsx
-msgid "Aggregator"
-msgstr ""
+#~ msgid "Aggregator"
+#~ msgstr ""
 
 #: src/components/SearchModal/CurrencySearch.tsx
 #: src/pages/Pools/index.tsx
@@ -429,7 +429,6 @@ msgstr ""
 msgid "An update is available for the token list \"{0}\" ({1} to {2})."
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/pages/Explore/Account/components/Tab.tsx
 msgid "Analytics"
 msgstr ""
@@ -630,7 +629,6 @@ msgstr ""
 msgid "Brave wallet can only be used in Brave Browser. Download it"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/pages/Bridge/index.tsx
 msgid "Bridge"
 msgstr ""
@@ -643,7 +641,6 @@ msgstr ""
 msgid "Bug Bounty"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/pages/BuyCrypto/index.tsx
 #: src/pages/BuyCrypto/index.tsx
 msgid "Buy Crypto"
@@ -687,7 +684,6 @@ msgstr ""
 msgid "Calculating best route"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Campaign/CampaignListAndSearch.tsx
 #: src/pages/Campaign/index.tsx
@@ -1084,7 +1080,6 @@ msgid "Dark Mode"
 msgstr ""
 
 #: src/components/AccountDetails/index.tsx
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "DashBoard"
 msgstr ""
@@ -1175,7 +1170,6 @@ msgstr ""
 msgid "Disconnect"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Discover"
 msgstr ""
@@ -1283,8 +1277,8 @@ msgstr ""
 #~ msgstr ""
 
 #: src/components/Header/index.tsx
-msgid "Earn"
-msgstr ""
+#~ msgid "Earn"
+#~ msgstr ""
 
 #: src/pages/About/AboutKyberSwap.tsx
 msgid "Earn More with Concentrated Liquidity"
@@ -1537,8 +1531,8 @@ msgid "Farming Pools"
 msgstr ""
 
 #: src/components/Header/index.tsx
-msgid "Farms"
-msgstr ""
+#~ msgid "Farms"
+#~ msgstr ""
 
 #: src/components/YieldPools/ElasticFarmSummary/SummaryContent.tsx
 msgid "Farms using this mechanism rely on the <0>total time</0> your liquidity position is <1>active</1> (i.e. in range) in the pool."
@@ -2083,8 +2077,8 @@ msgid "Invalid recipient"
 msgstr ""
 
 #: src/components/Header/index.tsx
-msgid "KNC"
-msgstr ""
+#~ msgid "KNC"
+#~ msgstr ""
 
 #: 
 #~ msgid "KNC allows token holders to play a critical role in building a wide base of stakeholders and capturing value created by products like KyberSwap on Kyber Network. KNC holders stake and vote to receive trading fees from protocols like KyberSwap. As more trades are executed on KyberSwap, more rewards are generated for KNC holders."
@@ -2139,8 +2133,8 @@ msgid "KyberDAO is a community platform that allows KNC token holders to partici
 msgstr ""
 
 #: src/components/Header/index.tsx
-msgid "KyberSwap"
-msgstr ""
+#~ msgid "KyberSwap"
+#~ msgstr ""
 
 #: src/components/Settings/index.tsx
 msgid "KyberSwap Guide"
@@ -2224,7 +2218,6 @@ msgstr ""
 msgid "Let’s get started"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/components/PoolList/ItemCard/index.tsx
 #: src/components/SearchModal/bridge/CurrencySearchBridge.tsx
 msgid "Liquidity"
@@ -2487,7 +2480,6 @@ msgstr ""
 msgid "My Deposit"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/pages/Pool/index.tsx
 msgid "My Pools"
 msgstr ""
@@ -2558,7 +2550,6 @@ msgstr ""
 msgid "Network"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Farm/index.tsx
 msgid "New"
@@ -2885,7 +2876,6 @@ msgstr ""
 #~ msgid "Pooled {0}:"
 #~ msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
 msgid "Pools"
@@ -3598,8 +3588,6 @@ msgstr ""
 msgid "Supply Anyway"
 msgstr ""
 
-#: src/components/Header/index.tsx
-#: src/components/Header/index.tsx
 #: src/components/NavigationTabs/index.tsx
 #: src/components/PoolList/ItemCard/index.tsx
 #: src/pages/Pools/index.tsx

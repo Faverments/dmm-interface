@@ -207,8 +207,8 @@ msgstr "AVG APR"
 #~ msgstr "AVG APY"
 
 #: src/components/Header/index.tsx
-msgid "About"
-msgstr "About"
+#~ msgid "About"
+#~ msgstr "About"
 
 #: src/components/swap/SwapModalHeader.tsx
 #: src/components/swapv2/SwapModalHeader.tsx
@@ -340,8 +340,8 @@ msgid "After harvesting, your rewards will unlock linearly over the indicated ti
 msgstr "After harvesting, your rewards will unlock linearly over the indicated time period"
 
 #: src/components/Header/index.tsx
-msgid "Aggregator"
-msgstr "Aggregator"
+#~ msgid "Aggregator"
+#~ msgstr "Aggregator"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 #: src/pages/Pools/index.tsx
@@ -391,7 +391,6 @@ msgstr "Amplified Liquidity Pools"
 msgid "An update is available for the token list \"{0}\" ({1} to {2})."
 msgstr "An update is available for the token list \"{0}\" ({1} to {2})."
 
-#: src/components/Header/index.tsx
 #: src/pages/Explore/Account/components/Tab.tsx
 msgid "Analytics"
 msgstr "Analytics"
@@ -592,7 +591,6 @@ msgstr "Best price guaranteed"
 msgid "Brave wallet can only be used in Brave Browser. Download it"
 msgstr "Brave wallet can only be used in Brave Browser. Download it"
 
-#: src/components/Header/index.tsx
 #: src/pages/Bridge/index.tsx
 msgid "Bridge"
 msgstr "Bridge"
@@ -605,7 +603,6 @@ msgstr "Bridge Assets"
 msgid "Bug Bounty"
 msgstr "Bug Bounty"
 
-#: src/components/Header/index.tsx
 #: src/pages/BuyCrypto/index.tsx
 #: src/pages/BuyCrypto/index.tsx
 msgid "Buy Crypto"
@@ -644,7 +641,6 @@ msgstr "CREATED"
 msgid "Calculating best route"
 msgstr "Calculating best route"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Campaign/CampaignListAndSearch.tsx
 #: src/pages/Campaign/index.tsx
@@ -1032,7 +1028,6 @@ msgid "Dark Mode"
 msgstr "Dark Mode"
 
 #: src/components/AccountDetails/index.tsx
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "DashBoard"
 msgstr "DashBoard"
@@ -1123,7 +1118,6 @@ msgstr "Disclaimer: The information here should not be treated as any form of fi
 msgid "Disconnect"
 msgstr "Disconnect"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Discover"
 msgstr "Discover"
@@ -1231,8 +1225,8 @@ msgstr "ENDED"
 #~ msgstr "Each time you harvest new rewards, a new vesting schedule (duration depends on the pool) is created. Multiple vesting schedules can run concurrently. Unlocked rewards can be claimed at any time with no deadline."
 
 #: src/components/Header/index.tsx
-msgid "Earn"
-msgstr "Earn"
+#~ msgid "Earn"
+#~ msgstr "Earn"
 
 #: src/pages/About/AboutKyberSwap.tsx
 msgid "Earn More with Concentrated Liquidity"
@@ -1476,8 +1470,8 @@ msgid "Farming Pools"
 msgstr "Farming Pools"
 
 #: src/components/Header/index.tsx
-msgid "Farms"
-msgstr "Farms"
+#~ msgid "Farms"
+#~ msgstr "Farms"
 
 #: src/components/YieldPools/ElasticFarmSummary/SummaryContent.tsx
 msgid "Farms using this mechanism rely on the <0>total time</0> your liquidity position is <1>active</1> (i.e. in range) in the pool."
@@ -2010,8 +2004,8 @@ msgid "Invalid recipient"
 msgstr "Invalid recipient"
 
 #: src/components/Header/index.tsx
-msgid "KNC"
-msgstr "KNC"
+#~ msgid "KNC"
+#~ msgstr "KNC"
 
 #: 
 #~ msgid "KNC allows token holders to play a critical role in building a wide base of stakeholders and capturing value created by products like KyberSwap on Kyber Network. KNC holders stake and vote to receive trading fees from protocols like KyberSwap. As more trades are executed on KyberSwap, more rewards are generated for KNC holders."
@@ -2066,8 +2060,8 @@ msgid "KyberDAO is a community platform that allows KNC token holders to partici
 msgstr "KyberDAO is a community platform that allows KNC token holders to participate in governance. KNC holders can stake KNC to vote on proposals. In return, they receive rewards from fees generated on KyberSwap through trading activities in Kyber Network."
 
 #: src/components/Header/index.tsx
-msgid "KyberSwap"
-msgstr "KyberSwap"
+#~ msgid "KyberSwap"
+#~ msgstr "KyberSwap"
 
 #: src/components/Settings/index.tsx
 msgid "KyberSwap Guide"
@@ -2151,7 +2145,6 @@ msgstr "Learn more"
 msgid "Let’s get started"
 msgstr "Let’s get started"
 
-#: src/components/Header/index.tsx
 #: src/components/PoolList/ItemCard/index.tsx
 #: src/components/SearchModal/bridge/CurrencySearchBridge.tsx
 msgid "Liquidity"
@@ -2385,7 +2378,6 @@ msgstr "More information about KNC is available on:"
 msgid "My Deposit"
 msgstr "My Deposit"
 
-#: src/components/Header/index.tsx
 #: src/pages/Pool/index.tsx
 msgid "My Pools"
 msgstr "My Pools"
@@ -2452,7 +2444,6 @@ msgstr "Navigating Pools Tutorial"
 msgid "Network"
 msgstr "Network"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Farm/index.tsx
 msgid "New"
@@ -2749,7 +2740,6 @@ msgstr "Pool | Fee"
 msgid "Pooled {0}"
 msgstr "Pooled {0}"
 
-#: src/components/Header/index.tsx
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
 msgid "Pools"
@@ -3440,8 +3430,6 @@ msgstr "Supply"
 msgid "Supply Anyway"
 msgstr "Supply Anyway"
 
-#: src/components/Header/index.tsx
-#: src/components/Header/index.tsx
 #: src/components/NavigationTabs/index.tsx
 #: src/components/PoolList/ItemCard/index.tsx
 #: src/pages/Pools/index.tsx
