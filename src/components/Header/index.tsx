@@ -5,9 +5,9 @@ import { Flex } from 'rebass'
 import styled, { css, keyframes } from 'styled-components'
 
 import { ReactComponent as Visa } from 'assets/buy-crypto/visa.svg'
-import Faverments from 'assets/images/faverments.png'
 import { ReactComponent as BridgeIcon } from 'assets/svg/bridge_icon.svg'
 import { ReactComponent as DropdownSVG } from 'assets/svg/down.svg'
+import Faverments from 'assets/svg/faverments.svg'
 import SearchExplore from 'components/SearchExplore'
 import Settings from 'components/Settings'
 import Web3Network from 'components/Web3Network'
@@ -366,9 +366,8 @@ export default function Header() {
         <Title to="/dashboard">
           <UniIcon>
             {/* <IconImage src={isDark ? '/logo-dark.svg' : '/logo.svg'} alt="logo" /> */}
-            <Flex style={{ gap: 8 }} alignItems={'center'}>
+            <Flex style={{ gap: 100 }} alignItems={'center'}>
               <img src={Faverments} alt="logo" height={40} />
-              <StyledTitle>FaverMents</StyledTitle>
             </Flex>
           </UniIcon>
         </Title>

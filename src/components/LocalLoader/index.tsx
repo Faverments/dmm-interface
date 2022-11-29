@@ -44,7 +44,7 @@ const LocalLoader = ({ fill }: LocalLoaderProps) => {
     <Wrapper fill={fill}>
       <AnimatedImg>
         {/* <img src={iseDark ? '/logo-dark.svg' : '/logo.svg'} alt="loading-icon" /> */}
-        <img src={'/faverments.png'} alt="loading-icon" />
+        <img src={'/faverments.svg'} alt="loading-icon" />
       </AnimatedImg>
     </Wrapper>
   )
