@@ -768,6 +768,7 @@ msgid "Click on the Settings icon"
 msgstr "Click on the Settings icon"
 
 #: src/components/TransactionConfirmationModal/index.tsx
+#: src/pages/Explore/Account/TokenApprovals/RevokeModal.tsx
 msgid "Close"
 msgstr "Close"
 
@@ -1432,7 +1433,7 @@ msgstr "FOR TRADERS"
 msgid "Failed"
 msgstr "Failed"
 
-#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/Account/TokenApprovals/index.tsx
 #: src/pages/Explore/hooks/userevoke.ts
 msgid "Failed to Revoke"
 msgstr "Failed to Revoke"
@@ -1852,7 +1853,7 @@ msgstr "Imported"
 msgid "In order to use KyberSwap on {0}, you must change the network in your wallet."
 msgstr "In order to use KyberSwap on {0}, you must change the network in your wallet."
 
-#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/Account/TokenApprovals/index.tsx
 msgid "In order to use Revode on Account : {address}, you must connect to this wallet."
 msgstr "In order to use Revode on Account : {address}, you must connect to this wallet."
 
@@ -2510,7 +2511,7 @@ msgstr "No token found. Try turn off truesight."
 msgid "No vesting schedule!"
 msgstr "No vesting schedule!"
 
-#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/Account/TokenApprovals/index.tsx
 msgid "No wallet connected"
 msgstr "No wallet connected"
 
@@ -2681,7 +2682,7 @@ msgstr "Please check the <0>Active Farms</0> or come back later."
 msgid "Please connect to the appropriate network."
 msgstr "Please connect to the appropriate network."
 
-#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/Account/TokenApprovals/index.tsx
 msgid "Please connect your wallet to revoke this token"
 msgstr "Please connect your wallet to revoke this token"
 
@@ -3008,6 +3009,10 @@ msgstr "Review transfer"
 #: src/pages/Bridge/ComfirmBridgeModal.tsx
 msgid "Review your transfer"
 msgstr "Review your transfer"
+
+#: src/pages/Explore/Account/TokenApprovals/RevokeModal.tsx
+msgid "Revoke"
+msgstr "Revoke"
 
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
@@ -3719,6 +3724,10 @@ msgstr "Token"
 #: src/components/NumericalInput/index.tsx
 msgid "Token Amount"
 msgstr "Token Amount"
+
+#: src/pages/Explore/Account/TokenApprovals/RevokeModal.tsx
+msgid "Token Approval"
+msgstr "Token Approval"
 
 #: src/pages/Explore/Account/components/Tab.tsx
 msgid "Token Approvals"

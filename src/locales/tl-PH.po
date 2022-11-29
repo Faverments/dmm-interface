@@ -815,6 +815,7 @@ msgid "Click on the Settings icon"
 msgstr ""
 
 #: src/components/TransactionConfirmationModal/index.tsx
+#: src/pages/Explore/Account/TokenApprovals/RevokeModal.tsx
 msgid "Close"
 msgstr ""
 
@@ -1493,7 +1494,7 @@ msgstr ""
 msgid "Failed"
 msgstr ""
 
-#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/Account/TokenApprovals/index.tsx
 #: src/pages/Explore/hooks/userevoke.ts
 msgid "Failed to Revoke"
 msgstr ""
@@ -1921,7 +1922,7 @@ msgstr ""
 msgid "In order to use KyberSwap on {0}, you must change the network in your wallet."
 msgstr ""
 
-#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/Account/TokenApprovals/index.tsx
 msgid "In order to use Revode on Account : {address}, you must connect to this wallet."
 msgstr ""
 
@@ -2620,7 +2621,7 @@ msgstr ""
 msgid "No vesting schedule!"
 msgstr ""
 
-#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/Account/TokenApprovals/index.tsx
 msgid "No wallet connected"
 msgstr ""
 
@@ -2795,7 +2796,7 @@ msgstr ""
 msgid "Please connect to the appropriate network."
 msgstr ""
 
-#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/Account/TokenApprovals/index.tsx
 msgid "Please connect your wallet to revoke this token"
 msgstr ""
 
@@ -3156,6 +3157,10 @@ msgstr ""
 
 #: src/pages/Bridge/ComfirmBridgeModal.tsx
 msgid "Review your transfer"
+msgstr ""
+
+#: src/pages/Explore/Account/TokenApprovals/RevokeModal.tsx
+msgid "Revoke"
 msgstr ""
 
 #: src/components/UpcomingFarms/index.tsx
@@ -3893,6 +3898,10 @@ msgstr ""
 
 #: src/components/NumericalInput/index.tsx
 msgid "Token Amount"
+msgstr ""
+
+#: src/pages/Explore/Account/TokenApprovals/RevokeModal.tsx
+msgid "Token Approval"
 msgstr ""
 
 #: src/pages/Explore/Account/components/Tab.tsx

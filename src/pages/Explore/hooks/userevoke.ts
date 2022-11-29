@@ -1,6 +1,5 @@
 import { t } from '@lingui/macro'
 import { BigNumber, Contract } from 'ethers'
-import { useParams } from 'react-router-dom'
 import { TokenApproval } from 'services/krystal'
 
 import ERC20_INTERFACE from 'constants/abis/erc20'

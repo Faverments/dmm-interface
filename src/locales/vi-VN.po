@@ -780,6 +780,7 @@ msgid "Click on the Settings icon"
 msgstr ""
 
 #: src/components/TransactionConfirmationModal/index.tsx
+#: src/pages/Explore/Account/TokenApprovals/RevokeModal.tsx
 msgid "Close"
 msgstr "Đóng"
 
@@ -1473,7 +1474,7 @@ msgstr ""
 msgid "Failed"
 msgstr ""
 
-#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/Account/TokenApprovals/index.tsx
 #: src/pages/Explore/hooks/userevoke.ts
 msgid "Failed to Revoke"
 msgstr ""
@@ -1893,7 +1894,7 @@ msgstr ""
 msgid "In order to use KyberSwap on {0}, you must change the network in your wallet."
 msgstr ""
 
-#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/Account/TokenApprovals/index.tsx
 msgid "In order to use Revode on Account : {address}, you must connect to this wallet."
 msgstr ""
 
@@ -2551,7 +2552,7 @@ msgstr ""
 msgid "No vesting schedule!"
 msgstr "Không có lịch vesting!"
 
-#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/Account/TokenApprovals/index.tsx
 msgid "No wallet connected"
 msgstr ""
 
@@ -2726,7 +2727,7 @@ msgstr "Vui lòng kiểm tra <0>Farm đang hiệu lực</0> hoặc quay lại sa
 msgid "Please connect to the appropriate network."
 msgstr "Vui lòng kết nối với mạng thích hợp."
 
-#: src/pages/Explore/hooks/userevoke.ts
+#: src/pages/Explore/Account/TokenApprovals/index.tsx
 msgid "Please connect your wallet to revoke this token"
 msgstr ""
 
@@ -3056,6 +3057,10 @@ msgstr ""
 
 #: src/pages/Bridge/ComfirmBridgeModal.tsx
 msgid "Review your transfer"
+msgstr ""
+
+#: src/pages/Explore/Account/TokenApprovals/RevokeModal.tsx
+msgid "Revoke"
 msgstr ""
 
 #: src/components/UpcomingFarms/index.tsx
@@ -3768,6 +3773,10 @@ msgstr "Token"
 #: src/components/NumericalInput/index.tsx
 msgid "Token Amount"
 msgstr "Số lượng Token"
+
+#: src/pages/Explore/Account/TokenApprovals/RevokeModal.tsx
+msgid "Token Approval"
+msgstr ""
 
 #: src/pages/Explore/Account/components/Tab.tsx
 msgid "Token Approvals"
