@@ -37,7 +37,10 @@ export default function Wallet({
         list: [],
       }
     }
-    const res = [...Object.values<any>(wallet[network].details)].sort((a, b) => b.balance - a.balance)
+    let res = []
+    if (wallet[network]) {
+      res = [...Object.values<any>(wallet[network].details)].sort((a, b) => b.balance - a.balance)
+    }
     return {
       size: res.length,
       list: res.slice((page - 1) * 10, page * 10),
