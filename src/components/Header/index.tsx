@@ -366,9 +366,9 @@ export default function Header() {
         <Title to="/dashboard">
           <UniIcon>
             {/* <IconImage src={isDark ? '/logo-dark.svg' : '/logo.svg'} alt="logo" /> */}
-            <Flex style={{ gap: 8 }} alignItems={'center'}>
+            <Flex style={{ gap: 16 }} alignItems={'center'}>
               <img src={Faverments} alt="logo" height={40} />
-              <StyledTitle>FaverMents</StyledTitle>
+              <StyledTitle>Asset Management</StyledTitle>
             </Flex>
           </UniIcon>
         </Title>
