@@ -368,7 +368,7 @@ export default function Header() {
             {/* <IconImage src={isDark ? '/logo-dark.svg' : '/logo.svg'} alt="logo" /> */}
             <Flex style={{ gap: 16 }} alignItems={'center'}>
               <img src={Faverments} alt="logo" height={40} />
-              <StyledTitle>Asset Management</StyledTitle>
+              {/* <StyledTitle>Asset Management</StyledTitle> */}
             </Flex>
           </UniIcon>
         </Title>
