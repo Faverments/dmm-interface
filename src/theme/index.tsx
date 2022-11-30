@@ -57,7 +57,8 @@ export function colors(darkMode: boolean): Colors {
     tabBackgound: darkMode ? '#0F0F0F' : '#E2E2E2',
 
     tableHeader: darkMode ? '#313131' : '#FBFBFB',
-    buttonBlack: darkMode ? '#0F0F0F' : '#f5f5f5',
+    // buttonBlack: darkMode ? '#0F0F0F' : '#f5f5f5',
+    buttonBlack: darkMode ? '#282828' : '#ffffff',
     buttonGray: darkMode ? '#292929' : '#E2E2E2',
 
     text2: darkMode ? '#C3C5CB' : '#565A69',
@@ -109,7 +110,7 @@ export function colors(darkMode: boolean): Colors {
 
     //primary colors
     // primary: '#31CB9E',
-    primary: '#00E8B4',
+    primary: '#00C59A',
 
     // border colors
     border: darkMode ? '#505050' : '#C1C1C1',
