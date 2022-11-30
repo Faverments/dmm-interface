@@ -122,7 +122,7 @@ const ReactApp = () => {
   return (
     <StrictMode>
       <SEO
-        title="FaverMents - Asset Management Platform"
+        title="Tomo - MultiChain Asset Management"
         description="KyberSwap is DeFi‚Äôs first Dynamic Market Maker; a decentralized exchange protocol that provides frictionless crypto liquidity with extremely high flexibility and capital efficiency. KyberSwap is the first major protocol in Kyber‚Äôs liquidity hub."
       />
       <FixedGlobalStyle />
