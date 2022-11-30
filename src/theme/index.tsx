@@ -109,6 +109,7 @@ export function colors(darkMode: boolean): Colors {
 
     //primary colors
     primary: '#31CB9E',
+    auraGradient: 'linear-gradient(108.46deg, #5EE6D0 12.51%, #BFC6FF 51.13%, #FFBA69 87.49%)',
 
     // border colors
     border: darkMode ? '#505050' : '#C1C1C1',

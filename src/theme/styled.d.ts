@@ -61,6 +61,7 @@ export interface Colors {
 
   //blues
   primary: Color
+  auraGradient: Color
 
   // border colors
   border: Color
