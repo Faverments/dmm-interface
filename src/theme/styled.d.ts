@@ -61,6 +61,7 @@ export interface Colors {
 
   //blues
   primary: Color
+  kardia_gradient: Color
 
   // border colors
   border: Color

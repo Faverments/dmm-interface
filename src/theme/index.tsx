@@ -108,8 +108,9 @@ export function colors(darkMode: boolean): Colors {
     advancedBorder: darkMode ? '#303e46' : '#dcdbdc',
 
     //primary colors
-    primary: '#31CB9E',
-
+    // primary: '#31CB9E',
+    primary: '#00c4f5',
+    kardia_gradient: 'linear-gradient(106.42deg,#00c4f5 10.51%,#1a2f4e 80.39%,#153d79 99.92%)',
     // border colors
     border: darkMode ? '#505050' : '#C1C1C1',
     btnOutline: darkMode ? '#31cb9e' : '#333333',
