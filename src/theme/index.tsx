@@ -57,7 +57,8 @@ export function colors(darkMode: boolean): Colors {
     tabBackgound: darkMode ? '#0F0F0F' : '#E2E2E2',
 
     tableHeader: darkMode ? '#313131' : '#FBFBFB',
-    buttonBlack: darkMode ? '#0F0F0F' : '#f5f5f5',
+    // buttonBlack: darkMode ? '#0F0F0F' : '#f5f5f5',
+    buttonBlack: darkMode ? '#181818' : '#f5f5f5',
     buttonGray: darkMode ? '#292929' : '#E2E2E2',
 
     text2: darkMode ? '#C3C5CB' : '#565A69',
