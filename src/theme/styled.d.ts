@@ -61,6 +61,7 @@ export interface Colors {
 
   //blues
   primary: Color
+  launchZoneGradient: Color
 
   // border colors
   border: Color

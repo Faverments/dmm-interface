@@ -56,7 +56,15 @@ export default function DashBoard(props: RouteComponentProps<{ address: string }
               >
                 <Trans>
                   Manage Your
-                  <Text fontWeight="500" color={theme.primary} as="span">
+                  <Text
+                    fontWeight="500"
+                    color="transparent"
+                    as="span"
+                    style={{
+                      background: theme.launchZoneGradient,
+                      WebkitBackgroundClip: 'text',
+                    }}
+                  >
                     DeFi
                   </Text>
                   Life
@@ -97,6 +105,7 @@ export default function DashBoard(props: RouteComponentProps<{ address: string }
                 style={{
                   marginTop: '40px',
                   maxWidth: '300px',
+                  background: theme.launchZoneGradient,
                 }}
               >
                 Collect Wallet
@@ -194,7 +203,10 @@ const Input = styled.input`
     -webkit-appearance: none;
   }
   &:hover {
-    border: 1px solid ${({ theme }) => theme.primary};
+    border: 1px solid;
+    border-image-slice: 1;
+    border-width: 1px;
+    border-image-source: ${({ theme }) => theme.launchZoneGradient};
   }
   @media screen and (max-width: 568px) {
     width: 100%;

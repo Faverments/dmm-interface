@@ -108,7 +108,9 @@ export function colors(darkMode: boolean): Colors {
     advancedBorder: darkMode ? '#303e46' : '#dcdbdc',
 
     //primary colors
-    primary: '#31CB9E',
+    // primary: '#31CB9E',
+    primary: '#5AA62B',
+    launchZoneGradient: 'linear-gradient(270deg,#96cf24 10.53%,#5aa62b)',
 
     // border colors
     border: darkMode ? '#505050' : '#C1C1C1',
