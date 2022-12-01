@@ -369,17 +369,17 @@ export default function Header() {
   return (
     <HeaderFrame>
       <HeaderRow>
-        <Title to="/swap">
+        <Title to="/discoverpro/truesight">
           <UniIcon>
             <IconImage src={isDark ? '/logo-dark.svg' : '/logo.svg'} alt="logo" />
           </UniIcon>
         </Title>
         <HeaderLinks>
-          <StyledNavLink id={`swapv2-nav-link`} to={'/swap'} isActive={match => Boolean(match)}>
+          {/* <StyledNavLink id={`swapv2-nav-link`} to={'/swap'} isActive={match => Boolean(match)}>
             <Flex alignItems="center" sx={{ gap: '10px' }}>
               <Trans>Swap</Trans>
             </Flex>
-          </StyledNavLink>
+          </StyledNavLink> */}
 
           {/* temporary hide Dropdown while waiting for legal confirm
           <HoverDropdown active={pathname.includes('/swap') || pathname === '/buy-crypto'}>
@@ -414,7 +414,7 @@ export default function Header() {
           </HoverDropdown>
           */}
 
-          <HoverDropdown active={pathname.toLowerCase().includes('pools')}>
+          {/* <HoverDropdown active={pathname.toLowerCase().includes('pools')}>
             <Flex alignItems="center">
               <Trans>Earn</Trans>
               <DropdownIcon />
@@ -468,12 +468,12 @@ export default function Header() {
               </SlideToUnlock>
               <DiscoverIcon size={14} style={{ marginTop: '-20px', marginLeft: '4px' }} />
             </StyledNavLink>
-          </DiscoverWrapper>
+          </DiscoverWrapper> */}
 
           <DiscoverProWapper>
             <DiscoverProPageDropwdown />
           </DiscoverProWapper>
-          <CampaignWrapper>
+          {/* <CampaignWrapper>
             <StyledNavLink id={`campaigns`} to={'/campaigns'} isActive={match => Boolean(match)}>
               <Trans>Campaigns</Trans>
               <NewLabel>
@@ -490,7 +490,7 @@ export default function Header() {
 
           <AboutWrapper>
             <AboutPageDropdown />
-          </AboutWrapper>
+          </AboutWrapper> */}
         </HeaderLinks>
       </HeaderRow>
       <HeaderControls>
@@ -519,7 +519,7 @@ export default function Header() {
         </HeaderElement>
         <HeaderElementWrap>
           <Settings />
-          <Menu />
+          {/* <Menu /> */}
         </HeaderElementWrap>
       </HeaderControls>
     </HeaderFrame>
