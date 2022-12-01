@@ -1,14 +1,14 @@
-# KyberSwap Interface
+# TomoChain Assets Management
 
-An open source interface for KyberSwap -- a protocol for decentralized exchange.
-Forked from [Uniswap/uniswap-interface](https://github.com/Uniswap/uniswap-interface)
+An open source interface for TomoChain Assets Management
 
-- Website: [kyberswap.com](https://kyberswap.com/)
-- Whitepaper: [Link](https://files.kyber.network/DMM-Feb21.pdf)
+Forked from [KyberNetwork/kyberswap-interface](https://github.com/KyberNetwork/kyberswap-interface)
 
-## Accessing the KyberSwap Interface
+- Website: [tomoChain.vukhaihoan.com](https://tomoChain.vukhaihoan.com/)
 
-To access the KyberSwap Interface, visit [kyberswap.com](https://kyberswap.com/)
+## Accessing the TomoChain Assets Management
+
+To access the TomoChain Assets Management, visit [tomoChain.vukhaihoan.com](https://tomoChain.vukhaihoan.com/)
 
 ## Development
 
@@ -26,5 +26,4 @@ yarn start
 
 ## Contributions
 
-**Please open all pull requests against the `main` branch.**
-CI checks will run against all PRs.
+**Please open all pull requests against the `tomochain` branch.**
