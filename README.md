@@ -1,14 +1,14 @@
-# Kardiachain Assets Management
+# Kardia Assets Management
 
-An open source interface for kardiachain Assets Management
+An open source interface for kardia Assets Management
 
 Forked from [KyberNetwork/kyberswap-interface](https://github.com/KyberNetwork/kyberswap-interface)
 
 - Website: [kardiachain.vukhaihoan.com](https://kardiachain.vukhaihoan.com/)
 
-## Accessing the Kardiachain Assets Management
+## Accessing the Kardia Assets Management
 
-To access the kardiachain Assets Management, visit [kardiachain.vukhaihoan.com](https://kardiachain.vukhaihoan.com/)
+To access the kardia Assets Management, visit [kardiachain.vukhaihoan.com](https://kardiachain.vukhaihoan.com/)
 
 ## Development
 
