@@ -57,7 +57,8 @@ export function colors(darkMode: boolean): Colors {
     tabBackgound: darkMode ? '#0F0F0F' : '#E2E2E2',
 
     tableHeader: darkMode ? '#313131' : '#FBFBFB',
-    buttonBlack: darkMode ? '#0F0F0F' : '#f5f5f5',
+    // buttonBlack: darkMode ? '#0F0F0F' : '#f5f5f5',
+    buttonBlack: darkMode ? '#24262e' : '#f5f5f5',
     buttonGray: darkMode ? '#292929' : '#E2E2E2',
 
     text2: darkMode ? '#C3C5CB' : '#565A69',
@@ -79,7 +80,8 @@ export function colors(darkMode: boolean): Colors {
     bg3Opacity4: darkMode ? '#40444F69' : '#69dcdbdc69',
     bg4: darkMode ? '#565A69' : '#CED0D9',
     bg5: darkMode ? '#6C7284' : '#888D9B',
-    bg7: darkMode ? '#31CB9E' : '#98e5ce',
+    // bg7: darkMode ? '#31CB9E' : '#98e5ce',
+    bg7: '#b3dbf4',
     bg8: darkMode ? '#1d7a5f' : '#31CB9E',
     bg9: darkMode ? '#1d2a32' : '#ecebeb',
     bg10: darkMode ? '#263239' : '#f5f5f5',
@@ -108,7 +110,8 @@ export function colors(darkMode: boolean): Colors {
     advancedBorder: darkMode ? '#303e46' : '#dcdbdc',
 
     //primary colors
-    primary: '#31CB9E',
+    // primary: '#31CB9E',
+    primary: '#b3dbf4',
 
     // border colors
     border: darkMode ? '#505050' : '#C1C1C1',
