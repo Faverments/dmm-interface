@@ -1,14 +1,14 @@
-# KyberSwap Interface
+# Kardiachain Assets Management
 
-An open source interface for KyberSwap -- a protocol for decentralized exchange.
-Forked from [Uniswap/uniswap-interface](https://github.com/Uniswap/uniswap-interface)
+An open source interface for kardiachain Assets Management
 
-- Website: [kyberswap.com](https://kyberswap.com/)
-- Whitepaper: [Link](https://files.kyber.network/DMM-Feb21.pdf)
+Forked from [KyberNetwork/kyberswap-interface](https://github.com/KyberNetwork/kyberswap-interface)
 
-## Accessing the KyberSwap Interface
+- Website: [kardiachain.vukhaihoan.com](https://kardiachain.vukhaihoan.com/)
 
-To access the KyberSwap Interface, visit [kyberswap.com](https://kyberswap.com/)
+## Accessing the Kardiachain Assets Management
+
+To access the kardiachain Assets Management, visit [kardiachain.vukhaihoan.com](https://kardiachain.vukhaihoan.com/)
 
 ## Development
 
@@ -26,5 +26,4 @@ yarn start
 
 ## Contributions
 
-**Please open all pull requests against the `main` branch.**
-CI checks will run against all PRs.
+**Please open all pull requests against the `kardiachain` branch.**
