@@ -307,7 +307,6 @@ msgstr ""
 msgid "An update is available for the token list \"{0}\" ({1} to {2})."
 msgstr "토큰 목록 \"{0}\"({1}에서 {2}까지)에 대한 업데이트가 있습니다."
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Analytics"
 msgstr "애널리틱스"
@@ -511,7 +510,6 @@ msgstr "청구됨"
 msgid "Calculating best route"
 msgstr "최적 경로 계산"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Campaign/CampaignListAndSearch.tsx
 #: src/pages/Campaign/index.tsx
@@ -921,7 +919,6 @@ msgstr ""
 msgid "Disclaimer: The information here should not be treated as any form of financial advice"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Discover"
 msgstr ""
@@ -1015,9 +1012,9 @@ msgstr ""
 msgid "Each time you harvest new rewards, a new vesting schedule (duration depends on the pool) is created. Multiple vesting schedules can run concurrently. Unlocked rewards can be claimed at any time with no deadline."
 msgstr "새로운 보상을 획득할 때마다 새로운 베스팅 일정(기간은 풀에 따라 다름)이 생성됩니다. 여러 베스팅 일정을 동시에 진행 될 수 있습니다. 잠금 해제된 보상은 기한 없이 언제든지 청구할 수 있습니다."
 
-#: src/components/Header/index.tsx
-msgid "Earn"
-msgstr ""
+#: 
+#~ msgid "Earn"
+#~ msgstr ""
 
 #: src/pages/About/AboutKyberSwap.tsx
 msgid "Earn More with Concentrated Liquidity"
@@ -1162,7 +1159,6 @@ msgstr ""
 msgid "FULL UNLOCK"
 msgstr "전체 잠금 해제"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Farm"
 msgstr "시골에 살고 있음"
@@ -1915,9 +1911,9 @@ msgstr ""
 msgid "My Deposit"
 msgstr "내 예치금"
 
-#: src/components/Header/index.tsx
-msgid "My Pools"
-msgstr ""
+#: 
+#~ msgid "My Pools"
+#~ msgstr ""
 
 #: src/components/YieldPools/index.tsx
 #: src/components/YieldPools/ListItem.tsx
@@ -1970,7 +1966,6 @@ msgstr ""
 msgid "Network"
 msgstr "네트워크"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Yield/index.tsx
@@ -2218,7 +2213,6 @@ msgstr ""
 msgid "Pooled {0}"
 msgstr "풀링된 {0}"
 
-#: src/components/Header/index.tsx
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
 msgid "Pools"
@@ -2818,7 +2812,6 @@ msgstr "공급"
 msgid "Supply Anyway"
 msgstr "공급합니다. "
 
-#: src/components/Header/index.tsx
 #: src/components/NavigationTabs/index.tsx
 #: src/components/PoolList/ItemCard/index.tsx
 #: src/pages/Pools/index.tsx

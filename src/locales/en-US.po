@@ -307,7 +307,6 @@ msgstr "Amplified Liquidity Pools"
 msgid "An update is available for the token list \"{0}\" ({1} to {2})."
 msgstr "An update is available for the token list \"{0}\" ({1} to {2})."
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Analytics"
 msgstr "Analytics"
@@ -511,7 +510,6 @@ msgstr "CLAIMED"
 msgid "Calculating best route"
 msgstr "Calculating best route"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Campaign/CampaignListAndSearch.tsx
 #: src/pages/Campaign/index.tsx
@@ -888,7 +886,6 @@ msgstr "Disable Metamask in C98"
 msgid "Disclaimer: The information here should not be treated as any form of financial advice"
 msgstr "Disclaimer: The information here should not be treated as any form of financial advice"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Discover"
 msgstr "Discover"
@@ -982,9 +979,9 @@ msgstr "ENDED"
 msgid "Each time you harvest new rewards, a new vesting schedule (duration depends on the pool) is created. Multiple vesting schedules can run concurrently. Unlocked rewards can be claimed at any time with no deadline."
 msgstr "Each time you harvest new rewards, a new vesting schedule (duration depends on the pool) is created. Multiple vesting schedules can run concurrently. Unlocked rewards can be claimed at any time with no deadline."
 
-#: src/components/Header/index.tsx
-msgid "Earn"
-msgstr "Earn"
+#: 
+#~ msgid "Earn"
+#~ msgstr "Earn"
 
 #: src/pages/About/AboutKyberSwap.tsx
 msgid "Earn More with Concentrated Liquidity"
@@ -1129,7 +1126,6 @@ msgstr "FOR TRADERS"
 msgid "FULL UNLOCK"
 msgstr "FULL UNLOCK"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Farm"
 msgstr "Farm"
@@ -1882,9 +1878,9 @@ msgstr "More information about KNC is available on:"
 msgid "My Deposit"
 msgstr "My Deposit"
 
-#: src/components/Header/index.tsx
-msgid "My Pools"
-msgstr "My Pools"
+#: 
+#~ msgid "My Pools"
+#~ msgstr "My Pools"
 
 #: src/components/YieldPools/index.tsx
 #: src/components/YieldPools/ListItem.tsx
@@ -1937,7 +1933,6 @@ msgstr "Name"
 msgid "Network"
 msgstr "Network"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Yield/index.tsx
@@ -2181,7 +2176,6 @@ msgstr "Pool | Fee"
 msgid "Pooled {0}"
 msgstr "Pooled {0}"
 
-#: src/components/Header/index.tsx
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
 msgid "Pools"
@@ -2777,7 +2771,6 @@ msgstr "Supply"
 msgid "Supply Anyway"
 msgstr "Supply Anyway"
 
-#: src/components/Header/index.tsx
 #: src/components/NavigationTabs/index.tsx
 #: src/components/PoolList/ItemCard/index.tsx
 #: src/pages/Pools/index.tsx

@@ -307,7 +307,6 @@ msgstr ""
 msgid "An update is available for the token list \"{0}\" ({1} to {2})."
 msgstr "Đã có bản cập nhật cho danh sách token \"{0}\" ({1} đến {2})."
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Analytics"
 msgstr "Phân tích"
@@ -511,7 +510,6 @@ msgstr "ĐÃ NHẬN"
 msgid "Calculating best route"
 msgstr "Đang tính Route tốt nhất"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Campaign/CampaignListAndSearch.tsx
 #: src/pages/Campaign/index.tsx
@@ -921,7 +919,6 @@ msgstr ""
 msgid "Disclaimer: The information here should not be treated as any form of financial advice"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Discover"
 msgstr ""
@@ -1015,9 +1012,9 @@ msgstr ""
 msgid "Each time you harvest new rewards, a new vesting schedule (duration depends on the pool) is created. Multiple vesting schedules can run concurrently. Unlocked rewards can be claimed at any time with no deadline."
 msgstr "Mỗi khi bạn thu hoạch được phần thưởng mới, một lịch vesting mới (thời gian phụ thuộc vào Pool) sẽ được tạo. Nhiều lịch vesting có thể chạy đồng thời. Phần thưởng đã mở khóa có thể được nhận bất kỳ lúc nào mà không có thời hạn."
 
-#: src/components/Header/index.tsx
-msgid "Earn"
-msgstr ""
+#: 
+#~ msgid "Earn"
+#~ msgstr ""
 
 #: src/pages/About/AboutKyberSwap.tsx
 msgid "Earn More with Concentrated Liquidity"
@@ -1162,7 +1159,6 @@ msgstr ""
 msgid "FULL UNLOCK"
 msgstr "MỞ KHÓA HOÀN TOÀN"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Farm"
 msgstr "Farm"
@@ -1915,9 +1911,9 @@ msgstr ""
 msgid "My Deposit"
 msgstr "Tiền gửi của tôi"
 
-#: src/components/Header/index.tsx
-msgid "My Pools"
-msgstr ""
+#: 
+#~ msgid "My Pools"
+#~ msgstr ""
 
 #: src/components/YieldPools/index.tsx
 #: src/components/YieldPools/ListItem.tsx
@@ -1970,7 +1966,6 @@ msgstr ""
 msgid "Network"
 msgstr "Mạng"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Yield/index.tsx
@@ -2218,7 +2213,6 @@ msgstr ""
 msgid "Pooled {0}"
 msgstr "Số lượng {0}"
 
-#: src/components/Header/index.tsx
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
 msgid "Pools"
@@ -2818,7 +2812,6 @@ msgstr "Cung cấp"
 msgid "Supply Anyway"
 msgstr "Vẫn Cung cấp"
 
-#: src/components/Header/index.tsx
 #: src/components/NavigationTabs/index.tsx
 #: src/components/PoolList/ItemCard/index.tsx
 #: src/pages/Pools/index.tsx

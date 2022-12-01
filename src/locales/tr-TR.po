@@ -345,7 +345,6 @@ msgstr ""
 msgid "An update is available for the token list \"{0}\" ({1} to {2})."
 msgstr "\"{0}\" ({1} - {2}) token listesi için bir güncelleme mevcut."
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Analytics"
 msgstr "İstatistikler"
@@ -554,7 +553,6 @@ msgstr "ALINDI"
 msgid "Calculating best route"
 msgstr "En iyi rota hesaplandı"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Campaign/CampaignListAndSearch.tsx
 #: src/pages/Campaign/index.tsx
@@ -940,7 +938,6 @@ msgstr ""
 msgid "Disclaimer: The information here should not be treated as any form of financial advice"
 msgstr ""
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Discover"
 msgstr ""
@@ -1034,9 +1031,9 @@ msgstr ""
 msgid "Each time you harvest new rewards, a new vesting schedule (duration depends on the pool) is created. Multiple vesting schedules can run concurrently. Unlocked rewards can be claimed at any time with no deadline."
 msgstr "Ödül topladığınız her seferde, süresi havuza göre değişebilen yeni bir hak kazanma süreci (Vesting) başlatılır. Birden fazla vesting programı aynı anda çalışabilir. Kilidi açılmış yani vesting süresi tamamlanmış ödüller istediğiniz zaman ve son çekim tarihi olmaksızın çekilebilir."
 
-#: src/components/Header/index.tsx
-msgid "Earn"
-msgstr ""
+#: 
+#~ msgid "Earn"
+#~ msgstr ""
 
 #: src/pages/About/AboutKyberSwap.tsx
 msgid "Earn More with Concentrated Liquidity"
@@ -1190,7 +1187,6 @@ msgstr ""
 msgid "FULL UNLOCK"
 msgstr "TAM KİLİT AÇMA"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 msgid "Farm"
 msgstr "Çiftlik"
@@ -1984,9 +1980,9 @@ msgstr ""
 msgid "My Deposit"
 msgstr "Yatırdıklarım"
 
-#: src/components/Header/index.tsx
-msgid "My Pools"
-msgstr ""
+#: 
+#~ msgid "My Pools"
+#~ msgstr ""
 
 #: 
 #: 
@@ -2044,7 +2040,6 @@ msgstr ""
 msgid "Network"
 msgstr "Ağ"
 
-#: src/components/Header/index.tsx
 #: src/components/Menu/index.tsx
 #: src/components/Menu/index.tsx
 #: src/pages/Yield/index.tsx
@@ -2318,7 +2313,6 @@ msgstr "{0} havuza alındı"
 #~ msgid "Pooled {0}:"
 #~ msgstr "{0} havuza alındı:"
 
-#: src/components/Header/index.tsx
 #: src/components/UpcomingFarms/index.tsx
 #: src/components/UpcomingFarms/ListItem.tsx
 msgid "Pools"
@@ -2936,7 +2930,6 @@ msgstr "Arz"
 msgid "Supply Anyway"
 msgstr "Yine de Temin Et"
 
-#: src/components/Header/index.tsx
 #: src/components/NavigationTabs/index.tsx
 #: src/components/PoolList/ItemCard/index.tsx
 #: src/pages/Pools/index.tsx
