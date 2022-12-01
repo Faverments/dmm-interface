@@ -109,7 +109,7 @@ function Footer() {
             <Text marginRight="6px">
               <Trans>Powered By</Trans>
             </Text>
-            <ExternalLink href="https://kyber.network" style={{ display: 'flex' }}>
+            <ExternalLink href="https://aura.network" style={{ display: 'flex' }}>
               {/* {isDarkMode ? <PoweredByIconDark width={48} /> : <PoweredByIconLight width={48} />} */}
               <img src={Aura} alt="aura" width="48" />
             </ExternalLink>
