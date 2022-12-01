@@ -1,17 +1,13 @@
 import { Trans, t } from '@lingui/macro'
-import React from 'react'
 import { useMedia } from 'react-use'
 import { Flex, Text } from 'rebass'
 import styled from 'styled-components'
 
+import Aura from 'assets/images/faverments.png'
 import { Telegram } from 'components/Icons'
 import Discord from 'components/Icons/Discord'
-import Medium from 'components/Icons/Medium'
-import PoweredByIconDark from 'components/Icons/PoweredByIconDark'
-import PoweredByIconLight from 'components/Icons/PoweredByIconLight'
 import TwitterIcon from 'components/Icons/TwitterIcon'
 import InfoHelper from 'components/InfoHelper'
-import { KYBER_NETWORK_DISCORD_URL, KYBER_NETWORK_TWITTER_URL } from 'constants/index'
 import useTheme from 'hooks/useTheme'
 import { useIsDarkMode } from 'state/user/hooks'
 import { ExternalLink, ExternalLinkNoLineHeight } from 'theme'
@@ -85,18 +81,18 @@ export const FooterSocialLink = () => {
   const theme = useTheme()
   return (
     <Flex alignItems="center" justifyContent="center" sx={{ gap: '24px' }}>
-      <ExternalLinkNoLineHeight href="https://t.me/kybernetwork">
+      <ExternalLinkNoLineHeight href="https://t.me/AuraNetworkOfficial">
         <Telegram size={16} color={theme.subText} />
       </ExternalLinkNoLineHeight>
-      <ExternalLinkNoLineHeight href={KYBER_NETWORK_TWITTER_URL}>
+      <ExternalLinkNoLineHeight href="https://twitter.com/AuraNetworkHQ">
         <TwitterIcon color={theme.subText} />
       </ExternalLinkNoLineHeight>
-      <ExternalLinkNoLineHeight href={KYBER_NETWORK_DISCORD_URL}>
+      <ExternalLinkNoLineHeight href="https://discord.com/invite/bzm3dyxJxR">
         <Discord width={16} height={12} color={theme.subText} />
       </ExternalLinkNoLineHeight>
-      <ExternalLinkNoLineHeight href={`https://blog.kyber.network`}>
+      {/* <ExternalLinkNoLineHeight href={`https://blog.kyber.network`}>
         <Medium />
-      </ExternalLinkNoLineHeight>
+      </ExternalLinkNoLineHeight> */}
     </Flex>
   )
 }
@@ -114,7 +110,8 @@ function Footer() {
               <Trans>Powered By</Trans>
             </Text>
             <ExternalLink href="https://kyber.network" style={{ display: 'flex' }}>
-              {isDarkMode ? <PoweredByIconDark width={48} /> : <PoweredByIconLight width={48} />}
+              {/* {isDarkMode ? <PoweredByIconDark width={48} /> : <PoweredByIconLight width={48} />} */}
+              <img src={Aura} alt="aura" width="48" />
             </ExternalLink>
           </Item>
           <Separator />
@@ -124,7 +121,7 @@ function Footer() {
               <Trans>Audited By</Trans>
               {!above768 && <InfoHelper size={14} text={t`Covers smart-contracts`} placement="top" />}
             </Text>
-            <ExternalLink href="https://chainsecurity.com/security-audit/kyberswap-elastic" style={{ display: 'flex' }}>
+            <div style={{ display: 'flex' }}>
               <img
                 src={
                   !isDarkMode
@@ -134,7 +131,7 @@ function Footer() {
                 alt=""
                 width="98px"
               />
-            </ExternalLink>
+            </div>
             {above768 && <InfoHelper size={14} text={t`Covers smart-contracts`} placement="top" />}
           </Item>
         </InfoWrapper>
