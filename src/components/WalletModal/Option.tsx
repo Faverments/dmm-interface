@@ -49,7 +49,7 @@ const OptionCardClickable = styled.button<{ clickable?: boolean }>`
   background-color: ${({ theme }) => theme.buttonBlack};
 
   &[data-active='true'] {
-    background-color: ${({ theme }) => theme.bg7};
+    background-color: ${({ theme }) => theme.primary};
     ${HeaderText} {
       color: ${({ theme }) => theme.darkText} !important;
     }
@@ -57,7 +57,7 @@ const OptionCardClickable = styled.button<{ clickable?: boolean }>`
 
   @media (hover: hover) {
     &:hover {
-      background-color: ${({ theme }) => theme.bg7};
+      background-color: ${({ theme }) => theme.primary};
       ${HeaderText} {
         color: ${({ theme }) => theme.darkText} !important;
       }
